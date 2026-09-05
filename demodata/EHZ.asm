@@ -1,0 +1,53 @@
+; ---------------------------------------------------------------------------
+; EHZ Demo Script (Sonic)
+; ---------------------------------------------------------------------------
+; byte_4CA8: Demo_Def:
+Demo_EHZ:
+	demoinput ,	$4C
+	demoinput R,	$43
+	demoinput RC,	9
+	demoinput R,	$3F
+	demoinput RC,	6
+	demoinput R,	$B0
+	demoinput RC,	$A
+	demoinput R,	$46
+	demoinput ,	$1E
+	demoinput L,	$F
+	demoinput ,	5
+	demoinput L,	5
+	demoinput ,	9
+	demoinput L,	$3F
+	demoinput ,	5
+	demoinput R,	$67
+	demoinput ,	$62
+	demoinput R,	$12
+	demoinput ,	$22
+	demoinput D,	8
+	demoinput DC,	7
+	demoinput D,	$E
+	demoinput ,	$3C
+	demoinput R,	$A
+	demoinput ,	$1E
+	demoinput D,	7
+	demoinput DC,	7
+	demoinput D,	2
+	demoinput ,	$F
+	demoinput R,	$100
+	demoinput R,	$2F
+	demoinput ,	$23
+	demoinput C,	8
+	demoinput RC,	$10
+	demoinput R,	3
+	demoinput ,	$30
+	demoinput RC,	$24
+	demoinput R,	$BE
+	demoinput ,	$C
+	demoinput L,	$14
+	demoinput ,	$17
+	demoinput D,	3
+	demoinput DC,	7
+	demoinput D,	3
+	demoinput ,	$64
+	demoinput S,	1
+	demoinput A,	1
+	demoinput ,	1
