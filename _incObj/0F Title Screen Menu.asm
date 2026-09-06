@@ -20,7 +20,7 @@ Obj0F_Init:
 	move.w	#spriteScreenPositionXCentered(8),x_pixel(a0)
 	move.w	#spriteScreenPositionYCentered(92),y_pixel(a0)
 	move.l	#Obj0F_MapUnc_13B70,mappings(a0)
-	move.w	#make_art_tile(ArtTile_VRAM_Start,0,0),art_tile(a0)
+	move.w	#make_art_tile(ArtTile_ArtNem_FontStuff_TtlScr,0,0),art_tile(a0)
 	andi.b	#1,(Title_screen_option).w
 	move.b	(Title_screen_option).w,mapping_frame(a0)
 
