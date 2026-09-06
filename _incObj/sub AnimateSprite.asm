@@ -11,8 +11,8 @@ AnimateSprite:
 	cmp.b	prev_anim(a0),d0	; is animation set to change?
 	beq.s	Anim_Run		; if not, branch
 	move.b	d0,prev_anim(a0)	; set prev anim to current current
-	move.b	#0,anim_frame(a0)	; reset animation
-	move.b	#0,anim_frame_duration(a0)	; reset frame duration
+	clr.b	anim_frame(a0)	; reset animation
+	clr.b	anim_frame_duration(a0)	; reset frame duration
 ; loc_16560:
 Anim_Run:
 	subq.b	#1,anim_frame_duration(a0)	; subtract 1 from frame duration
@@ -28,12 +28,10 @@ Anim_Run:
 Anim_Next:
 	andi.b	#$7F,d0			; clear sign bit
 	move.b	d0,mapping_frame(a0)	; load sprite number
-
 	move.b	status(a0),d1								;* match the orientation dictated by the object
 	andi.b	#1<<status.npc.x_flip|1<<status.npc.y_flip,d1				;* with the orientation used by the object engine
 	andi.b	#~(1<<render_flags.x_flip|1<<render_flags.y_flip),render_flags(a0)	;*
 	or.b	d1,render_flags(a0)							;*
-
 	addq.b	#1,anim_frame(a0)	; next frame number
 ; return_1659A:
 Anim_Wait:
