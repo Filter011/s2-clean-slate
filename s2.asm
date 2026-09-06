@@ -4117,25 +4117,16 @@ ObjectLayoutBoundary macro
 
 	ObjectLayoutBoundary
 
-; byte_1802A;
-    if gameRevision=0
-Objects_CNZ1_2P:	BINCLUDE	"level/objects/CNZ_1_2P (REV00).bin"
-    else
     ; a Crawl badnik was moved slightly further away from a ledge
     ; 2 flippers were moved closer to a wall
 Objects_CNZ1_2P:	BINCLUDE	"level/objects/CNZ_1_2P.bin"
-    endif
+
 
 	ObjectLayoutBoundary
 
-; byte_18492:
-    if gameRevision=0
-Objects_CNZ2_2P:	BINCLUDE	"level/objects/CNZ_2_2P (REV00).bin"
-    else
     ; 4 Crawl badniks were slightly moved, placing them closer/farther away from ledges
     ; 2 flippers were moved away from a wall to keep players from getting stuck behind them
 Objects_CNZ2_2P:	BINCLUDE	"level/objects/CNZ_2_2P.bin"
-    endif
 
 	ObjectLayoutBoundary
 
@@ -6212,40 +6203,40 @@ Off_Rings: zoneOrderedOffsetTable 4,2
 	zoneTableEntry.l  Rings_SCZ_2	; Act 2
     zoneTableEnd
 
-Rings_EHZ_1:	BINCLUDE	"level/rings/EHZ_1_INDIVIDUAL.bin"
-Rings_EHZ_2:	BINCLUDE	"level/rings/EHZ_2_INDIVIDUAL.bin"
-Rings_Lev1_1:	BINCLUDE	"level/rings/01_1_INDIVIDUAL.bin"
-Rings_Lev1_2:	BINCLUDE	"level/rings/01_2_INDIVIDUAL.bin"
-Rings_WZ_1:	BINCLUDE	"level/rings/WZ_1_INDIVIDUAL.bin"
-Rings_WZ_2:	BINCLUDE	"level/rings/WZ_2_INDIVIDUAL.bin"
-Rings_Lev3_1:	BINCLUDE	"level/rings/03_1_INDIVIDUAL.bin"
-Rings_Lev3_2:	BINCLUDE	"level/rings/03_2_INDIVIDUAL.bin"
-Rings_MTZ_1:	BINCLUDE	"level/rings/MTZ_1_INDIVIDUAL.bin"
-Rings_MTZ_2:	BINCLUDE	"level/rings/MTZ_2_INDIVIDUAL.bin"
-Rings_MTZ_3:	BINCLUDE	"level/rings/MTZ_3_INDIVIDUAL.bin"
-Rings_MTZ_4:	BINCLUDE	"level/rings/MTZ_4_INDIVIDUAL.bin"
-Rings_HTZ_1:	BINCLUDE	"level/rings/HTZ_1_INDIVIDUAL.bin"
-Rings_HTZ_2:	BINCLUDE	"level/rings/HTZ_2_INDIVIDUAL.bin"
-Rings_HPZ_1:	BINCLUDE	"level/rings/HPZ_1_INDIVIDUAL.bin"
-Rings_HPZ_2:	BINCLUDE	"level/rings/HPZ_2_INDIVIDUAL.bin"
-Rings_Lev9_1:	BINCLUDE	"level/rings/09_1_INDIVIDUAL.bin"
-Rings_Lev9_2:	BINCLUDE	"level/rings/09_2_INDIVIDUAL.bin"
-Rings_OOZ_1:	BINCLUDE	"level/rings/OOZ_1_INDIVIDUAL.bin"
-Rings_OOZ_2:	BINCLUDE	"level/rings/OOZ_2_INDIVIDUAL.bin"
-Rings_MCZ_1:	BINCLUDE	"level/rings/MCZ_1_INDIVIDUAL.bin"
-Rings_MCZ_2:	BINCLUDE	"level/rings/MCZ_2_INDIVIDUAL.bin"
-Rings_CNZ_1:	BINCLUDE	"level/rings/CNZ_1_INDIVIDUAL.bin"
-Rings_CNZ_2:	BINCLUDE	"level/rings/CNZ_2_INDIVIDUAL.bin"
-Rings_CPZ_1:	BINCLUDE	"level/rings/CPZ_1_INDIVIDUAL.bin"
-Rings_CPZ_2:	BINCLUDE	"level/rings/CPZ_2_INDIVIDUAL.bin"
-Rings_DEZ_1:	BINCLUDE	"level/rings/DEZ_1_INDIVIDUAL.bin"
-Rings_DEZ_2:	BINCLUDE	"level/rings/DEZ_2_INDIVIDUAL.bin"
-Rings_WFZ_1:	BINCLUDE	"level/rings/WFZ_1_INDIVIDUAL.bin"
-Rings_WFZ_2:	BINCLUDE	"level/rings/WFZ_2_INDIVIDUAL.bin"
-Rings_ARZ_1:	BINCLUDE	"level/rings/ARZ_1_INDIVIDUAL.bin"
-Rings_ARZ_2:	BINCLUDE	"level/rings/ARZ_2_INDIVIDUAL.bin"
-Rings_SCZ_1:	BINCLUDE	"level/rings/SCZ_1_INDIVIDUAL.bin"
-Rings_SCZ_2:	BINCLUDE	"level/rings/SCZ_2_INDIVIDUAL.bin"
+Rings_EHZ_1:	BINCLUDE	"level/rings/EHZ_1.bin"
+Rings_EHZ_2:	BINCLUDE	"level/rings/EHZ_2.bin"
+Rings_Lev1_1:	BINCLUDE	"level/rings/01_1.bin"
+Rings_Lev1_2:	BINCLUDE	"level/rings/01_2.bin"
+Rings_WZ_1:	BINCLUDE	"level/rings/WZ_1.bin"
+Rings_WZ_2:	BINCLUDE	"level/rings/WZ_2.bin"
+Rings_Lev3_1:	BINCLUDE	"level/rings/03_1.bin"
+Rings_Lev3_2:	BINCLUDE	"level/rings/03_2.bin"
+Rings_MTZ_1:	BINCLUDE	"level/rings/MTZ_1.bin"
+Rings_MTZ_2:	BINCLUDE	"level/rings/MTZ_2.bin"
+Rings_MTZ_3:	BINCLUDE	"level/rings/MTZ_3.bin"
+Rings_MTZ_4:	BINCLUDE	"level/rings/MTZ_4.bin"
+Rings_HTZ_1:	BINCLUDE	"level/rings/HTZ_1.bin"
+Rings_HTZ_2:	BINCLUDE	"level/rings/HTZ_2.bin"
+Rings_HPZ_1:	BINCLUDE	"level/rings/HPZ_1.bin"
+Rings_HPZ_2:	BINCLUDE	"level/rings/HPZ_2.bin"
+Rings_Lev9_1:	BINCLUDE	"level/rings/09_1.bin"
+Rings_Lev9_2:	BINCLUDE	"level/rings/09_2.bin"
+Rings_OOZ_1:	BINCLUDE	"level/rings/OOZ_1.bin"
+Rings_OOZ_2:	BINCLUDE	"level/rings/OOZ_2.bin"
+Rings_MCZ_1:	BINCLUDE	"level/rings/MCZ_1.bin"
+Rings_MCZ_2:	BINCLUDE	"level/rings/MCZ_2.bin"
+Rings_CNZ_1:	BINCLUDE	"level/rings/CNZ_1.bin"
+Rings_CNZ_2:	BINCLUDE	"level/rings/CNZ_2.bin"
+Rings_CPZ_1:	BINCLUDE	"level/rings/CPZ_1.bin"
+Rings_CPZ_2:	BINCLUDE	"level/rings/CPZ_2.bin"
+Rings_DEZ_1:	BINCLUDE	"level/rings/DEZ_1.bin"
+Rings_DEZ_2:	BINCLUDE	"level/rings/DEZ_2.bin"
+Rings_WFZ_1:	BINCLUDE	"level/rings/WFZ_1.bin"
+Rings_WFZ_2:	BINCLUDE	"level/rings/WFZ_2.bin"
+Rings_ARZ_1:	BINCLUDE	"level/rings/ARZ_1.bin"
+Rings_ARZ_2:	BINCLUDE	"level/rings/ARZ_2.bin"
+Rings_SCZ_1:	BINCLUDE	"level/rings/SCZ_1.bin"
+Rings_SCZ_2:	BINCLUDE	"level/rings/SCZ_2.bin"
 	even
 
 ; --------------------------------------------------------------------------------------
@@ -6310,12 +6301,7 @@ Off_Objects: zoneOrderedOffsetTable 4,2
 Objects_EHZ_1:	BINCLUDE	"level/objects/EHZ_1.bin"
 	ObjectLayoutBoundary
 
-    if gameRevision=0
-; A collision switcher was improperly placed
-Objects_EHZ_2:	BINCLUDE	"level/objects/EHZ_2 (REV00).bin"
-    else
 Objects_EHZ_2:	BINCLUDE	"level/objects/EHZ_2.bin"
-    endif
 
 	ObjectLayoutBoundary
 Objects_MTZ_1:	BINCLUDE	"level/objects/MTZ_1.bin"
@@ -6325,12 +6311,7 @@ Objects_MTZ_2:	BINCLUDE	"level/objects/MTZ_2.bin"
 Objects_MTZ_3:	BINCLUDE	"level/objects/MTZ_3.bin"
 	ObjectLayoutBoundary
 
-    if gameRevision=0
-; The lampposts were bugged: their 'remember state' flags weren't set
-Objects_WFZ_1:	BINCLUDE	"level/objects/WFZ_1 (REV00).bin"
-    else
 Objects_WFZ_1:	BINCLUDE	"level/objects/WFZ_1.bin"
-    endif
 
 	ObjectLayoutBoundary
 Objects_WFZ_2:	BINCLUDE	"level/objects/WFZ_2.bin"
@@ -6352,16 +6333,10 @@ Objects_MCZ_1:	BINCLUDE	"level/objects/MCZ_1.bin"
 Objects_MCZ_2:	BINCLUDE	"level/objects/MCZ_2.bin"
 	ObjectLayoutBoundary
 
-    if gameRevision=0
-; The signposts are too low, causing them to poke out the bottom of the ground
-Objects_CNZ_1:	BINCLUDE	"level/objects/CNZ_1 (REV00).bin"
-	ObjectLayoutBoundary
-Objects_CNZ_2:	BINCLUDE	"level/objects/CNZ_2 (REV00).bin"
-    else
 Objects_CNZ_1:	BINCLUDE	"level/objects/CNZ_1.bin"
 	ObjectLayoutBoundary
 Objects_CNZ_2:	BINCLUDE	"level/objects/CNZ_2.bin"
-    endif
+
 
 	ObjectLayoutBoundary
 Objects_CPZ_1:	BINCLUDE	"level/objects/CPZ_1.bin"

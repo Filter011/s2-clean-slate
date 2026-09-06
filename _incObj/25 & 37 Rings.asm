@@ -198,8 +198,6 @@ Obj37_Collect:
 	bsr.w	CollectRing
 ; Obj_37_sub_6:
 Obj37_Sparkle:
-	addq.b	#2,routine(a0)
-
 	lea	Ani_Ring(pc),a1
 	bsr.w	AnimateSprite
 	bra.w	DisplaySprite
