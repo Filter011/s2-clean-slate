@@ -37,7 +37,7 @@ RingsManager_Init:
 	move.l	a1,(Ring_start_addr_ROM).w
 	addq.w	#4,a1
 	moveq	#0,d5
-	move.w	#(Max_Rings-1),d0	
+	move.w	#(Max_Rings-1),d0
 -
 	tst.l	(a1)+	; get the next ring
 	bmi.s	+		; if there's no more, carry on
@@ -54,7 +54,7 @@ RingsManager_Init:
 	moveq	#1,d4	; no negative values allowed
 	bra.s	+
 -
-	addq.w	#4,a1	; load next ring 
+	addq.w	#4,a1	; load next ring
 	addq.w	#2,a2
 +
 	cmp.w	(a1),d4	; is the X pos of the ring < camera X pos?

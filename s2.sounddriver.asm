@@ -5,7 +5,7 @@
 ; RAS' work merged into SVN by Flamewing
 ; ---------------------------------------------------------------------------
 
-OptimiseFMFreq = 0
+OptimiseFMFreq = 1
 
 FreqNoAlign = 1
 
@@ -3356,7 +3356,8 @@ zDACLenTbl = zDACPtrTbl + 2
 	; First byte selects one of the DAC samples. The number that
 	; follows it is a wait time between each nibble written to the DAC
 	; (thus higher = slower)
-	ensure1byteoffset 2*11h
+;	ensure1byteoffset 2*11h
+	align 1200h
 ; zbyte_124F
 zDACMasterPlaylist:
 

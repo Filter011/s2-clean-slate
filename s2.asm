@@ -623,13 +623,14 @@ Vint_Level:
 
 	bsr.w	ProcessDMAQueue
 
+
 	movem.l	(Camera_RAM).w,d0-d7
 	movem.l	d0-d7,(Camera_RAM_copy).w
 	movem.l	(Scroll_flags).w,d0-d3
 	movem.l	d0-d3,(Scroll_flags_copy).w
 	cmpi.b	#$5C,(Hint_counter_reserve+1).w
 	bhs.s	Do_Updates
-	st.b	(Do_Updates_in_H_int).w
+	move.b	#1,(Do_Updates_in_H_int).w
 	bra.w	Set_KosPlus_Bookmark
 
 ; ---------------------------------------------------------------------------
