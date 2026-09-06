@@ -40,7 +40,7 @@ Obj25_Collect:
 	bsr.s	CollectRing
 ; Obj_25_sub_6:
 Obj25_Sparkle:
-	lea	Ani_Ring(pc),a1
+	lea	(Ani_Ring).l,a1
 	bsr.w	AnimateSprite
 	bra.w	DisplaySprite
 ; ===========================================================================
@@ -54,10 +54,10 @@ Obj25_Delete:
 CollectRing:
 CollectRing_Sonic:
 	cmpi.w	#999,(Rings_Collected).w ; did Sonic collect 999 or more rings?
-	bhs.s	CollectRing_1P		; if yes, branch
+	bhs.s	.not999		; if yes, branch
 	addq.w	#1,(Rings_Collected).w	; add 1 to the number of collected rings
 
-CollectRing_1P:
+.not999:
 	moveq	#SndID_Ring,d0		; prepare to play the ring sound
 	cmpi.w	#999,(Ring_count).w	; does the player 1 have 999 or more rings?
 	bhs.s	JmpTo_PlaySound2	; if yes, play the ring sound
@@ -198,7 +198,7 @@ Obj37_Collect:
 	bsr.w	CollectRing
 ; Obj_37_sub_6:
 Obj37_Sparkle:
-	lea	Ani_Ring(pc),a1
+	lea	(Ani_Ring).l,a1
 	bsr.w	AnimateSprite
 	bra.w	DisplaySprite
 ; ===========================================================================

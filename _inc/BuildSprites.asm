@@ -206,7 +206,7 @@ Build_1AF62:
 		bra.w	BuildSprites_NextObj
 
 ; ||||||||||||||| S U B	R O U T	I N E |||||||||||||||||||||||||||||||||||||||
-
+; DrawSprite
 
 BuildSpr_Draw:
 		lsr.b	#1,d6

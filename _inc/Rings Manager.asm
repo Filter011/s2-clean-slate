@@ -240,7 +240,7 @@ BuildRings_Loop:
 	sub.w	d4,d1		; subtract camera Y pos
 	addq.w	#8,d1
 	and.w	d3,d1
-	cmp.w	d5,d2
+	cmp.w	d5,d1
 	bhs.s	BuildRings_NextRing	; if the ring is not on-screen, branch
 	move.w	(a0),d0
 	sub.w	(a3),d0

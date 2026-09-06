@@ -32,7 +32,7 @@ Obj01_Init:
 	move.l	#MapUnc_Sonic,mappings(a0)
 	move.w	#2*$80,priority(a0)
 	move.b	#$18,width_pixels(a0)
-	move.b	#1<<render_flags.level_fg,render_flags(a0)
+	move.b	#1<<render_flags.on_screen|1<<render_flags.level_fg,render_flags(a0) ; render_flags(Tails) = $80 | initial render_flags(Sonic)
 	move.w	#$600,(Sonic_top_speed).w	; set Sonic's top speed
 	move.w	#$C,(Sonic_acceleration).w	; set Sonic's acceleration
 	move.w	#$80,(Sonic_deceleration).w	; set Sonic's deceleration
