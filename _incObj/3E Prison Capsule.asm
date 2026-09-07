@@ -20,9 +20,11 @@ Obj3E_Index:	offsetTable
 ; byte_3F1FE:
 Obj3E_ObjLoadData:
 	dc.b   0,  2,$20,  0
-	dc.w   4
+	dc.w   4*$80
+
 	dc.b $28,  4,$10,  4
-	dc.w   5*$80	; 5
+	dc.w   5*$80
+	; 5
 	dc.b $18,  6,  8,  5
 	dc.w   3*$80	; 10
 	dc.b   0,  8,$20,  0
