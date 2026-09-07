@@ -127,7 +127,7 @@ zTrack STRUCT DOTS
 	LoopCounters:		ds.b 2	; Loop counter index 0
 	VoicePtrLow:		ds.b 1	; Low byte of custom voice table (for SFX)
 	VoicePtrHigh:		ds.b 1	; High byte of custom voice table (for SFX)
-				ds.b 4	; used by LoopCounters
+				ds.b 6	; used by LoopCounters
 	;   ... open ...
 	GoSubStack:			; start of next track, every two bytes below this is a coord flag "gosub" (F8h) return stack
 	;
@@ -2520,9 +2520,6 @@ cfPanningAMSFMS:
 cfDetune:
 	ld	(ix+zTrack.Detune),a	; set new detune value
 
-; Set otherwise unused communication byte to parameter
-; Used for triggering a boss' attacks in Ristar
-; zloc_D1E cfUnknown1
 cfSetCommunication:
 	ret
 ; ---------------------------------------------------------------------------
