@@ -120,7 +120,7 @@ loc_19398:
 	add.w	y_pos(a0),d0
 	move.w	d0,y_pos(a1)
 	move.l	#Obj25_MapUnc_12382,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_Ring,1,0),art_tile(a1)
+	move.w	#make_art_tile(ArtTile_ArtNem_Ring_sparkles,1,0),art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.w	#2*$80,priority(a1)
 	move.b	#8,width_pixels(a1)
