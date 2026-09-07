@@ -1397,8 +1397,9 @@ SwScrl_CPZ:
 
 	; ...then clear BG1's and BG2's scroll flags.
 	; This zone basically uses its own dynamic background loader.
-	clr.b	(Scroll_flags_BG).w
-	clr.b	(Scroll_flags_BG2).w
+	moveq	#0,d0
+	move.b	d0,(Scroll_flags_BG).w
+	move.b	d0,(Scroll_flags_BG2).w
 
 	; Every 8 frames, subtract 1 from 'TempArray_LayerDef'.
 	; This animates the 'special line block'.
