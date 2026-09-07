@@ -829,8 +829,8 @@ zFMDoNext:
 ; zloc_285 zGetFrequency
 zFMSetFreq:
 	; 'a' holds a note to get frequency for
-	sub	80h
-	jr	z,zFMDoRest		; If this is a rest, jump to zFMDoRest
+	sub	81h
+	jr	c,zFMDoRest		; If this is a rest, jump to zFMDoRest
 	add	a,(ix+zTrack.Transpose)	; Add current channel transpose (coord flag E9)
 	add	a,a			; Offset into Frequency table...
     if OptimiseFMFreq
@@ -1306,8 +1306,8 @@ zPSGNoteOff:
 ; ---------------------------------------------------------------------------
 zMakeFMFrequency function frequency,roundFloatToInteger(frequency*1024*1024*2/FM_Sample_Rate)
 zMakeFMFrequenciesOctave macro octave
-		; Frequencies for the base octave. The first frequency is B, the last frequency is B-flat.
-		irp op, 15.39, 16.35, 17.34, 18.36, 19.45, 20.64, 21.84, 23.13, 24.51, 25.98, 27.53, 29.15
+		; Frequencies for the base octave. The first frequency is C, the last frequency is B.
+		irp op, 16.35, 17.34, 18.36, 19.45, 20.64, 21.84, 23.13, 24.51, 25.98, 27.53, 29.15, 30.88
 			dw zMakeFMFrequency(op)+octave*800h
 		endm
 	endm
@@ -1346,39 +1346,13 @@ zPSGSilenceAll:
 ; zsub_600
 zPauseMusic:
 	jp	m,.unpause	; If we are to unpause music, jump
-	ld	a,0B4h
-	ld	c,0
-	rst	zWriteFMI
-	rst	zWriteFMII
-	inc	a
-	rst	zWriteFMI
-	rst	zWriteFMII
-	inc	a
-	rst	zWriteFMI
-	ld	a,(zSongFM6.PlaybackControl)
-	or	a
-	jp	p,.notFM6
-	push	af
-	rst	zWriteFMII
-	pop	af
-.notFM6:
-
-	ld	a,28h		; Start at FM KEY ON/OFF register
-	ld	b,3		; Three key on/off per part
-
-.noteoffloop:
-	ld	c,b		; Current key off -> 'c
-	dec	c		; c--
-	rst	zWriteFMI	; Write key off for part I
-	set	2,c		; Set part II select
-	rst	zWriteFMI	; Write key off for part II
-	djnz	.noteoffloop
+	call	zFMSilenceAll
 	jp	zPSGSilenceAll
 
 .unpause:
 	xor	a			; a = 0
 	ld	(zAbsVar.StopMusic),a	; Clear pause/unpause flag
-	ld	ix,zSongDACFMStart	; ix = pointer to track RAM
+	ld	ix,zSongDACFMStart		; ix = pointer to track RAM
 	ld	b,MUSIC_DAC_FM_TRACK_COUNT	; 1 DAC + 6 FM
 	call	zResumeTrack
 
@@ -1400,7 +1374,7 @@ zResumeTrack:
 	bit	2,(ix+zTrack.PlaybackControl)	; Is SFX overriding track?
 	jr	nz,.nexttrack			; If yes, jump
 	push	bc				; Save bc
-	call	cfSetVoice
+	call	zSetVoice
 	pop	bc				; Restore bc
 
 .nexttrack:

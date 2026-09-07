@@ -955,7 +955,7 @@ MusID_Stop =		id(CmdPtr_Stop)		; FD
 CmdID__End =		id(CmdPtr__End)		; FE
 
 MusID_Pause =		1
-MusID_Unpause =		0
+MusID_Unpause =		$80
 
     if MOMPASS > 1 ; Avoid undefined symbol errors by checking only after the first pass.
         if MusID__End > SndID__First
