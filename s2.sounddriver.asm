@@ -2519,6 +2519,8 @@ cfPanningAMSFMS:
 ; zloc_D1A cfAlterNotesUNK cfAlterNotes
 cfDetune:
 	ld	(ix+zTrack.Detune),a	; set new detune value
+
+cfSetCommunication:
 	ret
 ; ---------------------------------------------------------------------------
 
@@ -2630,7 +2632,6 @@ cfPreventAttack:
 	set	4,(ix+zTrack.PlaybackControl)	; Set bit 4 (10h) on playback control; do not attack next note
 
 ; Unused commands
-cfSetCommunication:
 cfClearPush:
 cfStopSpecialFM4:
 	dec	hl				; Takes no argument, so just put it back

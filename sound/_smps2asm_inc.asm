@@ -390,10 +390,10 @@ smpsDetune macro val
 
 ; E2xx - Used for setting a variable which can be read by the game, for synchonisation. Ristar does this.
 smpsNop macro val
-	if (SonicDriverVer>=3) && ((val==$FF) || (val==$29))
-		warning "Values $FF and $29 are reserved in S3K's driver; use a different value or remove this command."
-	endif
-	dc.b	$E2,val
+;	if (SonicDriverVer>=3) && ((val==$FF) || (val==$29))
+;		warning "Values $FF and $29 are reserved in S3K's driver; use a different value or remove this command."
+;	endif
+;	dc.b	$E2,val
 	endm
 
 ; Return (used after smpsCall)
