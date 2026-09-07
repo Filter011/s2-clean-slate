@@ -192,7 +192,7 @@ Touch_Rings_Loop:
 	bhi.s	Touch_NextRing	; if they have, branch
 +
 -
-	move.w	#$601,(a4)		; set frame and destruction timer
+	move.w	#$401,(a4)		; set frame and destruction timer
 	bsr.s	Touch_ConsumeRing
 	lea	(Ring_consumption_table+2).w,a3
 
