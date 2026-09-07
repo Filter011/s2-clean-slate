@@ -177,10 +177,10 @@ ScrollVerti:
 ; ===========================================================================
 ; loc_D7FC:
 .doScroll_fast:
-	move.w	#24<<8,d1	; If player is going too fast, cap camera movement to $10 pixels per frame
-	cmpi.w	#24,d0		; is player going down too fast?
+	move.w	#16<<8,d1	; If player is going too fast, cap camera movement to $10 pixels per frame
+	cmpi.w	#16,d0		; is player going down too fast?
 	bgt.s	.scrollDown_max	; if so, move camera at capped speed
-	cmpi.w	#-24,d0		; is player going up too fast?
+	cmpi.w	#-16,d0		; is player going up too fast?
 	blt.s	.scrollUp_max	; if so, move camera at capped speed
 	bra.s	.scrollUpOrDown	; otherwise, move camera at player's speed
 ; ===========================================================================
