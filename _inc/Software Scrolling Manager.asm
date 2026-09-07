@@ -1495,8 +1495,8 @@ SwScrl_CPZ:
 	; The special block row has a ripple effect applied to it.
 	move.w	(Camera_BG_X_pos).w,d3
 	neg.w	d3
-	moveq	#$1F,d0
-	and.w	(TempArray_LayerDef).w,d0
+	move.w	(TempArray_LayerDef).w,d0
+	andi.w	#$1F,d0
 	lea	SwScrl_RippleData(pc),a2
 	lea	(a2,d0.w),a2
 
