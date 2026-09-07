@@ -1177,6 +1177,7 @@ HorizontalScrollBuffer endstruct
 Horiz_Scroll_Buf:		HorizontalScrollBuffer
 
 Sonic_Stat_Record_Buf:		ds.b	$100
+Sonic_Stat_Record_Buf_End:
 
 Sonic_Pos_Record_Buf:		ds.b	$100
 Sonic_Pos_Record_Buf_End:

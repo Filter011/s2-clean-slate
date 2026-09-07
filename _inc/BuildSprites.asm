@@ -20,10 +20,10 @@ BuildPriorityLoop:
 
 BuildObjectLoop:
 		movea.w	(a4)+,a0	; load object ID
-; 		tst.b	id(a0)
-; 		beq.w	BuildSprites_NextObj
-; 		tst.l	mappings(a0)
-; 		beq.w	BuildSprites_NextObj
+		tst.b	id(a0)
+		beq.w	BuildSprites_NextObj
+		tst.l	mappings(a0)
+		beq.w	BuildSprites_NextObj
 		andi.b	#$7F,render_flags(a0)
 		move.b	render_flags(a0),d6
 		move.w	x_pos(a0),d0

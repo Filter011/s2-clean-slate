@@ -2081,9 +2081,8 @@ Sonic_Animate:
 	cmp.b	prev_anim(a0),d0	; has animation changed?
 	beq.s	SAnim_Do		; if not, branch
 	move.b	d0,prev_anim(a0)	; set previous animation
-	moveq	#0,d7
-	move.b	d7,anim_frame(a0)	; reset animation frame
-	move.b	d7,anim_frame_duration(a0)	; reset frame duration
+	move.b	#0,anim_frame(a0)	; reset animation frame
+	move.b	#0,anim_frame_duration(a0)	; reset frame duration
 	bclr	#status.player.pushing,status(a0)
 ; loc_1B384:
 SAnim_Do:
