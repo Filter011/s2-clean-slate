@@ -77,12 +77,12 @@ Obj14_Main:
 ;	bhs.s	+
 ;	moveq	#1,d2
 ;+
-	add.w	d2,d1
-	cmpi.w	#3,d1
-	bne.s	+
-	addq.w	#1,d1
-+
-	lsr.w	#1,d1
+;	add.w	d2,d1
+;	cmpi.w	#3,d1
+;	bne.s	+
+;	addq.w	#1,d1
+;+
+;	lsr.w	#1,d1
 	bra.s	Obj14_UpdateMappingAndCollision
 ; ===========================================================================
 
@@ -225,7 +225,6 @@ Obj14_SetBallToRestOnSeeSaw:
 ; ===========================================================================
 
 Obj14_Ball_Fly:
-
 	bsr.w	Obj14_Animate
 	tst.w	y_vel(a0)
 	bpl.s	loc_21BB6
