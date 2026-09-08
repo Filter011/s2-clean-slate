@@ -1242,7 +1242,7 @@ zPSGDoVolFX:
 ; zloc_4F9
 zPSGUpdateVol:
 	ld	a,(ix+zTrack.PlaybackControl)	; get playback control byte
-	and	6				; Checks bits 1 ("track at rest") and 2 ("SFX overriding this track")
+	and	0110b				; Checks bits 1 ("track at rest") and 2 ("SFX overriding this track")
 	ret	nz				; If either bit is set, quit!
 	bit	4,(ix+zTrack.PlaybackControl)	; Is "do not attack next note" set?
 	jr	nz,zPSGCheckNoteFill		; If so, jump to zPSGCheckNoteFill
@@ -2413,9 +2413,9 @@ zUpdateFadeIn:
 zFMNoteOn:
 	ld	a,(ix+zTrack.FreqLow)
 	or	(ix+zTrack.FreqHigh)
-	ret	z
+	ret	z				; If Frequency is zero, return
 	ld	a,(ix+zTrack.PlaybackControl)	; Get playback control byte
-	and	6
+	and	0110b
 	ret	nz				; If either bit 1 ("track in rest") and 2 ("SFX overriding this track"), quit!
 	ld	a,(ix+zTrack.VoiceControl)	; Get "voice control" byte
 	or	0F0h				; Turn on ALL operators
@@ -2431,7 +2431,7 @@ zFMNoteOn:
 ; zsub_C56
 zFMNoteOff:
 	ld	a,(ix+zTrack.PlaybackControl)	; Load this track's playback control byte
-	and	14h				; Are bits 4 (no attack) or 2 (SFX overriding) set?
+	and	00010100h			; Are bits 4 (no attack) or 2 (SFX overriding) set?
 	ret	nz				; If they are, return
 	ld	a,28h				; Otherwise, send a KEY ON/OFF
 	ld	c,(ix+zTrack.VoiceControl)	; Track's data for this key operation
@@ -2555,7 +2555,7 @@ cfFadeInToPrevious:
 	ld	a,(zAbsVar.SongBank)
 	bankswitch
 	ld	a,(zSongDAC.PlaybackControl)	; Get DAC's playback bit
-	or	4
+	or	0100b
 	ld	(zSongDAC.PlaybackControl),a	; Set "SFX is overriding" on it (not normal, but will work for this purpose)
 	ld	a,(zAbsVar.FadeInCounter)	; Get current count of many frames to continue bringing volume up
 	ld	c,a
@@ -2933,7 +2933,7 @@ cfStopTrack:
 ;	res	7,(ix+zTrack.PlaybackControl)	; Clear playback byte bit 7 (80h) -- currently playing (not anymore)
 ;	res	4,(ix+zTrack.PlaybackControl)	; Clear playback byte bit 4 (10h) -- do not attack
  	ld	a,(ix+zTrack.PlaybackControl)
- 	and	6Fh
+ 	and	01101111b			; Bitmask so bits 7 and 4 are cleared
  	ld	(ix+zTrack.PlaybackControl),a
 	bit	7,(ix+zTrack.VoiceControl)	; Is voice control bit 7 (80h) a PSG track set?
 	jr	nz,zStopPSGTrack		; If so, skip this next part...
