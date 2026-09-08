@@ -2431,7 +2431,7 @@ zFMNoteOn:
 ; zsub_C56
 zFMNoteOff:
 	ld	a,(ix+zTrack.PlaybackControl)	; Load this track's playback control byte
-	and	00010100h			; Are bits 4 (no attack) or 2 (SFX overriding) set?
+	and	00010100b			; Are bits 4 (no attack) or 2 (SFX overriding) set?
 	ret	nz				; If they are, return
 	ld	a,28h				; Otherwise, send a KEY ON/OFF
 	ld	c,(ix+zTrack.VoiceControl)	; Track's data for this key operation
