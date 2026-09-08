@@ -14,7 +14,8 @@ Obj05AniData:	offsetTable
 		offsetTableEntry.w Obj05Ani_Skidding	;  8
 		offsetTableEntry.w Obj05Ani_Pushing	;  9
 		offsetTableEntry.w Obj05Ani_Hanging	; $A
-
+		offsetTableEntry.w Obj05Ani_Flying	; $B
+		offsetTableEntry.w Obj05Ani_FlyingFast	; $C
 Obj05Ani_Blank:		dc.b $20,  0,$FF
 	rev02even
 Obj05Ani_Swish:		dc.b   7,  9, $A, $B, $C, $D,$FF
@@ -36,4 +37,8 @@ Obj05Ani_Skidding:	dc.b   2,$87,$88,$89,$8A,$FF
 Obj05Ani_Pushing:	dc.b   9,$87,$88,$89,$8A,$FF
 	rev02even
 Obj05Ani_Hanging:	dc.b   9,$81,$82,$83,$84,$FF
+	even
+Obj05Ani_Flying:	dc.b   1, $5E, $5F, $FF
+	even
+Obj05Ani_FlyingFast:	dc.b   0, $5E, $5F, $FF
 	even

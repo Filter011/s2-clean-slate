@@ -292,7 +292,21 @@ Touch_Enemy:
 	cmpi.b	#AniIDSonAni_Spindash,anim(a0)
 	beq.s	+
 	cmpi.b	#AniIDSonAni_Roll,anim(a0)		; is Sonic rolling?
-	bne.w	Touch_ChkHurt		; if not, branch
+	beq.s	+					; if yes, branch
+	cmpi.b	#ObjID_Tails,id(a0)			; is the character Tails?
+	bne.w	Touch_ChkHurt				; if not, branch
+	tst.b	flying(a0)				; is Tails flying?
+	beq.w	Touch_ChkHurt				; if not, branch
+	btst	#status.player.underwater,status(a0)	; is Tails underwater?
+	bne.w	Touch_ChkHurt				; if yes, branch
+	move.w	x_pos(a0),d1				; get Tails' X position
+	move.w	y_pos(a0),d2				; get Tails' Y position
+	sub.w	x_pos(a1),d1				; subtract object's X position from Tails'
+	sub.w	y_pos(a1),d2				; subtract object's Y position from Tails'
+	jsr	(CalcAngle).l				; calculate the angle of
+	subi.b	#$20,d0					; shift by 45 degrees to the left
+	cmpi.b	#$40,d0					; is the object above Tails?
+	bhs.w	Touch_ChkHurt				; if not, branch
 +
 	btst	#render_flags.multi_sprite,render_flags(a1)
 	beq.s	Touch_Enemy_Part2
@@ -312,6 +326,14 @@ Touch_Enemy_Part2:
 	beq.s	Touch_KillEnemy
 	neg.w	x_vel(a0)
 	neg.w	y_vel(a0)
+	btst	#status_secondary.carry,status_secondary(a0)	; is Sonic being carried?
+	beq.s	.noextrabounce			; if not, branch
+	neg.w	x_vel+object_size(a0)		; negate Tails' X-velocity
+	neg.w	y_vel+object_size(a0)		; negate Tails' Y-velocity
+	neg.w	(Sidekick_X_vel_copy).w		; negate saved Tails' X-velocity
+	neg.w	(Sidekick_Y_vel_copy).w		; negate saved Tails' Y-velocity
+.noextrabounce:
+
 	move.b	#0,collision_flags(a1)
 	subq.b	#1,collision_property(a1)
 	bne.s	return_3F7E8
@@ -345,6 +367,8 @@ loc_3F81C:
 	move.b	#0,routine(a1)
 
 	; Decide how to bounce Sonic back.
+	btst	#status_secondary.carry,status_secondary(a0)		; is Sonic being carried? / is Tails flying?
+	bne.s	return_3F7E8			; if yes, branch
 	tst.w	y_vel(a0)
 	bmi.s	loc_3F844
 	move.w	y_pos(a0),d0

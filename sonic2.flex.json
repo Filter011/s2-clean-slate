@@ -73,19 +73,23 @@
                     "mappings": {
                         "path": "mappings/sprite/Tails.asm",
                         "format": "Sonic 2",
-                        "customDefinition": ""
+                        "customDefinition": "",
+                        "label": "Map_Tails"
                     },
                     "dplcs": {
                         "enabled": true,
                         "path": "mappings/spriteDPLC/Tails.asm",
                         "format": "Sonic 2/3&K",
-                        "customDefinition": ""
+                        "customDefinition": "",
+                        "label": "DPLC_Tails"
                     },
                     "animations": {
                         "path": "",
                         "prefix": ""
                     },
-                    "config": {}
+                    "config": {
+                        "mapMacros": true
+                    }
                 },
                 {
                     "format": "Sonic 2.js",

@@ -402,6 +402,8 @@ SolidObject_TestClearPush:
 	beq.s	SolidObject_NoCollision	; if not, branch
 	cmpi.b	#AniIDSonAni_Roll,anim(a1)
 	beq.s	Solid_NotPushing
+	cmpi.b	#AniIDSonAni_Hang2,anim(a1)
+	beq.s	Solid_NotPushing
 	cmpi.b	#AniIDSonAni_Spindash,anim(a1)
 	beq.s	Solid_NotPushing
 	cmpi.b	#AniIDSonAni_Death,anim(a1)

@@ -81,7 +81,10 @@ Obj02_Control_Joypad2:
 ; loc_1B9EA:
 Obj02_Control_Part2:
 	btst	#0,obj_control(a0)	; is Tails flying, or interacting with another object that holds him in place or controls his movement somehow?
-	bne.s	+			; if yes, branch to skip Tails' control
+	beq.s	+			; if not, proceed with Tails' control as usual
+	move.b	#0,flying(a0)		; if yes, clear Tails' flying state
+	bra.s	++			; skip Tails' control
++
 	moveq	#1<<status.player.in_air|1<<status.player.rolling,d0	; %0000 %0110
 	and.b	status(a0),d0
 	move.w	Obj02_Modes(pc,d0.w),d1
@@ -277,6 +280,8 @@ Obj02_MdNormal:
 ; Called if Tails is airborne, but not in a ball (thus, probably not jumping)
 ; loc_1C032: Obj02_MdJump
 Obj02_MdAir:
+	tst.b	flying(a0)		; is Tails flying?
+	bne.s	Obj02_MdFly		; if yes, use different routine
 	bsr.w	Tails_JumpHeight
 	bsr.w	Tails_ChgJumpDir
 	bsr.w	Tails_LevelBound
@@ -289,6 +294,19 @@ Obj02_MdAir:
 	bsr.w	Tails_DoLevelCollision
 	rts
 ; End of subroutine Obj02_MdAir
+; ---------------------------------------------------------------------------
+; Called if Tails is flying after a jump
+Obj02_MdFly:
+	bsr.w	Tails_Flying
+	bsr.w	Tails_ChgJumpDir
+	bsr.w	Tails_LevelBound
+	jsr	(ObjectMove).l
+	bsr.w	Tails_JumpAngle
+	bsr.w	Tails_DoLevelCollision
+    if flightCarrySonic = 1
+	bsr.w	Tails_CarrySonic
+    endif
+	rts
 ; ===========================================================================
 ; Start of subroutine Obj02_MdRoll
 ; Called if Tails is in a ball, but not airborne (thus, probably rolling)
@@ -1034,7 +1052,7 @@ Tails_JumpHeight:
 	move.w	#-$200,d1
 +
 	cmp.w	y_vel(a0),d1	; is Tails going up faster than d1?
-	ble.s	+		; if not, branch
+	ble.s	Tails_CheckFlying		; if not, branch
 	move.b	(Ctrl_2_Held_Logical).w,d0
 	andi.b	#button_B_mask|button_C_mask|button_A_mask,d0 ; is a jump button pressed?
 	bne.s	+		; if yes, branch
@@ -1053,7 +1071,296 @@ Tails_UpVelCap:
 return_1C70C:
 	rts
 ; End of subroutine Tails_JumpHeight
+; ---------------------------------------------------------------------------
+; Subroutine to check if Tails should start flying
+; ---------------------------------------------------------------------------
 
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
+
+Tails_CheckFlying:
+	tst.b	flying(a0)			; is Tails already flying?
+	bne.w	.noflight			; if yes, branch
+	move.b	(Ctrl_2_Press_Logical).w,d0	; get Tails' controller input
+	andi.b	#button_A_mask|button_B_mask|button_C_mask,d0	; has been any jump button pressed?
+	beq.w	.noflight			; if not, branch
+;	cmpa.l	#Sidekick,a0			; is Tails the sidekick?
+;	bne.s	.setflight			; if not, make him fly?
+
+;	tst.w	(Tails_control_counter).w	; is Tails currently AI controlled?
+;	beq.s	.noflight			; if yes, branch
+
+.setflight:
+	bclr	#status.player.rolling,status(a0)	; unset Tails' rolling flag
+	move.b	#$F,y_radius(a0)		; restore regular height...
+	move.b	#9,x_radius(a0)			; ...and width
+	addq.w	#1,y_pos(a0)			; adjust Y-position a bit
+	move.b	#1,flying(a0)			; set flying mode flag
+	move.b	#(8*60)/2,flying_timer(a0)	; set flying timer to 8 seconds (divided by 2)
+	move.b	#AniIDTailsAni_Fly,anim(a0)	; set flying animation
+
+.noflight:
+	rts
+
+; End of subroutine Tails_CheckFlying
+
+; ---------------------------------------------------------------------------
+; Subroutine controlling Tails' flying (and swimming)
+; ---------------------------------------------------------------------------
+
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
+
+Tails_Flying:
+	move.b	(Level_frame_counter+1).w,d0	; get the universal timer value
+	andi.b	#1,d0				; is it odd?
+	beq.s	.nodecrement			; if yes, branch
+	tst.b	flying_timer(a0)		; is Tails tired?
+	beq.s	.nodecrement			; if yes, branch
+	subq.b	#1,flying_timer(a0)		; subtract from the timer
+
+.nodecrement:
+	cmpi.b	#1,flying(a0)			; is the flying flag exactly 1?
+	beq.s	.checkflying			; if yes, branch
+	cmpi.w	#-$100,y_vel(a0)		; is Tails moving upwards fast enough?
+	blt.s	.resetflag			; if yes, branch
+	subi.w	#$20,y_vel(a0)			; move Tails upwards
+	addq.b	#1,flying(a0)			; increase the flying flag like a timer
+	cmpi.b	#$20,flying(a0)			; has enough time passed?
+	bne.s	.noreset			; if not, branch
+
+.resetflag:
+	move.b	#1,flying(a0)			; set flying flag to 1
+
+.noreset:
+	bra.s	.checkupperboundary		; check for upper boundary
+; ---------------------------------------------------------------------------
+
+.checkflying:
+	move.b	(Ctrl_2_Press_Logical).w,d0	; get Tails' controller input
+	andi.b	#button_A_mask|button_B_mask|button_C_mask,d0	; has been any jump button pressed?
+	beq.s	.applygravity			; if not, branch
+	cmpi.w	#-$100,y_vel(a0)		; is Tails moving upwards fast enough?
+	blt.s	.applygravity			; if yes, branch
+	tst.b	flying_timer(a0)		; is Tails tired?
+	beq.s	.applygravity			; if yes, branch
+	tst.w	(Player_mode).w			; is it a Tails-only game?
+	bne.s	.allowflightt			; if yes, branch
+	btst	#status.player.underwater,status(a0)	; is Tails underwater?
+	beq.s	.allowflightt			; if not, branch
+	btst	#status_secondary.carry,status_secondary-object_size(a0)	; is Tails carrying Sonic?
+	bne.s	.applygravity			; if yes, branch
+
+.allowflightt:
+	move.b	#2,flying(a0)			; set flying flag to 2 (and thus run delay code on next frame)
+
+.applygravity:
+	addi.w	#8,y_vel(a0)			; apply weak gravity
+
+.checkupperboundary:
+	move.w	(Camera_Min_Y_pos).w,d0		; get upper boundary value
+	addi.w	#$10,d0				; add $10 to it
+	cmp.w	y_pos(a0),d0			; is Tails close enough to the top boundary?
+	blt.s	.setanim			; if not, branch
+	tst.w	y_vel(a0)			; is Tails moving upwards?
+	bpl.s	.setanim			; if not, branch
+	move.w	#0,y_vel(a0)			; clear Tails' Y velocity
+.setanim:
+; ---------------------------------------------------------------------------
+; Subroutine to pick a correct animation for Tails when flying or swimming
+; ---------------------------------------------------------------------------
+
+; =============== S U B R O U T I N E =======================================
+
+Tails_FlyingAnimation:
+	moveq	#0,d0				; clear d0
+	move.b	#SndID_Flying,d1		; prepare flying sound to play
+	tst.w	y_vel(a0)			; is Tails moving upwards?
+	bpl.s	.movingdown			; if not, branch
+	addq.b	#1,d0				; use upwards sprites
+
+.movingdown:
+	tst.w	(Player_mode).w			; is this a Sonic & Tails game?
+	bne.s	.nocarry			; if not, branch
+	cmpi.w	#4,(Tails_CPU_routine).w	; is Tails respawning?
+	beq.s	.nottired			; if yes, check for water only
+	btst	#status_secondary.carry,status_secondary-object_size(a0)	; is Tails currently carrying Sonic?
+	beq.s	.nocarry			; if not, branch
+	addq.b	#2,d0				; use carrying sprites
+
+.nocarry:
+	tst.b	flying_timer(a0)		; is Tails tired?
+	bne.s	.nottired			; if not, branch
+	addq.b	#4,d0				; use tired sprites
+	move.b	#SndID_FlyingTired,d1		; prepare to play tired flying sound instead
+.nottired:
+	btst	#status.player.underwater,status(a0)	; is Tails underwater?
+	beq.s	.display			; if not, branch
+	addq.b	#8,d0				; use swimming sprites
+	move.b	#0,d1				; no sound underwater
+.display:
+	move.b	.animationtable(pc,d0.w),anim(a0)	; get correct animation ID
+	tst.b	d1				; is there a sound to play?
+	beq.s	.nosound			; if not, branch
+	move.b	(Level_frame_counter+1).w,d0	; get universal timer value
+	addq.b	#8,d0				; prevent the sound from being overlapped
+	andi.b	#$F,d0				; get only lower nibble (0-15/0-$F)
+	bne.s	.nosound			; play sound only every 16th frame
+	move.w	d1,d0				; get appropriate sound
+	jmp	(PlaySoundLocal).l		; if Tails is on-screen, play sound
+.nosound:
+	rts
+
+; ---------------------------------------------------------------------------
+; A lookup table for Tails' flying/swimming animation
+;	dc.b	moving downwards, moving upwards, carrying Sonic downwards, carrying Sonic upwards
+
+.animationtable:
+	dc.b	      AniIDTailsAni_Fly,     AniIDTailsAni_FlyUp,      AniIDTailsAni_Carry, AniIDTailsAni_CarryUp	; normal
+	dc.b	    AniIDTailsAni_Tired,     AniIDTailsAni_Tired, AniIDTailsAni_CarryTired, AniIDTailsAni_CarryTired	; tired
+	dc.b	     AniIDTailsAni_Swim,    AniIDTailsAni_SwimUp,  AniIDTailsAni_SwimCarry, AniIDTailsAni_SwimCarry	; swimming
+	dc.b	AniIDTailsAni_SwimTired, AniIDTailsAni_SwimTired,  AniIDTailsAni_SwimCarry, AniIDTailsAni_SwimCarry	; swimming tired
+	even
+; End of subroutine Tails_FlyingAnimation
+
+; End of subroutine Tails_Flying
+; ---------------------------------------------------------------------------
+; Subroutine to control Sonic being carried by Tails during flight
+; ---------------------------------------------------------------------------
+    if flightCarrySonic = 1
+
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
+
+Tails_CarrySonic:ss
+	tst.w	(Player_mode).w				; is this a Sonic & Tails game?
+	bne.w	Tails_CarryNoGrab			; if not, branch
+	lea	(MainCharacter).w,a1			; load Sonic's RAM address to a1
+	move.w	(Ctrl_1).w,d0				; load player's inputs to d0
+
+	btst	#status_secondary.carry,status_secondary(a1)	; is Sonic being carried now?
+	beq.w	Tails_CheckCarry			; if not, check if he can be
+	cmpi.b	#4,routine(a1)				; is Sonic well and alive?
+	bhs.w	.exitgrab				; if not, branch
+	tst.b	obj_control(a1)				; is Sonic's collision restricted?
+	bmi.w	.exitgrab				; if yes, branch
+	btst	#status.player.in_air,status(a1)	; is Sonic airbone?
+	beq.w	.bumpandexitgrab			; if not, branch
+	move.w	(Sidekick_Y_vel_copy).w,d1		; get Tails' Y speed from previous frame
+	cmp.w	y_vel(a1),d1				; is Sonic's current Y speed equal to it?
+	bne.s	.exitgrab				; if not, branch
+	move.w	(Sidekick_X_vel_copy).w,d1		; get Tails' X speed from previous frame
+	cmp.w	x_vel(a1),d1				; is Sonic's current X speed equal to it?
+	bne.w	.bumpandexitgrab			; if not, branch
+	andi.b	#button_A_mask|button_B_mask|button_C_mask,d0	; has been any jump button pressed?
+	beq.w	Tails_CarryUpdatePosition		; if not, keep flying
+
+; leaving Tails on demand
+	bclr	#status_secondary.carry,status_secondary(a1)	; if yes, let go of Tails
+	move.b	#18,carry_delay(a0)			; set a delay before another carrying
+	andi.w	#(button_left_mask|button_right_mask)<<8,d0	; has left/right direction button been pressed?
+	beq.w	.notright				; if not, branch
+	move.b	#60,carry_delay(a0)			; make the delay a bit longer
+
+.nodirection:
+	btst	#(button_left+8),d0			; is left button being held?
+	beq.s	.notleft				; if not, branch
+	move.w	#-$200,x_vel(a1)			; set X-velocity
+
+.notleft:
+	btst	#(button_right+8),d0			; is right button being held?
+	beq.s	.notright				; if not, branch
+	move.w	#$200,x_vel(a1)				; set X-velocity
+
+.notright:
+	move.w	#-$380,y_vel(a1)			; set Y-velocity
+	bset	#status.player.in_air,status(a1)	; set "in-air" mode
+	move.b	#1,jumping(a1)				; set jumping flag
+	move.b	#$E,y_radius(a1)			; set jumping height
+	move.b	#7,x_radius(a1)				; set jumping width (/2)
+	move.b	#AniIDSonAni_Roll,anim(a1)		; set rolling animation
+	bset	#status.player.rolling,status(a1)	; set "rolling" mode
+	rts
+; ---------------------------------------------------------------------------
+; leaving Tails by outside means
+.bumpandexitgrab:
+	move.w	#-$100,y_vel(a1)		; make a slight upwards push
+
+.exitgrab:
+	bclr	#status_secondary.carry,status_secondary(a1)	; clear "being carried" flag
+	move.b	#60,carry_delay(a0)		; set a delay before another carrying
+	rts
+; End of subroutine Tails_CarrySonic
+
+; ---------------------------------------------------------------------------
+; Subroutine to check for Tails to start carrying Sonic
+; ---------------------------------------------------------------------------
+
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
+
+Tails_CheckCarry:
+	tst.b	carry_delay(a0)			; is the delay timer running?
+	beq.s	.notimer			; if 0, branch
+	subq.b	#1,carry_delay(a0)		; subtract from the timer
+	bne.w	Tails_CarryNoGrab		; if non-0, branch
+
+.notimer:
+	tst.b	obj_control(a1)			; is Sonic controlled by other object?
+	bne.w	Tails_CarryNoGrab		; if not, branch
+	cmpi.b	#4,routine(a1)			; is Sonic well and alive?
+	bhs.w	Tails_CarryNoGrab		; if not, branch
+	tst.w	(Debug_placement_mode).w	; is the player in object placement mode?
+	bne.w	Tails_CarryNoGrab		; if yes, branch
+	tst.b	spindash_flag(a1)		; is Sonic reloading a Spin Dash?
+	bne.w	Tails_CarryNoGrab		; if yes, branch
+
+	move.w	x_pos(a1),d0			; get Sonic's X-position
+	sub.w	x_pos(a0),d0			; subtract Tails' X-position
+	addi.w	#$10,d0				; add $10
+	cmpi.w	#$20,d0				; is Sonic in range to be caught?
+	bhs.w	Tails_CarryNoGrab		; if not, branch
+	move.w	y_pos(a1),d1			; get Sonic's Y-position
+	sub.w	y_pos(a0),d1			; subtract Tails' Y-position
+	subi.w	#$20,d1				; subtract $20
+	cmpi.w	#$10,d1				; is Sonic in range to be caught?
+	bhs.w	Tails_CarryNoGrab		; if not, branch
+
+	clr.l	x_vel(a1)			; clear X and Y velocities
+	clr.w	inertia(a1)			; clear ground velocity
+	clr.w	angle(a1)			; clear angle
+	clr.b	jumping(a1)			; clear jumping flag
+	bset	#status_secondary.carry,status_secondary(a1)	; set being carried flag
+	bset	#status.player.in_air,status(a1); set "in-air" status
+	move.w	#AniIDSonAni_Hang2<<8,anim(a1)	; set and force hanging animation
+	move.w	#SndID_Grab,d0			; load grabbing sound
+	jsr	(PlaySound).l			; play it
+; End of subroutine Tails_CheckCarry
+	; continue straight to Tails_CarryUpdatePosition
+
+; ---------------------------------------------------------------------------
+; Subroutine to update Sonic's position and collision when he's being carried
+; ---------------------------------------------------------------------------
+
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
+
+Tails_CarryUpdatePosition:
+	move.w	x_pos(a0),x_pos(a1)		; align Sonic and Tails on X-axis
+	move.w	y_pos(a0),y_pos(a1)		; align Sonic and Tails on Y-axis
+	addi.w	#$1D,y_pos(a1)			; move Sonic a bit lower
+	andi.b	#~(1<<render_flags.x_flip),render_flags(a1)	; clear horizontal flip flag in object render
+	andi.b	#~(1<<status.player.x_flip),status(a1)	; clear horizontal flip flag in object status
+	move.b	status(a0),d0			; get Tails' object status
+	andi.b	#1<<status.player.x_flip,d0	; leave only the horizontal flip bit
+	or.b	d0,render_flags(a1)		; update Sonic's horizontal flip flag in object render
+	or.b	d0,status(a1)			; update Sonic's horizontal flip flag in object status
+	move.l	x_vel(a0),x_vel(a1)		; align Sonic's and Tails' velocities
+	move.l	x_vel(a0),(Sidekick_X_vel_copy).w ; backup Tails' velocities
+	move.l	a0,-(sp)			; backup Tails' RAM address
+	lea	(MainCharacter).w,a0		; load Sonic's RAM address to a0
+	bsr.w	Sonic_DoLevelCollision		; perform collision checks for Sonic
+	move.l	(sp)+,a0			; restore Tails' RAM address
+
+Tails_CarryNoGrab:
+	rts
+; End of subroutine Tails_CarryUpdatePosition
+	endif
 ; ---------------------------------------------------------------------------
 ; Subroutine to check for starting to charge a spindash
 ; ---------------------------------------------------------------------------
@@ -1483,14 +1790,18 @@ Tails_ResetOnFloor_Part2:
 Tails_ResetOnFloor_Part3:
 	bclr	#status.player.in_air,status(a0)
 	bclr	#status.player.pushing,status(a0)
-	move.b	#0,jumping(a0)
 	move.w	#0,(Chain_Bonus_counter).w
 	move.b	#0,flip_angle(a0)
 	move.b	#0,flip_turned(a0)
 	move.b	#0,flips_remaining(a0)
+	move.b	#0,jumping(a0)
+	move.b	#0,flying(a0)
 	move.w	#0,(Tails_Look_delay_counter).w
+	cmpi.b	#AniIDTailsAni_Fly,anim(a0)
+	bge.s	+
 	cmpi.b	#AniIDSonAni_Hang2,anim(a0)
 	bne.s	return_1CBC4
++
 	move.b	#AniIDSonAni_Walk,anim(a0)
 
 return_1CBC4:

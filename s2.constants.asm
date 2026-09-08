@@ -68,6 +68,11 @@ jumping =		$3C
 interact =		$3D ; RAM address of the last object Sonic stood on, minus $FFFFB000 and divided by $40
 top_solid_bit = 	$3E ; the bit to check for top solidity (either $C or $E)
 lrb_solid_bit =		$3F ; the bit to check for left/right/bottom solidity (either $D or $F)
+;
+; - Status Constants For Tails Flight
+flying 		=		$1F	; 0 for normal, 1 for flying, 2+ for flying unaffected by gravity
+flying_timer =		$21	; remaining flight time for Tails (frames / 2)
+carry_delay =		$23	; number of frames before main character can be carried by Tails after jumping off; starts at either 18 or 60 and decrements to 0
 ; ---------------------------------------------------------------------------
 ; conventions followed by several objects but NOT Sonic/Tails:
 y_pixel =		y_pos ; and 3+x_pos ; y coordinate for objects using screen-space coordinate system
@@ -234,6 +239,7 @@ status.npc.no_balancing		= 7 ; Prevents player from performing their balancing a
 status_secondary.shield		= 0
 status_secondary.invincible	= 1
 status_secondary.speed_shoes	= 2
+status_secondary.carry		= 3
 status_secondary.sliding	= 7
 
 ; Ugly old constants, kept for backwards-compatibility.
@@ -938,6 +944,9 @@ SndID_Error =		id(SndPtr_Error)		; ED
 SndID_MechaSonicBuzz =	id(SndPtr_MechaSonicBuzz)	; EE
 SndID_LargeLaser =	id(SndPtr_LargeLaser)		; EF
 SndID_OilSlide =	id(SndPtr_OilSlide)		; F0
+SndID_Grab =		id(SndPtr_Grab)			; grabbing
+SndID_Flying =		id(SndPtr_Flying)		; flying
+SndID_FlyingTired =	id(SndPtr_FlyingTired)		; flying tired
 SndID__End =		id(SndPtr__End)			; F1
 
 ; Sound command IDs
@@ -1013,6 +1022,15 @@ idstart :=	0
 
 AniIDTailsAni_HaulAss		= id(TailsAni_HaulAss_ptr)	; 31 ; $1F
 AniIDTailsAni_Fly		= id(TailsAni_Fly_ptr)		; 32 ; $20
+AniIDTailsAni_FlyUp		= id(TailsAni_FlyUp_ptr)	; 33 ; $21
+AniIDTailsAni_Carry		= id(TailsAni_Carry_ptr)	; 34 ; $22
+AniIDTailsAni_CarryUp		= id(TailsAni_CarryUp_ptr)	; 35 ; $23
+AniIDTailsAni_Tired		= id(TailsAni_Tired_ptr)	; 36 ; $24
+AniIDTailsAni_CarryTired	= id(TailsAni_CarryTired_ptr)	; 37 ; $25
+AniIDTailsAni_Swim		= id(TailsAni_Swim_ptr)		; 38 ; $26
+AniIDTailsAni_SwimUp		= id(TailsAni_SwimUp_ptr)	; 39 ; $27
+AniIDTailsAni_SwimCarry		= id(TailsAni_SwimCarry_ptr)	; 40 ; $28
+AniIDTailsAni_SwimTired		= id(TailsAni_SwimTired_ptr)	; 41 ; $29
 
 
 ; Other sizes
@@ -1085,7 +1103,9 @@ Object_RAM:			; The various objects in the game are loaded in this area.
 Reserved_Object_RAM:
 MainCharacter:			; first object (usually Sonic except in a Tails Alone game)
 				ds.b	object_size
-;Sidekick:			; second object (Tails in a Sonic and Tails game)
+				; while no sidekick exists, we'll keep this object reserved
+				; if you re-add the sidekick, here's the RAM, otherwise it's free
+Sidekick:			; second object (Tails in a Sonic and Tails game)
 				ds.b	object_size
 TitleCard:
 TitleCard_ZoneName:		; level title card: zone name
@@ -1238,8 +1258,12 @@ Block_Crossed_Flags_End:
 Block_Crossed_Flags_P2:
 Horiz_block_crossed_flag_P2:	ds.b	1	; toggles between 0 and $10 when you cross a block boundary horizontally
 Verti_block_crossed_flag_P2:	ds.b	1	; toggles between 0 and $10 when you cross a block boundary vertically
-				ds.b	6	; $FFFFEE4A-$FFFFEE4F ; seems unused
-Block_Crossed_Flags_P2_End:
+
+
+Sidekick_X_vel_copy:		ds.w	1	; copy of Tails's X speed
+Sidekick_Y_vel_copy:		ds.w	1	; copy of Tails's Y speed
+
+							ds.b	2	; $FFFFF7C4-$FFFFF7C6 ; seems unusedBlock_Crossed_Flags_P2_End:
 
 Scroll_Flags_All:
 Scroll_flags:			ds.w	1	; bitfield ; bit 0 = redraw top row, bit 1 = redraw bottom row, bit 2 = redraw left-most column, bit 3 = redraw right-most column

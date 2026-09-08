@@ -61,8 +61,11 @@ loc_225FC:
 	sub.w	y_pos(a0),d1
 	cmpi.w	#$80,d1
 	bhs.w	return_22718
-	cmpi.b	#$20,anim(a1)
-	beq.w	return_22718
+	cmpi.b	#ObjID_Tails,id(a1)		; is the character Tails?
+	bne.s	.nottails			; if not, branch
+	cmpi.w	#4,(Tails_CPU_routine).w	; is Tails respawning?
+	beq.w	return_22718			; if yes, branch
+.nottails:
 
 	moveq	#0,d3
 	cmpi.w	#$A0,d2

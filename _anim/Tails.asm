@@ -36,6 +36,15 @@ TailsAniData:		offsetTable
 			offsetTableEntry.w TailsAni_Dummy5	; 30 ; $1E
 TailsAni_HaulAss_ptr:	offsetTableEntry.w TailsAni_HaulAss	; 31 ; $1F
 TailsAni_Fly_ptr:	offsetTableEntry.w TailsAni_Fly		; 32 ; $20
+TailsAni_FlyUp_ptr:	offsetTableEntry.w TailsAni_Fly			; 33 ; $21 (duplicate)
+TailsAni_Carry_ptr:	offsetTableEntry.w TailsAni_Carry		; 34 ; $22
+TailsAni_CarryUp_ptr:	offsetTableEntry.w TailsAni_CarryUp		; 35 ; $23
+TailsAni_Tired_ptr:	offsetTableEntry.w TailsAni_Tired		; 36 ; $24
+TailsAni_CarryTired_ptr:	offsetTableEntry.w TailsAni_CarryTired	; 37 ; $25
+TailsAni_Swim_ptr:	offsetTableEntry.w TailsAni_Swim		; 38 ; $26
+TailsAni_SwimUp_ptr:	offsetTableEntry.w TailsAni_SwimUp		; 39 ; $27
+TailsAni_SwimCarry_ptr:	offsetTableEntry.w TailsAni_SwimCarry		; 40 ; $28
+TailsAni_SwimTired_ptr:	offsetTableEntry.w TailsAni_SwimTired		; 41 ; $29
 
 TailsAni_Walk:	dc.b $FF,$10,$11,$12,$13,$14,$15, $E, $F,$FF
 	rev02even
@@ -106,5 +115,21 @@ TailsAni_Dummy5:	dc.b   3,  1,  2,  3,  4,  5,  6,  7,  8,$FF
 TailsAni_HaulAss:	dc.b $FF,$32,$33,$FF
 			dc.b $FF,$FF,$FF,$FF,$FF,$FF
 	rev02even
-TailsAni_Fly:		dc.b   1,$5E,$5F,$FF
+TailsAni_Fly:		dc.b	$3F, $8B, $FF
+	rev02even
+TailsAni_Carry:		dc.b	$3F, $8C, $FF
+	rev02even
+TailsAni_CarryUp:	dc.b	$3F, $8D, $FF
+	rev02even
+TailsAni_Tired:		dc.b	$B, $8E, $8F, $FF
+	rev02even
+TailsAni_CarryTired:	dc.b	$B, $90, $91, $FF
+	rev02even
+TailsAni_Swim:		dc.b	7, $92, $93, $94, $95, $96, $FF
+	rev02even
+TailsAni_SwimUp:	dc.b	3, $92, $93, $94, $95, $96, $FF
+	rev02even
+TailsAni_SwimCarry:	dc.b	4, $97, $98, $FF
+	rev02even
+TailsAni_SwimTired:	dc.b	$B, $99, $9A, $9B, $9A, $FF
 	even

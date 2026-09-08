@@ -36,7 +36,9 @@ skipChecksumCheck = 1
 useFullWaterTables = 1
 ;	| If 1, zone offset tables for water levels cover all level slots instead of only slots 8-$F
 ;	| Set to 1 if you've shifted level IDs around or you want water in levels with a level slot below 8
-
+flightCarrySonic = 0
+;	| If 1 and a sidekick character exists, allow Tails as the sidekick to carry MainCharacter
+;	| Set to 0 as the sidekick functionallity doesn't currently exist
 ; >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ; AS-specific macros and assembler settings
 	CPU 68000
@@ -6506,7 +6508,7 @@ Sound36:	include "sound/sfx/B6 - Spikes Move.asm"
 Sound37:	include "sound/sfx/B7 - Rumbling.asm"
 Sound38:	include "sound/sfx/B8 - Unknown (Unused).asm"
 Sound39:	include "sound/sfx/B9 - Smash.asm"
-Sound3A:	include "sound/sfx/BA - Special Stage Glass (Unused).asm"
+Sound3A:	include "sound/sfx/BA - Grab.asm"
 Sound3B:	include "sound/sfx/BB - Door Slam.asm"
 Sound3C:	include "sound/sfx/BC - Spin Dash Release.asm"
 Sound3D:	include "sound/sfx/BD - Hammer.asm"
@@ -6529,8 +6531,8 @@ Sound4D:	include "sound/sfx/CD - Switch.asm"
 Sound4E:	include "sound/sfx/CE - Ring Left Speaker.asm"
 Sound4F:	include "sound/sfx/CF - Signpost.asm"
 Sound50:	include "sound/sfx/D0 - CNZ Boss Zap.asm"
-Sound51:	include "sound/sfx/D1 - Unknown (Unused).asm"
-Sound52:	include "sound/sfx/D2 - Unknown (Unused).asm"
+Sound51:	include "sound/sfx/D1 - Flying.asm"
+Sound52:	include "sound/sfx/D2 - Flying (Tired).asm"
 Sound53:	include "sound/sfx/D3 - Signpost 2P.asm"
 Sound54:	include "sound/sfx/D4 - OOZ Lid Pop.asm"
 Sound55:	include "sound/sfx/D5 - Sliding Spike.asm"

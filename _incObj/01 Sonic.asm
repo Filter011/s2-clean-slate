@@ -82,6 +82,14 @@ Obj01_Control:
 	bne.s	+			; if yes, branch
 	move.w	(Ctrl_1).w,(Ctrl_1_Logical).w	; copy new held buttons, to enable joypad control
 +
+    if flightCarrySonic = 1
+	btst	#status_secondary.carry,status_secondary(a0)	; is Sonic being carried by Tails now?
+	beq.s	+			; if not, branch
+	tst.b	flying+object_size(a0)	; is Tails actually flying?
+	bne.s	++			; if yes, branch to skip Sonic's control
+	bclr	#status_secondary.carry,status_secondary(a0)	; free Sonic
++
+    endif
 	btst	#0,obj_control(a0)	; is Sonic interacting with another object that holds him in place or controls his movement somehow?
 	bne.s	+			; if yes, branch to skip Sonic's control
 	moveq	#1<<status.player.in_air|1<<status.player.rolling,d0	; %0000 %0110
@@ -241,18 +249,21 @@ Obj01_InWater:
 	move.w	#$18,(Sonic_acceleration).w
 	move.w	#$80,(Sonic_deceleration).w
 +
+	btst	#status_secondary.carry,status_secondary(a0)	; is Sonic being carried?
+	bne.s	.splash			; if yes, don't alter speed
 	asr.w	x_vel(a0)
 	asr.w	y_vel(a0)	; memory operands can only be shifted one bit at a time
 	asr.w	y_vel(a0)
 	beq.s	return_1A18C
+.splash:	; <--
 	move.w	#(1<<8)|(0<<0),(Sonic_Dust+anim).w	; splash animation
-	moveq	#SndID_Splash,d0	; splash sound
-	jmp	(PlaySound).w
+	move.w	#SndID_Splash,d0	; splash sound
+	jmp	(PlaySound).l
 ; ---------------------------------------------------------------------------
 ; loc_1A1FE:
 Obj01_OutWater:
 	bclr	#status.player.underwater,status(a0) ; unset underwater flag
-	beq.s	return_1A18C ; if already above water, branch
+	beq.w	return_1A18C ; if already above water, branch
 
 	movea.l	a0,a1
 	bsr.w	ResumeMusic
@@ -267,6 +278,8 @@ Obj01_OutWater:
 +
 	cmpi.b	#4,routine(a0)	; is Sonic falling back from getting hurt?
 	beq.s	+		; if yes, branch
+	btst	#status_secondary.carry,status_secondary(a0)	; is Sonic being carried?
+	bne.s	+			; if yes, branch
 	asl.w	y_vel(a0)
 +
 	tst.w	y_vel(a0)

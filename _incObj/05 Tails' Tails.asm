@@ -83,6 +83,8 @@ Obj05AniSelection:
 	dc.b	0,0	; TailsAni_Hurt,Slide	->
 	dc.b	0	; TailsAni_Blank	->
 	dc.b	0,0	; TailsAni_Dummy4,5	->
-	dc.b	0	; TailsAni_HaulAss	->
-	dc.b	0	; TailsAni_Fly		->
+	dc.b	$B, $C	; TailsAni_Fly,Up	-> Flying, Flying Fast
+	dc.b	$B, $C	; TailsAni_Carry,Up	->
+	dc.b	$B, $B	; TailsAni_Tired,CarryTired	->
+	dc.b	0, 0, 0, 0	; TailsAni_Swim et al.	-> Swimming (blank)
 	even

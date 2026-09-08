@@ -175,7 +175,7 @@ BranchTo2_JmpTo26_MarkObjGone ; BranchTo
 
 loc_2A990:
 	cmpi.b	#4,routine(a1)
-	bhs.s	return_2AA10
+	bhs.w	return_2AA10
 	tst.b	obj_control(a1)
 	bne.s	return_2AA10
 	move.w	x_pos(a1),d0
@@ -209,6 +209,8 @@ loc_2A990:
 	move.b	#AniIDSonAni_Walk,anim(a1)
 	move.b	#$7F,flips_remaining(a1)
 	move.b	#8,flip_speed(a1)
+	clr.b	flying(a1)	; clear flying flag
+	clr.b	jumping(a1)	; clear jumping flag
 
 return_2AA10:
 	rts

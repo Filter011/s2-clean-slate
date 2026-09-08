@@ -52,9 +52,7 @@ TailsCPU_Spawning:
 	bne.s	return_1BB88
 	tst.b	obj_control(a1)
 	bne.s	return_1BB88
-	move.b	status(a1),d0
-	andi.b	#1<<status.player.in_air|1<<status.player.rolljumping|1<<status.player.underwater|1<<status.player.prevent_tails_respawn,d0
-	bne.s	return_1BB88
+
 ; loc_1BB54:
 TailsCPU_Respawn:
 	move.w	#4,(Tails_CPU_routine).w	; => TailsCPU_Flying
@@ -68,7 +66,9 @@ TailsCPU_Respawn:
 	ori.w	#high_priority,art_tile(a0)
 	move.b	#0,spindash_flag(a0)
 	move.w	#0,spindash_counter(a0)
-
+	move.w	#$600,(Tails_top_speed).w
+	move.w	#$C,(Tails_acceleration).w
+	move.w	#$80,(Tails_deceleration).w
 return_1BB88:
 	rts
 
@@ -85,11 +85,11 @@ TailsCPU_Flying:
 	move.w	#0,(Tails_respawn_counter).w
 	move.w	#2,(Tails_CPU_routine).w	; => TailsCPU_Spawning
 	move.b	#$81,obj_control(a0)
-	move.b	#1<<status.player.in_air,status(a0)
+	andi.b	#1<<status.player.underwater,status(a0)	; keep Tails' underwater status bit
+	ori.b	#1<<status.player.in_air,status(a0)	; set Tails' "in-air" status bit
 	move.w	#0,x_pos(a0)
 	move.w	#0,y_pos(a0)
-	move.b	#AniIDTailsAni_Fly,anim(a0)
-	rts
+	bra.w	Tails_FlyingAnimation		; set flying animation
 ; ---------------------------------------------------------------------------
 ; loc_1BBC8:
 TailsCPU_FlyingOnscreen:
@@ -104,14 +104,6 @@ TailsCPU_Flying_Part2:
 	sub.b	d2,d3
 	move.w	(a2,d3.w),(Tails_CPU_target_x).w
 	move.w	2(a2,d3.w),(Tails_CPU_target_y).w
-	tst.b	(Water_flag).w
-	beq.s	+
-	move.w	(Water_Level_1).w,d0
-	subi.w	#$10,d0
-	cmp.w	(Tails_CPU_target_y).w,d0
-	bge.s	+
-	move.w	d0,(Tails_CPU_target_y).w
-+
 	move.w	x_pos(a0),d0
 	sub.w	(Tails_CPU_target_x).w,d0
 	beq.s	loc_1BC54
@@ -159,10 +151,8 @@ loc_1BC64:
 	add.w	d2,y_pos(a0)
 
 loc_1BC68:
-	lea	(Sonic_Stat_Record_Buf).w,a2
-	move.b	2(a2,d3.w),d2
-	andi.b	#$D2,d2
-	bne.s	return_1BCDE
+	cmpi.b	#6,(MainCharacter+routine).w	; is Sonic dead?
+	bhs.s	return_1BCDE			; if yes, branch
 	or.w	d0,d1
 	bne.s	return_1BCDE
 	move.w	#6,(Tails_CPU_routine).w	; => TailsCPU_Normal
@@ -171,7 +161,8 @@ loc_1BC68:
 	move.w	#0,x_vel(a0)
 	move.w	#0,y_vel(a0)
 	move.w	#0,inertia(a0)
-	move.b	#1<<status.player.in_air,status(a0)
+	andi.b	#1<<status.player.underwater,status(a0)	; keep Tails' underwater status bit
+	ori.b	#1<<status.player.in_air,status(a0)	; set Tails' "in-air" status bit
 	move.w	#0,move_lock(a0)
 	andi.w	#drawing_mask,art_tile(a0)
 	tst.b	art_tile(a1)
@@ -202,9 +193,9 @@ TailsCPU_Normal:
 	move.b	#0,spindash_flag(a0)
 	move.w	#0,spindash_counter(a0)
 	move.b	#$81,obj_control(a0)
-	move.b	#1<<status.player.in_air,status(a0)
-	move.b	#AniIDTailsAni_Fly,anim(a0)
-	rts
+	andi.b	#1<<status.player.underwater,status(a0)	; keep Tails' underwater status bit
+	ori.b	#1<<status.player.in_air,status(a0)	; set Tails' "in-air" status bit
+	bra.w	Tails_FlyingAnimation		; set flying animation
 ; ---------------------------------------------------------------------------
 ; loc_1BD0E:
 TailsCPU_Normal_SonicOK:
@@ -339,8 +330,7 @@ TailsCPU_Despawn:
 	move.b	#1<<status.player.in_air,status(a0)
 	move.w	#$4000,x_pos(a0)
 	move.w	#0,y_pos(a0)
-	move.b	#AniIDTailsAni_Fly,anim(a0)
-	rts
+	bra.w	Tails_FlyingAnimation		; set flying animation
 ; ===========================================================================
 ; sub_1BE66:
 TailsCPU_CheckDespawn:

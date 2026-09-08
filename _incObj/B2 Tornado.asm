@@ -284,7 +284,7 @@ ObjB2_Jump_to_plane:
 	addq.w	#1,objoff_2A(a0)
 	subq.w	#1,objoff_2E(a0)
 	bmi.s	+
-	move.w	#((button_right_mask|button_A_mask)<<8)|button_right_mask|button_A_mask,(Ctrl_1_Logical).w
+	move.w	#((button_right_mask|button_A_mask)<<8),(Ctrl_1_Logical).w
 + ; loc_3AABC:
 	bsr.w	ObjB2_Align_plane
 	btst	#p1_standing_bit,status(a0)

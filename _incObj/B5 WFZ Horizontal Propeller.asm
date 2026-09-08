@@ -82,6 +82,8 @@ ObjB5_CheckPlayer:
 	move.b	#AniIDSonAni_Float2,anim(a1)
 	move.b	#$7F,flips_remaining(a1)
 	move.b	#8,flip_speed(a1)
+	clr.b	flying(a1)	; clear flying flag
+	clr.b	jumping(a1)	; clear jumping flag
 +
 	rts
 ; ===========================================================================

@@ -366,6 +366,7 @@ LevEvents_WFZ_Routine6:
 	blo.s	+	; rts
 	addq.w	#2,(WFZ_LevEvent_Subrout).w ; => LevEvents_WFZ_RoutineNull
 	st.b	(Control_Locked).w
+	clr.w	(Ctrl_1_Logical).w
 	moveq	#PLCID_Tornado,d0
 	jmp	(LoadPLC).w
 +

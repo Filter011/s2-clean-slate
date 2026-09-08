@@ -3398,7 +3398,7 @@ SndPtr_SpikesMove:	sfx_metadata	Sound36
 SndPtr_Rumbling:	sfx_metadata	Sound37	; rumbling
 			sfx_metadata	Sound38	; (unused)
 SndPtr_Smash:		sfx_metadata	Sound39	; smash/breaking
-			sfx_metadata	Sound3A	; nondescript ding (unused)
+SndPtr_Grab:			sfx_metadata	Sound3A	; nondescript ding (unused)
 SndPtr_DoorSlam:	sfx_metadata	Sound3B	; door slamming shut
 SndPtr_SpindashRelease:	sfx_metadata	Sound3C	; spindash unleashed
 SndPtr_Hammer:		sfx_metadata	Sound3D	; slide-thunk
@@ -3421,8 +3421,8 @@ SndPtr_Blip:		sfx_metadata	Sound4D	; selection blip
 SndPtr_RingLeft:	sfx_metadata	Sound4E	; another ring sound (only plays in the left speaker?)
 SndPtr_Signpost:	sfx_metadata	Sound4F	; signpost spin sound
 SndPtr_CNZBossZap:	sfx_metadata	Sound50	; mosquito zapper
-			sfx_metadata	Sound51	; (unused)
-			sfx_metadata	Sound52	; (unused)
+SndPtr_Flying:		sfx_metadata	Sound51	; flying
+SndPtr_FlyingTired:	sfx_metadata	Sound52	; tired flying
 SndPtr_Signpost2P:	sfx_metadata	Sound53
 SndPtr_OOZLidPop:	sfx_metadata	Sound54	; OOZ lid pop sound
 SndPtr_SlidingSpike:	sfx_metadata	Sound55

@@ -33,6 +33,8 @@ WindTunnel:
 	move.w	#0,y_vel(a1)
 	move.b	#AniIDSonAni_Float2,anim(a1)
 	bset	#status.player.in_air,status(a1)	; set "in-air" bit
+	clr.b	flying(a1)	; clear flying flag
+	clr.b	jumping(a1)	; clear jumping flag
 	btst	#button_up,(Ctrl_1_Held).w	; is Up being pressed?
 	beq.s	+				; if not, branch
 	subq.w	#1,y_pos(a1)	; move up
