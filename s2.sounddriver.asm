@@ -2930,17 +2930,22 @@ cfEnableModulation:
 ; (via Saxman's doc): stop the track
 ; zloc_EE4
 cfStopTrack:
-;	res	7,(ix+zTrack.PlaybackControl)	; Clear playback byte bit 7 (80h) -- currently playing (not anymore)
-;	res	4,(ix+zTrack.PlaybackControl)	; Clear playback byte bit 4 (10h) -- do not attack
-	ld	a,(ix+zTrack.PlaybackControl)
-	and	6Fh
-	ld	(ix+zTrack.PlaybackControl),a
+	res	7,(ix+zTrack.PlaybackControl)	; Clear playback byte bit 7 (80h) -- currently playing (not anymore)
+	res	4,(ix+zTrack.PlaybackControl)	; Clear playback byte bit 4 (10h) -- do not attack
+; 	ld	a,(ix+zTrack.PlaybackControl)
+; 	and	6Fh
+; 	ld	(ix+zTrack.PlaybackControl),a
 	bit	7,(ix+zTrack.VoiceControl)	; Is voice control bit 7 (80h) a PSG track set?
 	jr	nz,zStopPSGTrack		; If so, skip this next part...
-	bit	4,(ix+zTrack.VoiceControl)		; Is DAC updating?
-	jp	nz,zDACStopTrack			; If DAC is updating, go here (we're in a DAC track)
+
+	bit	1,(ix+zTrack.VoiceControl)	; Is DAC updating?
+	jp	nz,zDACStopTrack		; If DAC is updating, go here (we're in a DAC track)
+
+	bit	4,(ix+zTrack.VoiceControl)	; Is DAC updating?
+	jp	nz,zDACStopTrack		; If DAC is updating, go here (we're in a DAC track)
+
 	call	zFMNoteOff			; Otherwise, stop this FM track
-	jp	zStoppedChannel
+	jr	zStoppedChannel
 
 ; zcall_zsub_526
 zStopPSGTrack:
