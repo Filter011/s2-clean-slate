@@ -1806,7 +1806,7 @@ zFMOperatorWriteLoop:
 ; FM channel assignment bits
 ; zbyte_916
 zFMDACInitBytes:
-	db    6,   0,   1,   2,   4,   5,   6	; first byte is for DAC; then notice the 0, 1, 2 then 4, 5, 6; this is the gap between parts I and II for YM2612 port writes
+	db    6+10h,   0,   1,   2,   4,   5,   6	; first byte is for DAC; then notice the 0, 1, 2 then 4, 5, 6; this is the gap between parts I and II for YM2612 port writes
 
 ; Default values for PSG tracks
 ; zbyte_91D
@@ -2930,22 +2930,19 @@ cfEnableModulation:
 ; (via Saxman's doc): stop the track
 ; zloc_EE4
 cfStopTrack:
-	res	7,(ix+zTrack.PlaybackControl)	; Clear playback byte bit 7 (80h) -- currently playing (not anymore)
-	res	4,(ix+zTrack.PlaybackControl)	; Clear playback byte bit 4 (10h) -- do not attack
-; 	ld	a,(ix+zTrack.PlaybackControl)
-; 	and	6Fh
-; 	ld	(ix+zTrack.PlaybackControl),a
+;	res	7,(ix+zTrack.PlaybackControl)	; Clear playback byte bit 7 (80h) -- currently playing (not anymore)
+;	res	4,(ix+zTrack.PlaybackControl)	; Clear playback byte bit 4 (10h) -- do not attack
+ 	ld	a,(ix+zTrack.PlaybackControl)
+ 	and	6Fh
+ 	ld	(ix+zTrack.PlaybackControl),a
 	bit	7,(ix+zTrack.VoiceControl)	; Is voice control bit 7 (80h) a PSG track set?
 	jr	nz,zStopPSGTrack		; If so, skip this next part...
-
-	bit	1,(ix+zTrack.VoiceControl)	; Is DAC updating?
-	jp	nz,zDACStopTrack		; If DAC is updating, go here (we're in a DAC track)
 
 	bit	4,(ix+zTrack.VoiceControl)	; Is DAC updating?
 	jp	nz,zDACStopTrack		; If DAC is updating, go here (we're in a DAC track)
 
 	call	zFMNoteOff			; Otherwise, stop this FM track
-	jr	zStoppedChannel
+	jp	zStoppedChannel
 
 ; zcall_zsub_526
 zStopPSGTrack:
