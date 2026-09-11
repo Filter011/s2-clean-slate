@@ -750,7 +750,13 @@ zUpdateTrack:
 .notegoing:
 	bit	1,(ix+zTrack.PlaybackControl)	; Is "track in rest"?
 	ret	nz				; If so, quit
-	call	zNoteFillUpdate			; Applies "note fill" (time until cut-off); NOTE: Will not return here if "note fill" expires
+	ld	a,(ix+zTrack.NoteFillTimeout)	; Get current note fill value
+	or	a
+	jr	z,.modulation			; If zero, skip!
+	dec	(ix+zTrack.NoteFillTimeout)	; Decrement note fill
+	jp	z,zFMNoteOff			; If zero, branch
+
+.modulation:
 	call	zDoModulation			; Update modulation (if modulation doesn't change, we do not return here)
 	; fall into zFMUpdateFreq
 ; End of function zUpdateTrack
@@ -936,23 +942,6 @@ zFinishTrackUpdate:
 	ld	(ix+zTrack.ModulationValHigh),0	; Clear modulation value high byte
 	ret
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
-
-; zsub_2E3
-zNoteFillUpdate:
-	ld	a,(ix+zTrack.NoteFillTimeout)	; Get current note fill value
-	or	a
-	ret	z				; If zero, return!
-	dec	(ix+zTrack.NoteFillTimeout)	; Decrement note fill
-	ret	nz				; If not zero, return
-	set	1,(ix+zTrack.PlaybackControl)	; Set bit 1 (track is at rest)
-	pop	de				; return address -> 'de' (will not return to zUpdateTrack function!!)
-	bit	7,(ix+zTrack.VoiceControl)	; Is this a PSG track?
-	jp	nz,zPSGNoteOff			; If so, jump to zPSGNoteOff
-	jp	zFMNoteOff			; Else, jump to zFMNoteOff
-; End of function zNoteFillUpdate
-
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
@@ -1061,7 +1050,13 @@ zPSGUpdateTrack:
 .notegoing:
 	bit	1,(ix+zTrack.PlaybackControl)	; Is "track in rest"?
 	ret	nz				; If so, quit
-	call	zNoteFillUpdate			; Applies "note fill" (time until cut-off); NOTE: Will not return here if "note fill" expires
+	ld	a,(ix+zTrack.NoteFillTimeout)	; Get current note fill value
+	or	a
+	jr	z,.next				; If zero, skip!
+	dec	(ix+zTrack.NoteFillTimeout)	; Decrement note fill
+	jp	z,zPSGNoteOff_RestTrack		; If zero, branch
+
+.next:
 	call	zPSGUpdateVolFX			; Update volume effects
 	call	zDoModulation			; Update modulation (if modulation doesn't change, we do not return here)
 	; fall into zPSGUpdateFreq
@@ -1279,6 +1274,8 @@ zVolEnvHold:
 	jp	zPSGDoVolFX		; Loop back and update volume
 ; End of function zPSGDoVolFX
 
+zPSGNoteOff_RestTrack:
+	set	1,(ix+zTrack.PlaybackControl)	; set as resting
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
