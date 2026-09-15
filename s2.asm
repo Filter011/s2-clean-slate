@@ -730,20 +730,28 @@ loc_EFE:
 
 ; ===========================================================================
 ; Start of H-INT code
+
+; ---------------------------------------------------------------------------
+; DMA copy data from 68K (ROM/RAM) to the CRAM
+; input: source, length, destination
+; ---------------------------------------------------------------------------
+
+dma68kToVDP_H_Int macro source,dest,length,type
+	move.l	#(($9400|((((length)>>1)&$FF00)>>8))<<16)|($9300|(((length)>>1)&$FF)),(a0)
+	move.l	#(($9600|((((source)>>1)&$FF00)>>8))<<16)|($9500|(((source)>>1)&$FF)),(a0)
+	move.l	#($9700|((((source>>1)&$FF0000)>>16)&$7F))<<16|$8A00|223,(a0)
+	move.l	#vdpComm(dest,type,DMA),(a0)
+	endm
+
 H_Int:
 	move	#$2700,sr
 	tst.b	(Hint_flag).w
 	beq.s	H_Int_Done
 	clr.b	(Hint_flag).w
-	movem.l	a0-a1,-(sp)
-	lea	(VDP_data_port).l,a1
-	lea	(Underwater_palette).w,a0 ; load palette from RAM
-	move.l	#vdpComm($0000,CRAM,WRITE),VDP_control_port-VDP_data_port(a1)	; set VDP to write to CRAM address $00
-    rept 32
-	move.l	(a0)+,(a1)	; move palette to CRAM (all 64 colors at once)
-    endm
-	move.w	#$8A00|223,VDP_control_port-VDP_data_port(a1)	; Write %1101 %1111 to register 10 (interrupt every 224th line)
-	movem.l	(sp)+,a0-a1
+	move.l	a0,-(sp)
+	lea	(VDP_control_port).l,a0
+	dma68kToVDP_H_Int Underwater_palette,$0000,palette_line_size*4,CRAM
+	movea.l	(sp)+,a0
 	tst.b	(Do_Updates_in_H_int).w
 	bne.s	loc_1072
 
