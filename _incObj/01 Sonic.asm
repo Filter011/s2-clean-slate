@@ -1685,8 +1685,8 @@ Sonic_DoLevelCollision:
 	move.l	(Secondary_Collision).w,(Collision_addr).w
 +
 	move.b	lrb_solid_bit(a0),d5
-	move.w	obVelX(a0),d0				; get X speed
-	move.w	obVelY(a0),d1				; get Y speed
+	move.w	x_vel(a0),d0				; get X speed
+	move.w	y_vel(a0),d1				; get Y speed
 	bpl.s	SonAirCol_PosY				; if it's positive, branch
 	cmp.w	d0,d1					; are we moving towards the left?
 	bgt.w	Sonic_HitLeftWall			; if so, branch
@@ -1901,7 +1901,6 @@ return_1B09E:
 Sonic_ResetOnFloor:
 	tst.b	pinball_mode(a0)
 	bne.s	Sonic_ResetOnFloor_Part3
-	move.b	#AniIDSonAni_Walk,anim(a0)
 ; loc_1B0AC:
 Sonic_ResetOnFloor_Part2:
 	; some routines outside of Tails' code can call Sonic_ResetOnFloor_Part2

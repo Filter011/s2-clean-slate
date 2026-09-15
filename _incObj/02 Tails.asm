@@ -119,7 +119,7 @@ Obj02_Modes:	offsetTable
 		offsetTableEntry.w Obj02_MdNormal	; 0 - not airborne or rolling
 		offsetTableEntry.w Obj02_MdAir		; 2 - airborne
 		offsetTableEntry.w Obj02_MdRoll		; 4 - rolling
-		offsetTableEntry.w Obj02_MdJump		; 6 - jumping
+		offsetTableEntry.w Obj02_MdAir		; 6 - jumping
 ; ===========================================================================
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
@@ -272,8 +272,7 @@ Obj02_MdNormal:
 	bsr.w	Tails_LevelBound
 	jsr	(ObjectMove).l
 	bsr.w	AnglePos
-	bsr.w	Player_SlopeRepel
-	rts
+	bra.w	Player_SlopeRepel
 ; End of subroutine Obj02_MdNormal
 ; ===========================================================================
 ; Start of subroutine Obj02_MdAir
@@ -291,8 +290,7 @@ Obj02_MdAir:
 	subi.w	#$28,y_vel(a0)	; reduce gravity by $28 ($38-$28=$10)
 +
 	bsr.w	Tails_JumpAngle
-	bsr.w	Tails_DoLevelCollision
-	rts
+	bra.w	Tails_DoLevelCollision
 ; End of subroutine Obj02_MdAir
 ; ---------------------------------------------------------------------------
 ; Called if Tails is flying after a jump
@@ -302,11 +300,12 @@ Obj02_MdFly:
 	bsr.w	Tails_LevelBound
 	jsr	(ObjectMove).l
 	bsr.w	Tails_JumpAngle
+    if flightCarrySonic
 	bsr.w	Tails_DoLevelCollision
-    if flightCarrySonic = 1
-	bsr.w	Tails_CarrySonic
+	bra.w	Tails_CarrySonic
+    else
+	bra.w	Tails_DoLevelCollision
     endif
-	rts
 ; ===========================================================================
 ; Start of subroutine Obj02_MdRoll
 ; Called if Tails is in a ball, but not airborne (thus, probably rolling)
@@ -321,28 +320,8 @@ Obj02_MdRoll:
 	bsr.w	Tails_LevelBound
 	jsr	(ObjectMove).l
 	bsr.w	AnglePos
-	bsr.w	Player_SlopeRepel
-	rts
+	bra.w	Player_SlopeRepel
 ; End of subroutine Obj02_MdRoll
-; ===========================================================================
-; Start of subroutine Obj02_MdJump
-; Called if Tails is in a ball and airborne (he could be jumping but not necessarily)
-; Notes: This is identical to Obj02_MdAir, at least at this outer level.
-;        Why they gave it a separate copy of the code, I don't know.
-; loc_1C082: Obj02_MdJump2:
-Obj02_MdJump:
-	bsr.w	Tails_JumpHeight
-	bsr.w	Tails_ChgJumpDir
-	bsr.w	Tails_LevelBound
-	jsr	(ObjectMoveAndFall).l
-	btst	#status.player.underwater,status(a0)	; is Tails underwater?
-	beq.s	+					; if not, branch
-	subi.w	#$28,y_vel(a0)	; reduce gravity by $28 ($38-$28=$10)
-+
-	bsr.w	Tails_JumpAngle
-	bsr.w	Tails_DoLevelCollision
-	rts
-; End of subroutine Obj02_MdJump
 
 ; ---------------------------------------------------------------------------
 ; Subroutine to make Tails walk/run
@@ -514,9 +493,14 @@ Obj02_Traction:
 ; stops Tails from running through walls that meet the ground
 ; loc_1C232:
 Obj02_CheckWallsOnGround:
+	move.b	obAngle(a0),d0				; get Tails's current angle in relation to the floor
+	andi.b	#$3F,d0					; is he standing on a flat surface in any of the four quadrants?
+	beq.s	.noearlyexit				; if yes, skip the upside-down exit below
 	move.b	angle(a0),d0
 	addi.b	#$40,d0
 	bmi.s	return_1C2A2
+
+.noearlyexit:
 	move.b	#$40,d1
 	tst.w	inertia(a0)
 	beq.s	return_1C2A2
@@ -539,8 +523,12 @@ Obj02_CheckWallsOnGround:
 	cmpi.b	#$80,d0
 	beq.s	loc_1C286
 	add.w	d1,x_vel(a0)
-	bset	#status.player.pushing,status(a0)
-	move.w	#0,inertia(a0)
+	move.w	#0,inertia(a0)				; clear ground speed
+	btst	#status.player.x_flip,status(a0)	; is Tails facing the wall?
+	bne.s	.awayright				; if not, branch
+	bset	#status.player.pushing,status(a0)	; set pushing flag
+
+.awayright:
 	rts
 ; ---------------------------------------------------------------------------
 
@@ -551,8 +539,12 @@ loc_1C286:
 
 loc_1C28C:
 	sub.w	d1,x_vel(a0)
-	bset	#status.player.pushing,status(a0)
-	move.w	#0,inertia(a0)
+	move.w	#0,inertia(a0)				; clear ground speed
+	btst	#status.player.x_flip,status(a0)	; is Tails facing the wall?
+	beq.s	.awayleft				; if not, branch
+	bset	#status.player.pushing,status(a0)	; set pushing flag
+
+.awayleft:
 	rts
 ; ---------------------------------------------------------------------------
 loc_1C29E:
@@ -751,6 +743,14 @@ Tails_SetRollSpeed:
 	jsr	(CalcSine).w
 	muls.w	inertia(a0),d0
 	asr.l	#8,d0
+	cmpi.w	#$1000,d0
+	ble.s	+
+	move.w	#$1000,d0	; limit Sonic's speed rolling right
++
+	cmpi.w	#-$1000,d0
+	bge.s	+
+	move.w	#-$1000,d0	; limit Sonic's speed rolling left
++
 	move.w	d0,y_vel(a0)	; set y velocity based on $14 and angle
 	muls.w	inertia(a0),d1
 	asr.l	#8,d1
@@ -1027,6 +1027,8 @@ Tails_Jump:
 	clr.b	stick_to_convex(a0)
 	moveq	#SndID_Jump,d0
 	jsr	(PlaySound).w	; play jumping sound
+	btst	#status.player.rolling,status(a0)
+	bne.s	return_1C6C2
 	move.b	#$E,y_radius(a0)
 	move.b	#7,x_radius(a0)
 	move.b	#AniIDSonAni_Roll,anim(a0)	; use "jumping" animation
@@ -1079,10 +1081,10 @@ return_1C70C:
 
 Tails_CheckFlying:
 	tst.b	flying(a0)			; is Tails already flying?
-	bne.w	.noflight			; if yes, branch
+	bne.s	.noflight			; if yes, branch
 	move.b	(Ctrl_2_Press_Logical).w,d0	; get Tails' controller input
 	andi.b	#button_A_mask|button_B_mask|button_C_mask,d0	; has been any jump button pressed?
-	beq.w	.noflight			; if not, branch
+	beq.s	.noflight			; if not, branch
 ;	cmpa.l	#Sidekick,a0			; is Tails the sidekick?
 ;	bne.s	.setflight			; if not, make him fly?
 
@@ -1153,7 +1155,7 @@ Tails_Flying:
 	move.b	#2,flying(a0)			; set flying flag to 2 (and thus run delay code on next frame)
 
 .applygravity:
-	addi.w	#8,y_vel(a0)			; apply weak gravity
+	addq.w	#8,y_vel(a0)			; apply weak gravity
 
 .checkupperboundary:
 	move.w	(Camera_Min_Y_pos).w,d0		; get upper boundary value
@@ -1172,7 +1174,7 @@ Tails_Flying:
 
 Tails_FlyingAnimation:
 	moveq	#0,d0				; clear d0
-	move.b	#SndID_Flying,d1		; prepare flying sound to play
+	moveq	#SndID_Flying,d1		; prepare flying sound to play
 	tst.w	y_vel(a0)			; is Tails moving upwards?
 	bpl.s	.movingdown			; if not, branch
 	addq.b	#1,d0				; use upwards sprites
@@ -1190,12 +1192,12 @@ Tails_FlyingAnimation:
 	tst.b	flying_timer(a0)		; is Tails tired?
 	bne.s	.nottired			; if not, branch
 	addq.b	#4,d0				; use tired sprites
-	move.b	#SndID_FlyingTired,d1		; prepare to play tired flying sound instead
+	moveq	#SndID_FlyingTired,d1		; prepare to play tired flying sound instead
 .nottired:
 	btst	#status.player.underwater,status(a0)	; is Tails underwater?
 	beq.s	.display			; if not, branch
 	addq.b	#8,d0				; use swimming sprites
-	move.b	#0,d1				; no sound underwater
+	moveq	#0,d1				; no sound underwater
 .display:
 	move.b	.animationtable(pc,d0.w),anim(a0)	; get correct animation ID
 	tst.b	d1				; is there a sound to play?
@@ -1205,7 +1207,7 @@ Tails_FlyingAnimation:
 	andi.b	#$F,d0				; get only lower nibble (0-15/0-$F)
 	bne.s	.nosound			; play sound only every 16th frame
 	move.w	d1,d0				; get appropriate sound
-	jmp	(PlaySoundLocal).l		; if Tails is on-screen, play sound
+	jmp	(PlaySoundLocal).w		; if Tails is on-screen, play sound
 .nosound:
 	rts
 
@@ -1225,7 +1227,7 @@ Tails_FlyingAnimation:
 ; ---------------------------------------------------------------------------
 ; Subroutine to control Sonic being carried by Tails during flight
 ; ---------------------------------------------------------------------------
-    if flightCarrySonic = 1
+    if flightCarrySonic
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
@@ -1248,7 +1250,7 @@ Tails_CarrySonic:ss
 	bne.s	.exitgrab				; if not, branch
 	move.w	(Sidekick_X_vel_copy).w,d1		; get Tails' X speed from previous frame
 	cmp.w	x_vel(a1),d1				; is Sonic's current X speed equal to it?
-	bne.w	.bumpandexitgrab			; if not, branch
+	bne.s	.bumpandexitgrab			; if not, branch
 	andi.b	#button_A_mask|button_B_mask|button_C_mask,d0	; has been any jump button pressed?
 	beq.w	Tails_CarryUpdatePosition		; if not, keep flying
 
@@ -1256,7 +1258,7 @@ Tails_CarrySonic:ss
 	bclr	#status_secondary.carry,status_secondary(a1)	; if yes, let go of Tails
 	move.b	#18,carry_delay(a0)			; set a delay before another carrying
 	andi.w	#(button_left_mask|button_right_mask)<<8,d0	; has left/right direction button been pressed?
-	beq.w	.notright				; if not, branch
+	beq.s	.notright				; if not, branch
 	move.b	#60,carry_delay(a0)			; make the delay a bit longer
 
 .nodirection:
@@ -1329,8 +1331,8 @@ Tails_CheckCarry:
 	bset	#status_secondary.carry,status_secondary(a1)	; set being carried flag
 	bset	#status.player.in_air,status(a1); set "in-air" status
 	move.w	#AniIDSonAni_Hang2<<8,anim(a1)	; set and force hanging animation
-	move.w	#SndID_Grab,d0			; load grabbing sound
-	jsr	(PlaySound).l			; play it
+	moveq	#SndID_Grab,d0			; load grabbing sound
+	jsr	(PlaySound).w			; play it
 ; End of subroutine Tails_CheckCarry
 	; continue straight to Tails_CarryUpdatePosition
 
@@ -1576,17 +1578,24 @@ Tails_DoLevelCollision:
 	move.l	(Secondary_Collision).w,(Collision_addr).w
 +
 	move.b	lrb_solid_bit(a0),d5
-	move.w	x_vel(a0),d1
-	move.w	y_vel(a0),d2
-	jsr	(CalcAngle).w
-	subi.b	#$20,d0
-	andi.b	#$C0,d0
-	cmpi.b	#$40,d0
-	beq.w	Tails_HitLeftWall
-	cmpi.b	#$80,d0
-	beq.w	Tails_HitCeilingAndWalls
-	cmpi.b	#$C0,d0
-	beq.w	Tails_HitRightWall
+	move.w	x_vel(a0),d0				; get X speed
+	move.w	y_vel(a0),d1				; get Y speed
+	bpl.s	TaiAirCol_PosY				; if it's positive, branch
+	cmp.w	d0,d1					; are we moving towards the left?
+	bgt.w	Tails_HitLeftWall			; if so, branch
+	neg.w	d0					; negate for right cheeck
+	cmp.w	d0,d1					; are we moving towards the right?
+	bge.w	Tails_HitRightWall			; if so, branch
+	bra.w	Tails_HitCeilingAndWalls		; we are moving upwards
+; ===========================================================================
+
+TaiAirCol_PosY:
+	cmp.w	d0,d1					; are we moving towards the right?
+	blt.w	Tails_HitRightWall			; if so, branch
+	neg.w	d0					; negate for left check
+	cmp.w	d0,d1					; are we moving towards the left?
+	ble.w	Tails_HitLeftWall			; if so, branch
+	; otherwise, we know we're falling down (fall-through...)
 	bsr.w	CheckLeftWallDist
 	tst.w	d1
 	bpl.s	+
@@ -1601,49 +1610,58 @@ Tails_DoLevelCollision:
 +
 	bsr.w	Sonic_CheckFloor
 	tst.w	d1
-	bpl.s	return_1CA3A
+	bpl.s	.return
 	move.b	y_vel(a0),d2
 	addq.b	#8,d2
 	neg.b	d2
 	cmp.b	d2,d1
 	bge.s	+
 	cmp.b	d2,d0
-	blt.s	return_1CA3A
+	blt.s	.return
 +
 	add.w	d1,y_pos(a0)
 	move.b	d3,angle(a0)
 	bsr.w	Tails_ResetOnFloor
-	move.b	d3,d0
-	addi.b	#$20,d0
-	andi.b	#$40,d0
-	bne.s	loc_1CA18
-	move.b	d3,d0
-	addi.b	#$10,d0
-	andi.b	#$20,d0
-	beq.s	loc_1CA0A
-	asr	y_vel(a0)
-	bra.s	loc_1CA2C
+	move.b	d3,d0					; get floor angle
+	bpl.s	.checkupper				; if it's in the left half, branch
+	neg.b	d0					; if if's in the right half, mirror it
+.checkupper:
+	btst	#6,d0					; is it in the lower half?
+	beq.s	.checkslope				; if so, branch
+	subi.b	#$80,d0					; if it's in the upper half...
+	neg.b	d0					; ...mirror it
+.checkslope:
+	cmpi.b	#$20,d0					; are we landing on a steep slope?
+	bhs.s	.steepslope				; if so, branch
+	cmpi.b	#$11,d0					; are we landing on a shallow slope?
+	blo.s	.flatsurface				; if not, branch
+	asr.w	y_vel(a0)
+	bra.s	.noslopecap
 ; ===========================================================================
 
-loc_1CA0A:
+; loc_1CA0A:
+.flatsurface:
 	move.w	#0,y_vel(a0)
 	move.w	x_vel(a0),inertia(a0)
 	rts
 ; ===========================================================================
 
-loc_1CA18:
+; loc_1CA18:
+.steepslope:
 	move.w	#0,x_vel(a0)	; stop Tails since he hit a wall
 	cmpi.w	#$FC0,y_vel(a0)
-	ble.s	loc_1CA2C
+	ble.s	.noslopecap
 	move.w	#$FC0,y_vel(a0)
 
-loc_1CA2C:
+; loc_1CA2C:
+.noslopecap:
 	move.w	y_vel(a0),inertia(a0)
 	tst.b	d3
-	bpl.s	return_1CA3A
+	bpl.s	.return
 	neg.w	inertia(a0)
 
-return_1CA3A:
+; return_1CA3A:
+.return:
 	rts
 ; ===========================================================================
 ; loc_1CA3C:
@@ -1776,15 +1794,14 @@ return_1CB4E:
 Tails_ResetOnFloor:
 	tst.b	pinball_mode(a0)
 	bne.s	Tails_ResetOnFloor_Part3
-	move.b	#AniIDSonAni_Walk,anim(a0)
 ; loc_1CB5C:
 Tails_ResetOnFloor_Part2:
+	move.b	#AniIDSonAni_Walk,anim(a0)	; use running/walking/standing animation
 	btst	#status.player.rolling,status(a0)
 	beq.s	Tails_ResetOnFloor_Part3
 	bclr	#status.player.rolling,status(a0)
 	move.b	#$F,y_radius(a0) ; this slightly increases Tails' collision height to standing
 	move.b	#9,x_radius(a0)
-	move.b	#AniIDSonAni_Walk,anim(a0)	; use running/walking/standing animation
 	subq.w	#1,y_pos(a0)	; move Tails up 1 pixel so the increased height doesn't push him slightly into the ground
 ; loc_1CB80:
 Tails_ResetOnFloor_Part3:
@@ -1825,6 +1842,7 @@ Obj02_Hurt:
 	andi.w	#$7FF,y_pos(a0)
 +
 	bsr.s	Tails_HurtStop
+	bsr.w	Tails_Water
 	bsr.w	Tails_LevelBound
 	bsr.w	Tails_RecordPos
 	bsr.w	Tails_Animate
@@ -2091,11 +2109,7 @@ TAnim_Roll:
 	addq.b	#1,d0		; is the end flag = $FE?
 	bne.s	TAnim_GetTailFrame	; if not, branch
 	mvabs.w	inertia(a0),d2
-	lea	TailsAni_Roll2(pc),a1
-	cmpi.w	#$600,d2
-	bhs.s	+
 	lea	TailsAni_Roll(pc),a1
-+
 	neg.w	d2
 	addi.w	#$400,d2
 	bpl.s	+

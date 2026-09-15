@@ -64,7 +64,6 @@ Obj05_Main:
 Obj05AniSelection:
 	dc.b	0,0	; TailsAni_Walk,Run	->
 	dc.b	3	; TailsAni_Roll		-> Directional
-	dc.b	3	; TailsAni_Roll2	-> Directional
 	dc.b	9	; TailsAni_Push		-> Pushing
 	dc.b	1	; TailsAni_Wait		-> Swish
 	dc.b	0	; TailsAni_Balance	-> Blank
