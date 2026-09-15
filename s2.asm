@@ -23,8 +23,6 @@ gameRevision = 1
 ;	| If 0, a REV00 ROM is built
 ;	| If 1, a REV01 ROM is built, which contains some fixes
 ;	| If 2, a (theoretical) REV02 ROM is built, which contains even more fixes
-padToPowerOfTwo = 0
-;	| If 1, pads the end of the ROM to the next power of two bytes (for real hardware)
 ;
 fixBugs = 1
 ;	| If 1, enables all bug-fixes
@@ -6626,15 +6624,8 @@ Mus_Emerald:	include	"sound/music/9D - Got Emerald.asm"
 
 	even
 	include	"errorhandler/ErrorHandler.asm"
+	even
 
-; end of 'ROM'
-	if padToPowerOfTwo && (*-StartOfRom)&(*-StartOfRom-1)
-		cnop	-1,2<<lastbit(*-StartOfRom-1)
-		dc.b	$00
-paddingSoFar	:= paddingSoFar+1
-	else
-		even
-	endif
 EndOfRom:
 	if MOMPASS=2
 		; "About" because it will be off by the same amount that Size_of_Snd_driver_guess is incorrect (if you changed it), and because I may have missed a small amount of internal padding somewhere
