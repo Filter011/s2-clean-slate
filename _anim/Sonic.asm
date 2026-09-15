@@ -6,42 +6,40 @@ SonicAniData:			offsetTable
 SonAni_Walk_ptr:		offsetTableEntry.w SonAni_Walk		;  0 ;   0
 SonAni_Run_ptr:			offsetTableEntry.w SonAni_Run		;  1 ;   1
 SonAni_Roll_ptr:		offsetTableEntry.w SonAni_Roll		;  2 ;   2
-SonAni_Roll2_ptr:		offsetTableEntry.w SonAni_Roll2		;  3 ;   3
-SonAni_Push_ptr:		offsetTableEntry.w SonAni_Push		;  4 ;   4
-SonAni_Wait_ptr:		offsetTableEntry.w SonAni_Wait		;  5 ;   5
-SonAni_Balance_ptr:		offsetTableEntry.w SonAni_Balance	;  6 ;   6
-SonAni_LookUp_ptr:		offsetTableEntry.w SonAni_LookUp	;  7 ;   7
-SonAni_Duck_ptr:		offsetTableEntry.w SonAni_Duck		;  8 ;   8
-SonAni_Spindash_ptr:		offsetTableEntry.w SonAni_Spindash	;  9 ;   9
-SonAni_Blink_ptr:		offsetTableEntry.w SonAni_Blink		; 10 ;  $A
-SonAni_GetUp_ptr:		offsetTableEntry.w SonAni_GetUp		; 11 ;  $B
-SonAni_Balance2_ptr:		offsetTableEntry.w SonAni_Balance2	; 12 ;  $C
-SonAni_Stop_ptr:		offsetTableEntry.w SonAni_Stop		; 13 ;  $D
-SonAni_Float_ptr:		offsetTableEntry.w SonAni_Float		; 14 ;  $E
-SonAni_Float2_ptr:		offsetTableEntry.w SonAni_Float2	; 15 ;  $F
-SonAni_Spring_ptr:		offsetTableEntry.w SonAni_Spring	; 16 ; $10
-SonAni_Hang_ptr:		offsetTableEntry.w SonAni_Hang		; 17 ; $11
-SonAni_Dash2_ptr:		offsetTableEntry.w SonAni_Dash2		; 18 ; $12
-SonAni_Dash3_ptr:		offsetTableEntry.w SonAni_Dash3		; 19 ; $13
-SonAni_Hang2_ptr:		offsetTableEntry.w SonAni_Hang2		; 20 ; $14
-SonAni_Bubble_ptr:		offsetTableEntry.w SonAni_Bubble	; 21 ; $15
-SonAni_DeathBW_ptr:		offsetTableEntry.w SonAni_DeathBW	; 22 ; $16
-SonAni_Drown_ptr:		offsetTableEntry.w SonAni_Drown		; 23 ; $17
-SonAni_Death_ptr:		offsetTableEntry.w SonAni_Death		; 24 ; $18
-SonAni_Hurt_ptr:		offsetTableEntry.w SonAni_Hurt		; 25 ; $19
-SonAni_Hurt2_ptr:		offsetTableEntry.w SonAni_Hurt		; 26 ; $1A
-SonAni_Slide_ptr:		offsetTableEntry.w SonAni_Slide		; 27 ; $1B
-SonAni_Blank_ptr:		offsetTableEntry.w SonAni_Blank		; 28 ; $1C
-SonAni_Balance3_ptr:		offsetTableEntry.w SonAni_Balance3	; 29 ; $1D
-SonAni_Balance4_ptr:		offsetTableEntry.w SonAni_Balance4	; 30 ; $1E
-SupSonAni_Transform_ptr:	offsetTableEntry.w SupSonAni_Transform	; 31 ; $1F
-SonAni_Lying_ptr:		offsetTableEntry.w SonAni_Lying		; 32 ; $20
-SonAni_LieDown_ptr:		offsetTableEntry.w SonAni_LieDown	; 33 ; $21
+SonAni_Push_ptr:		offsetTableEntry.w SonAni_Push		;  3 ;   3
+SonAni_Wait_ptr:		offsetTableEntry.w SonAni_Wait		;  4 ;   4
+SonAni_Balance_ptr:		offsetTableEntry.w SonAni_Balance	;  5 ;   5
+SonAni_LookUp_ptr:		offsetTableEntry.w SonAni_LookUp	;  6 ;   6
+SonAni_Duck_ptr:		offsetTableEntry.w SonAni_Duck		;  7 ;   7
+SonAni_Spindash_ptr:		offsetTableEntry.w SonAni_Spindash	;  8 ;   8
+SonAni_Blink_ptr:		offsetTableEntry.w SonAni_Blink		;  9 ;   9
+SonAni_GetUp_ptr:		offsetTableEntry.w SonAni_GetUp		; 10 ;  $A
+SonAni_Balance2_ptr:		offsetTableEntry.w SonAni_Balance2	; 11 ;  $B
+SonAni_Stop_ptr:		offsetTableEntry.w SonAni_Stop		; 12 ;  $C
+SonAni_Float_ptr:		offsetTableEntry.w SonAni_Float		; 13 ;  $D
+SonAni_Float2_ptr:		offsetTableEntry.w SonAni_Float2	; 14 ;  $E
+SonAni_Spring_ptr:		offsetTableEntry.w SonAni_Spring	; 15 ;  $F
+SonAni_Hang_ptr:		offsetTableEntry.w SonAni_Hang		; 16 ; $10
+SonAni_Dash2_ptr:		offsetTableEntry.w SonAni_Dash2		; 17 ; $11
+SonAni_Dash3_ptr:		offsetTableEntry.w SonAni_Dash3		; 18 ; $12
+SonAni_Hang2_ptr:		offsetTableEntry.w SonAni_Hang2		; 19 ; $13
+SonAni_Bubble_ptr:		offsetTableEntry.w SonAni_Bubble	; 20 ; $14
+SonAni_DeathBW_ptr:		offsetTableEntry.w SonAni_DeathBW	; 21 ; $15
+SonAni_Drown_ptr:		offsetTableEntry.w SonAni_Drown		; 22 ; $16
+SonAni_Death_ptr:		offsetTableEntry.w SonAni_Death		; 23 ; $17
+SonAni_Hurt_ptr:		offsetTableEntry.w SonAni_Hurt		; 24 ; $18
+SonAni_Hurt2_ptr:		offsetTableEntry.w SonAni_Hurt		; 25 ; $19
+SonAni_Slide_ptr:		offsetTableEntry.w SonAni_Slide		; 26 ; $1A
+SonAni_Blank_ptr:		offsetTableEntry.w SonAni_Blank		; 27 ; $1B
+SonAni_Balance3_ptr:		offsetTableEntry.w SonAni_Balance3	; 28 ; $1C
+SonAni_Balance4_ptr:		offsetTableEntry.w SonAni_Balance4	; 29 ; $1D
+SupSonAni_Transform_ptr:	offsetTableEntry.w SupSonAni_Transform	; 30 ; $1E
+SonAni_Lying_ptr:		offsetTableEntry.w SonAni_Lying		; 31 ; $1F
+SonAni_LieDown_ptr:		offsetTableEntry.w SonAni_LieDown	; 32 ; $20
 
 SonAni_Walk:	dc.b $FF, $F,$10,$11,$12,$13,$14, $D, $E,$FF
 SonAni_Run:	dc.b $FF,$2D,$2E,$2F,$30,$FF,$FF,$FF,$FF,$FF
 SonAni_Roll:	dc.b $FE,$3D,$41,$3E,$41,$3F,$41,$40,$41,$FF
-SonAni_Roll2:	dc.b $FE,$3D,$41,$3E,$41,$3F,$41,$40,$41,$FF
 SonAni_Push:	dc.b $FD,$48,$49,$4A,$4B,$FF,$FF,$FF,$FF,$FF
 SonAni_Wait:
 	dc.b   5,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1
@@ -92,35 +90,34 @@ SuperSonicAniData: offsetTable
 	offsetTableEntry.w SupSonAni_Walk	;  0 ;   0
 	offsetTableEntry.w SupSonAni_Run	;  1 ;   1
 	offsetTableEntry.w SonAni_Roll		;  2 ;   2
-	offsetTableEntry.w SonAni_Roll2		;  3 ;   3
-	offsetTableEntry.w SupSonAni_Push	;  4 ;   4
-	offsetTableEntry.w SupSonAni_Stand	;  5 ;   5
-	offsetTableEntry.w SupSonAni_Balance	;  6 ;   6
-	offsetTableEntry.w SonAni_LookUp	;  7 ;   7
-	offsetTableEntry.w SupSonAni_Duck	;  8 ;   8
-	offsetTableEntry.w SonAni_Spindash	;  9 ;   9
-	offsetTableEntry.w SonAni_Blink		; 10 ;  $A
-	offsetTableEntry.w SonAni_GetUp		; 11 ;  $B
-	offsetTableEntry.w SonAni_Balance2	; 12 ;  $C
-	offsetTableEntry.w SonAni_Stop		; 13 ;  $D
-	offsetTableEntry.w SonAni_Float		; 14 ;  $E
-	offsetTableEntry.w SonAni_Float2	; 15 ;  $F
-	offsetTableEntry.w SonAni_Spring	; 16 ; $10
-	offsetTableEntry.w SonAni_Hang		; 17 ; $11
-	offsetTableEntry.w SonAni_Dash2		; 18 ; $12
-	offsetTableEntry.w SonAni_Dash3		; 19 ; $13
-	offsetTableEntry.w SonAni_Hang2		; 20 ; $14
-	offsetTableEntry.w SonAni_Bubble	; 21 ; $15
-	offsetTableEntry.w SonAni_DeathBW	; 22 ; $16
-	offsetTableEntry.w SonAni_Drown		; 23 ; $17
-	offsetTableEntry.w SonAni_Death		; 24 ; $18
+	offsetTableEntry.w SupSonAni_Push	;  3 ;   3
+	offsetTableEntry.w SupSonAni_Stand	;  4 ;   4
+	offsetTableEntry.w SupSonAni_Balance	;  5 ;   5
+	offsetTableEntry.w SonAni_LookUp	;  6 ;   6
+	offsetTableEntry.w SupSonAni_Duck	;  7 ;   7
+	offsetTableEntry.w SonAni_Spindash	;  8 ;   8
+	offsetTableEntry.w SonAni_Blink		;  9 ;   9
+	offsetTableEntry.w SonAni_GetUp		; 10 ;  $A
+	offsetTableEntry.w SonAni_Balance2	; 11 ;  $B
+	offsetTableEntry.w SonAni_Stop		; 12 ;  $C
+	offsetTableEntry.w SonAni_Float		; 13 ;  $D
+	offsetTableEntry.w SonAni_Float2	; 14 ;  $E
+	offsetTableEntry.w SonAni_Spring	; 15 ;  $F
+	offsetTableEntry.w SonAni_Hang		; 16 ; $10
+	offsetTableEntry.w SonAni_Dash2		; 17 ; $11
+	offsetTableEntry.w SonAni_Dash3		; 18 ; $12
+	offsetTableEntry.w SonAni_Hang2		; 19 ; $13
+	offsetTableEntry.w SonAni_Bubble	; 20 ; $14
+	offsetTableEntry.w SonAni_DeathBW	; 21 ; $15
+	offsetTableEntry.w SonAni_Drown		; 22 ; $16
+	offsetTableEntry.w SonAni_Death		; 23 ; $17
+	offsetTableEntry.w SonAni_Hurt		; 24 ; $18
 	offsetTableEntry.w SonAni_Hurt		; 25 ; $19
-	offsetTableEntry.w SonAni_Hurt		; 26 ; $1A
-	offsetTableEntry.w SonAni_Slide		; 27 ; $1B
-	offsetTableEntry.w SonAni_Blank		; 28 ; $1C
-	offsetTableEntry.w SonAni_Balance3	; 29 ; $1D
-	offsetTableEntry.w SonAni_Balance4	; 30 ; $1E
-	offsetTableEntry.w SupSonAni_Transform	; 31 ; $1F
+	offsetTableEntry.w SonAni_Slide		; 26 ; $1A
+	offsetTableEntry.w SonAni_Blank		; 27 ; $1B
+	offsetTableEntry.w SonAni_Balance3	; 28 ; $1C
+	offsetTableEntry.w SonAni_Balance4	; 29 ; $1D
+	offsetTableEntry.w SupSonAni_Transform	; 30 ; $1E
 
 SupSonAni_Walk:		dc.b $FF,$77,$78,$79,$7A,$7B,$7C,$75,$76,$FF
 SupSonAni_Run:		dc.b $FF,$B5,$B9,$FF,$FF,$FF,$FF,$FF,$FF,$FF

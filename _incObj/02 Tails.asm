@@ -221,9 +221,9 @@ Obj02_InWater:
 	move.w	#$300,(Tails_top_speed).w
 	move.w	#6,(Tails_acceleration).w
 	move.w	#$40,(Tails_deceleration).w
-	asr	x_vel(a0)
-	asr	y_vel(a0)
-	asr	y_vel(a0)
+	asr.w	x_vel(a0)
+	asr.w	y_vel(a0)
+	asr.w	y_vel(a0)
 	beq.s	return_1BF58
 	move.w	#(1<<8)|(0<<0),(Tails_Dust+anim).w	; splash animation
 	moveq	#SndID_Splash,d0	; splash sound
@@ -242,7 +242,7 @@ Obj02_OutWater:
 
 	cmpi.b	#4,routine(a0)	; is Tails falling back from getting hurt?
 	beq.s	+		; if yes, branch
-	asl	y_vel(a0)
+	asl.w	y_vel(a0)
 +
 	tst.w	y_vel(a0)
 	beq.w	return_1BF58

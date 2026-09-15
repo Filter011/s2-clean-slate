@@ -2337,11 +2337,7 @@ SAnim_Roll:
 	addq.b	#1,d0		; is the start flag = $FE?
 	bne.s	SAnim_Push	; if not, branch
 	mvabs.w	inertia(a0),d2
-	lea	SonAni_Roll2(pc),a1
-	cmpi.w	#$600,d2
-	bhs.s	+
 	lea	SonAni_Roll(pc),a1
-+
 	neg.w	d2
 	addi.w	#$400,d2
 	bpl.s	+
