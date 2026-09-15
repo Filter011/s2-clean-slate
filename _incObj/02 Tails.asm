@@ -601,8 +601,8 @@ Tails_TurnLeft:
 	jsr	(PlaySound).w
 	cmpi.b	#12,air_left(a0)
 	blo.s	return_1C328	; if he's drowning, branch to not make dust
-	move.b	#6,(Sonic_Dust+routine).w
-	move.b	#$15,(Sonic_Dust+mapping_frame).w
+	move.b	#6,(Tails_Dust+routine).w
+	move.b	#$15,(Tails_Dust+mapping_frame).w
 
 return_1C328:
 	rts
@@ -651,8 +651,8 @@ Tails_TurnRight:
 	jsr	(PlaySound).w
 	cmpi.b	#12,air_left(a0)
 	blo.s	return_1C3A8	; if he's drowning, branch to not make dust
-	move.b	#6,(Sonic_Dust+routine).w
-	move.b	#$15,(Sonic_Dust+mapping_frame).w
+	move.b	#6,(Tails_Dust+routine).w
+	move.b	#$15,(Tails_Dust+mapping_frame).w
 
 return_1C3A8:
 	rts
