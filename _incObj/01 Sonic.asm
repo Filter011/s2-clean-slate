@@ -665,9 +665,14 @@ Obj01_Traction:
 ; stops Sonic from running through walls that meet the ground
 ; loc_1A64E:
 Obj01_CheckWallsOnGround:
+	move.b	obAngle(a0),d0				; get Sonic's current angle in relation to the floor
+	andi.b	#$3F,d0					; is he standing on a flat surface in any of the four quadrants?
+	beq.s	.noearlyexit				; if yes, skip the upside-down exit below
 	move.b	angle(a0),d0
 	addi.b	#$40,d0
 	bmi.s	return_1A6BE
+
+.noearlyexit:
 	move.b	#$40,d1			; Rotate 90 degrees clockwise
 	tst.w	inertia(a0)		; Check inertia
 	beq.s	return_1A6BE	; If not moving, don't do anything
@@ -690,8 +695,12 @@ Obj01_CheckWallsOnGround:
 	cmpi.b	#$80,d0
 	beq.s	loc_1A6A2
 	add.w	d1,x_vel(a0)
-	bset	#status.player.pushing,status(a0)
-	move.w	#0,inertia(a0)
+	move.w	#0,inertia(a0)				; clear ground speed
+	btst	#status.player.x_flip,status(a0)	; is Sonic facing the wall?
+	bne.s	.awayright				; if not, branch
+	bset	#status.player.pushing,status(a0)	; set pushing flag
+
+.awayright:
 	rts
 ; ---------------------------------------------------------------------------
 loc_1A6A2:
@@ -700,8 +709,12 @@ loc_1A6A2:
 ; ---------------------------------------------------------------------------
 loc_1A6A8:
 	sub.w	d1,x_vel(a0)
-	bset	#status.player.pushing,status(a0)
-	move.w	#0,inertia(a0)
+	move.w	#0,inertia(a0)				; clear ground speed
+	btst	#status.player.x_flip,status(a0)	; is Sonic facing the wall?
+	beq.s	.awayleft				; if not, branch
+	bset	#status.player.pushing,status(a0)	; set pushing flag
+
+.awayleft:
 	rts
 ; ---------------------------------------------------------------------------
 loc_1A6BA:
@@ -1141,6 +1154,7 @@ Obj01_DoRoll:
 	move.b	#$E,y_radius(a0)
 	move.b	#7,x_radius(a0)
 	move.b	#AniIDSonAni_Roll,anim(a0)	; use "rolling" animation
+	move.b	#$3D,anim_frame(a0)			; force Sonic into his first rolling frame
 	addq.w	#5,y_pos(a0)
 	moveq	#SndID_Roll,d0
 	jsr	(PlaySound).w	; play rolling sound
@@ -1196,6 +1210,8 @@ Sonic_Jump:
 	clr.b	stick_to_convex(a0)
 	moveq	#SndID_Jump,d0
 	jsr	(PlaySound).w	; play jumping sound
+	btst	#status.player.rolling,status(a0)
+	bne.s	return_1AAE6
 	move.b	#$E,y_radius(a0)
 	move.b	#7,x_radius(a0)
 	move.b	#AniIDSonAni_Roll,anim(a0)	; use "jumping" animation
@@ -1701,49 +1717,58 @@ SonAirCol_PosY:
 +
 	bsr.w	Sonic_CheckFloor
 	tst.w	d1
-	bpl.s	return_1AF8A
+	bpl.s	.return
 	move.b	y_vel(a0),d2
 	addq.b	#8,d2
 	neg.b	d2
 	cmp.b	d2,d1
 	bge.s	+
 	cmp.b	d2,d0
-	blt.s	return_1AF8A
+	blt.s	.return
 +
 	add.w	d1,y_pos(a0)
 	move.b	d3,angle(a0)
 	bsr.w	Sonic_ResetOnFloor
-	move.b	d3,d0
-	addi.b	#$20,d0
-	andi.b	#$40,d0
-	bne.s	loc_1AF68
-	move.b	d3,d0
-	addi.b	#$10,d0
-	andi.b	#$20,d0
-	beq.s	loc_1AF5A
+	move.b	d3,d0					; get floor angle
+	bpl.s	.checkupper				; if it's in the left half, branch
+	neg.b	d0					; if if's in the right half, mirror it
+.checkupper:
+	btst	#6,d0					; is it in the lower half?
+	beq.s	.checkslope				; if so, branch
+	subi.b	#$80,d0					; if it's in the upper half...
+	neg.b	d0					; ...mirror it
+.checkslope:
+	cmpi.b	#$20,d0					; are we landing on a steep slope?
+	bhs.s	.steepslope				; if so, branch
+	cmpi.b	#$11,d0					; are we landing on a shallow slope?
+	blo.s	.flatsurface				; if not, branch
 	asr.w	y_vel(a0)
-	bra.s	loc_1AF7C
+	bra.s	.noslopecap
 ; ===========================================================================
 
-loc_1AF5A:
+; loc_1AF5A:
+.flatsurface:
 	move.w	#0,y_vel(a0)
 	move.w	x_vel(a0),inertia(a0)
 	rts
 ; ===========================================================================
 
-loc_1AF68:
+; loc_1AF68:
+.steepslope:
 	move.w	#0,x_vel(a0) ; stop Sonic since he hit a wall
 	cmpi.w	#$FC0,y_vel(a0)
-	ble.s	loc_1AF7C
+	ble.s	.noslopecap
 	move.w	#$FC0,y_vel(a0)
 
-loc_1AF7C:
+; loc_1AF7C:
+.noslopecap:
 	move.w	y_vel(a0),inertia(a0)
 	tst.b	d3
-	bpl.s	return_1AF8A
+	bpl.s	.return
 	neg.w	inertia(a0)
 
-return_1AF8A:
+; return_1AF8A:
+.return:
 	rts
 ; ===========================================================================
 ; loc_1AF8C:
@@ -1884,12 +1909,12 @@ Sonic_ResetOnFloor_Part2:
 	cmpi.b	#ObjID_Sonic,id(a0)	; is this object ID Sonic (obj01)?
 	bne.w	Tails_ResetOnFloor_Part2	; if not, branch to the Tails version of this code
 
+	move.b	#AniIDSonAni_Walk,anim(a0)	; use running/walking/standing animation
 	btst	#status.player.rolling,status(a0)
 	beq.s	Sonic_ResetOnFloor_Part3
 	bclr	#status.player.rolling,status(a0)
 	move.b	#$13,y_radius(a0) ; this increases Sonic's collision height to standing
 	move.b	#9,x_radius(a0)
-	move.b	#AniIDSonAni_Walk,anim(a0)	; use running/walking/standing animation
 	subq.w	#5,y_pos(a0)	; move Sonic up 5 pixels so the increased height doesn't push him into the ground
 ; loc_1B0DA:
 Sonic_ResetOnFloor_Part3:
@@ -1935,6 +1960,7 @@ Obj01_Hurt_Normal:
 	andi.w	#$7FF,y_pos(a0)
 +
 	bsr.s	Sonic_HurtStop
+	bsr.w	Sonic_Water
 	bsr.w	Sonic_LevelBound
 	bsr.w	Sonic_RecordPos
 	bsr.w	Sonic_Animate
