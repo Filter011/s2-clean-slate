@@ -706,6 +706,7 @@ zDACUpdateTrack:
 ; zloc_20E
 .gotduration:
 	call	zSetDuration
+	ld	(ix+zTrack.DurationTimeout),a	; Sets it on ticker (counts to zero)
 
 ; zloc_211
 zDACAfterDur:
@@ -744,7 +745,7 @@ zUpdateTrack:
 	bit	1,(ix+zTrack.PlaybackControl)	; Is "track in rest"?
 	ret	nz				; If so, quit
 	call	zDoModulation			; Update modulation (if modulation doesn't change, we do not return here)
-	call	zFMPrepareNote			; Prepares to play next note
+	call	zFMUpdateFreq			; Prepares to play next note
 	jp	zFMNoteOn			; Actually key it (if allowed)
 
 .notegoing:
@@ -765,8 +766,6 @@ zUpdateTrack:
 
 ; zloc_3E5
 zFMUpdateFreq:
-; zloc_3F5
-zFMPrepareNote:
 	bit	2,(ix+zTrack.PlaybackControl)	; Is SFX overriding this track?
 	ret	nz				; If so, quit!
 
@@ -898,7 +897,6 @@ zSetDuration:
 	add	a,c				; Will multiply duration based on 'b'
 	djnz	.multloop
 	ld	(ix+zTrack.SavedDuration),a	; Store new duration into ticker goal of this track (this is reused if a note follows a note without a new duration)
-	ld	(ix+zTrack.DurationTimeout),a	; Sets it on ticker (counts to zero)
 	ret
 ; End of function zSetDuration
 
@@ -1044,7 +1042,7 @@ zPSGUpdateTrack:
 	bit	1,(ix+zTrack.PlaybackControl)	; Is "track in rest"?
 	ret	nz				; If so, quit
 	call	zDoModulation			; Update modulation (if modulation doesn't change, we do not return here)
-	call	zPSGDoNoteOn			; Actually key it (if allowed)
+	call	zPSGUpdateFreq			; Actually key it (if allowed)
 	jp	zPSGDoVolFX			; This applies PSG volume as well as its special volume-based effects that I call "flutter"
 
 .notegoing:
@@ -1067,8 +1065,6 @@ zPSGUpdateTrack:
 
 ; zsub_487
 zPSGUpdateFreq:
-; zloc_493
-zPSGDoNoteOn:
 	bit	2,(ix+zTrack.PlaybackControl)	; Get playback control byte
 	ret	nz				; If bit 2 ("SFX overriding this track"), quit!
 
