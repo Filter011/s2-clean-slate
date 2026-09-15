@@ -4,6 +4,8 @@
 ; Additional disassembly work by RAS Oct 2008
 ; RAS' work merged into SVN by Flamewing
 ; ---------------------------------------------------------------------------
+; Settings
+; ---------------------------------------------------------------------------
 
 ; Optimise FM Frequencies
 ; This is enabled by default to give the sound driver more headspace for code.
