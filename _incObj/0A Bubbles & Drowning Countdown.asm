@@ -74,8 +74,8 @@ Obj0A_ChkWater:
 	; pop the bubble:
 	move.b	#6,routine(a0) ; Obj0A_Display
 	addq.b	#7,anim(a0)
-	cmpi.b	#$D,anim(a0)
-	ble.s	Obj0A_Display
+	cmpi.b	#$E,anim(a0)
+	blo.s	Obj0A_Display
 	move.b	#$D,anim(a0)
 	bra.s	Obj0A_Display
 ; ===========================================================================
@@ -179,17 +179,6 @@ Obj0A_WobbleData:
 	dc.b -3,-3,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4;96
 	dc.b -4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-3;112
 	dc.b -3,-3,-3,-3,-3,-3,-2,-2,-2,-2,-2,-1,-1,-1,-1,-1;128
-
-	; Unused leftover from Sonic 1.
-	; This was used by Labyrinth Zone's water ripple effect in REV01.
-	dc.b  0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2;144
-	dc.b  2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3;160
-	dc.b  3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2;176
-	dc.b  2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0;192
-	dc.b  0,-1,-1,-1,-1,-1,-2,-2,-2,-2,-2,-3,-3,-3,-3,-3;208
-	dc.b -3,-3,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4;224
-	dc.b -4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-3;240
-	dc.b -3,-3,-3,-3,-3,-3,-2,-2,-2,-2,-2,-1,-1,-1,-1,-1;256
 ; ===========================================================================
 ; the countdown numbers go over the dust and splash effect tiles in VRAM
 ; loc_1D5C0:
@@ -207,8 +196,13 @@ Obj0A_LoadCountdownArt:
 	move.w	d1,d0
 	add.w	d1,d1
 	add.w	d0,d1
+    if AssumeSourceAddressInBytes
+	lsl.w	#5,d1
+	addi.l	#dmaSource(ArtUnc_Countdown),d1
+    else
 	lsl.w	#6,d1
 	addi.l	#ArtUnc_Countdown,d1
+    endif
 	move.w	#tiles_to_bytes(ArtTile_ArtNem_SonicDust),d2
 	tst.b	obj0a_character+3(a0)
 	beq.s	+
@@ -301,7 +295,8 @@ Obj0A_ReduceAir:
 	move.w	#0,y_vel(a0)
 	move.w	#0,x_vel(a0)
 	move.w	#0,inertia(a0)
-	movea.l	(sp)+,a0 ; load 0bj address ; restore a0 = obj0A
+	move.b	#2,routine(a0)
+	movea.l	(sp)+,a0 ; load obj address ; restore a0 = obj0A
 	move.b	#1,(Deform_lock).w
 	rts
 ; ===========================================================================

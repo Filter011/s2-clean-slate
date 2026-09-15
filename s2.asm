@@ -473,8 +473,8 @@ V_Int:
 	jsr	Vint_SwitchTbl(pc,d0.w)
 
 VintRet:
-	addq.l	#1,(Vint_runcount).w
 	movem.l	(sp)+,d0-a6
+	addq.l	#1,(Vint_runcount).w
 	rte
 ; ===========================================================================
 Vint_SwitchTbl: offsetTable
@@ -483,12 +483,11 @@ Vint_SEGA_ptr:		offsetTableEntry.w Vint_SEGA		;   2
 Vint_Title_ptr:		offsetTableEntry.w Vint_Title		;   4
 Vint_Unused6_ptr:	offsetTableEntry.w Vint_Unused6		;   6
 Vint_Level_ptr:		offsetTableEntry.w Vint_Level		;   8
-Vint_TitleCard_ptr:	offsetTableEntry.w Vint_TitleCard	;  $C
-Vint_UnusedE_ptr:	offsetTableEntry.w Vint_UnusedE		;  $E
-Vint_Pause_ptr:		offsetTableEntry.w Vint_Pause		; $10
-Vint_Fade_ptr:		offsetTableEntry.w Vint_Fade		; $12
-Vint_PCM_ptr:		offsetTableEntry.w Vint_PCM		; $14
-Vint_Menu_ptr:		offsetTableEntry.w Vint_Menu		; $16
+Vint_TitleCard_ptr:	offsetTableEntry.w Vint_TitleCard	;  $A
+Vint_UnusedE_ptr:	offsetTableEntry.w Vint_UnusedE		;  $C
+Vint_Fade_ptr:		offsetTableEntry.w Vint_Fade		;  $E
+Vint_PCM_ptr:		offsetTableEntry.w Vint_PCM		; $10
+Vint_Menu_ptr:		offsetTableEntry.w Vint_Menu		; $12
 ; ===========================================================================
 ;VintSub0
 Vint_Lag:
@@ -511,10 +510,10 @@ Vint_Lag_Main:
 .isInLevelMode:
 	tst.b	(Water_flag).w
 	beq.s	Vint0_noWater
+	move.w	(a5),d0
 	btst	#6,(Graphics_Flags).w ; is Megadrive PAL?
 	beq.s	+		; if not, branch
 
-	move.w	(a5),d0
 	move.w	#$700,d0
 -	dbf	d0,- ; wait here in a loop doing nothing for a while...
 +
@@ -541,10 +540,10 @@ Vint_Lag_Main:
 ; ---------------------------------------------------------------------------
 
 Vint0_noWater:
+	move.w	(a5),d0
 	btst	#6,(Graphics_Flags).w	; is Megadrive PAL?
 	beq.s	+			; if not, branch
 
-	move.w	(a5),d0
 	move.w	#$700,d0
 -	dbf	d0,- ; wait here in a loop doing nothing for a while...
 +
@@ -598,8 +597,6 @@ Vint_Title:
 Vint_Unused6:
 	bra.w	Do_ControllerPal
 ; >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-;VintSub10
-Vint_Pause:
 ;VintSub8
 Vint_Level:
 	bsr.w	ReadJoypads
@@ -952,7 +949,7 @@ PauseGame:
 	startZ80
 ; loc_13B2:
 Pause_Loop:
-	move.b	#VintID_Pause,(Vint_routine).w
+	move.b	#VintID_Level,(Vint_routine).w
 	bsr.w	WaitForVint
 	tst.b	(Slow_motion_flag).w	; is slow-motion cheat on?
 	beq.s	Pause_ChkStart		; if not, branch
