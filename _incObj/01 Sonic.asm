@@ -257,8 +257,8 @@ Obj01_InWater:
 	beq.s	return_1A18C
 .splash:	; <--
 	move.w	#(1<<8)|(0<<0),(Sonic_Dust+anim).w	; splash animation
-	move.w	#SndID_Splash,d0	; splash sound
-	jmp	(PlaySound).l
+	moveq	#SndID_Splash,d0	; splash sound
+	jmp	(PlaySound).w
 ; ---------------------------------------------------------------------------
 ; loc_1A1FE:
 Obj01_OutWater:

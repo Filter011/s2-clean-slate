@@ -348,8 +348,8 @@ Obj02_NotLeft:
 	bsr.w	Tails_MoveRight
 ; loc_1C0E0:
 Obj02_NotRight:
-	move.b	angle(a0),d0
-	addi.b	#$20,d0
+	moveq	#$20,d0
+	add.b	angle(a0),d0
 	andi.b	#$C0,d0		; is Tails on a slope?
 	bne.w	Obj02_ResetScr	; if yes, branch
 	tst.w	inertia(a0)	; is Tails moving?
@@ -589,8 +589,8 @@ Tails_TurnLeft:
 	moveq	#-$80,d0
 +
 	move.w	d0,inertia(a0)
-	move.b	angle(a0),d1
-	addi.b	#$20,d1
+	moveq	#$20,d1
+	add.b	angle(a0),d1
 	andi.b	#$C0,d1
 	bne.s	return_1C328
 	cmpi.w	#$400,d0
@@ -639,8 +639,8 @@ Tails_TurnRight:
 	move.w	#$80,d0
 +
 	move.w	d0,inertia(a0)
-	move.b	angle(a0),d1
-	addi.b	#$20,d1
+	moveq	#$20,d1
+	add.b	angle(a0),d1
 	andi.b	#$C0,d1
 	bne.s	return_1C3A8
 	cmpi.w	#-$400,d0
