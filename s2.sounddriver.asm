@@ -5,8 +5,13 @@
 ; RAS' work merged into SVN by Flamewing
 ; ---------------------------------------------------------------------------
 
+; Optimise FM Frequencies
+; This is enabled by default to give the sound driver more headspace for code.
+; Disable this option if you want to improve sound driver processing.
 OptimiseFMFreq = 1
 
+; Frequency Alignment
+; Do not set to 0 at the current moment.
 FreqNoAlign = 1
 
 ; ---------------------------------------------------------------------------
@@ -171,7 +176,7 @@ zYM2612_D1 =	$4003
 zBankRegister =	$6000
 zPSG =		$7F11
 zROMWindow =	$8000
-zStack =	$1B80	; 1B80h
+zStack =	$1C00
 
 	phase zStack
 zAbsVar:		zVar
