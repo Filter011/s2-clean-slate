@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.9.17 (stable)
+; S2CS Driver version: 26.9.17.1 (unstable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -134,9 +134,9 @@ zTrack STRUCT DOTS
 	VolTLMask:		ds.b 1	; zVolTLMaskTbl value set during voice setting (value based on algorithm indexing zGain table)
 	PSGNoise:		ds.b 1	; PSG noise setting
 	LoopCounters:		ds.b 2	; Loop counter index 0
-	VoicePtrLow:		ds.b 1	; Low byte of custom voice table (for SFX)
-	VoicePtrHigh:		ds.b 1	; High byte of custom voice table (for SFX)
-				ds.b 6	; used by LoopCounters
+	VoicePtrLow:		ds.b 1	; Low byte of custom voice table (for SFX and Music)
+	VoicePtrHigh:		ds.b 1	; High byte of custom voice table (for SFX and Music)
+				ds.b 6	; Reserved for and used by LoopCounters (must have a total of 0Ah bytes reserved)
 	;   ... open ...
 	GoSubStack:			; start of next track, every two bytes below this is a coord flag "gosub" (F8h) return stack
 	;
@@ -168,6 +168,7 @@ zVar STRUCT DOTS
 	SpeedUpFlag:		ds.b 1
 	DACEnabled:		ds.b 1
 	SongBank:		ds.b 1
+	SFXBank:		ds.b 1
 	DACBank:		ds.b 1
 	IsPalFlag:		ds.b 1	; Flags if the system is a PAL console
 zVar ENDSTRUCT
@@ -280,6 +281,18 @@ bankswitchToBank macro bank
 		; this is either ld (hl),h or ld (hl),l
 		db 74h|(((bank)&(1<<(15+.cnt)))<>0)
 .cnt	:= .cnt+1
+	endm
+    endm
+
+zmake68kBanks macro
+	irp op,ALLARGS
+		db zmake68kBank(op)
+	endm
+    endm
+
+zmake68kPtrs macro
+	irp op,ALLARGS
+		dw zmake68kPtr(op)
 	endm
     endm
 
@@ -426,7 +439,8 @@ zUpdateEverything:
 	call	zUpdateMusic
 
 	; Now all of the SFX tracks are updated in a similar manner to "zUpdateMusic"...
-	bankswitchToBank MusicPoint1	; Bank switch to sound effects
+	ld	a,(zAbsVar.SFXBank)
+	bankswitch 			; Bank switch to sound effects
 
 	ld	a,80h
 	ld	(zDoSFXFlag),a		; Set zDoSFXFlag = 80h (updating sound effects)
@@ -451,7 +465,7 @@ zUpdateDAC:
 	ld	(zYM2612_A0),a		; Set DAC port register
 
 	ld	a,zmake68kBank(MusicPoint1)
-	bankswitch		; Bankswitch to the DAC data
+	bankswitch 			; Bankswitch to the DAC data
 
 	ld	a,(zCurDAC)		; Get currently playing DAC sound
 	or	a
@@ -1356,7 +1370,8 @@ zPauseMusic:
 	ld	b,MUSIC_DAC_FM_TRACK_COUNT	; 1 DAC + 6 FM
 	call	zResumeTrack
 
-	bankswitchToBank MusicPoint1	; Now for SFX
+	ld	a,(zAbsVar.SFXBank)
+	bankswitch			; Now for SFX
 
 	ld	a,0FFh			; a = 0FFH
 	ld	(zDoSFXFlag),a		; Set flag to say we are updating SFX
@@ -1566,6 +1581,8 @@ zBGMLoad:
 	call	zInitMusicPlayback
 	ld	a,(zCurSong)			; So, let's take your desired song, put it into 'a'
 	sub	MusID__First			; Make it a zero-based entry ...
+	add	a,a
+	add	a,a
 	ld	e,a				; Transform 'a' into 16-bit de
 	ld	d,0
 	ld	hl,zSpedUpTempoTable		; Load 'hl' of "sped up" tempos [I think]
@@ -1573,9 +1590,6 @@ zBGMLoad:
 	ld	a,(hl)				; Get value at this location -> 'a'
 	ld	(zAbsVar.TempoTurbo),a		; Store 'a' here (provides an alternate tempo or something for speed up mode)
 	ld	hl,zMasterPlaylist		; Get address of the zMasterPlaylist
-	add	hl,de				; Offset by 16-bit
-	add	hl,de				; Offset by 16-bit
-	add	hl,de				; Offset by 16-bit
 	add	hl,de				; Offset by 16-bit
 	ld	a,(hl)				; Get bank for the song to play
 	ld	(zAbsVar.SongBank),a			; Save the song's bank...
@@ -1871,15 +1885,23 @@ zPlaySound_CheckSpindash:
 
 ; zloc_975:
 zPlaySound:
-	bankswitchToBank MusicPoint1		; Switch to SFX banks
-
 	ld	hl,SoundIndex	; 'hl' points to beginning of SFX bank in ROM window
 	ld	a,c				; 'c' -> 'a'
 	sub	SndID__First			; Bring 'a' down to index value
-	add	a,a				; Multiply it by 2
+	ld	c,a
+	add	a,a
+	add	a,c		; each entry is 3 bytes in size
 	ld	e,a
 	ld	d,0		; de = a
-	add	hl,de		; now hl points to a pointer in the SoundIndex list (such as rom_ptr_z80 Sound20)
+	add	hl,de
+
+	ld	a,(hl)
+	ld	(zAbsVar.SFXBank),a
+	ex	de,hl
+	bankswitch
+	ex	de,hl
+
+	inc	hl
 	ld	a,(hl)
 	inc	hl
 	ld	h,(hl)
@@ -2553,9 +2575,9 @@ cfFadeInToPrevious:
 
 	ld	a,(zAbsVar.SongBank)
 	bankswitch
-	ld	a,(zSongDAC.PlaybackControl)	; Get DAC's playback bit
-	or	0100b
-	ld	(zSongDAC.PlaybackControl),a	; Set "SFX is overriding" on it (not normal, but will work for this purpose)
+
+	ld	hl,zSongDAC.PlaybackControl	; Get DAC's playback bit
+	set	2,(hl)				; Set "SFX is overriding" on it (not normal, but will work for this purpose)
 	ld	a,(zAbsVar.FadeInCounter)	; Get current count of many frames to continue bringing volume up
 	ld	c,a
 	ld	a,28h
@@ -2929,8 +2951,6 @@ cfEnableModulation:
 ; (via Saxman's doc): stop the track
 ; zloc_EE4
 cfStopTrack:
-;	res	7,(ix+zTrack.PlaybackControl)	; Clear playback byte bit 7 (80h) -- currently playing (not anymore)
-;	res	4,(ix+zTrack.PlaybackControl)	; Clear playback byte bit 4 (10h) -- do not attack
  	ld	a,(ix+zTrack.PlaybackControl)
  	and	01101111b			; Bitmask so bits 7 and 4 are cleared
  	ld	(ix+zTrack.PlaybackControl),a
@@ -2974,7 +2994,8 @@ zStoppedChannel:	; General stop track continues here...
 	set	1,(ix+zTrack.PlaybackControl)	; Set track as resting bit
 	call	zSetVoice			; And set it! (takes care of volume too)
 
-	bankswitchToBank MusicPoint1
+	ld	a,(zAbsVar.SFXBank)
+	bankswitch
 
 zNoVoiceUpdate:
 	pop	ix	; restore 'ix'
@@ -3224,9 +3245,9 @@ zPSG_Env13:
 
 ;	END of zPSG_EnvTbl -------------------------------
 
-music_metadata macro loc,bank,pal
-	db	zmake68kBank(bank)
-	dw	zmake68kPtr(loc)
+music_metadata macro loc,pal
+	zmake68kBanks	loc
+	zmake68kPtrs	loc
 	if "pal"<>""
 	db	0
 	else
@@ -3236,37 +3257,37 @@ music_metadata macro loc,bank,pal
 
 ; zbyte_11F5h
 zMasterPlaylist:
-zMusIDPtr_2PResult:	music_metadata Mus_2PResult,MusicPoint2
-zMusIDPtr_EHZ:		music_metadata Mus_EHZ,MusicPoint2
-zMusIDPtr_MCZ_2P:	music_metadata Mus_MCZ_2P,MusicPoint2
-zMusIDPtr_OOZ:		music_metadata Mus_OOZ,MusicPoint2
-zMusIDPtr_MTZ:		music_metadata Mus_MTZ,MusicPoint2
-zMusIDPtr_HTZ:		music_metadata Mus_HTZ,MusicPoint2
-zMusIDPtr_ARZ:		music_metadata Mus_ARZ,MusicPoint1
-zMusIDPtr_CNZ_2P:	music_metadata Mus_CNZ_2P,MusicPoint2
-zMusIDPtr_CNZ:		music_metadata Mus_CNZ,MusicPoint2
-zMusIDPtr_DEZ:		music_metadata Mus_DEZ,MusicPoint2
-zMusIDPtr_MCZ:		music_metadata Mus_MCZ,MusicPoint2
-zMusIDPtr_EHZ_2P:	music_metadata Mus_EHZ_2P,MusicPoint2
-zMusIDPtr_SCZ:		music_metadata Mus_SCZ,MusicPoint2
-zMusIDPtr_CPZ:		music_metadata Mus_CPZ,MusicPoint2
-zMusIDPtr_WFZ:		music_metadata Mus_WFZ,MusicPoint2
-zMusIDPtr_HPZ:		music_metadata Mus_HPZ,MusicPoint2
-zMusIDPtr_Options:	music_metadata Mus_Options,MusicPoint2
-zMusIDPtr_SpecStage:	music_metadata Mus_SpecStage,MusicPoint2
-zMusIDPtr_Boss:		music_metadata Mus_Boss,MusicPoint2
-zMusIDPtr_EndBoss:	music_metadata Mus_EndBoss,MusicPoint2
-zMusIDPtr_Ending:	music_metadata Mus_Ending,MusicPoint2
-zMusIDPtr_SuperSonic:	music_metadata Mus_SuperSonic,MusicPoint2
-zMusIDPtr_Invincible:	music_metadata Mus_Invincible,MusicPoint1
-zMusIDPtr_ExtraLife:	music_metadata Mus_ExtraLife,MusicPoint2
-zMusIDPtr_Title:	music_metadata Mus_Title,MusicPoint2
-zMusIDPtr_EndLevel:	music_metadata Mus_EndLevel,MusicPoint2
-zMusIDPtr_GameOver:	music_metadata Mus_GameOver,MusicPoint2
-zMusIDPtr_Continue:	music_metadata Mus_Continue,MusicPoint2
-zMusIDPtr_Emerald:	music_metadata Mus_Emerald,MusicPoint2
-zMusIDPtr_Credits:	music_metadata Mus_Credits,MusicPoint1
-zMusIDPtr_Countdown:	music_metadata Mus_Drowning,MusicPoint2,1
+zMusIDPtr_2PResult:	music_metadata Mus_2PResult
+zMusIDPtr_EHZ:		music_metadata Mus_EHZ
+zMusIDPtr_MCZ_2P:	music_metadata Mus_MCZ_2P
+zMusIDPtr_OOZ:		music_metadata Mus_OOZ
+zMusIDPtr_MTZ:		music_metadata Mus_MTZ
+zMusIDPtr_HTZ:		music_metadata Mus_HTZ
+zMusIDPtr_ARZ:		music_metadata Mus_ARZ
+zMusIDPtr_CNZ_2P:	music_metadata Mus_CNZ_2P
+zMusIDPtr_CNZ:		music_metadata Mus_CNZ
+zMusIDPtr_DEZ:		music_metadata Mus_DEZ
+zMusIDPtr_MCZ:		music_metadata Mus_MCZ
+zMusIDPtr_EHZ_2P:	music_metadata Mus_EHZ_2P
+zMusIDPtr_SCZ:		music_metadata Mus_SCZ
+zMusIDPtr_CPZ:		music_metadata Mus_CPZ
+zMusIDPtr_WFZ:		music_metadata Mus_WFZ
+zMusIDPtr_HPZ:		music_metadata Mus_HPZ
+zMusIDPtr_Options:	music_metadata Mus_Options
+zMusIDPtr_SpecStage:	music_metadata Mus_SpecStage
+zMusIDPtr_Boss:		music_metadata Mus_Boss
+zMusIDPtr_EndBoss:	music_metadata Mus_EndBoss
+zMusIDPtr_Ending:	music_metadata Mus_Ending
+zMusIDPtr_SuperSonic:	music_metadata Mus_SuperSonic
+zMusIDPtr_Invincible:	music_metadata Mus_Invincible
+zMusIDPtr_ExtraLife:	music_metadata Mus_ExtraLife
+zMusIDPtr_Title:	music_metadata Mus_Title
+zMusIDPtr_EndLevel:	music_metadata Mus_EndLevel
+zMusIDPtr_GameOver:	music_metadata Mus_GameOver
+zMusIDPtr_Continue:	music_metadata Mus_Continue
+zMusIDPtr_Emerald:	music_metadata Mus_Emerald
+zMusIDPtr_Credits:	music_metadata Mus_Credits
+zMusIDPtr_Countdown:	music_metadata Mus_Drowning,1
 zMusIDPtr__End:
 
 ; Tempo with speed shoe tempo for each song
@@ -3365,7 +3386,8 @@ sample_rate_scale := sampleRateScale
 	dac_sample_metadata SndDAC_Bongo,   1.30	; 91h
 
 sfx_metadata macro loc
-	dw	zmake68kPtr(loc)
+	zmake68kBanks	loc
+	zmake68kPtrs	loc
     endm
 
 SoundIndex:
@@ -3397,7 +3419,7 @@ SndPtr_SpikesMove:	sfx_metadata	Sound36
 SndPtr_Rumbling:	sfx_metadata	Sound37	; rumbling
 			sfx_metadata	Sound38	; (unused)
 SndPtr_Smash:		sfx_metadata	Sound39	; smash/breaking
-SndPtr_Grab:			sfx_metadata	Sound3A	; nondescript ding (unused)
+SndPtr_Grab:		sfx_metadata	Sound3A	; nondescript ding (unused)
 SndPtr_DoorSlam:	sfx_metadata	Sound3B	; door slamming shut
 SndPtr_SpindashRelease:	sfx_metadata	Sound3C	; spindash unleashed
 SndPtr_Hammer:		sfx_metadata	Sound3D	; slide-thunk
