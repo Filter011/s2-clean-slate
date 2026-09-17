@@ -79,8 +79,8 @@ loc_28432:
 	move.w	d2,d3
 	addq.w	#1,d3
 	jsr	(SolidObject).l
-	move.w	objoff_34(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	objoff_34(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	+
@@ -119,8 +119,8 @@ loc_284BC:
 	move.w	d1,x_pos(a0)
 	add.w	objoff_30(a0),d2
 	move.w	d2,y_pos(a0)
-	move.w	objoff_34(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	objoff_34(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	+

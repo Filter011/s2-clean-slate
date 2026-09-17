@@ -26,8 +26,8 @@ Obj49_Init:
 	bset	#render_flags.explicit_height,render_flags(a0)
 ; loc_20BEA:
 Obj49_ChkDel:
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.w	JmpTo18_DeleteObject

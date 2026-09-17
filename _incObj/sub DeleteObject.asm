@@ -6,8 +6,8 @@
 ; input: a0 = the object
 ; loc_163D2:
 MarkObjGone:
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$80+roundToNextMultiple(screen_width,$80)+$80,d0	; This gives an object $80 pixels of room offscreen before being unloaded
 	bhi.s	+
@@ -33,17 +33,16 @@ MarkObjGone2:
 	lea	(Object_Respawn_Table).w,a2
 	moveq	#0,d0
 	move.b	respawn_index(a0),d0
-	beq.s	+
+	beq.s	DeleteObject
 	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
-+
-	bra.w	DeleteObject
+	bra.s	DeleteObject
 ; ===========================================================================
 ; input: a0 = the object
 ; does nothing instead of calling DisplaySprite in the case of no deletion
 ; loc_1643E:
 MarkObjGone3:
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$80+roundToNextMultiple(screen_width,$80)+$80,d0	; This gives an object $80 pixels of room offscreen before being unloaded
 	bhi.s	+
@@ -52,16 +51,15 @@ MarkObjGone3:
 	lea	(Object_Respawn_Table).w,a2
 	moveq	#0,d0
 	move.b	respawn_index(a0),d0
-	beq.s	+
+	beq.s	DeleteObject
 	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
-+
-	bra.w	DeleteObject
+	bra.s	DeleteObject
 ; ===========================================================================
 ; input: a0 = the object
 ; loc_16472:
 MarkObjGone_P1:
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$80+roundToNextMultiple(screen_width,$80)+$80,d0	; This gives an object $80 pixels of room offscreen before being unloaded
 	bhi.s	+
@@ -70,10 +68,8 @@ MarkObjGone_P1:
 	lea	(Object_Respawn_Table).w,a2
 	moveq	#0,d0
 	move.b	respawn_index(a0),d0
-	beq.s	+
+	beq.s	DeleteObject
 	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
-+
-	bra.w	DeleteObject
 
 ; ---------------------------------------------------------------------------
 ; Subroutine to delete an object

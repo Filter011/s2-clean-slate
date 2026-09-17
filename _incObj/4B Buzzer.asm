@@ -134,7 +134,7 @@ JmpTo21_ObjectMove ; JmpTo
 ; sub_2D1D6:
 Obj4B_ChkPlayers:
 	tst.b	Obj4B_shooting_flag(a0)
-	bne.w	return_2D232	; branch, if shooting is disabled
+	bne.s	return_2D232	; branch, if shooting is disabled
 	move.w	x_pos(a0),d0
 	lea	(MainCharacter).w,a1 ; a1=character
 	sub.w	x_pos(a1),d0	; get object's distance to player

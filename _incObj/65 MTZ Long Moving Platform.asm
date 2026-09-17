@@ -118,8 +118,8 @@ loc_26C1C:
 	move.w	d2,d3
 	addq.w	#1,d3
 	jsr	(SolidObject).l
-	move.w	objoff_34(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	objoff_34(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	loc_26C66
@@ -152,12 +152,10 @@ return_26C8E:
 
 loc_26C90:
 	tst.b	objoff_38(a0)
-	bne.s	BranchTo_loc_26CC2
+	bne.s	loc_26CC2
 	subq.w	#1,objoff_36(a0)
 	bne.s	loc_26CD0
 	move.b	#1,objoff_38(a0)
-
-BranchTo_loc_26CC2 ; BranchTo
 	bra.s	loc_26CC2
 ; ===========================================================================
 
@@ -205,14 +203,13 @@ loc_26CF2:
 
 loc_26D14:
 	tst.b	objoff_38(a0)
-	bne.s	+
+	bne.s	loc_26D46
 	lea	(ButtonVine_Trigger).w,a2
 	moveq	#0,d0
 	move.b	objoff_3E(a0),d0
 	btst	#0,(a2,d0.w)
 	beq.s	loc_26D50
 	move.b	#1,objoff_38(a0)
-+
 	bra.s	loc_26D46
 ; ===========================================================================
 

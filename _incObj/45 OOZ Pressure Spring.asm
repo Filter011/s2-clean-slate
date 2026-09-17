@@ -210,7 +210,7 @@ loc_2433C:
 	btst	#status.npc.x_flip,status(a0)
 	beq.s	loc_24378
 	btst	#status.player.x_flip,status(a1)
-	bne.w	return_243CE
+	bne.s	return_2433A
 	tst.w	d0
 	bne.s	loc_2435E
 	tst.w	inertia(a1)
@@ -272,13 +272,13 @@ return_243CE:
 Obj45_LaunchCharacterHorizontal:
 	move.b	status(a0),d0
 	andi.b	#pushing_mask,d0
-	beq.w	return_244D0
+	beq.s	return_243CE
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_pushing_bit,d6
 
 loc_243EA:
 	bclr	d6,status(a0)
-	beq.w	return_244D0
+	beq.s	return_243CE
 	move.w	obj45_original_x_pos(a0),d0
 	sub.w	x_pos(a0),d0
 	bcc.s	loc_243FE

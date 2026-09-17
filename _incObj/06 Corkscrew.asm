@@ -7,8 +7,8 @@ Obj06:
 	move.b	routine(a0),d0
 	move.w	Obj06_Index(pc,d0.w),d1
 	jsr	Obj06_Index(pc,d1.w)
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo19_DeleteObject
@@ -236,7 +236,7 @@ Obj06_Cylinder:
 	lea	(MTZCylinder_Angle_Sonic).w,a2
 	moveq	#p1_standing_bit,d6
 	btst	d6,status(a0)
-	bne.w	loc_2188C
+	bne.s	loc_2188C
 	move.w	x_pos(a1),d0
 	sub.w	x_pos(a0),d0
 	cmpi.w	#-$C0,d0
@@ -294,7 +294,7 @@ loc_218C6:
 	addi.b	#$20,d0
 	cmpi.b	#$40,d0
 	bhs.s	+
-	asr	y_vel(a1)
+	asr.w	y_vel(a1)
 	bra.s	loc_218A8
 ; ---------------------------------------------------------------------------
 +	move.w	#0,y_vel(a1)

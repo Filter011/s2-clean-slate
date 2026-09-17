@@ -69,7 +69,8 @@ loc_3B9D8:
 	move.l	a2,objoff_2A(a1)
 	moveq	#0,d0
 	move.b	mapping_frame(a0),d0
-	lsl.w	#2,d0
+	add.w	d0,d0
+	add.w	d0,d0
 	lea	byte_3BA2A(pc,d0.w),a2
 	move.b	(a2)+,d0
 	ext.w	d0

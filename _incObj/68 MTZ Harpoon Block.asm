@@ -121,8 +121,8 @@ Obj68_Spike_Left:
 Obj68_Spike_Action:
 	tst.w	spikearoundblock_waiting(a0)
 	beq.s	+
-	move.b	(Level_frame_counter+1).w,d0
-	andi.b	#$3F,d0
+	moveq	#$3F,d0
+	and.b	(Level_frame_counter+1).w,d0
 	bne.s	Obj68_Spike_Action_End
 	clr.w	spikearoundblock_waiting(a0)
 	_btst	#render_flags.on_screen,render_flags(a0)	; is the spike on the screen?

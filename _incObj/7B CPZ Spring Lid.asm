@@ -7,8 +7,8 @@ Obj7B:
 	move.b	routine(a0),d0
 	move.w	Obj7B_Index(pc,d0.w),d1
 	jsr	Obj7B_Index(pc,d1.w)
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo40_DeleteObject

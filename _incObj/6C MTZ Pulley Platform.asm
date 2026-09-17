@@ -7,8 +7,8 @@ Obj6C:
 	move.b	routine(a0),d0
 	move.w	Obj6C_Index(pc,d0.w),d1
 	jsr	Obj6C_Index(pc,d1.w)
-	move.w	objoff_30(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	objoff_30(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	+

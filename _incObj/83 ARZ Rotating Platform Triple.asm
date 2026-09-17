@@ -196,8 +196,8 @@ Obj83_Main:
 	moveq	#9,d3
 	move.w	(sp)+,d4
 	jsr	(PlatformObject).l
-	move.w	Obj83_initial_x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	Obj83_initial_x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	.objectOffscreen

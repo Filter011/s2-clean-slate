@@ -234,9 +234,9 @@ loc_254C2:
 ; loc_254CC:
 Obj48_MoveCharacter:
 	movem.w	x_vel(a1),d0/d2
-	lsl.l	#8,d0
+	asl.l	#8,d0
 	add.l	d0,x_pos(a1)
-	lsl.l	#8,d2
+	asl.l	#8,d2
 	add.l	d2,y_pos(a1)
 	rts
 ; ===========================================================================

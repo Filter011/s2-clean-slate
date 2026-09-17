@@ -125,13 +125,13 @@ loc_2C5AE:
 	move.w	d0,x_pos(a0)
 
 loc_2C5C4:
-	move.w	objoff_30(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	objoff_30(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bls.s	+
-	move.w	objoff_32(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	objoff_32(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	loc_2C5F8

@@ -70,8 +70,8 @@ Obj19_Main:
 	moveq	#$11,d3
 	move.w	(sp)+,d4
 	jsr	(PlatformObject).l
-	move.w	objoff_30(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	objoff_30(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo20_DeleteObject

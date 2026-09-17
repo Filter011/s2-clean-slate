@@ -107,8 +107,8 @@ Obj93_Init:
 	ori.b	#1<<render_flags.on_screen,render_flags(a0)
 	ori.b	#$80,collision_flags(a0)
 	movea.w	objoff_2C(a0),a1 ; a1=object
-	move.b	render_flags(a1),d0
-	andi.b	#3,d0
+	moveq	#3,d0
+	and.b	render_flags(a1),d0
 	or.b	d0,render_flags(a0)
 	moveq	#2,d1
 	btst	#1,d0

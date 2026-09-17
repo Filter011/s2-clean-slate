@@ -145,8 +145,8 @@ loc_28B16:
 ; ===========================================================================
 
 loc_28B46:
-	move.w	objoff_3A(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	objoff_3A(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	+

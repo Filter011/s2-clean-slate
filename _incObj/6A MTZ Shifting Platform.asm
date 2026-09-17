@@ -168,8 +168,7 @@ loc_27CA2:
 	move.b	objoff_38(a0),d0
 	movea.l	objoff_2C(a0),a1 ; a1=object
 	lea	(a1,d0.w),a1
-	move.w	(a1)+,x_vel(a0)
-	move.w	(a1)+,y_vel(a0)
+	move.l	(a1)+,x_vel(a0)	; and y_vel
 	move.w	(a1)+,objoff_34(a0)
 	move.w	#7,objoff_3A(a0)
 	move.b	#0,objoff_36(a0)

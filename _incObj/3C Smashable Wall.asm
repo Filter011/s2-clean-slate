@@ -6,8 +6,7 @@ Obj3C:
 	moveq	#0,d0
 	move.b	routine(a0),d0
 	move.w	Obj3C_Index(pc,d0.w),d1
-	jsr	Obj3C_Index(pc,d1.w)
-	bra.w	MarkObjGone
+	jmp	Obj3C_Index(pc,d1.w)
 ; ===========================================================================
 ; off_15D56:
 Obj3C_Index:	offsetTable
@@ -34,7 +33,7 @@ Obj3C_Main:
 	bsr.w	SolidObject
 	btst	#status.npc.p1_pushing,status(a0)
 	bne.s	+
--	rts
+-	bra.w	MarkObjGone
 ; ===========================================================================
 +
 	lea	(MainCharacter).w,a1 ; a1=character

@@ -287,8 +287,8 @@ loc_10006:
 ; ===========================================================================
 
 loc_1000C:
-	move.w	objoff_3A(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	objoff_3A(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	+
@@ -317,9 +317,9 @@ Obj15_State4:
 	jsr	(PlatformObject2).l
 	move.b	status(a0),d0
 	andi.b	#standing_mask,d0
-	beq.w	loc_1000C
+	beq.s	loc_1000C
 	tst.b	(Oscillating_Data+$18).w
-	bne.w	loc_1000C
+	bne.s	loc_1000C
 	bsr.w	AllocateObjectAfterCurrent
 	bne.s	loc_100E4
 	moveq	#0,d0

@@ -169,8 +169,8 @@ ObjA0_Index:	offsetTable
 ObjA0_Init:
 	bsr.w	LoadSubObject
 	movea.w	objoff_2C(a0),a1 ; a1=object
-	move.b	render_flags(a1),d0
-	andi.b	#1,d0
+	moveq	#1,d0
+	and.b	render_flags(a1),d0
 	or.b	d0,render_flags(a0)
 	move.w	objoff_2E(a0),d0
 	beq.s	loc_38198

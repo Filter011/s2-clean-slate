@@ -113,7 +113,8 @@ loc_1DAA4:
 
 loc_1DAAC:
 	move.b	objoff_36(a0),d1
-	lsl.b	#2,d1
+	add.b	d1,d1
+	add.b	d1,d1
 	move.w	d1,d2
 	add.w	d1,d1
 	add.w	d2,d1

@@ -8,8 +8,8 @@ Obj85:
 	move.w	Obj85_Index(pc,d0.w),d1
 	jsr	Obj85_Index(pc,d1.w)
 	move.w	#object_display_list_size*4,d0
-	move.w	x_pos(a0),d1
-	andi.w	#$FF80,d1
+	moveq	#-$80,d1
+	and.w	x_pos(a0),d1
 	sub.w	(Camera_X_pos_coarse).w,d1
 	cmpi.w	#$280,d1
 	bhi.s	+
@@ -53,7 +53,7 @@ Obj85_Init:
 	move.w	y_pos(a0),objoff_34(a0)
 	move.w	x_pos(a0),d2
 	move.w	y_pos(a0),d3
-	addi.w	#0,d3
+;	addi.w	#0,d3	; ???
 	move.b	#1,mainspr_childsprites(a0)
 	lea	subspr_data(a0),a2
 	move.w	d2,(a2)+	; sub2_x_pos

@@ -94,8 +94,8 @@ Obj13_Main:
 	move.b	d1,mapping_frame(a1)
 
 loc_204D8:
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo17_DeleteObject
@@ -106,8 +106,8 @@ loc_204F0:
 	moveq	#$13,d0
 	move.b	d0,mapping_frame(a0)
 	move.b	d0,mapping_frame(a1)
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo17_DeleteObject
@@ -118,8 +118,8 @@ JmpTo17_DeleteObject ; JmpTo
 ; ===========================================================================
 ; loc_20510:
 Obj13_ChkDel:
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo17_DeleteObject

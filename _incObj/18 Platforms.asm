@@ -119,8 +119,8 @@ Obj18_NonSolid:
 ; loc_105B0:
 Obj18_Despawn:
 	; local version of MarkObjGone
-	move.w	obj18_x_origin(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	obj18_x_origin(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$80+roundToNextMultiple(screen_width,$80)+$80,d0
 	bhi.s	Obj18_Delete

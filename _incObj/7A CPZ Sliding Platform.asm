@@ -88,13 +88,13 @@ Obj7A_SubObjectLoop_End:
 ; loc_2948E:
 Obj7A_Main:
 	bsr.s	loc_294F4
-	move.w	objoff_32(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	objoff_32(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bls.s	+
-	move.w	objoff_34(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	objoff_34(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	loc_294C4

@@ -54,8 +54,8 @@ Obj66_Main:
 	bsr.s	loc_27042
 
 loc_26FF6:
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo33_DeleteObject

@@ -1,8 +1,10 @@
-; Sonic the Hedgehog 2 disassembled Z80 sound driver
+; Sonic the Hedgehog 2 Clean Slate Z80 sound driver
 
-; Disassembled by Xenowhirl for AS
-; Additional disassembly work by RAS Oct 2008
-; RAS' work merged into SVN by Flamewing
+; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
+
+; S2CS Driver for short, optimised and rewritten by Filter.
+; S2CS Driver version: 26.9.17 (stable)
+
 ; ---------------------------------------------------------------------------
 ; Settings
 ; ---------------------------------------------------------------------------
@@ -712,7 +714,14 @@ zDACUpdateTrack:
 
 ; zloc_20E
 .gotduration:
-	call	zSetDuration
+	ld	b,(ix+zTrack.TempoDivider)	; Divisor; causes multiplication of duration for every number higher than 1
+	ld	c,a
+	xor	a
+
+.multloop:
+	add	a,c				; Will multiply duration based on 'b'
+	djnz	.multloop
+	ld	(ix+zTrack.SavedDuration),a	; Store new duration into ticker goal of this track (this is reused if a note follows a note without a new duration)
 	ld	(ix+zTrack.DurationTimeout),a	; Sets it on ticker (counts to zero)
 
 ; zloc_211
@@ -825,71 +834,12 @@ zFMDoNext:
 	call	zFMNoteOff		; Send key off
 	pop	af
 	or	a			; Test 'a' for 80h not set, which is a note duration
-	jp	p,.gotduration		; If duration, jump to .gotduration
+	jp	p,zSetDuration		; If duration, jump to .gotduration
 	call	zFMSetFreq		; Otherwise, this is a note; call zFMSetFreq
 	ld	a,(hl)			; Get next byte
 	or	a			; Test 'a' for 80h set, which is a note
 	jp	m,zFinishTrackUpdate	; If this is a note, jump to zFinishTrackUpdate
 	inc	hl			; Otherwise, go to next byte; a duration
-
-.gotduration:
-	call	zSetDuration
-	jp	zFinishTrackUpdate	; Either way, jumping to zFinishTrackUpdate...
-; End of function zFMDoNext
-
-; ---------------------------------------------------------------------------
-; zloc_285 zGetFrequency
-zFMSetFreq:
-	; 'a' holds a note to get frequency for
-	sub	81h
-	jr	c,zFMDoRest		; If this is a rest, jump to zFMDoRest
-	add	a,(ix+zTrack.Transpose)	; Add current channel transpose (coord flag E9)
-	add	a,a			; Offset into Frequency table...
-    if OptimiseFMFreq
-	ld	d,12*2			; 12 notes per octave
-	ld	c,0			; Clear c (will hold octave bits)
-
-.loop:
-	sub	d			; Subtract 1 octave from the note
-	jr	c,.getoctave		; If this is less than zero, we are done
-	inc	c			; One octave up
-	jp	.loop
-
-.getoctave:
-	add	a,d			; Add 1 octave back (so note index is positive)
-	sla	c
-	sla	c
-	sla	c			; Multiply octave value by 8, to get final octave bits
-    endif
-	add	a,zFrequencies&0FFh
-	ld	(.storefreq+2),a		; Store into the instruction after .storefreq (self-modifying code)
-	if FreqNoAlign
-	ld	d,a
-	adc	a,(zFrequencies&0FF00h)>>8
-	sub	d
-	ld	(.storefreq+3),a		; Store the high byte of the pointer (unnecessary if it's in the right range)
-	endif
-
-; zloc_292
-.storefreq:
-	ld	de,(zFrequencies)	; Stores frequency into "de"
-	ld	(ix+zTrack.FreqLow),e	; Frequency low byte   -> trackPtr + 0Dh
-    if OptimiseFMFreq
-	ld	a,d
-	or	c
-	ld	(ix+zTrack.FreqHigh),a	; Frequency high byte  -> trackPtr + 0Eh
-    else
-	ld	(ix+zTrack.FreqHigh),d	; Frequency high byte  -> trackPtr + 0Eh
-    endif
-	ret
-; ---------------------------------------------------------------------------
-
-; zloc_29D
-zFMDoRest:
-	set	1,(ix+zTrack.PlaybackControl)	; Set bit 1 (track is at rest)
-	ld	(ix+zTrack.FreqLow),0		; Zero out FM Frequency
-	ld	(ix+zTrack.FreqHigh),0		; Zero out FM Frequency
-	ret
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
@@ -904,7 +854,6 @@ zSetDuration:
 	add	a,c				; Will multiply duration based on 'b'
 	djnz	.multloop
 	ld	(ix+zTrack.SavedDuration),a	; Store new duration into ticker goal of this track (this is reused if a note follows a note without a new duration)
-	ret
 ; End of function zSetDuration
 
 ; ---------------------------------------------------------------------------
@@ -945,6 +894,61 @@ zFinishTrackUpdate:
 	ret	nz				; If so, quit!
 	ld	(ix+zTrack.ModulationValLow),0	; Clear modulation value low byte
 	ld	(ix+zTrack.ModulationValHigh),0	; Clear modulation value high byte
+	ret
+; End of function zFMDoNext
+
+; ---------------------------------------------------------------------------
+; zloc_285 zGetFrequency
+zFMSetFreq:
+	; 'a' holds a note to get frequency for
+	sub	81h
+	jr	c,zFMDoRest		; If this is a rest, jump to zFMDoRest
+	add	a,(ix+zTrack.Transpose)	; Add current channel transpose (coord flag E9)
+	add	a,a			; Offset into Frequency table...
+    if OptimiseFMFreq
+	ld	d,12*2			; 12 notes per octave
+	ld	c,0			; Clear c (will hold octave bits)
+
+.loop:
+	sub	d			; Subtract 1 octave from the note
+	jr	c,.getoctave		; If this is less than zero, we are done
+	inc	c			; One octave up
+	jp	.loop
+
+.getoctave:
+	add	a,d			; Add 1 octave back (so note index is positive)
+	sla	c
+	sla	c
+	sla	c			; Multiply octave value by 8, to get final octave bits
+    endif
+	add	a,zFrequencies&0FFh
+	ld	(.storefreq+2),a		; Store into the instruction after .storefreq (self-modifying code)
+    if FreqNoAlign
+	ld	d,a
+	adc	a,(zFrequencies&0FF00h)>>8
+	sub	d
+	ld	(.storefreq+3),a		; Store the high byte of the pointer (unnecessary if it's in the right range)
+    endif
+
+; zloc_292
+.storefreq:
+	ld	de,(zFrequencies)	; Stores frequency into "de"
+	ld	(ix+zTrack.FreqLow),e	; Frequency low byte   -> trackPtr + 0Dh
+    if OptimiseFMFreq
+	ld	a,d
+	or	c
+	ld	(ix+zTrack.FreqHigh),a	; Frequency high byte  -> trackPtr + 0Eh
+    else
+	ld	(ix+zTrack.FreqHigh),d	; Frequency high byte  -> trackPtr + 0Eh
+    endif
+	ret
+; ---------------------------------------------------------------------------
+
+; zloc_29D
+zFMDoRest:
+	set	1,(ix+zTrack.PlaybackControl)	; Set bit 1 (track is at rest)
+	ld	(ix+zTrack.FreqLow),0		; Zero out FM Frequency
+	ld	(ix+zTrack.FreqHigh),0		; Zero out FM Frequency
 	ret
 
 
@@ -1138,16 +1142,13 @@ zPSGDoNext:
 
 .gotnote:
 	or	a				; Test 'a' for 80h not set, which is a note duration
-	jp	p,.gotduration			; If note duration, jump to .gotduration
+	jp	p,zSetDuration			; If note duration, jump to .gotduration
 	call	zPSGSetFreq			; Get frequency for this note
 	ld	a,(hl)				; Get next byte
 	or	a				; Test 'a' for 80h set, which is a note
 	jp	m,zFinishTrackUpdate		; If this is a note, jump to zFinishTrackUpdate
 	inc	hl				; Otherwise, go to next byte; a duration
-
-.gotduration:
-	call	zSetDuration
-	jp	zFinishTrackUpdate		; Either way, jumping to zFinishTrackUpdate...
+	jp	zSetDuration
 ; End of function zPSGDoNext
 
 ; ---------------------------------------------------------------------------
@@ -1176,10 +1177,9 @@ zPSGSetFreq:
 
 .restpsg:
 	; If you get here, we're doing a PSG rest
-	set	1,(ix+zTrack.PlaybackControl)	; Set "track in rest" bit
 	ld	(ix+zTrack.FreqLow),0FFh	; Frequency low byte = FFh
 	ld	(ix+zTrack.FreqHigh),0FFh	; Frequency high byte = FFh
-	jp	zPSGNoteOff			; Send PSG Note Off
+	jp	zPSGNoteOff_RestTrack		; Send PSG Note Off
 
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
@@ -1401,9 +1401,9 @@ zCycleQueue:
 	ld	c,a
 
 	cp	SndID__End			; Is it a special command?
-	jr	nc,.skip_priority	; If so, jump
+	jr	nc,.skip_priority		; If so, jump
 	sub	SndID__First			; Subtract first SFX index
-	jr	c,.skip_priority	; If it was music, jump
+	jr	c,.skip_priority		; If it was music, jump
 	add	a,zSFXPriority&0FFh		; a = low byte of pointer to SFX priority
 	ld	e,a				; e = low byte of pointer to SFX priority
 	adc	a,(zSFXPriority&0FF00h)>>8	; a = low byte of pointer to SFX priority + high byte of same pointer
@@ -2159,6 +2159,7 @@ zUpdateFadeout:
 	ld	de,zTrack.len
 	add	ix,de				; Next track
 	djnz	.fmloop				; Keep going for all FM tracks...
+
 	ld	b,MUSIC_PSG_TRACK_COUNT		; 3 PSG tracks to follow...
 
 ; zloc_B0D
@@ -2183,8 +2184,8 @@ zUpdateFadeout:
 ; zloc_B2C
 .nextpsg:
 	ld	de,zTrack.len
-	add	ix,de		; Next track
-	djnz	.psgloop	; Keep going for all PSG tracks...
+	add	ix,de				; Next track
+	djnz	.psgloop			; Keep going for all PSG tracks...
 	pop	ix
 	ret
 ; End of function zUpdateFadeout
@@ -2356,9 +2357,8 @@ zUpdateFadeIn:
 	ld	a,(zAbsVar.FadeInCounter)	; Get current fade out frame count
 	or	a
 	jr	nz,.fadenotdone			; If fadeout hasn't reached zero yet, skip this
-	ld	a,(zSongDAC.PlaybackControl)	; Get DAC's playback control byte
-	and	0FBh				; Clear "SFX is overriding" bit
-	ld	(zSongDAC.PlaybackControl),a	; Set that
+	ld	hl,zSongDAC.PlaybackControl	; Get DAC's playback control byte
+	res	2,(hl)				; Clear "SFX is overriding" bit
 	xor	a
 	ld	(zAbsVar.FadeInFlag),a		; Done fading-in, SFX can play now
 	ret
@@ -2398,9 +2398,8 @@ zUpdateFadeIn:
 
 .nextpsg:
 	ld	de,zTrack.len
-	add	ix,de		; Next track
-	djnz	.psgloop	; Keep going for all PSG tracks...
-
+	add	ix,de				; Next track
+	djnz	.psgloop			; Keep going for all PSG tracks...
 	pop	ix
 	ret
 ; End of function zUpdateFadeIn

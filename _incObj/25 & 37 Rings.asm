@@ -40,7 +40,7 @@ Obj25_Collect:
 	bsr.s	CollectRing
 ; Obj_25_sub_6:
 Obj25_Sparkle:
-	lea	(Ani_Ring).l,a1
+	lea	Ani_Ring(pc),a1
 	bsr.w	AnimateSprite
 	bra.w	DisplaySprite
 ; ===========================================================================
@@ -97,8 +97,8 @@ Obj37:
 Obj37_Index:	offsetTable
 		offsetTableEntry.w Obj37_Init		; 0
 		offsetTableEntry.w Obj37_Main		; 2
-		offsetTableEntry.w Obj37_Collect	; 4
-		offsetTableEntry.w Obj37_Sparkle	; 6
+		offsetTableEntry.w Obj25_Collect	; 4
+		offsetTableEntry.w Obj25_Sparkle	; 6
 		offsetTableEntry.w Obj37_Delete		; 8
 ; ===========================================================================
 ; Obj_37_sub_0:
@@ -187,19 +187,6 @@ loc_121B8:
 	addi.w	#screen_height,d0
 	cmp.w	y_pos(a0),d0
 	blo.s	Obj37_Delete
-	bra.w	DisplaySprite
-; ===========================================================================
-; Obj_37_sub_4:
-Obj37_Collect:
-	addq.b	#2,routine(a0)
-	move.b	#0,collision_flags(a0)
-	move.w	#1*$80,priority(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Ring_sparkles,1,0),obGfx(a0)
-	bsr.w	CollectRing
-; Obj_37_sub_6:
-Obj37_Sparkle:
-	lea	(Ani_Ring).l,a1
-	bsr.w	AnimateSprite
 	bra.w	DisplaySprite
 ; ===========================================================================
 ; BranchTo5_DeleteObject

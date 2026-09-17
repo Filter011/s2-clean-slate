@@ -8,11 +8,11 @@
 DisplaySprite:
 	lea	(Object_Display_Lists).w,a1
 	adda.w	priority(a0),a1
-	cmpi.w	#object_display_list_size-2,(a1)
-	bhs.s	.return
-	addq.w	#2,(a1)
-	adda.w	(a1),a1
-	move.w	a0,(a1)
+	move.w	(a1),d0
+	addq.b	#2,d0
+	bmi.s	.return
+	move.w	d0,(a1)
+	move.w	a0,(a1,d0.w)
 
 .return:
 	rts
@@ -28,11 +28,11 @@ DisplaySprite:
 DisplaySprite2:
 	lea	(Object_Display_Lists).w,a2
 	adda.w	priority(a1),a2
-	cmpi.w	#object_display_list_size-2,(a2)
-	bhs.s	.return
-	addq.w	#2,(a2)
-	adda.w	(a2),a2
-	move.w	a1,(a2)
+	move.w	(a2),d0
+	addq.b	#2,d0
+	bmi.s	.return
+	move.w	d0,(a2)
+	move.w	a1,(a2,d0.w)
 
 .return:
 	rts
@@ -47,11 +47,11 @@ DisplaySprite2:
 DisplaySprite3:
 	lea	(Object_Display_Lists).w,a1
 	adda.w	d0,a1
-	cmpi.w	#object_display_list_size-2,(a1)
-	bhs.s	.return
-	addq.w	#2,(a1)
-	adda.w	(a1),a1
-	move.w	a0,(a1)
+	move.w	(a1),d0
+	addq.b	#2,d0
+	bmi.s	.return
+	move.w	d0,(a1)
+	move.w	a0,(a1,d0.w)
 
 .return:
 	rts

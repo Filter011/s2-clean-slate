@@ -30,7 +30,7 @@ Obj07_Init:
 Obj07_Main:
 	; check player 1
 	tst.w	(Debug_placement_mode).w
-	bne.w	Obj07_End
+	bne.s	Obj07_End
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing,d1
 	move.b	status(a0),d0

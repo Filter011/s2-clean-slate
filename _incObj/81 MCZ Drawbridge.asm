@@ -136,8 +136,8 @@ loc_2A1A8:
 loc_2A1B4:
 	move.w	x_pos(a0),d4
 	jsr	(SolidObject).l
-	move.w	objoff_30(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	objoff_30(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	+

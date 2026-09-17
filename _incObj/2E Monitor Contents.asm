@@ -121,11 +121,11 @@ super_ring:
 	cmpi.w	#100,(a2)
 	blo.s	+		; branch, if player has less than 100 rings
 	bset	#1,(a4)		; set flag for first 1up
-	beq.w	sonic_1up	; branch, if not yet set
+	beq.s	sonic_1up	; branch, if not yet set
 	cmpi.w	#200,(a2)
 	blo.s	+		; branch, if player has less than 200 rings
 	bset	#2,(a4)		; set flag for second 1up
-	beq.w	sonic_1up	; branch, if not yet set
+	beq.s	sonic_1up	; branch, if not yet set
 +
 	moveq	#SndID_Ring,d0
 	jmp	(PlaySound).w

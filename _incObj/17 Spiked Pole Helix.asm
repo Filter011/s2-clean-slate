@@ -79,8 +79,8 @@ Obj17_MakeHelix:
 ; loc_103E8: Obj17_Action:
 Obj17_Main:
 	bsr.s	Obj17_RotateSpike
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	Obj17_DelAll

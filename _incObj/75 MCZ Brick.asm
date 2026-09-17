@@ -124,8 +124,8 @@ Obj75_Main:
 	move.w	sub6_y_pos(a1),y_pos(a1)
 
 loc_28D3E:
-	move.w	objoff_30(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	objoff_30(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	+

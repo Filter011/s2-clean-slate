@@ -35,7 +35,7 @@ off_3797A:	offsetTable
 		offsetTableEntry.w loc_379A0	; 0
 		offsetTableEntry.w loc_379CA	; 2
 		offsetTableEntry.w loc_379EA	; 4
-		offsetTableEntry.w return_37A04	; 6
+		offsetTableEntry.w return_37A02	; 6
 ; ===========================================================================
 
 loc_37982:
@@ -81,7 +81,6 @@ loc_379EA:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 
 return_37A02:
-return_37A04:
 	rts
 ; ===========================================================================
 ; ----------------------------------------------------------------------------

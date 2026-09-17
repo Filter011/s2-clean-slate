@@ -127,8 +127,6 @@ loc_1419C:
 	subq.w	#1,anim_frame_duration(a0)
 	bne.w	DisplaySprite
 	addq.b	#2,routine(a0)
-
-BranchTo18_DisplaySprite ; BranchTo
 	bra.w	DisplaySprite
 ; ===========================================================================
 
