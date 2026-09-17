@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.9.17.1 (unstable)
+; S2CS Driver version: 26.9.17.2 (unstable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -38,59 +38,6 @@ FreqNoAlign = 1
 ; >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ; Setup defines and macros
 
-	; zComRange:	@ 1B80h
-	; 	+00h	-- Priority of current SFX (cleared when 1-up song is playing)
-	; 	+01h	-- tempo clock
-	; 	+02h	-- current tempo
-	; 	+03h	-- Pause/unpause flag: 7Fh for pause; 80h for unpause (set from 68K)
-	; 	+04h	-- total volume levels to continue decreasing volume before fade out considered complete (starts at 28h, works downward)
-	; 	+05h	-- delay ticker before next volume decrease
-	; 	+06h	-- communication value
-	; 	+07h	-- "DAC is updating" flag (set to FFh until completion of DAC track change)
-	; 	+08h	-- When NOT set to 80h, 68K request new sound index to play
-	; 	+09h	-- SFX to Play queue slot
-	; 	+0Ah	-- Play stereo sound queue slot
-	; 	+0Bh	-- Unknown SFX Queue slot
-	; 	+0Ch	-- Address to table of voices
-	;
-	; 	+0Eh	-- Set to 80h while fading in (disabling SFX) then 00h
-	; 	+0Fh	-- Same idea as +05h, except for fade IN
-	; 	+10h	-- Same idea as +04h, except for fade IN
-	; 	+11h	-- 80h set indicating 1-up song is playing (stops other sounds)
-	; 	+12h	-- main tempo value
-	; 	+13h	-- original tempo for speed shoe restore
-	; 	+14h	-- Speed shoes flag
-	; 	+15h	-- If 80h, FM Channel 6 is NOT in use (DAC enabled)
-	; 	+16h	-- value of which music bank to use (0 for MusicPoint1, $80 for MusicPoint2)
-	; 	+17h	-- Pal mode flag
-	;
-	; ** zTracksSongStart starts @ +18h
-	;
-	; 	1B98 base
-	; 	Track 1 = DAC
-	; 	Then 6 FM
-	; 	Then 3 PSG
-	;
-	;
-	; 	1B98 = DAC
-	; 	1BC2 = FM 1
-	; 	1BEC = FM 2
-	; 	1C16 = FM 3
-	; 	1C40 = FM 4
-	; 	1C6A = FM 5
-	; 	1C94 = FM 6
-	; 	1CBE = PSG 1
-	; 	1CE8 = PSG 2
-	; 	1D12 = PSG 3 (tone or noise)
-	;
-	; 	1D3C = SFX FM 3
-	; 	1D66 = SFX FM 4
-	; 	1D90 = SFX FM 5
-	; 	1DBA = SFX PSG 1
-	; 	1DE4 = SFX PSG 2
-	; 	1E0E = SFX PSG 3 (tone or noise)
-	;
-	;
 zTrack STRUCT DOTS
 	; 	"playback control"; bits:
 	; 	1 (02h): track is at rest
@@ -139,13 +86,6 @@ zTrack STRUCT DOTS
 				ds.b 6	; Reserved for and used by LoopCounters (must have a total of 0Ah bytes reserved)
 	;   ... open ...
 	GoSubStack:			; start of next track, every two bytes below this is a coord flag "gosub" (F8h) return stack
-	;
-	;	The bytes between +20h and +29h are "open"; starting at +20h and going up are possible loop counters
-	;	(for coord flag F7) while +2Ah going down (never AT 2Ah though) are stacked return addresses going
-	;	down after calling coord flag F8h.  Of course, this does mean collisions are possible with either
-	;	or other track memory if you're not careful with these!  No range checking is performed!
-	;
-	; 	All tracks are 2Ah bytes long
 zTrack ENDSTRUCT
 
 zVar STRUCT DOTS
@@ -169,7 +109,6 @@ zVar STRUCT DOTS
 	DACEnabled:		ds.b 1
 	SongBank:		ds.b 1
 	SFXBank:		ds.b 1
-	DACBank:		ds.b 1
 	IsPalFlag:		ds.b 1	; Flags if the system is a PAL console
 zVar ENDSTRUCT
 
@@ -439,11 +378,11 @@ zUpdateEverything:
 	call	zUpdateMusic
 
 	; Now all of the SFX tracks are updated in a similar manner to "zUpdateMusic"...
-	ld	a,(zAbsVar.SFXBank)
-	bankswitch 			; Bank switch to sound effects
-
 	ld	a,80h
 	ld	(zDoSFXFlag),a		; Set zDoSFXFlag = 80h (updating sound effects)
+
+	ld	a,(zAbsVar.SFXBank)
+	bankswitch 			; Bank switch to sound effects
 
 	; SFX channels
 	ld	b,SFX_TRACK_COUNT		; Only 3 FM and 3 PSG channels for SFX (FM3, FM4, FM5, PSG1, PSG2, PSG3)
