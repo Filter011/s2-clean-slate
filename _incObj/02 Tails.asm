@@ -82,7 +82,7 @@ Obj02_Control_Joypad2:
 Obj02_Control_Part2:
 	btst	#0,obj_control(a0)	; is Tails flying, or interacting with another object that holds him in place or controls his movement somehow?
 	beq.s	+			; if not, proceed with Tails' control as usual
-	move.b	#0,flying(a0)		; if yes, clear Tails' flying state
+	clr.b	flying(a0)		; if yes, clear Tails' flying state
 	bra.s	++			; skip Tails' control
 +
 	moveq	#1<<status.player.in_air|1<<status.player.rolling,d0	; %0000 %0110
@@ -146,8 +146,7 @@ Obj02_ChkInvinc:	; Checks if invincibility has expired and disables it if it has
 	bne.s	Obj02_RmvInvin
 	cmpi.b	#12,air_left(a0)	; Don't change music if drowning
 	blo.s	Obj02_RmvInvin
-	move.w	(Level_Music).w,d0
-	jsr	(PlayMusic).w
+	jsr	(PlayLevelMusic).w
 ; loc_1BA96:
 Obj02_RmvInvin:
 	bclr	#status_secondary.invincible,status_secondary(a0)

@@ -98,7 +98,7 @@
                     "name": "Knuckles",
                     "palettes": [
                         {
-                            "path": "art/palettes/SonicAndTails.bin",
+                            "path": "art/palettes/Knuckles.bin",
                             "length": 1
                         }
                     ],
@@ -123,19 +123,21 @@
                         "path": "",
                         "prefix": ""
                     },
-                    "config": {}
+                    "config": {
+                        "mapMacros": true
+                    }
                 },
                 {
                     "name": "Ring",
                     "palettes": [
                         {
-                            "path": "art\\palettes\\EHZ.bin",
+                            "path": "art/palettes/EHZ.bin",
                             "length": 3
                         }
                     ],
                     "format": "Sonic 2.js",
                     "art": {
-                        "path": "art\\uncompressed\\Rings.unc",
+                        "path": "art/uncompressed/Rings.unc",
                         "compression": "Uncompressed",
                         "offset": 0,
                         "extra": []
@@ -155,19 +157,19 @@
                     "name": "Ring Sparkles",
                     "palettes": [
                         {
-                            "path": "art\\palettes\\EHZ.bin",
+                            "path": "art/palettes/EHZ.bin",
                             "length": 3
                         }
                     ],
                     "format": "Sonic 2.js",
                     "art": {
-                        "path": "art\\kosinskiplusm\\Ring Sparkles.unc",
+                        "path": "art/kosinskiplusm/Ring Sparkles.unc",
                         "compression": "Uncompressed",
                         "offset": 0,
                         "extra": []
                     },
                     "mappings": {
-                        "path": "mappings\\sprite\\Rings.asm",
+                        "path": "mappings/sprite/Rings.asm",
                         "label": ""
                     },
                     "dplcs": {

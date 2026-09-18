@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.9.18 (stable)
+; S2CS Driver version: 26.9.18.1 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -2367,8 +2367,8 @@ zFMNoteOn:
 	or	(ix+zTrack.FreqHigh)
 	ret	z				; If Frequency is zero, return
 	ld	a,(ix+zTrack.PlaybackControl)	; Get playback control byte
-	and	0110b
-	ret	nz				; If either bit 1 ("track in rest") and 2 ("SFX overriding this track"), quit!
+	and	00010110b
+	ret	nz				; If bit 1 ("track in rest"), 2 ("SFX overriding this track"), or 4 (no attack), quit!
 	ld	a,(ix+zTrack.VoiceControl)	; Get "voice control" byte
 	or	0F0h				; Turn on ALL operators
 	ld	c,a				; Set as data to write to FM
