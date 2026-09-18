@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.9.17.3 (unstable)
+; S2CS Driver version: 26.9.18 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -108,7 +108,6 @@ zVar STRUCT DOTS
 	SpeedUpFlag:		ds.b 1
 	DACEnabled:		ds.b 1
 	SongBank:		ds.b 1
-	SFXBank:		ds.b 1
 	IsPalFlag:		ds.b 1	; Flags if the system is a PAL console
 zVar ENDSTRUCT
 
@@ -394,8 +393,7 @@ zUpdateEverything:
 	ld	a,-1
 	ld	(zDoSFXFlag),a		; Set zDoSFXFlag = -1 (updating sound effects)
 
-	ld	a,(zAbsVar.SFXBank)
-	bankswitch 			; Bank switch to sound effects
+	bankswitchToBank MusicPoint1		; Bank switch to sound effects
 
 	; SFX channels
 	ld	b,SFX_TRACK_COUNT		; Only 3 FM and 3 PSG channels for SFX (FM3, FM4, FM5, PSG1, PSG2, PSG3)
@@ -416,8 +414,7 @@ zUpdateDAC:
 	ld	a,2Ah			; DAC port
 	ld	(zYM2612_A0),a		; Set DAC port register
 
-	ld	a,zmake68kBank(MusicPoint1)
-	bankswitch 			; Bankswitch to the DAC data
+	bankswitchToBank MusicPoint1		; Bankswitch to the DAC data
 
 	ld	a,(zCurDAC)		; Get currently playing DAC sound
 	or	a
@@ -1312,8 +1309,7 @@ zPauseMusic:
 	ld	b,MUSIC_DAC_FM_TRACK_COUNT	; 1 DAC + 6 FM
 	call	zResumeTrack
 
-	ld	a,(zAbsVar.SFXBank)
-	bankswitch			; Now for SFX
+	bankswitchToBank MusicPoint1	; Now for SFX
 
 	ld	a,-1			; a = -1
 	ld	(zDoSFXFlag),a		; Set flag to say we are updating SFX
@@ -1413,12 +1409,12 @@ zPlaySoundByIndex:
 ; ---------------------------------------------------------------------------
 zCommandIndex:
 
-CmdPtr_StopSFX:		jp	zStopSoundEffects ; sound test index 78
-CmdPtr_FadeOut:		jp	zFadeOutMusic ; 79
-CmdPtr_SegaSound:	jp	zPlaySegaSound ; 7A
-CmdPtr_SpeedUp:		jp	zSpeedUpMusic ; 7B
-CmdPtr_SlowDown:	jp	zSlowDownMusic ; 7C
-CmdPtr_Stop:		jp	zStopSoundAndMusic ; 7D
+CmdPtr_StopSFX:		jp	zStopSoundEffects
+CmdPtr_FadeOut:		jp	zFadeOutMusic
+CmdPtr_SegaSound:	jp	zPlaySegaSound
+CmdPtr_SpeedUp:		jp	zSpeedUpMusic
+CmdPtr_SlowDown:	jp	zSlowDownMusic
+CmdPtr_Stop:		jp	zStopSoundAndMusic
 
 CmdPtr__End:
 ; ---------------------------------------------------------------------------
@@ -1828,23 +1824,15 @@ zPlaySound_CheckSpindash:
 
 ; zloc_975:
 zPlaySound:
+	bankswitchToBank MusicPoint1		; Switch to SFX banks
+
 	ld	hl,SoundIndex	; 'hl' points to beginning of SFX bank in ROM window
 	ld	a,c				; 'c' -> 'a'
 	sub	SndID__First			; Bring 'a' down to index value
-	ld	c,a
-	add	a,a
-	add	a,c		; each entry is 3 bytes in size
+	add	a,a		; Multiply it by 2
 	ld	e,a
 	ld	d,0		; de = a
-	add	hl,de
-
-	ld	a,(hl)
-	ld	(zAbsVar.SFXBank),a
-	ex	de,hl
-	bankswitch
-	ex	de,hl
-
-	inc	hl
+	add	hl,de		; now hl points to a pointer in the SoundIndex list (such as rom_ptr_z80 Sound20)
 	ld	a,(hl)
 	inc	hl
 	ld	h,(hl)
@@ -2937,8 +2925,7 @@ zStoppedChannel:	; General stop track continues here...
 	set	1,(ix+zTrack.PlaybackControl)	; Set track as resting bit
 	call	zSetVoice			; And set it! (takes care of volume too)
 
-	ld	a,(zAbsVar.SFXBank)
-	bankswitch
+	bankswitchToBank MusicPoint1
 
 zNoVoiceUpdate:
 	pop	ix	; restore 'ix'
@@ -3328,7 +3315,6 @@ sample_rate_scale := sampleRateScale
 	dac_sample_metadata SndDAC_Bongo,   1.30	; 91h
 
 sfx_metadata macro loc
-	zmake68kBanks	loc
 	zmake68kPtrs	loc
     endm
 

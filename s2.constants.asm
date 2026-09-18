@@ -858,7 +858,7 @@ MusID__End =		id(zMusIDPtr__End)	; A0
 
 ; Sound IDs
 offset :=	SoundIndex
-ptrsize :=	3
+ptrsize :=	2
 idstart :=	MusID__End
 ; $00 is reserved for silence, so if you make idstart $00 or less,
 ; you may need to insert a dummy SndPtr in the $00 slot
