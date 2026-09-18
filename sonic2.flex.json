@@ -53,7 +53,9 @@
                         "label": ""
                     },
                     "expanded": true,
-                    "config": {}
+                    "config": {
+                        "mapMacros": true
+                    }
                 },
                 {
                     "format": "Sonic 2.js",

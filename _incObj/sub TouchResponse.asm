@@ -303,7 +303,7 @@ Touch_Enemy:
 	move.w	y_pos(a0),d2				; get Tails' Y position
 	sub.w	x_pos(a1),d1				; subtract object's X position from Tails'
 	sub.w	y_pos(a1),d2				; subtract object's Y position from Tails'
-	jsr	(CalcAngle).l				; calculate the angle of
+	jsr	(CalcAngle).w				; calculate the angle of
 	subi.b	#$20,d0					; shift by 45 degrees to the left
 	cmpi.b	#$40,d0					; is the object above Tails?
 	bhs.w	Touch_ChkHurt				; if not, branch

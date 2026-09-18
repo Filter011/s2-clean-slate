@@ -400,17 +400,6 @@ SolidObject_TestClearPush:
 	addq.b	#pushing_bit_delta,d4
 	btst	d4,status(a0)		; is Sonic pushing?
 	beq.s	SolidObject_NoCollision	; if not, branch
-	cmpi.b	#AniIDSonAni_Roll,anim(a1)
-	beq.s	Solid_NotPushing
-	cmpi.b	#AniIDSonAni_Hang2,anim(a1)
-	beq.s	Solid_NotPushing
-	cmpi.b	#AniIDSonAni_Spindash,anim(a1)
-	beq.s	Solid_NotPushing
-	cmpi.b	#AniIDSonAni_Death,anim(a1)
-	beq.s	Solid_NotPushing
-	cmpi.b	#AniIDSonAni_Drown,anim(a1)
-	beq.s	Solid_NotPushing
-	move.w	#(AniIDSonAni_Walk<<8)|(AniIDSonAni_Run<<0),anim(a1) ; use walking animation (and force it to restart)
 ; loc_19ADC:
 Solid_NotPushing:
 	move.l	d6,d4

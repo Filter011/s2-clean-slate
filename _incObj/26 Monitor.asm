@@ -132,7 +132,7 @@ Obj26_Break:
 Obj26_SpawnIcon:
 	clr.b	status(a0)
 	addq.b	#2,routine(a0)
-	move.b	#0,collision_flags(a0)
+	clr.b	collision_flags(a0)
 	bsr.w	AllocateObject
 	bne.s	Obj26_SpawnSmoke
 	move.b	#ObjID_MonitorContents,id(a1) ; load obj2E

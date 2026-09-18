@@ -1,4 +1,4 @@
-DPLC_4f7a: mappingsTable
+DPLC_e189: mappingsTable
 	mappingsTableEntry.w	DPLC_4f7a_0
 	mappingsTableEntry.w	DPLC_4f7a_1
 	mappingsTableEntry.w	DPLC_4f7a_2

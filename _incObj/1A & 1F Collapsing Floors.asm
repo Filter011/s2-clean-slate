@@ -250,8 +250,8 @@ Obj1A_CreateFragments:
 	movea.l	a0,a1
 	bra.s	+
 ; ===========================================================================
--	bsr.w	AllocateObject
-	bne.s	+++
+-	bsr.w	AllocateObjectAfterCurrent
+	bne.s	++
 	addq.w	#6,a3
 +
 	move.b	#4,routine(a1)
@@ -265,10 +265,7 @@ Obj1A_CreateFragments:
 	move.b	width_pixels(a0),width_pixels(a1)
 	move.b	y_radius(a0),y_radius(a1)
 	move.b	(a4)+,collapsing_platform_delay_counter(a1)
-	cmpa.l	a0,a1
-	bhs.s	+
-	bsr.w	DisplaySprite2
-+	dbf	d1,-
+	dbf	d1,-
 +
 	bsr.w	DisplaySprite
 	moveq	#SndID_Smash,d0

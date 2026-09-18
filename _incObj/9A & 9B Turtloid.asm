@@ -28,7 +28,7 @@ Obj9A_Main:
 	move.b	routine_secondary(a0),d0
 	move.w	off_3797A(pc,d0.w),d1
 	jsr	off_3797A(pc,d1.w)
-	bsr.w	loc_37982
+	bsr.s	loc_37982
 	bra.w	Obj_DeleteBehindScreen
 ; ===========================================================================
 off_3797A:	offsetTable

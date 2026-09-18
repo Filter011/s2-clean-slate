@@ -1,4 +1,4 @@
-Map_464f: mappingsTable
+Map_77e1: mappingsTable
 	mappingsTableEntry.w	Map_464f_0
 	mappingsTableEntry.w	Map_464f_1
 	mappingsTableEntry.w	Map_464f_2
@@ -917,8 +917,8 @@ Map_464f_120_End
 
 Map_464f_121:	spriteHeader
  spritePiece -$C, -$1D, 3, 3, 0, 0, 0, 0, 0
- spritePiece -$12, -5, 4, 4, 9, 0, 0, 0, 0
- spritePiece $E, -5, 1, 2, $19, 0, 0, 0, 0
+ spritePiece -$13, -5, 4, 4, 9, 0, 0, 0, 0
+ spritePiece $D, -5, 1, 2, $19, 0, 0, 0, 0
 Map_464f_121_End
 
 Map_464f_122:	spriteHeader
@@ -1046,8 +1046,8 @@ Map_464f_139:	spriteHeader
 Map_464f_139_End
 
 Map_464f_140:	spriteHeader
- spritePiece -$1C, -$C, 3, 4, 0, 0, 0, 0, 0
- spritePiece -4, -$E, 3, 4, $C, 0, 0, 0, 0
+ spritePiece -$1C, -$E, 3, 4, 0, 0, 0, 0, 0
+ spritePiece -4, -$C, 3, 4, $C, 0, 0, 0, 0
 Map_464f_140_End
 
 Map_464f_141:	spriteHeader
@@ -1134,8 +1134,8 @@ Map_464f_152_End
 
 Map_464f_153:	spriteHeader
  spritePiece -$C, -$1D, 3, 3, 0, 0, 0, 0, 0
- spritePiece -$12, -5, 4, 4, 9, 0, 0, 0, 0
- spritePiece $E, -5, 1, 2, $19, 0, 0, 0, 0
+ spritePiece -$13, -5, 4, 4, 9, 0, 0, 0, 0
+ spritePiece $D, -5, 1, 2, $19, 0, 0, 0, 0
 Map_464f_153_End
 
 Map_464f_154:	spriteHeader

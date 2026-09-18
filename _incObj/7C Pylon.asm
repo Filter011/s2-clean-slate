@@ -20,6 +20,7 @@ Obj7C_Init:
 	move.w	#make_art_tile(ArtTile_ArtNem_CPZMetalThings,2,1),art_tile(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#7*$80,priority(a0)
+	move.b	#0,render_flags(a0)
 
 ; loc_21006:
 Obj7C_Main:

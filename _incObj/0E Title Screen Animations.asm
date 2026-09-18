@@ -99,7 +99,7 @@ Obj0E_Sonic_FadeInAndPlayMusic:
 	; Load palette-changer object.
 	lea	(TitleScreenPaletteChanger3).w,a1
 	move.b	#ObjID_TtlScrPalChanger,id(a1)
-	move.b	#0,subtype(a1)
+	clr.b	subtype(a1)
 
 	; Play title screen music.
 	st.b	obj0e_music_playing(a0)
@@ -438,8 +438,9 @@ Obj0E_FlashingStar_Wait:
 ; loc_1319E:
 Obj0E_FlashingStar_Move:
 	move.b	#2,routine_secondary(a0)	; Obj0E_Animate
-	move.b	#0,anim_frame(a0)
-	move.b	#0,anim_frame_duration(a0)
+	moveq	#0,d0
+	move.b	d0,anim_frame(a0)
+	move.b	d0,anim_frame_duration(a0)
 	move.w	#6,obj0e_counter(a0)
 
 	; Advance index, while checking if we've reached the end of the

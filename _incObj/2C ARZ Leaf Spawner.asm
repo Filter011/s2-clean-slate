@@ -35,8 +35,8 @@ Obj2C_Init:
 	move.b	subtype(a0),mapping_frame(a0)
 ; loc_26152:
 Obj2C_Main:
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.w	JmpTo29_DeleteObject
