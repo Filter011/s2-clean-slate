@@ -5,7 +5,7 @@
 ; size variables - you'll get an informational error if you need to change these...
 ; they are all in units of bytes
 Size_of_SEGA_sound =		$6174
-Size_of_Snd_driver_guess =	$DEE ; approximate post-compressed size of the Z80 sound driver
+Size_of_Snd_driver_guess =	$DF1 ; approximate post-compressed size of the Z80 sound driver
 
 ; ---------------------------------------------------------------------------
 ; Object Status Table offsets (for everything between Object_RAM and Primary_Collision)

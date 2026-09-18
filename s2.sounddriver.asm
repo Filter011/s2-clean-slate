@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.9.17.2 (unstable)
+; S2CS Driver version: 26.9.17.3 (unstable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -223,6 +223,19 @@ bankswitchToBank macro bank
 	endm
     endm
 
+; small bankswitch macro
+; useful for code that only runs once, 10 bytes in size
+bankswitchSmall macro
+	ld	hl,zBankRegister
+	ld	b,8
+
+.bankloop:
+	ld	(hl),a
+	rra
+	djnz	.bankloop
+	ld	(hl),h
+    endm
+
 zmake68kBanks macro
 	irp op,ALLARGS
 		db zmake68kBank(op)
@@ -327,10 +340,10 @@ zVInt:    rsttarget
 
 	push	af			; Save 'af'
 	exx				; Effectively backs up 'bc', 'de', and 'hl'
-	ld	a,(zAbsVar.SongBank)
-	bankswitch
 	xor	a			; Clear 'a'
 	ld	(zDoSFXFlag),a		; Not updating SFX (updating music)
+	ld	a,(zAbsVar.SongBank)
+	bankswitch
 	ld	ix,zAbsVar		; ix points to zComRange
 	ld	a,(zAbsVar.StopMusic)	; Get pause/unpause flag
 	or	a			; Test 'a'
@@ -378,8 +391,8 @@ zUpdateEverything:
 	call	zUpdateMusic
 
 	; Now all of the SFX tracks are updated in a similar manner to "zUpdateMusic"...
-	ld	a,80h
-	ld	(zDoSFXFlag),a		; Set zDoSFXFlag = 80h (updating sound effects)
+	ld	a,-1
+	ld	(zDoSFXFlag),a		; Set zDoSFXFlag = -1 (updating sound effects)
 
 	ld	a,(zAbsVar.SFXBank)
 	bankswitch 			; Bank switch to sound effects
@@ -910,16 +923,11 @@ zFMDoRest:
 
 ; zsub_2FB
 zDoModulation:
-;	pop	de				; keep return address -> de (MAY not return to caller)
 	bit	3,(ix+zTrack.PlaybackControl)	; Is modulation on?
 	ret	z				; If not, quit
-	ld	a,(ix+zTrack.ModulationWait)	; 'ww' period of time before modulation starts
-	or	a
-	jr	z,.waitdone			; if zero, go to it!
-	dec	(ix+zTrack.ModulationWait)	; Otherwise, decrement timer
-	ret					; return if decremented
-
-.waitdone:
+	dec	(ix+zTrack.ModulationWait)	; Decrement timer
+	ret	nz				; if non-zero, return
+	inc	(ix+zTrack.ModulationWait)	; Otherwise, increment timer
 	dec	(ix+zTrack.ModulationSpeed)	; Decrement modulation speed counter
 	ret	nz				; Return if not yet zero
 	ld	l,(ix+zTrack.ModulationPtrLow)
@@ -955,11 +963,6 @@ zDoModulation:
 	add	hl,bc				; Add to current modulation value
 	ld	(ix+zTrack.ModulationValLow),l
 	ld	(ix+zTrack.ModulationValHigh),h	; Store new 16-bit modulation value
-;	ld	c,(ix+zTrack.FreqLow)		; frequency low byte -> c
-;	ld	b,(ix+zTrack.FreqHigh)		; frequency high byte -> b
-;	add	hl,bc				; Add modulation value
-;	ex	de,hl
-;	jp	(hl)				; WILL return to zUpdateTrack
 	ret
 ; End of function zDoModulation
 
@@ -1312,7 +1315,7 @@ zPauseMusic:
 	ld	a,(zAbsVar.SFXBank)
 	bankswitch			; Now for SFX
 
-	ld	a,0FFh			; a = 0FFH
+	ld	a,-1			; a = -1
 	ld	(zDoSFXFlag),a		; Set flag to say we are updating SFX
 	ld	ix,zSFX_FMStart		; ix = pointer to SFX track RAM
 	ld	b,SFX_FM_TRACK_COUNT	; 3 FM
@@ -1432,10 +1435,11 @@ zPlaySegaSound:
 	ld	c,80h		; Command to enable DAC
 	rst	zWriteFMI
 
-	bankswitchToBank Snd_Sega	; We want the Sega sound
+	ld	a,zmake68kBank(Snd_Sega)
+	bankswitchSmall		; We want the Sega sound
 
-	ld	hl,zmake68kPtr(Snd_Sega) ; was: 9E8Ch
-	ld	de,Snd_Sega.size	; was: 30BAh
+	ld	hl,zmake68kPtr(Snd_Sega)
+	ld	de,Snd_Sega.size
 	ld	a,2Ah			; DAC data register
 	ld	(zYM2612_A0),a		; Select it
 
@@ -1461,7 +1465,7 @@ zPlaySegaSound:
 
 .stop:
 	ld	a,(zAbsVar.SongBank)
-	bankswitch
+	bankswitchSmall
 	ld	a,(zAbsVar.DACEnabled)	; DAC status
 	ld	c,a			; c = DAC status
 	ld	a,2Bh			; DAC enable/disable register
@@ -3288,8 +3292,7 @@ zDACLenTbl = zDACPtrTbl + 2
 	; First byte selects one of the DAC samples. The number that
 	; follows it is a wait time between each nibble written to the DAC
 	; (thus higher = slower)
-;	ensure1byteoffset 2*11h
-	align 1200h
+	ensure1byteoffset 2*11h
 ; zbyte_124F
 zDACMasterPlaylist:
 
