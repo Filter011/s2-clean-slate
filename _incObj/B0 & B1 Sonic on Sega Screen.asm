@@ -46,7 +46,11 @@ ObjB0_Init:
 	; this copies the tiles that we want to scale up from ROM to RAM
 ;loc_3A246:
 ;CopySpriteTilesToRAMForSegaScreen:
--	movea.l	(a1)+,a2
+-	lea	(MapRUnc_Sonic).l,a2
+	moveq	#0,d0
+	move.b	(a1)+,d0
+	add.w	d0,d0
+	adda.w	(a2,d0.w),a2
 	move.w	(a2)+,d6 ; get the number of pieces in this mapping frame
 	subq.w	#1,d6
 -	move.w	(a2)+,d0
@@ -55,10 +59,8 @@ ObjB0_Init:
 	lsl.l	#5,d0
 	lea	(a3,d0.l),a4 ; source ROM address of tiles to copy
 	andi.w	#$F000,d1 ; abcd000000000000
-	rol.w	#4,d1	  ; (this calculation can be done smaller and faster
-	addq.w	#1,d1	  ; by doing rol.w #7,d1 addq.w #7,d1
-	lsl.w	#3,d1	  ; instead of these 4 lines)
-	subq.w	#1,d1	  ; 000000000abcd111 ; number of dwords to copy minus 1
+	rol.w	#7,d1
+	addq.w	#7,d1	  ; 000000000abcd111 ; number of dwords to copy minus 1
 -	move.l	(a4)+,(a5)+
 	dbf	d1,- ; copy all of the pixels in this piece into the temp buffer
 	dbf	d6,-- ; loop per piece in the frame
@@ -82,10 +84,10 @@ ObjB0_Init:
 	rts
 ; ===========================================================================
 off_3A294:
-	dc.l DPLC_4f7a_45
-	dc.l DPLC_4f7a_46
-	dc.l DPLC_4f7a_47
-	dc.l DPLC_4f7a_48
+	dc.b 45
+	dc.b 46
+	dc.b 47
+	dc.b 48
 
 map_piece macro width,height
 	dc.l copysrc,copydst

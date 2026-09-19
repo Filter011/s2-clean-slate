@@ -88,8 +88,13 @@ Dynamic_HTZ:
 	move.w	d0,d1
 	neg.w	d1
 	asr.w	#3,d1
+	move.w	d0,d2
+	andi.w	#$F,d2	; Is the lower nibble zero?
+	seq.b	d2	; If yes, set low byte of d2 to $FF
+	ext.w	d2	; Low word of d2 = -1
 	lsr.w	#4,d0
 	add.w	d1,d0
+	add.w	d2,d0	; Shift the parallax to the correct value
 	subi.w	#$10,d0
 	divu.w	#$30,d0
 	swap	d0
