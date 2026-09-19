@@ -197,11 +197,11 @@ Obj0A_LoadCountdownArt:
 	add.w	d1,d1
 	add.w	d0,d1
     if AssumeSourceAddressInBytes
-	lsl.w	#5,d1
-	addi.l	#dmaSource(ArtUnc_Countdown),d1
-    else
 	lsl.w	#6,d1
 	addi.l	#ArtUnc_Countdown,d1
+    else
+	lsl.w	#5,d1
+	addi.l	#dmaSource(ArtUnc_Countdown),d1
     endif
 	move.w	#tiles_to_bytes(ArtTile_ArtNem_SonicDust),d2
 	tst.b	obj0a_character+3(a0)

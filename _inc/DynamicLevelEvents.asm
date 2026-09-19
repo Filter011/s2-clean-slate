@@ -1088,17 +1088,12 @@ LevEvents_MCZ2_Routine2:
 	move.w	#MusID_FadeOut,d0
 	jsr	(PlayMusic).w
 	clr.b	(Boss_spawn_delay).w
-;	move.l	#vdpComm(tiles_to_bytes(ArtTile_ArtUnc_FallingRocks),VRAM,WRITE),(VDP_control_port).l
-;	lea	(VDP_data_port).l,a6
-;	lea	(ArtUnc_FallingRocks).l,a2
 
-;	moveq	#7,d0
-;-   rept 8
-;	move.l	(a2)+,(a6)
-;    endm
-;	dbf	d0,-
-
+    if AssumeSourceAddressInBytes
 	move.l	#ArtUnc_FallingRocks,d1
+    else
+	move.l	#dmaSource(ArtUnc_FallingRocks),d1
+    endif
 	move.w	#tiles_to_bytes(ArtTile_ArtUnc_FallingRocks),d2
 	move.w	#$100,d4
 	jsr	(QueueDMATransfer).w

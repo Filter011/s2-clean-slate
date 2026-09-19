@@ -115,7 +115,11 @@ Dynamic_HTZ:
 	move.w	#tiles_to_bytes(ArtTile_ArtUnc_HTZMountains),d4
 ; loc_3FD7C:
 .mountainLoop:
+    if AssumeSourceAddressInBytes
 	move.l	#ArtNem_HTZCliffs,d1
+    else
+	move.l	#dmaSource(ArtNem_HTZCliffs),d1
+    endif
 	add.w	(a4)+,d1
 	move.w	d4,d2
 	moveq	#tiles_to_words(4),d3	; DMA transfer length (in words)
@@ -129,6 +133,7 @@ Dynamic_HTZ:
 ; HTZ mountain art main RAM addresses?
 ;word_3FD9C:
 .offsets:
+    if AssumeSourceAddressInBytes
 	dc.w     0,  $80, $100, $180, $200, $280	; 6
 	dc.w     0,  $80, $100, $180, $200, $280	; 12
 	dc.w  $300, $380, $400, $480, $500, $580	; 18
@@ -145,6 +150,24 @@ Dynamic_HTZ:
 	dc.w $1200,$1280,$1300,$1380,$1400,$1480	; 84
 	dc.w $1500,$1580,$1600,$1680,$1700,$1780	; 90
 	dc.w $1500,$1580,$1600,$1680,$1700,$1780	; 96
+    else
+	dc.w     0,    $80/2, $100/2, $180/2, $200/2, $280/2	; 6
+	dc.w     0,    $80/2, $100/2, $180/2, $200/2, $280/2	; 12
+	dc.w  $300/2, $380/2, $400/2, $480/2, $500/2, $580/2	; 18
+	dc.w  $300/2, $380/2, $400/2, $480/2, $500/2, $580/2	; 24
+	dc.w  $600/2, $680/2, $700/2, $780/2, $800/2, $880/2	; 30
+	dc.w  $600/2, $680/2, $700/2, $780/2, $800/2, $880/2	; 36
+	dc.w  $900/2, $980/2, $A00/2, $A80/2, $B00/2, $B80/2	; 42
+	dc.w  $900/2, $980/2, $A00/2, $A80/2, $B00/2, $B80/2	; 48
+	dc.w  $C00/2, $C80/2, $D00/2, $D80/2, $E00/2, $E80/2	; 54
+	dc.w  $C00/2, $C80/2, $D00/2, $D80/2, $E00/2, $E80/2	; 60
+	dc.w  $F00/2, $F80/2,$1000/2,$1080/2,$1100/2,$1180/2	; 66
+	dc.w  $F00/2, $F80/2,$1000/2,$1080/2,$1100/2,$1180/2	; 72
+	dc.w $1200/2,$1280/2,$1300/2,$1380/2,$1400/2,$1480/2	; 78
+	dc.w $1200/2,$1280/2,$1300/2,$1380/2,$1400/2,$1480/2	; 84
+	dc.w $1500/2,$1580/2,$1600/2,$1680/2,$1700/2,$1780/2	; 90
+	dc.w $1500/2,$1580/2,$1600/2,$1680/2,$1700/2,$1780/2	; 96
+    endif
 ; ===========================================================================
 ; loc_3FE5C:
 .doCloudArt:
@@ -200,7 +223,11 @@ Dynamic_HTZ:
 	dbf	d1,.cloudLoop
 ; loc_3FEEC:
 .done:
-	move.l	#(Chunk_Table+$7C00) & $FFFFFF,d1
+    if AssumeSourceAddressInBytes
+	move.l	#(Chunk_Table+$7C00)&$FFFFFF,d1
+    else
+	move.l	#dmaSource(Chunk_Table+$7C00),d1
+    endif
 	move.w	#tiles_to_bytes(ArtTile_ArtUnc_HTZClouds),d2
 	move.w	#tiles_to_words(8),d3	; DMA transfer length (in words)
 	jsr	(QueueDMATransfer).w

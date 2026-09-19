@@ -48,6 +48,9 @@ LoadZoneTiles:
 	lsl.w	d0,d2
 	move.l	#$FFFFFF,d1
 	move.w	d2,d1
+    if AssumeSourceAddressInBytes=0
+	lsr.l	#1,d1
+    endif
 	bsr.w	QueueDMATransfer
 	move.w	d7,-(sp)
 	move.b	#VintID_TitleCard,(Vint_routine).w

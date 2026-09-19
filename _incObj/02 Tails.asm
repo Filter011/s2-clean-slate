@@ -299,7 +299,7 @@ Obj02_MdFly:
 	bsr.w	Tails_LevelBound
 	jsr	(ObjectMove).l
 	bsr.w	Tails_JumpAngle
-    if flightCarrySonic
+    if flightCarrySonic=1
 	bsr.w	Tails_DoLevelCollision
 	bra.w	Tails_CarrySonic
     else
@@ -1226,7 +1226,7 @@ Tails_FlyingAnimation:
 ; ---------------------------------------------------------------------------
 ; Subroutine to control Sonic being carried by Tails during flight
 ; ---------------------------------------------------------------------------
-    if flightCarrySonic
+    if flightCarrySonic=1
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 

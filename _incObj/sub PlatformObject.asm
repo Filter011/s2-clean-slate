@@ -304,7 +304,7 @@ SlopedPlatform_cont:
 
 .inair:
 	tst.w	y_vel(a1)
-	bmi.w	return_19E8E
+	bmi.s	return_19E8E
 .skip
 	move.w	x_pos(a1),d0
 	sub.w	x_pos(a0),d0

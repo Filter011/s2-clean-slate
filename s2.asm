@@ -1989,8 +1989,13 @@ LoadRingFrame:
 	beq.s	.noring				; If not, branch
 	move.b	d1,(Rings_anim_prev).w		; Mark frame's art as loaded
 
+    if AssumeSourceAddressInBytes
 	lsl.l	#7,d1				; Each ring frame takes $80 bytes, so multiply by $80
 	addi.l	#Art_Ring,d1			; Queue a DMA transfer for this ring frame
+    else
+	lsl.l	#6,d1				; Each ring frame takes $80 bytes, so multiply by $80
+	addi.l	#dmaSource(Art_Ring),d1		; Queue a DMA transfer for this ring frame
+    endif
 	move.w	#tiles_to_bytes(ArtTile_ArtNem_Ring),d2
 	moveq	#$80/2,d3
 	jsr	(QueueDMATransfer).w		; (or DMA_68KtoVRAM)
@@ -2002,8 +2007,13 @@ LoadRingFrame:
 	beq.s	.end				; If not, branch
 	move.b	d1,(Ring_spill_prev).w		; Mark frame's art as loaded
 
+    if AssumeSourceAddressInBytes
 	lsl.l	#7,d1				; Each ring frame takes $80 bytes, so multiply by $80
 	addi.l	#Art_Ring,d1			; Queue a DMA transfer for this ring frame
+    else
+	lsl.l	#6,d1				; Each ring frame takes $80 bytes, so multiply by $80
+	addi.l	#dmaSource(Art_Ring),d1		; Queue a DMA transfer for this ring frame
+    endif
 	move.w	#tiles_to_bytes(ArtTile_ArtNem_Ring_loss),d2
 	moveq	#$80/2,d3
 	jmp	(QueueDMATransfer).w		; (or DMA_68KtoVRAM)

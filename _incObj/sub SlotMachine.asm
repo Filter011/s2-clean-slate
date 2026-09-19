@@ -375,7 +375,11 @@ SlotMachine_Subroutine2:
 +
 	dbf	d1,-				; Loop for aoo pixel rows
 
+    if AssumeSourceAddressInBytes
 	move.l	#(Block_Table+$1000)&$FFFFFF,d1	; Source
+    else
+	move.l	#dmaSource(Block_Table+$1000),d1	; Source
+    endif
 	move.w	#tiles_to_words(16),d3		; DMA transfer length (in words)
 	jmp	(QueueDMATransfer).w
 ; ===========================================================================

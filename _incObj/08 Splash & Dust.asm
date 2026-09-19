@@ -154,6 +154,11 @@ Obj08_LoadDustOrSplashArt:
 	subq.w	#1,d5
 	bmi.s	return_1DF36
 	move.w	obj08_vram_address(a0),d4
+    if AssumeSourceAddressInBytes
+	move.l	#ArtUnc_SplashAndDust,d6
+    else
+	move.l	#dmaSource(ArtUnc_SplashAndDust),d6
+    endif
 
 -	moveq	#0,d1
 	move.w	(a2)+,d1
@@ -162,8 +167,12 @@ Obj08_LoadDustOrSplashArt:
 	andi.w	#$F0,d3
 	addi.w	#$10,d3
 	andi.w	#$FFF,d1
+    if AssumeSourceAddressInBytes
 	lsl.l	#5,d1
-	addi.l	#ArtUnc_SplashAndDust,d1
+    else
+	lsl.l	#4,d1
+    endif
+	add.l	d6,d1
 	move.w	d4,d2
 	add.w	d3,d4
 	add.w	d3,d4
