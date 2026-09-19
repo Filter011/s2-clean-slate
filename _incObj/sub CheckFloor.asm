@@ -47,7 +47,7 @@ loc_1ECC6:
 	cmp.w	d0,d1
 	ble.s	loc_1ECD4
 	move.b	(Primary_Angle).w,d3
-	exg	d0,d1
+	exg.l	d0,d1
 
 loc_1ECD4:
 	btst	#0,d3

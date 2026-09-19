@@ -81,7 +81,7 @@ Scale_2x:
 	swap	d2					; Save height offset again
 	move.w	d1,d5					; Copy height-1
 	andi.w	#1,d5					; How many tiles we want to do -- this is 1 for Wx2 or Wx4 pieces, 0 otherwise
-	bsr.w	Scale2x_SingleTile
+	bsr.s	Scale2x_SingleTile
 	btst	#1,d1					; Are we upscaling a Wx3 or Wx4 piece?
 	beq.s	.done					; Branch if not
 	move.w	d1,d5					; Copy height-1
@@ -90,7 +90,7 @@ Scale_2x:
 	lea	(a4,d3.w),a4				; Output location for next tile
 	lea	(a4,d3.w),a5				; Output location for next tile
 	swap	d3					; Save height offset again
-	bra.w	Scale2x_SingleTile2
+	bra.s	Scale2x_SingleTile2
 
 .done:
 	rts

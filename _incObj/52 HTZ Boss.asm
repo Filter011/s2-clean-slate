@@ -57,10 +57,10 @@ Obj52_Mobile:
 ; ===========================================================================
 off_2FD0E:	offsetTable
 		offsetTableEntry.w Obj52_Mobile_Raise			; 0
-		offsetTableEntry.w Obj52_Mobile_Flamethrower	; 2
+		offsetTableEntry.w Obj52_Mobile_Flamethrower		; 2
 		offsetTableEntry.w Obj52_Mobile_BeginLower		; 4
 		offsetTableEntry.w Obj52_Mobile_Lower			; 6
-		offsetTableEntry.w Obj52_Mobile_Defeated				; 8
+		offsetTableEntry.w Obj52_Mobile_Defeated		; 8
 ; ===========================================================================
 
 ; loc_2FD18:

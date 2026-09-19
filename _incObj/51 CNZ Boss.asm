@@ -101,16 +101,14 @@ off_31A44:	offsetTable
 
 loc_31A48:
 	cmpi.w	#$28C0,(Boss_X_pos).w
-	bgt.s	BranchTo_loc_31AA4
+	bgt.s	loc_31AA4
 	move.w	#$28C0,(Boss_X_pos).w
 	move.w	#0,(Boss_Y_vel).w
 	move.w	#$180,(Boss_X_vel).w
 	move.b	#2,objoff_38(a0)
 	bset	#render_flags.x_flip,render_flags(a0)
 	move.b	#0,objoff_2D(a0)
-
-BranchTo_loc_31AA4 ; BranchTo
-	bra.w	loc_31AA4
+	bra.s	loc_31AA4
 ; ===========================================================================
 
 loc_31A78:
@@ -559,7 +557,7 @@ loc_31F96:
 ; ===========================================================================
 
 loc_31FDC:
-	bsr.w	loc_31FF8
+	bsr.s	loc_31FF8
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
 	bpl.w	JmpTo39_DisplaySprite

@@ -154,8 +154,7 @@ Obj01_ChkInvin:		; Checks if invincibility has expired and disables it if it has
 	bne.s	Obj01_RmvInvin
 	cmpi.b	#12,air_left(a0)	; Don't change music if drowning
 	blo.s	Obj01_RmvInvin
-	move.w	(Level_Music).w,d0
-	jsr	(PlayMusic).w
+	jsr	(PlayLevelMusic).w
 ;loc_1A106:
 Obj01_RmvInvin:
 	bclr	#status_secondary.invincible,status_secondary(a0)

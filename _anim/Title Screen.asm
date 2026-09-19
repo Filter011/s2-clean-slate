@@ -11,13 +11,6 @@ Ani_obj0E_Sonic:
 	dc.b   5
 	dc.b   6
 	dc.b   7
-    if ~~fixBugs
-	; This appears to be a leftover prototype frame: it's a duplicate of
-	; frame $12, except Sonic is missing his right arm. The old frame
-	; being here in this animation script causes Sonic to appear with
-	; both of his arms missing for a single frame.
-	dc.b   8
-    endif
 	dc.b $FA
 	even
 ; byte_13694:

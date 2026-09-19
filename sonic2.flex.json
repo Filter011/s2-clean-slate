@@ -34,30 +34,6 @@
                     }
                 },
                 {
-                    "format": "Sonic 2 Special.js",
-                    "name": "Sonic (special)",
-                    "palettes": [],
-                    "art": {
-                        "path": "art/nemesis/Sonic and Tails animation frames in special stage.nem",
-                        "compression": "Nemesis",
-                        "offset": 0,
-                        "extra": []
-                    },
-                    "mappings": {
-                        "path": "mappings/sprite/obj09.asm",
-                        "label": ""
-                    },
-                    "dplcs": {
-                        "enabled": true,
-                        "path": "mappings/spriteDPLC/obj09.asm",
-                        "label": ""
-                    },
-                    "expanded": true,
-                    "config": {
-                        "mapMacros": true
-                    }
-                },
-                {
                     "format": "Sonic 2.js",
                     "name": "Tails",
                     "palettes": [

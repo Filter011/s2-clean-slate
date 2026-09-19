@@ -803,7 +803,6 @@ loc_2F916:
 loc_2F924:
 	lea	Ani_obj56_c(pc),a1	; animation script
 	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
 
 JmpTo35_DisplaySprite ; JmpTo
 	jmp	(DisplaySprite).l

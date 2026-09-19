@@ -24,10 +24,6 @@ gameRevision = 1
 ;	| If 1, a REV01 ROM is built, which contains some fixes
 ;	| If 2, a (theoretical) REV02 ROM is built, which contains even more fixes
 ;
-fixBugs = 1
-;	| If 1, enables all bug-fixes
-;	| See also the 'FixDriverBugs' flag in 's2.sounddriver.asm'
-;	| See also the 'FixMusicAndSFXDataBugs' flag in 'build.lua'
 skipChecksumCheck = 1
 ;	| If 1, disables the slow bootup checksum calculation
 ;
@@ -53,7 +49,7 @@ flightCarrySonic = 0
 
 ; >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ; Expressing SMPS bytecode in a portable and human-readable form
-FixMusicAndSFXDataBugs = fixBugs
+FixMusicAndSFXDataBugs = 1
 SonicDriverVer = 2 ; Tell SMPS2ASM that we are targetting Sonic 2's sound driver
 	include "sound/_smps2asm_inc.asm"
 

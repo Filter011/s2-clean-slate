@@ -186,10 +186,8 @@ Obj54_MainSub4:
 +
 	move.w	(Boss_X_vel).w,d0
 	or.w	(Boss_Y_vel).w,d0
-	bne.s	BranchTo_Obj54_MoveAndShow
+	bne.s	Obj54_MoveAndShow
 	addq.b	#2,boss_routine(a0)		; => Obj54_MainSub6
-
-BranchTo_Obj54_MoveAndShow ; BranchTo
 	bra.s	Obj54_MoveAndShow
 ; ===========================================================================
 ;loc_32524
