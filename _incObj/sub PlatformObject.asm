@@ -273,7 +273,7 @@ loc_19E30:
 	move.w	a0,d1
 	subi.w	#Object_RAM,d1
 	bne.s	loc_19E76
-	cmpi.w	#2,(Player_mode).w
+	cmpi.w	#1,(Player_mode).w
 	beq.s	loc_19E76
 	jsr	(Sonic_ResetOnFloor_Part2).l
 	bra.s	loc_19E7C
