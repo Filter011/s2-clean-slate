@@ -1198,6 +1198,8 @@ ObjC7_CheckHit:
 	subq.b	#1,collision_property(a0)
 	beq.s	ObjC7_Beaten
 +
+	movea.w	objoff_36(a0),a1 ; a1=object
+	clr.b	collision_flags(a0)
 	move.b	#60,objoff_2A(a0)
 	moveq	#SndID_BossHit,d0
 	jsr	(PlaySound).w
