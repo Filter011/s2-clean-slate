@@ -84,10 +84,10 @@ Dynamic_HTZ:
 	; Upload dynamic mountain art.
 	lea	(Anim_Counters).w,a3
 	moveq	#0,d0
-	move.w	(Camera_X_pos).w,d1
+	move.w	(Camera_X_pos).w,d0
+	move.w	d0,d1
 	neg.w	d1
 	asr.w	#3,d1
-	move.w	(Camera_X_pos).w,d0
 	lsr.w	#4,d0
 	add.w	d1,d0
 	subi.w	#$10,d0
