@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.9.18.1 (stable)
+; S2CS Driver version: 26.9.19 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -678,12 +678,15 @@ zDACUpdateTrack:
 ; zloc_20E
 .gotduration:
 	ld	b,(ix+zTrack.TempoDivider)	; Divisor; causes multiplication of duration for every number higher than 1
+	dec	b
+	jr	z,.setduration
 	ld	c,a
-	xor	a
 
 .multloop:
 	add	a,c				; Will multiply duration based on 'b'
 	djnz	.multloop
+
+.setduration:
 	ld	(ix+zTrack.SavedDuration),a	; Store new duration into ticker goal of this track (this is reused if a note follows a note without a new duration)
 	ld	(ix+zTrack.DurationTimeout),a	; Sets it on ticker (counts to zero)
 
@@ -810,12 +813,15 @@ zFMDoNext:
 ; zsub_2A9
 zSetDuration:
 	ld	b,(ix+zTrack.TempoDivider)	; Divisor; causes multiplication of duration for every number higher than 1
+	dec	b
+	jr	z,.setduration
 	ld	c,a
-	xor	a
 
 .multloop:
 	add	a,c				; Will multiply duration based on 'b'
 	djnz	.multloop
+
+.setduration:
 	ld	(ix+zTrack.SavedDuration),a	; Store new duration into ticker goal of this track (this is reused if a note follows a note without a new duration)
 ; End of function zSetDuration
 
