@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.9.19 (stable)
+; S2CS Driver version: 26.9.19.1 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -696,10 +696,9 @@ zDACAfterDur:
 	ld	(ix+zTrack.DataPointerHigh),h
 	bit	2,(ix+zTrack.PlaybackControl)	; Is SFX overriding this track?
 	ret	nz				; If so, we're done
-	ld	a,(ix+zTrack.SavedDAC)		; Check next note to play
-	cp	80h				; Is it a rest?
-	ret	z				; If so, quit
-	sub	81h				; Otherwise, transform note into an index... (we're selecting which drum to play!)
+	ld	a,(ix+zTrack.SavedDAC)		; Get next note to play
+	sub	81h				; Transform note into an index... (we're selecting which drum to play!)
+	ret	c				; Return if below 81h
 	add	a,a				; Multiply by 2...
 	add	a,zDACMasterPlaylist&0FFh	; Offset into list
 	ld	(zDACDataStore+2),a		; store into the following instruction (self-modifying code)
