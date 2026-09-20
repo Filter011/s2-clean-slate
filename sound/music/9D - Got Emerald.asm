@@ -1,7 +1,7 @@
 Emerald_Header:
 	smpsHeaderStartSong 2, 1
 	smpsHeaderVoice     Emerald_Voices
-	smpsHeaderChan      $07, $03
+	smpsHeaderChan      $07, $02
 	smpsHeaderTempo     $01, $D5
 
 	smpsHeaderDAC       Emerald_DAC
@@ -13,7 +13,6 @@ Emerald_Header:
 	smpsHeaderFM        Emerald_FM6,	$F4, $16
 	smpsHeaderPSG       Emerald_PSG1,	$F4, $02, $00, fTone_04
 	smpsHeaderPSG       Emerald_PSG2,	$F4, $02, $00, fTone_05
-	smpsHeaderPSG       Emerald_PSG3,	$F4, $00, $00, fTone_04
 
 ; FM3 Data
 Emerald_FM3:
@@ -61,8 +60,7 @@ Emerald_Loop01:
 
 ; PSG1 Data
 Emerald_PSG1:
-	smpsNop             $01
-	dc.b	nRst, $02, nRst, $2D
+	dc.b	nRst, $2F
 
 Emerald_Loop00:
 	dc.b	nG5, $06, nF5, nE5, nD5
@@ -71,9 +69,6 @@ Emerald_Loop00:
 
 ; DAC Data
 Emerald_DAC:
-; PSG3 Data
-Emerald_PSG3:
-	smpsNop             $01
 	smpsStop
 
 Emerald_Voices:

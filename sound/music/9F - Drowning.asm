@@ -14,7 +14,6 @@ Drowning_Header:
 ; FM1 Data
 Drowning_FM1:
 	smpsSetvoice        $00
-	smpsNop             $01
 	smpsNoteFill        $05
 	smpsCall            Drowning_Call01
 	smpsSetTempoMod     $AB
@@ -26,7 +25,6 @@ Drowning_FM1:
 	smpsSetTempoMod     $E7
 	smpsCall            Drowning_Call01
 	dc.b	nC5, $06
-	smpsNop             $01
 	smpsStop
 
 ; FM2 Data
@@ -79,11 +77,9 @@ Drowning_FM5:
 Drowning_Loop00:
 	smpsPan             panLeft, $00
 	dc.b	nC4, $06, nC5
-	smpsPan             panLeft, $00
 	dc.b	nC4, nC5
 	smpsPan             panRight, $00
 	dc.b	nCs4, nCs5
-	smpsPan             panRight, $00
 	dc.b	nCs4, nCs5
 	smpsLoop            $00, $0A, Drowning_Loop00
 	smpsStop

@@ -106,8 +106,8 @@ Title_screen_PSG2:
 
 ; PSG1 Data
 Title_screen_PSG1:
-	dc.b	nRst, $30
-	smpsLoop            $00, $06, Title_screen_PSG1
+	dc.b	nRst, $60
+	smpsLoop            $00, $03, Title_screen_PSG1
 	dc.b	nRst, $20
 
 Title_screen_Loop00:

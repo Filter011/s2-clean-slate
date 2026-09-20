@@ -1,7 +1,7 @@
 Continue_Header:
 	smpsHeaderStartSong 2
 	smpsHeaderVoice     Continue_Voices
-	smpsHeaderChan      $06, $03
+	smpsHeaderChan      $05, $00
 	smpsHeaderTempo     $01, $DB
 
 	smpsHeaderDAC       Continue_DAC
@@ -9,10 +9,6 @@ Continue_Header:
 	smpsHeaderFM        Continue_FM2,	$E8, $08
 	smpsHeaderFM        Continue_FM3,	$F4, $0F
 	smpsHeaderFM        Continue_FM4,	$F4, $0F
-	smpsHeaderFM        Continue_FM5,	$F4, $0A
-	smpsHeaderPSG       Continue_PSG1,	$D0, $03, $00, fTone_05
-	smpsHeaderPSG       Continue_PSG2,	$DC, $06, $00, fTone_05
-	smpsHeaderPSG       Continue_PSG3,	$DC, $00, $00, fTone_04
 
 ; FM1 Data
 Continue_FM1:
@@ -32,11 +28,8 @@ Continue_Loop04:
 Continue_FM2:
 	smpsSetvoice        $01
 	smpsAlterVol        $02
-	smpsAlterPitch      $F4
-	smpsNop             $01
-	dc.b	nA5, $0C, nAb5, nG5, nFs5
+	dc.b	nA4, $0C, nAb4, nG4, nFs4
 	smpsAlterVol        $FE
-	smpsAlterPitch      $0C
 	smpsSetvoice        $02
 
 Continue_Loop03:
@@ -47,7 +40,6 @@ Continue_Loop03:
 	smpsAlterPitch      $FD
 	dc.b	nB4, $06, nRst, nB4, nRst, nFs4, nRst, nFs4, nRst, nE5, $0C, nRst
 	dc.b	$06, nEb5, $4E
-	smpsNop             $01
 	smpsStop
 
 ; FM3 Data
@@ -74,15 +66,6 @@ Continue_Loop01:
 	smpsLoop            $00, $03, Continue_Loop01
 	dc.b	nCs6, $06, nRst, nCs6, nRst, nA5, nRst, nA5, nRst, nD6, $0C, nRst
 	dc.b	$06, nD6, $4E
-
-; FM5 Data
-Continue_FM5:
-; PSG1 Data
-Continue_PSG1:
-; PSG2 Data
-Continue_PSG2:
-; PSG3 Data
-Continue_PSG3:
 	smpsStop
 
 ; DAC Data
