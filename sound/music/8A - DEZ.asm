@@ -159,8 +159,7 @@ DEZ_PSG2:
 
 ; PSG1 Data
 DEZ_PSG1:
-	dc.b	nRst, $18
-	smpsLoop            $00, $18, DEZ_PSG1
+	dc.b	nRst, $60, nRst, nRst, nRst, nRst, nRst
 
 DEZ_Loop09:
 	smpsModSet          $06, $02, $FE, $FF
@@ -227,8 +226,8 @@ DEZ_Jump02:
 	dc.b	nMaxPSG, nMaxPSG, nRst, $08, nMaxPSG, nMaxPSG, nRst, $30
 
 DEZ_Loop08:
-	dc.b	nRst, $18
-	smpsLoop            $00, $28, DEZ_Loop08
+	dc.b	nRst, $60
+	smpsLoop            $00, $0A, DEZ_Loop08
 	smpsJump            DEZ_Jump02
 
 DEZ_Voices:

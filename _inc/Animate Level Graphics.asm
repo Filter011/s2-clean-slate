@@ -99,7 +99,7 @@ Dynamic_HTZ:
 	divu.w	#$30,d0
 	swap	d0
 	cmp.b	1(a3),d0
-	beq.s	.skipMountainArt
+	beq.w	.doCloudArt
 	move.b	d0,1(a3)
 	move.w	d0,d2
 	andi.w	#7,d0
@@ -126,8 +126,6 @@ Dynamic_HTZ:
 	jsr	(QueueDMATransfer).w
 	addi.w	#$80,d4
 	dbf	d5,.mountainLoop
-; BranchTo_loc_3FE5C ; BranchTo
-.skipMountainArt:
 	bra.w	.doCloudArt
 ; ===========================================================================
 ; HTZ mountain art main RAM addresses?

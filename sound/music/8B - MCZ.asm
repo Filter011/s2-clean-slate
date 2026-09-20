@@ -53,48 +53,46 @@ MCZ_FM5:
 	smpsCall            MCZ_Call00
 
 MCZ_Jump03:
-	dc.b	nRst, $2F, nRst, $1E
+	dc.b	nRst, $4D
 	smpsSetvoice        $06
 	dc.b	nB2, $12, nC3, $06
 	smpsSetvoice        $01
-	dc.b	nRst, $30, nRst, $06, nC5, $08, nB4, $04, nBb4, $08, nA4, $04
-	dc.b	nAb4, $08, nG4, $04, nRst, $30, nRst, $1E
+	dc.b	nRst, $36, nC5, $08, nB4, $04, nBb4, $08, nA4, $04
+	dc.b	nAb4, $08, nG4, $04, nRst, $4E
 	smpsSetvoice        $06
 	dc.b	nB2, $12, nC3, $06
 	smpsSetvoice        $01
-	dc.b	nRst, $30, nRst, $06, nC5, $08, nB4, $04, nBb4, $08, nA4, $04
-	dc.b	nAb4, $08, nG4, $04, nRst, $30, nRst, $1E
+	dc.b	nRst, $36, nC5, $08, nB4, $04, nBb4, $08, nA4, $04
+	dc.b	nAb4, $08, nG4, $04, nRst, $4E
 	smpsSetvoice        $06
 	dc.b	nB2, $12, nC3, $06
 	smpsSetvoice        $01
-	dc.b	nRst, $30, nRst, $06, nC5, $08, nB4, $04, nBb4, $08, nA4, $04
-	dc.b	nAb4, $08, nG4, $04, nRst, $30, nRst, $1E
+	dc.b	nRst, $36, nC5, $08, nB4, $04, nBb4, $08, nA4, $04
+	dc.b	nAb4, $08, nG4, $04, nRst, $4E
 	smpsSetvoice        $06
 	dc.b	nB2, $12, nC3, $06
 	smpsSetvoice        $01
-	dc.b	nRst, $30, nRst, $06, nC5, $08, nB4, $04, nBb4, $08, nA4, $04
+	dc.b	nRst, $36, nC5, $08, nB4, $04, nBb4, $08, nA4, $04
 	dc.b	nAb4, $08, nG4, $04
 
 MCZ_Loop05:
-	dc.b	nRst, $0C, nE5, $06, nRst, $12, $06, nRst, $12, nE5, $06
+	dc.b	nRst, $0C, nE5, $06, nRst, $2A, nE5, $06
 	dc.b	nRst, $0C
 	smpsSetvoice        $06
 	dc.b	nB2, $12, nC3, $06, nRst
 	smpsSetvoice        $01
-	dc.b	nE5, $06, nRst, $12, $06, nRst, $12, nE5, $08, nEb5, $04
+	dc.b	nE5, $06, nRst, $2A, nE5, $08, nEb5, $04
 	dc.b	nE5, $08, nEb5, $04, nE5, $0C
 	smpsLoop            $00, $04, MCZ_Loop05
 	dc.b	nRst, $01
 	smpsCall            MCZ_Call00
 	dc.b	nRst, $0B, nA3, $08, nB3, $04, nC4, $08, nB3, $04, nA3, $0C
-	dc.b	$08, nB3, $04, nC4, $08, nB3, $04, nA3, $06, nRst, $12, nRst
-	dc.b	$01
+	dc.b	$08, nB3, $04, nC4, $08, nB3, $04, nA3, $06, nRst, $13
 	smpsCall            MCZ_Call00
 	dc.b	nA2, $0C, nRst, nG2, nRst, nF2, nRst, nE2, nRst
 	smpsCall            MCZ_Call00
 	dc.b	nRst, $0B, nC4, $08, nD4, $04, nE4, $08, nD4, $04, nC4, $0C
-	dc.b	$08, nD4, $04, nE4, $08, nD4, $04, nC4, $06, nRst, $12, nRst
-	dc.b	$01
+	dc.b	$08, nD4, $04, nE4, $08, nD4, $04, nC4, $06, nRst, $13
 	smpsCall            MCZ_Call00
 	dc.b	nA2, $0C, nA2, nE2, $08, nG2, $0C, nA2, $06, nRst, $2E
 	smpsJump            MCZ_Jump03
@@ -113,7 +111,7 @@ MCZ_Call02:
 MCZ_FM1:
 	smpsSetvoice        $02
 	smpsModSet          $18, $01, $0A, $04
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 
 MCZ_Jump02:
 	smpsCall            MCZ_Call01
@@ -141,21 +139,21 @@ MCZ_Jump02:
 	dc.b	nRst, $0C
 
 MCZ_Loop04:
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsLoop            $00, $09, MCZ_Loop04
 	smpsCall            MCZ_Call03
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsAlterPitch      $03
 	smpsCall            MCZ_Call04
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsAlterPitch      $FD
 	smpsCall            MCZ_Call03
-	dc.b	nRst, $30, nRst, nRst, nRst
+	dc.b	nRst, $60, nRst
 	smpsJump            MCZ_Jump02
 
 ; PSG1 Data
 MCZ_PSG1:
-	dc.b	nRst, $04, nRst, $30, nRst
+	dc.b	nRst, $64
 
 MCZ_Jump05:
 	smpsCall            MCZ_Call01
@@ -183,24 +181,24 @@ MCZ_Jump05:
 	dc.b	nRst, $0C
 
 MCZ_Loop08:
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsLoop            $00, $09, MCZ_Loop08
 	smpsCall            MCZ_Call03
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsAlterPitch      $03
 	smpsCall            MCZ_Call04
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsAlterPitch      $FD
 	smpsCall            MCZ_Call03
-	dc.b	nRst, $30, nRst, nRst, nRst
+	dc.b	nRst, $60, nRst
 	smpsJump            MCZ_Jump05
 
 ; PSG2 Data
 MCZ_PSG2:
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 
 MCZ_Loop06:
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsLoop            $00, $08, MCZ_Loop06
 	dc.b	nA5, $0C, nAb5, nG5, $08, nAb5, $04, nG5, $08, nFs5, $04, nF5
 	dc.b	$08, $04, nE5, $0C, nEb5, $08, nD5, $10, nC5, $0C, nC5, nB4
@@ -231,7 +229,7 @@ MCZ_FM3:
 	smpsSetvoice        $00
 
 MCZ_Loop02:
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsLoop            $00, $08, MCZ_Loop02
 	dc.b	nA5, $0C, nAb5, nG5, $08, nAb5, $04, nG5, $08, nFs5, $04, nF5
 	dc.b	$08, $04, nE5, $0C, nEb5, $08, nD5, $10, nC5, $0C, nC5, nB4
@@ -259,7 +257,7 @@ MCZ_Loop03:
 ; FM2 Data
 MCZ_FM2:
 	smpsSetvoice        $05
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 
 MCZ_Loop01:
 	dc.b	nA2, $0C, nA3, nG3, $08, nA3, $04, nG3, $08, nE3, $04, nD3
@@ -281,43 +279,43 @@ MCZ_FM4:
 	smpsCall            MCZ_Call00
 
 MCZ_Jump01:
-	dc.b	nRst, $30, nRst, $1E
+	dc.b	nRst, $4E
 	smpsPan             panRight, $00
 	smpsSetvoice        $06
 	dc.b	nAb2, $12, nA2, $06
 	smpsPan             panCenter, $00
 	smpsSetvoice        $01
-	dc.b	nRst, $30, nRst, $06, nA4, $08, nAb4, $04, nG4, $08, nFs4, $04
-	dc.b	nF4, $08, nE4, $04, nRst, $30, nRst, $1E
+	dc.b	nRst, $36, nA4, $08, nAb4, $04, nG4, $08, nFs4, $04
+	dc.b	nF4, $08, nE4, $04, nRst, $4E
 	smpsPan             panRight, $00
 	smpsSetvoice        $06
 	dc.b	nAb2, $12, nA2, $06
 	smpsPan             panCenter, $00
 	smpsSetvoice        $01
-	dc.b	nRst, $30, nRst, $06, nA4, $08, nAb4, $04, nG4, $08, nFs4, $04
-	dc.b	nF4, $08, nE4, $04, nRst, $30, nRst, $1E
+	dc.b	nRst, $36, nA4, $08, nAb4, $04, nG4, $08, nFs4, $04
+	dc.b	nF4, $08, nE4, $04, nRst, $4E
 	smpsPan             panRight, $00
 	smpsSetvoice        $06
 	dc.b	nAb2, $12, nA2, $06
 	smpsPan             panCenter, $00
 	smpsSetvoice        $01
-	dc.b	nRst, $30, nRst, $06, nA4, $08, nAb4, $04, nG4, $08, nFs4, $04
-	dc.b	nF4, $08, nE4, $04, nRst, $30, nRst, $1E
+	dc.b	nRst, $36, nA4, $08, nAb4, $04, nG4, $08, nFs4, $04
+	dc.b	nF4, $08, nE4, $04, nRst, $4E
 	smpsPan             panRight, $00
 	smpsSetvoice        $06
 	dc.b	nAb2, $12, nA2, $06
 	smpsPan             panCenter, $00
 	smpsSetvoice        $01
-	dc.b	nRst, $30, nRst, $06, nA4, $08, nAb4, $04, nG4, $08, nFs4, $04
+	dc.b	nRst, $36, nA4, $08, nAb4, $04, nG4, $08, nFs4, $04
 	dc.b	nF4, $08, nE4, $04
 
 MCZ_Loop00:
-	dc.b	nRst, $0C, nC5, $06, nRst, $12, $06, nRst, $12, nC5, $06
+	dc.b	nRst, $0C, nC5, $06, nRst, $2A, nC5, $06
 	dc.b	nRst, $0C
 	smpsSetvoice        $06
 	dc.b	nAb2, $12, nA2, $06, nRst
 	smpsSetvoice        $01
-	dc.b	nC5, $06, nRst, $12, $06, nRst, $12, nC5, $08, nB4, $04
+	dc.b	nC5, $06, nRst, $2A, nC5, $08, nB4, $04
 	dc.b	nC5, $08, nB4, $04, nC5, $0C
 	smpsLoop            $00, $04, MCZ_Loop00
 	smpsCall            MCZ_Call00
@@ -345,7 +343,7 @@ MCZ_Loop00:
 ; PSG3 Data
 MCZ_PSG3:
 	smpsPSGform         $E7
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 
 MCZ_Jump04:
 	dc.b	nMaxPSG, $0C, $08, $04
@@ -353,7 +351,7 @@ MCZ_Jump04:
 
 ; DAC Data
 MCZ_DAC:
-	dc.b	nRst, $30, nRst, $18, dKick, $0C, $08, $04
+	dc.b	nRst, $48, dKick, $0C, $08, $04
 
 MCZ_Jump00:
 	dc.b	dKick, $08, $0C, $04, dSnare, $0C, dKick, $08, $0C, dSnare, $04, dKick
