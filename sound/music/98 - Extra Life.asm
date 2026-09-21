@@ -1,7 +1,7 @@
 ExtraLife_Header:
 	smpsHeaderStartSong 2
 	smpsHeaderVoice     ExtraLife_Voices
-	smpsHeaderChan      $06, $03
+	smpsHeaderChan      $06, $01
 	smpsHeaderTempo     $02, $CD
 
 	smpsHeaderDAC       ExtraLife_DAC
@@ -11,8 +11,6 @@ ExtraLife_Header:
 	smpsHeaderFM        ExtraLife_FM4,	$E8, $10
 	smpsHeaderFM        ExtraLife_FM5,	$E8, $10
 	smpsHeaderPSG       ExtraLife_PSG1,	$D0, $08, $00, fTone_05
-	smpsHeaderPSG       ExtraLife_PSG2,	$DC, $08, $00, fTone_05
-	smpsHeaderPSG       ExtraLife_PSG3,	$DC, $00, $00, fTone_04
 
 ; FM4 Data
 ExtraLife_FM4:
@@ -36,11 +34,9 @@ ExtraLife_Jump01:
 ExtraLife_FM2:
 	smpsSetvoice        $01
 	smpsNoteFill        $06
-	smpsNop             $01
 	dc.b	nCs7, $06, $03, $03, $06, $06
 	smpsNoteFill        $00
 	dc.b	nD7, $09, nB6, nA6, $06, nCs7, $18
-	smpsNop             $01
 	smpsStop
 
 ; FM5 Data
@@ -65,16 +61,11 @@ ExtraLife_PSG1:
 	dc.b	nCs7, $06, $03, $03, $06, $06
 	smpsNoteFill        $00
 	dc.b	nD7, $09, nB6, nA6, $06, nCs7, $18
-
-; PSG2 Data
-ExtraLife_PSG2:
-; PSG3 Data
-ExtraLife_PSG3:
 	smpsStop
 
 ; DAC Data
 ExtraLife_DAC:
-	dc.b	dHiTimpani, $12, $06, dVLowTimpani, $09, $09, $06, dHiTimpani, $06, dLowTimpani, dHiTimpani, dLowTimpani
+	dc.b	dHiTimpani, $12, $06, dVLowTimpani, $09, $09, $06, dHiTimpani, dLowTimpani, dHiTimpani, dLowTimpani
 	dc.b	dHiTimpani, $0C
 	smpsFade
 
