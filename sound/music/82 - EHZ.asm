@@ -225,7 +225,7 @@ EHZ_Loop04:
 
 ; PSG1 Data
 EHZ_PSG1:
-	dc.b	nRst, $20, nRst, nRst, nRst
+	dc.b	nRst, $40, nRst
 
 EHZ_Jump05:
 	smpsAlterPitch      $0C
@@ -236,10 +236,10 @@ EHZ_Loop0B:
 	dc.b	nG5, $20, smpsNoAttack, $20, nA5, smpsNoAttack, $20, nF5, smpsNoAttack, $20, nE5, smpsNoAttack
 	dc.b	$20
 	smpsLoop            $00, $04, EHZ_Loop0B
-	dc.b	nRst, $20, nRst
+	dc.b	nRst, $60
 	smpsPSGvoice        fTone_08
 	smpsPSGAlterVol     $FF
-	dc.b	nRst, nB5, $02, nRst, $06, nC6, $04, nB5, $08
+	dc.b	nB5, $02, nRst, $06, nC6, $04, nB5, $08
 	smpsPSGAlterVol     $FF
 	smpsPSGvoice        fTone_02
 	smpsPSGAlterVol     $03
@@ -249,8 +249,7 @@ EHZ_Loop0B:
 	smpsPSGAlterVol     $FA
 	smpsPSGvoice        fTone_08
 	smpsAlterPitch      $F4
-	dc.b	nRst, $20, nRst, nC6, $04, nRst, nC6, $10, nA5, $08, nRst, $20
-	dc.b	nRst, nRst
+	dc.b	nRst, $40, nC6, $04, nRst, nC6, $10, nA5, $08, nRst, $40
 	smpsAlterPitch      $0C
 	smpsPSGAlterVol     $01
 	dc.b	nRst, nB5, $02, nRst, $06, nC6, $04, nB5, $08
@@ -262,12 +261,12 @@ EHZ_Loop0B:
 	dc.b	nB5, $02, nRst, $02
 	smpsPSGAlterVol     $FA
 	smpsAlterPitch      $F4
-	dc.b	nRst, $20, nRst, nRst, nRst
+	dc.b	nRst, $40, nRst
 	smpsJump            EHZ_Jump05
 
 ; PSG2 Data
 EHZ_PSG2:
-	dc.b	nRst, $20, nRst, nRst, nRst
+	dc.b	nRst, $40, nRst
 
 EHZ_Jump04:
 	smpsPSGAlterVol     $03
@@ -280,11 +279,11 @@ EHZ_Loop0A:
 	smpsLoop            $00, $04, EHZ_Loop0A
 	smpsModOff
 	smpsPSGAlterVol     $FD
-	dc.b	nRst, $20, nRst
+	dc.b	nRst, $60
 	smpsPSGvoice        $00
 	smpsAlterNote       $01
 	smpsPSGAlterVol     $01
-	dc.b	nRst, nB5, $02, nRst, $06, nC6, $04, nB5, $08
+	dc.b	nB5, $02, nRst, $06, nC6, $04, nB5, $08
 	smpsPSGAlterVol     $FF
 	smpsPSGvoice        fTone_02
 	smpsPSGAlterVol     $03
@@ -293,9 +292,9 @@ EHZ_Loop0A:
 	dc.b	nB5, $02, nRst, $02
 	smpsPSGAlterVol     $FA
 	smpsPSGvoice        $00
-	dc.b	nRst, $20, nRst, nRst, nRst, nRst, nRst
+	dc.b	nRst, $70, nRst
 	smpsPSGAlterVol     $01
-	dc.b	nRst, nB5, $02, nRst, $06, nC6, $04, nB5, $08
+	dc.b	nB5, $02, nRst, $06, nC6, $04, nB5, $08
 	smpsPSGAlterVol     $FF
 	smpsPSGvoice        fTone_02
 	smpsPSGAlterVol     $03
@@ -303,7 +302,7 @@ EHZ_Loop0A:
 	smpsPSGAlterVol     $03
 	dc.b	nB5, $02, nRst, $02
 	smpsPSGAlterVol     $FA
-	dc.b	nRst, $20, nRst, nRst, nRst
+	dc.b	nRst, $40, nRst
 	smpsJump            EHZ_Jump04
 
 ; PSG3 Data

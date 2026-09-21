@@ -42,6 +42,9 @@ Options_FM5:
 	smpsSetvoice        $01
 	smpsPan             panRight, $00
 	smpsModSet          $02, $01, $02, $04
+
+; PSG2 Data
+Options_PSG2:
 	dc.b	nRst, $02
 	smpsJump            Options_Jump00
 
@@ -64,11 +67,6 @@ Options_FM1:
 	dc.b	nC3, $06, nRst, nG2, $0C, nAb2, $06, nRst, $12, nAb2, $06, nRst
 	dc.b	nF2, $0C, nBb2, $06, nRst, $12, nBb2, $06, nRst, nG2, $0C
 	smpsJump            Options_FM1
-
-; PSG2 Data
-Options_PSG2:
-	dc.b	nRst, $02
-	smpsJump            Options_Jump00
 
 ; PSG3 Data
 Options_PSG3:

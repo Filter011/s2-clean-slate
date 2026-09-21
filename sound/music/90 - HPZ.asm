@@ -125,7 +125,7 @@ HPZ_Loop06:
 	smpsJump            HPZ_Loop05
 
 HPZ_Call00:
-	dc.b	dKick, $12, dSnare, $06, dFloorTom, $0C, dKick, $0C, dSnare, $12, dFloorTom, $06
+	dc.b	dKick, $12, dSnare, $06, dFloorTom, $0C, dKick, dSnare, $12, dFloorTom, $06
 	smpsReturn
 
 ; DAC Data
@@ -141,7 +141,7 @@ HPZ_Loop00:
 HPZ_Loop01:
 	smpsCall            HPZ_Call00
 	smpsLoop            $00, $08, HPZ_Loop01
-	dc.b	dKick, $12, dSnare, $06, dKick, $0C, dKick, $0C, dKick, dSnare, dKick, $12
+	dc.b	dKick, $12, dSnare, $06, dKick, $0C, dKick, dKick, dSnare, dKick, $12
 	dc.b	dSnare, $06, dKick, $0C
 	smpsJump            HPZ_DAC
 
