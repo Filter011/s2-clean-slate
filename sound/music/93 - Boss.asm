@@ -125,7 +125,7 @@ Boss_Jump00:
 	dc.b	$0C, nE5, nEb5, nE5, nAb5, $18, nE5
 
 Boss_Loop05:
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsLoop            $00, $04, Boss_Loop05
 	smpsModOn
 	smpsAlterVol        $02
@@ -153,7 +153,7 @@ Boss_PSG3:
 	smpsNoteFill        $05
 
 Boss_Loop0D:
-	dc.b	nA5, $24, $24, $18, nRst, $30, nRst
+	dc.b	nA5, $24, $24, $18, nRst, $60
 	smpsLoop            $00, $02, Boss_Loop0D
 
 Boss_Loop0E:
@@ -163,7 +163,7 @@ Boss_Loop0E:
 
 ; DAC Data
 Boss_DAC:
-	dc.b	dSnare, $0C, dSnare, dSnare, dSnare, dSnare, dSnare, dSnare, dSnare, dMidTimpani, $0C, dVLowTimpani
+	dc.b	dSnare, $0C, dSnare, dSnare, dSnare, dSnare, dSnare, dSnare, dSnare, dMidTimpani, dVLowTimpani
 	dc.b	dMidTimpani, dVLowTimpani, dMidTimpani, dVLowTimpani, dMidTimpani, dVLowTimpani
 	smpsLoop            $00, $02, Boss_DAC
 	dc.b	dKick, $0C, dSnare, $06, dSnare

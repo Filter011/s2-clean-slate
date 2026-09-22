@@ -7,7 +7,7 @@ HPZ_Header:
 	smpsHeaderDAC       HPZ_DAC
 	smpsHeaderFM        HPZ_FM1,	$00, $06
 	smpsHeaderFM        HPZ_FM2,	$0C, $10
-	smpsHeaderFM        HPZ_FM3,	$00, $14
+	smpsHeaderFM        HPZ_FM3,	$F4, $14
 	smpsHeaderFM        HPZ_FM4,	$00, $0E
 	smpsHeaderFM        HPZ_FM5,	$F4, $14
 	smpsHeaderPSG       HPZ_PSG1,	$E8, $06, $00, $00
@@ -83,7 +83,6 @@ HPZ_Jump01:
 ; FM3 Data
 HPZ_FM3:
 	smpsPan             panLeft, $00
-	smpsAlterPitch      $F4
 	smpsModSet          $18, $01, $02, $04
 	smpsSetvoice        $02
 
@@ -96,9 +95,7 @@ HPZ_Jump00:
 	dc.b	nA4, nB4, nC5, nB4, nC5, nD5, $24, smpsNoAttack, $18, nE5, $0C, nD5
 	dc.b	$24
 	smpsLoop            $00, $02, HPZ_Loop02
-	smpsAlterPitch      $0C
-	dc.b	smpsNoAttack, nD4, $24, nD4, nBb3, $0C, nD4, nA4, nG4, $24
-	smpsAlterPitch      $F4
+	dc.b	smpsNoAttack, nD5, $24, nD5, nBb4, $0C, nD5, nA5, nG5, $24
 	dc.b	nE4, $0C, nA4, nF4
 	smpsJump            HPZ_Jump00
 
