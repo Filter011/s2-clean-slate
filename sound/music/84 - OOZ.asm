@@ -111,7 +111,7 @@ OOZ_Call08:
 ; FM2 Data
 OOZ_FM2:
 	smpsSetvoice        $00
-	dc.b	nRst, $06, nRst, $30, nRst, nRst, $2A, nF4, $03, nG4
+	dc.b	nRst, $66, nRst, $2A, nF4, $03, nG4
 
 OOZ_Loop07:
 	smpsCall            OOZ_Call01
@@ -148,7 +148,7 @@ OOZ_FM4:
 
 OOZ_Loop04:
 	dc.b	nRst, $06, nD5, $03, nRst, nD5, nRst, nD5, nRst, nCs5, $09, nD5
-	dc.b	$03, nRst, $0C, nRst, $30
+	dc.b	$03, nRst, $3C
 	smpsLoop            $00, $08, OOZ_Loop04
 
 OOZ_Loop05:
@@ -185,7 +185,7 @@ OOZ_FM5:
 
 OOZ_Loop02:
 	dc.b	nRst, $06, nBb4, $03, nRst, nBb4, nRst, nBb4, nRst, nA4, $09, nBb4
-	dc.b	$03, nRst, $0C, nRst, $30
+	dc.b	$03, nRst, $3C
 	smpsLoop            $00, $08, OOZ_Loop02
 
 OOZ_Loop03:
@@ -219,7 +219,7 @@ OOZ_Loop01:
 ; PSG1 Data
 OOZ_PSG1:
 	smpsAlterNote       $01
-	dc.b	nRst, $02, nRst, $01
+	dc.b	nRst, $03
 	smpsCall            OOZ_Call02
 
 OOZ_Jump02:
@@ -241,7 +241,7 @@ OOZ_PSG2:
 
 OOZ_Jump01:
 	smpsPSGAlterVol     $03
-	dc.b	nRst, $18, nRst, $03, nRst, $01
+	dc.b	nRst, $1C
 	smpsPSGvoice        fTone_0C
 	smpsPSGAlterVolS2   $FE
 	dc.b	nC6, $01, nD6, $02, nEb6, $02, nFs6, $2D, nAb6, $01, nG6, $0B
@@ -258,11 +258,10 @@ OOZ_Jump01:
 
 ; PSG3 Data
 OOZ_PSG3:
-	dc.b	nRst, $06, nRst, $30, nE5, $03, nRst, nE5, $03, nRst, $0F, nE5
+	dc.b	nRst, $36, nE5, $03, nRst, nE5, $03, nRst, $0F, nE5
 	dc.b	$03, nRst, $09, nE5, $03, nRst, nRst, $06, nE5, $03, nRst, nE5
 	dc.b	$03, nRst, $0F, nE5, $03, nRst, nE5, $03, nRst, nE5, $03, $03
-	dc.b	nRst, $06, nE5, $03, nRst, nE5, $03, nRst, $03, nRst, $18, nRst
-	dc.b	$0C
+	dc.b	nRst, $06, nE5, $03, nRst, nE5, $03, nRst, $27
 
 OOZ_Loop08:
 	dc.b	nE5, $03, nE5, nE5, nRst, nE5, nRst, nE5, nE5, nE5, nE5, nE5
@@ -274,7 +273,7 @@ OOZ_Loop08:
 
 ; DAC Data
 OOZ_DAC:
-	dc.b	nRst, $06, nRst, $30, nRst, nRst, $2A, dSnare, $06
+	dc.b	nRst, $66, nRst, $2A, dSnare, $06
 
 OOZ_Loop00:
 	dc.b	dKick, $03, dKick, dKick, nRst, dSnare, $09, $06, dKick, $03, dKick, nRst
