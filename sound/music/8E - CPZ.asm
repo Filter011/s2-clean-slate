@@ -16,8 +16,6 @@ CPZ_Header:
 
 ; PSG1 Data
 CPZ_PSG1:
-	smpsStop
-
 ; PSG2 Data
 CPZ_PSG2:
 	smpsStop
@@ -75,14 +73,14 @@ CPZ_Call02:
 	dc.b	nFs5, $05, nRst, $13, nFs5, $12, nFs5, $05, nRst, $25, nFs5, $06
 	dc.b	nFs5, nRst, $0C, nFs5, $06, nFs5, $05, nRst, $0D, nFs5, $06, nAb5
 	dc.b	$30, smpsNoAttack, $06, nFs5, $05, nRst, $13, nFs5, $12, nFs5, $05, nRst
-	dc.b	$30, nRst, $01, nRst, $30, nRst
+	dc.b	$31, nRst, $60
 	smpsReturn
 
 CPZ_Call04:
 	dc.b	nA5, $05, nRst, $13, nA5, $12, nA5, $05, nRst, $25, nA5, $06
 	dc.b	nA5, nRst, $0C, nA5, $06, nA5, $05, nRst, $0D, nA5, $06, nB5
 	dc.b	$30, smpsNoAttack, $06, nA5, $05, nRst, $13, nA5, $12, nA5, $05, nRst
-	dc.b	$30, nRst, $01, nRst, $30, nRst
+	dc.b	$31, nRst, $60
 	smpsReturn
 
 CPZ_Call03:
@@ -143,7 +141,7 @@ CPZ_Call01:
 CPZ_FM1:
 	smpsModSet          $06, $01, $FA, $04
 	smpsCall            CPZ_Call05
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsCall            CPZ_Call05
 	dc.b	nRst, $30
 	smpsCall            CPZ_Call06
@@ -218,10 +216,10 @@ CPZ_Loop0D:
 
 CPZ_Loop0E:
 	dc.b	nAb5, $12, nRst, $06, nAb5, $12, nRst, $06, nA5, $0C, nRst, $24
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsLoop            $00, $04, CPZ_Loop0E
 	smpsModSet          $0C, $01, $05, $04
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsSetvoice        $05
 	smpsAlterVol        $F8
 
@@ -254,13 +252,10 @@ CPZ_Loop09:
 
 CPZ_Loop0A:
 	dc.b	nB5, $12, nRst, $06, nB5, $12, nRst, $06, nCs6, $0C, nRst, $24
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsLoop            $00, $04, CPZ_Loop0A
 	smpsModSet          $0C, $01, $05, $04
-
-CPZ_Loop0B:
-	dc.b	nRst, $30, nRst
-	smpsLoop            $00, $02, CPZ_Loop0B
+	dc.b	nRst, $60, nRst
 	smpsSetvoice        $05
 	smpsAlterVol        $F8
 	dc.b	nFs5, $04, nRst, $08, nE5, $04, nRst, $08, nFs5, $0C, nE5, $06
@@ -291,15 +286,15 @@ CPZ_Loop05:
 	dc.b	nE2, $0C, nE3, $06, nRst, nEb3, nRst, nE3, nEb2, nRst, nEb2, nEb3
 	dc.b	nRst, nCs3, nRst, nEb3, $0C
 	smpsLoop            $01, $04, CPZ_Loop05
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsPan             panCenter, $00
 
 CPZ_Loop06:
 	smpsCall            CPZ_Call03
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsLoop            $00, $03, CPZ_Loop06
 	smpsPan             panRight, $00
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsSetvoice        $05
 	smpsAlterVol        $F8
 
@@ -314,10 +309,7 @@ CPZ_Loop07:
 ; FM2 Data
 CPZ_FM2:
 	smpsSetvoice        $04
-
-CPZ_Loop02:
-	dc.b	nRst, $30, nRst
-	smpsLoop            $00, $03, CPZ_Loop02
+	dc.b	nRst, $60, nRst, nRst
 	dc.b	nFs2, $06, nEb2, $24, nRst, $06, nE2, $04, nRst, $08, nE2, $0C
 	dc.b	nF2, $04, nRst, $08, nF2, $0C, nFs2, $04, nRst, $08, nFs2, $0C
 	dc.b	nFs2, $04, nRst, $08, nFs2, $0C, nFs2, $04, nRst, $08, nFs2, $0C
@@ -343,7 +335,7 @@ CPZ_Loop03:
 	dc.b	$18, nE3, $06, nE4, nEb3, nEb4, nE2, $18, nF2, nFs2, $0C, nRst
 	dc.b	$24, nRst, $30, nRst, $18, nE3, $06, nRst, nE3, nFs3, nE2, $18
 	dc.b	nF2, nFs2, $0C, nRst, $24, nFs2, $0C, nEb2, $24, nE2, $18, nF2
-	dc.b	nFs2, $30, smpsNoAttack, $30, nRst, $30, nRst, nRst, nRst, nRst, nA2, $06
+	dc.b	nFs2, $30, smpsNoAttack, $30, nRst, $78, nRst, nA2, $06
 	dc.b	nA3, nA2, nA3, nAb2, nAb3, nG2, nG3
 	smpsJump            CPZ_Loop03
 

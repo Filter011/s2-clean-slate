@@ -1,7 +1,7 @@
 End_of_level_Header:
 	smpsHeaderStartSong 2
 	smpsHeaderVoice     End_of_level_Voices
-	smpsHeaderChan      $06, $03
+	smpsHeaderChan      $06, $02
 	smpsHeaderTempo     $02, $AA
 
 	smpsHeaderDAC       End_of_level_DAC
@@ -12,7 +12,6 @@ End_of_level_Header:
 	smpsHeaderFM        End_of_level_FM5,	$F4, $14
 	smpsHeaderPSG       End_of_level_PSG1,	$D0, $05, $00, fTone_05
 	smpsHeaderPSG       End_of_level_PSG2,	$DC, $07, $00, fTone_05
-	smpsHeaderPSG       End_of_level_PSG3,	$DC, $00, $00, fTone_04
 
 ; FM1 Data
 End_of_level_FM1:
@@ -67,15 +66,12 @@ End_of_level_FM5:
 End_of_level_PSG2:
 	dc.b	nG5, $06, nC6, nB5, nG5, nC6, nB5, nG5, nC6, nB5, $0C, nC6
 	dc.b	$09, nB5, $33
-
-; PSG3 Data
-End_of_level_PSG3:
 	smpsStop
 
 ; DAC Data
 End_of_level_DAC:
 	dc.b	dSnare, $03, dSnare, dKick, $06, dKick, dSnare, $03, dSnare, dKick, $06, dKick
-	dc.b	dSnare, $03, dSnare, dHiTimpani, dHiTimpani, dVLowTimpani, dVLowTimpani, $03, dVLowTimpani, dVLowTimpani, dSnare, $09
+	dc.b	dSnare, $03, dSnare, dHiTimpani, dHiTimpani, dVLowTimpani, dVLowTimpani, dVLowTimpani, dVLowTimpani, dSnare, $09
 	dc.b	$33
 	smpsStop
 

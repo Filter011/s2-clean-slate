@@ -48,19 +48,13 @@ Emerald_FM6:
 	dc.b	nG5, $0C, nG5, $06, nC6, $06, nRst, nC6, nRst, nE6, $2A
 	smpsStop
 
+; PSG1 Data
+Emerald_PSG1:
+	dc.b	nRst, $02
+
 ; PSG2 Data
 Emerald_PSG2:
 	dc.b	nRst, $2D
-
-Emerald_Loop01:
-	dc.b	nG5, $06, nF5, nE5, nD5
-	smpsPSGAlterVol     $03
-	smpsLoop            $00, $04, Emerald_Loop01
-	smpsStop
-
-; PSG1 Data
-Emerald_PSG1:
-	dc.b	nRst, $2F
 
 Emerald_Loop00:
 	dc.b	nG5, $06, nF5, nE5, nD5
