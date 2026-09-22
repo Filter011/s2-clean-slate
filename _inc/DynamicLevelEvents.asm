@@ -4,9 +4,9 @@
 
 ; sub_E5D0:
 RunDynamicLevelEvents:
-	moveq	#0,d0
-	move.b	(Current_Zone).w,d0
-	add.w	d0,d0
+	move.w	(Current_ZoneAndAct).w,d0
+	ror.b	#1,d0
+	lsr.w	#6,d0
 	move.w	DynamicLevelEventIndex(pc,d0.w),d0
 	jsr	DynamicLevelEventIndex(pc,d0.w)
 	moveq	#2,d1
@@ -43,30 +43,45 @@ RunDynamicLevelEvents:
 
 ; ===========================================================================
 ; off_E636:
-DynamicLevelEventIndex: zoneOrderedOffsetTable 2,1
-	zoneOffsetTableEntry.w LevEvents_EHZ	; EHZ
-	zoneOffsetTableEntry.w LevEvents_001	; Zone 1
-	zoneOffsetTableEntry.w LevEvents_WZ	; WZ
-	zoneOffsetTableEntry.w LevEvents_003	; Zone 3
-	zoneOffsetTableEntry.w LevEvents_MTZ	; MTZ1,2
+DynamicLevelEventIndex: zoneOrderedOffsetTable 2,2
+	zoneOffsetTableEntry.w LevEvents_EHZ	; EHZ1
+	zoneOffsetTableEntry.w LevEvents_EHZ2	; EHZ2
+	zoneOffsetTableEntry.w LevEvents_001	; Zone 1 Act 1
+	zoneOffsetTableEntry.w LevEvents_001	; Zone 1 Act 2
+	zoneOffsetTableEntry.w LevEvents_WZ	; WZ1
+	zoneOffsetTableEntry.w LevEvents_WZ	; WZ2
+	zoneOffsetTableEntry.w LevEvents_003	; Zone 3 Act 1
+	zoneOffsetTableEntry.w LevEvents_003	; Zone 3 Act 2
+	zoneOffsetTableEntry.w LevEvents_MTZ	; MTZ1
+	zoneOffsetTableEntry.w LevEvents_MTZ	; MTZ2
 	zoneOffsetTableEntry.w LevEvents_MTZ3	; MTZ3
-	zoneOffsetTableEntry.w LevEvents_WFZ	; WFZ
-	zoneOffsetTableEntry.w LevEvents_HTZ	; HTZ
-	zoneOffsetTableEntry.w LevEvents_HPZ	; HPZ
-	zoneOffsetTableEntry.w LevEvents_009	; Zone 9
-	zoneOffsetTableEntry.w LevEvents_OOZ	; OOZ
-	zoneOffsetTableEntry.w LevEvents_MCZ	; MCZ
-	zoneOffsetTableEntry.w LevEvents_CNZ	; CNZ
-	zoneOffsetTableEntry.w LevEvents_CPZ	; CPZ
-	zoneOffsetTableEntry.w LevEvents_DEZ	; DEZ
-	zoneOffsetTableEntry.w LevEvents_ARZ	; ARZ
-	zoneOffsetTableEntry.w LevEvents_SCZ	; SCZ
+	zoneOffsetTableEntry.w LevEvents_MTZ3	; MTZ4
+	zoneOffsetTableEntry.w LevEvents_WFZ	; WFZ1
+	zoneOffsetTableEntry.w LevEvents_WFZ	; WFZ2
+	zoneOffsetTableEntry.w LevEvents_HTZ	; HTZ1
+	zoneOffsetTableEntry.w LevEvents_HTZ2	; HTZ2
+	zoneOffsetTableEntry.w LevEvents_HPZ	; HPZ1
+	zoneOffsetTableEntry.w LevEvents_HPZ	; HPZ2
+	zoneOffsetTableEntry.w LevEvents_009	; Zone 9 Act 1
+	zoneOffsetTableEntry.w LevEvents_009	; Zone 9 Act 2
+	zoneOffsetTableEntry.w LevEvents_OOZ	; OOZ1
+	zoneOffsetTableEntry.w LevEvents_OOZ2	; OOZ2
+	zoneOffsetTableEntry.w LevEvents_MCZ	; MCZ1
+	zoneOffsetTableEntry.w LevEvents_MCZ2	; MCZ2
+	zoneOffsetTableEntry.w LevEvents_CNZ	; CNZ1
+	zoneOffsetTableEntry.w LevEvents_CNZ2	; CNZ2
+	zoneOffsetTableEntry.w LevEvents_CPZ	; CPZ1
+	zoneOffsetTableEntry.w LevEvents_CPZ2	; CPZ2
+	zoneOffsetTableEntry.w LevEvents_DEZ	; DEZ1
+	zoneOffsetTableEntry.w LevEvents_DEZ	; DEZ2
+	zoneOffsetTableEntry.w LevEvents_ARZ	; ARZ1
+	zoneOffsetTableEntry.w LevEvents_ARZ2	; ARZ2
+	zoneOffsetTableEntry.w LevEvents_SCZ	; SCZ1
+	zoneOffsetTableEntry.w LevEvents_SCZ2	; SCZ2
     zoneTableEnd
 ; ===========================================================================
 ; loc_E658:
 LevEvents_EHZ:
-	tst.b	(Current_Act).w
-	bne.s	LevEvents_EHZ2
 	rts
 ; ---------------------------------------------------------------------------
 LevEvents_EHZ2:
@@ -379,8 +394,6 @@ LevEvents_WFZ_RoutineNull:
 ; ===========================================================================
 ; loc_E986:
 LevEvents_HTZ:
-	tst.b	(Current_Act).w
-	bne.w	LevEvents_HTZ2
 	moveq	#0,d0
 	move.b	(Dynamic_Resize_Routine).w,d0
 	move.w	LevEvents_HTZ_Index(pc,d0.w),d0
@@ -963,8 +976,6 @@ LevEvents_009:
 ; ===========================================================================
 ; loc_F05E:
 LevEvents_OOZ:
-	tst.b	(Current_Act).w
-	bne.s	LevEvents_OOZ2
 	rts
 ; ---------------------------------------------------------------------------
 ; loc_F066:
@@ -1046,8 +1057,6 @@ LevEvents_OOZ2_Routine4:
 ; ===========================================================================
 ; loc_F13E:
 LevEvents_MCZ:
-	tst.b	(Current_Act).w
-	bne.s	LevEvents_MCZ2
 	rts
 ; ---------------------------------------------------------------------------
 ; loc_F146:
@@ -1144,13 +1153,11 @@ LevEvents_MCZ2_Routine4:
 ; ===========================================================================
 ; loc_F26A:
 LevEvents_CNZ:
-	jsr	(SlotMachine).l
-	tst.b	(Current_Act).w
-	bne.s	LevEvents_CNZ2
-	rts			; no events for act 1
+	jmp	(SlotMachine).l	; no events for act 1
 ; ===========================================================================
 ; loc_F278:
 LevEvents_CNZ2:
+	jsr	(SlotMachine).l
 	moveq	#0,d0
 	move.b	(Dynamic_Resize_Routine).w,d0
 	move.w	LevEvents_CNZ2_Index(pc,d0.w),d0
@@ -1231,8 +1238,6 @@ LevEvents_CNZ2_Routine4:
 ; ===========================================================================
 ; loc_F378:
 LevEvents_CPZ:
-	tst.b	(Current_Act).w
-	bne.s	LevEvents_CPZ2
 	rts
 ; ===========================================================================
 ; loc_F380:
@@ -1375,8 +1380,6 @@ LevEvents_DEZ_Routine5:
 ; ===========================================================================
 ; loc_F4D0:
 LevEvents_ARZ:
-	tst.b	(Current_Act).w
-	bne.s	LevEvents_ARZ2
 	rts
 ; ===========================================================================
 ; loc_F4D8:
@@ -1451,8 +1454,6 @@ LevEvents_ARZ2_Routine4:
 ; ===========================================================================
 ; loc_F59E:
 LevEvents_SCZ:
-	tst.b	(Current_Act).w
-	bne.w	LevEvents_SCZ2
 	moveq	#0,d0
 	move.b	(Dynamic_Resize_Routine).w,d0
 	move.w	LevEvents_SCZ_Index(pc,d0.w),d0
