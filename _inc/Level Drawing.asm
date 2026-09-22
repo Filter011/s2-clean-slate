@@ -29,7 +29,7 @@ LoadTilesAsYouMove:
 	tst.b	(Screen_redraw_flag).w
 	beq.s	Draw_FG
 
-	move.b	#0,(Screen_redraw_flag).w
+	clr.b	(Screen_redraw_flag).w
 
 	moveq	#-block_width,d4	; X (relative to camera)
 	moveq	#(1+screen_height/block_height+1)-1,d6 ; Cover the screen, plus an extra row at the top and bottom.
@@ -47,7 +47,7 @@ Draw_All:
 	addi.w	#block_height,d4	; move onto the next row
 	dbf	d6,Draw_All		; repeat for all rows
 
-	move.b	#0,(Scroll_flags_copy).w
+	clr.b	(Scroll_flags_copy).w
 
 	rts
 ; ===========================================================================
@@ -916,9 +916,9 @@ DrawInitialBG:
 	move.w	d1,d4
 	moveq	#0,d5
 	moveq	#gameplay_plane_width/block_width-1,d6 ; Width of plane in blocks minus 1.
-	move	#$2700,sr
+	move.w	#$2700,sr
 	bsr.w	DrawBlockRow_CustomWidth
-	move	#$2300,sr
+	move.w	#$2300,sr
 	movem.l	(sp)+,d4-d6
 	addi.w	#block_height,d4
 	dbf	d6,-
@@ -939,9 +939,9 @@ DrawInitialBG_LoadWholeBackground_512x256:
 	move.w	d1,d4
 	moveq	#0,d5
 	moveq	#gameplay_plane_width/block_width-1,d6 ; Width of plane in blocks minus 1.
-	move	#$2700,sr
+	move.w	#$2700,sr
 	bsr.w	DrawBlockRow.AbsoluteXAbsoluteYCustomWidth
-	move	#$2300,sr
+	move.w	#$2300,sr
 	movem.l	(sp)+,d4-d6
 	addi.w	#block_height,d4
 	dbf	d6,-

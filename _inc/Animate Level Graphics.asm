@@ -111,7 +111,7 @@ Dynamic_HTZ:
 	lsr.w	#2,d2
 	add.w	d2,d0
 	lea	.offsets(pc,d0.w),a4
-	moveq	#5,d5
+	moveq	#6-1,d5
 	move.w	#tiles_to_bytes(ArtTile_ArtUnc_HTZMountains),d4
 ; loc_3FD7C:
 .mountainLoop:
