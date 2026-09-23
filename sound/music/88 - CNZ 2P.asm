@@ -271,6 +271,8 @@ CNZ_2p_Call02:
 
 ; PSG1 Data
 CNZ_2p_PSG1:
+; PSG3 Data
+CNZ_2p_PSG3:
 	dc.b	nRst, $60
 	smpsNoteFill        $06
 
@@ -316,10 +318,6 @@ CNZ_2p_Loop0F:
 	smpsLoop            $00, $03, CNZ_2p_Loop0F
 	dc.b	nRst, $0C, nA5, nRst, nA5, nRst, nA5, nRst, nA5, nRst, $60
 	smpsJump            CNZ_2p_Loop0D
-
-; PSG3 Data
-CNZ_2p_PSG3:
-	smpsJump            CNZ_2p_PSG1
 
 ; DAC Data
 CNZ_2p_DAC:

@@ -1,7 +1,7 @@
 WFZ_Header:
 	smpsHeaderStartSong 2
 	smpsHeaderVoice     WFZ_Voices
-	smpsHeaderChan      $06, $03
+	smpsHeaderChan      $06, $00
 	smpsHeaderTempo     $01, $88
 
 	smpsHeaderDAC       WFZ_DAC
@@ -10,17 +10,6 @@ WFZ_Header:
 	smpsHeaderFM        WFZ_FM3,	$0C, $06
 	smpsHeaderFM        WFZ_FM4,	$18, $08
 	smpsHeaderFM        WFZ_FM5,	$00, $06
-	smpsHeaderPSG       WFZ_PSG1,	$00, $00, $00, $00
-	smpsHeaderPSG       WFZ_PSG2,	$00, $00, $00, $00
-	smpsHeaderPSG       WFZ_PSG3,	$00, $00, $00, $00
-
-; PSG1 Data
-WFZ_PSG1:
-; PSG2 Data
-WFZ_PSG2:
-; PSG3 Data
-WFZ_PSG3:
-	smpsStop
 
 ; FM5 Data
 WFZ_FM5:

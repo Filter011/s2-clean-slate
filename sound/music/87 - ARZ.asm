@@ -172,7 +172,7 @@ ARZ_Jump01:
 	smpsPan             panCenter, $00
 
 ARZ_Loop04:
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsSetvoice        $04
 	dc.b	nD6, $06, nA6, nD6, nA6, nD6, $18, nRst, $12, nCs6, $06, nCs6
 	dc.b	nRst, $12
@@ -276,16 +276,13 @@ ARZ_Loop0A:
 	dc.b	nRst, $2A
 	smpsJump            ARZ_Jump05
 
-	; Unreachable
-	smpsStop
-
 ; PSG2 Data
 ARZ_PSG2:
 	dc.b	nRst, $0C
 	smpsModSet          $03, $02, $01, $05
 
 ARZ_Loop08:
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsPSGvoice        fTone_0A
 	dc.b	nA5, $06, nE6, nA5, nE6, nA5, $18, nRst, $12, nF5, $06, nF5
 	dc.b	nRst, $12

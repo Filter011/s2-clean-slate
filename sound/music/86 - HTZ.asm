@@ -1,7 +1,7 @@
 HTZ_Header:
 	smpsHeaderStartSong 2, 1
 	smpsHeaderVoice     HTZ_Voices
-	smpsHeaderChan      $06, $03
+	smpsHeaderChan      $06, $00
 	smpsHeaderTempo     $01, $BE
 
 	smpsHeaderDAC       HTZ_DAC
@@ -10,17 +10,6 @@ HTZ_Header:
 	smpsHeaderFM        HTZ_FM3,	$0C, $07
 	smpsHeaderFM        HTZ_FM4,	$00, $07
 	smpsHeaderFM        HTZ_FM5,	$00, $07
-	smpsHeaderPSG       HTZ_PSG1,	$00, $06, $00, $00
-	smpsHeaderPSG       HTZ_PSG2,	$00, $05, $00, $00
-	smpsHeaderPSG       HTZ_PSG3,	$00, $00, $00, $00
-
-; PSG1 Data
-HTZ_PSG1:
-; PSG2 Data
-HTZ_PSG2:
-; PSG3 Data
-HTZ_PSG3:
-	smpsStop
 
 ; FM1 Data
 HTZ_FM1:

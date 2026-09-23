@@ -1350,13 +1350,6 @@ Credits_Call02:
 	dc.b	dSnare, $04, dKick, $0C, dSnare, dSnare, $08, $04
 	smpsReturn
 
-; Unused
-;Credits_CallUnk:
-	dc.b	dKick, $06, nRst, $03, dKick, dKick, $06, dSnare, dKick, $06, nRst, $03
-	dc.b	dKick, dKick, $06, dSnare, $03, dSnare, dKick, $06, nRst, $03, dKick, dKick
-	dc.b	$06, dSnare
-	smpsReturn
-
 Credits_Voices:
 ;	Voice $00
 ;	$3A
