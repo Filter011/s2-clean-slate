@@ -246,7 +246,7 @@ PSGInitLoop:
 	dbf	d5,PSGInitLoop	; repeat for other channels
 	move.w	d0,(a2)
 	movem.l	(a6),d0-a6	; clear all registers
-	move	#$2700,sr	; set the sr
+	move.w	#$2700,sr	; set the sr
  ; loc_292:
 PortC_OK: ;;
 	bra.s	GameProgram	; Branch to game program.
@@ -740,7 +740,7 @@ dma68kToVDP_H_Int macro source,dest,length,type
 	endm
 
 H_Int:
-	move	#$2700,sr
+	move.w	#$2700,sr
 	tst.b	(Hint_flag).w
 	beq.s	H_Int_Done
 	clr.b	(Hint_flag).w
@@ -1078,7 +1078,7 @@ PlaneMapToVRAM_H80_SpecialStage:
 
 ; sub_3384: DelayProgram:
 WaitForVint:
-	move	#$2300,sr
+	move.w	#$2300,sr
 
 -	tst.b	(Vint_routine).w
 	bne.s	-
@@ -1110,7 +1110,7 @@ SegaScreen:
 	move.w	#$8C81,(a6)		; H res 40 cells, no interlace, S/H disabled
 	move.w	#$9003,(a6)		; Scroll table size: 128x32 ($2000 bytes)
 	clr.b	(Water_fullscreen_flag).w
-	move	#$2700,sr
+	move.w	#$2700,sr
 	move.w	(VDP_Reg1_val).w,d0
 	andi.b	#$BF,d0
 	move.w	d0,(VDP_control_port).l
@@ -1204,7 +1204,7 @@ TitleScreen:
 	bsr.w	Pal_FadeToBlack
 
 	; Disable interrupts, so that we can have exclusive access to the VDP.
-	move	#$2700,sr
+	move.w	#$2700,sr
 
 	; Configure the VDP for this screen mode.
 	lea	(VDP_control_port).l,a6
@@ -1247,7 +1247,7 @@ TitleScreen:
 	; 'Pal_FadeFromBlack' enabled the interrupts, so disable them again
 	; so that we have exclusive access to the VDP for the following calls
 	; to the Nemesis decompressor.
-	move	#$2700,sr
+	move.w	#$2700,sr
 
 	; Load assets while the above text is being displayed.
 	lea	(ArtNem_Title).l,a1
@@ -1289,7 +1289,7 @@ TitleScreen:
 	; 'Pal_FadeToBlack' enabled the interrupts, so disable them again
 	; so that we have exclusive access to the VDP for the following calls
 	; to the plane map loader.
-	move	#$2700,sr
+	move.w	#$2700,sr
 
 	; Decompress the first part of the title screen background plane map...
 	lea	(Chunk_Table).l,a1
@@ -1599,10 +1599,10 @@ Level:
 	bsr.w	PlayMusic	; fade out music
 	bsr.w	ClearPLC
 	bsr.w	Pal_FadeToBlack
-	move	#$2700,sr
+	move.w	#$2700,sr
 	bsr.w	ClearScreen
 	jsr	(LoadTitleCard).l ; load title card patterns
-	move	#$2300,sr
+	move.w	#$2300,sr
 	moveq	#0,d0
 	move.w	d0,(Level_frame_counter).w
 	move.b	(Current_Zone).w,d0
@@ -2183,7 +2183,7 @@ MenuScreenTextToRAM:
 ; loc_8BD4:
 MenuScreen:
 	bsr.w	Pal_FadeToBlack
-	move	#$2700,sr
+	move.w	#$2700,sr
 	move.w	(VDP_Reg1_val).w,d0
 	andi.b	#$BF,d0
 	move.w	d0,(VDP_control_port).l
@@ -2268,11 +2268,11 @@ MenuScreen_Options:
 OptionScreen_Main:
 	move.b	#VintID_Menu,(Vint_routine).w
 	bsr.w	WaitForVint
-	move	#$2700,sr
+	move.w	#$2700,sr
 	bsr.w	OptionScreen_DrawUnselected
 	bsr.w	OptionScreen_Controls
 	bsr.w	OptionScreen_DrawSelected
-	move	#$2300,sr
+	move.w	#$2300,sr
 	lea	Anim_SonicMilesBG(pc),a2
 	jsr	(Dynamic_Normal).l
 	move.b	(Ctrl_1_Press).w,d0
@@ -2675,7 +2675,7 @@ LevelSelect_Main:	; routine running during level select
 	move.b	#VintID_Menu,(Vint_routine).w
 	bsr.w	WaitForVint
 
-	move	#$2700,sr
+	move.w	#$2700,sr
 
 	moveq	#palette_line_0,d3
 	bsr.w	LevelSelect_MarkFields	; unmark fields
@@ -2685,7 +2685,7 @@ LevelSelect_Main:	; routine running during level select
 
 	bsr.w	LevelSelect_DrawIcon
 
-	move	#$2300,sr
+	move.w	#$2300,sr
 
 	lea	Anim_SonicMilesBG(pc),a2
 	jsr	(Dynamic_Normal).l
@@ -3202,7 +3202,7 @@ MapEng_LevSelIcon:	BINCLUDE "mappings/misc/Level Select Icons.eni"
 	even
 
 loc_B272:
-	move	#$2700,sr
+	move.w	#$2700,sr
 	lea	(VDP_data_port).l,a6
 -
 	move.l	(a1)+,d0
@@ -3222,7 +3222,7 @@ loc_B272:
 +	bra.s	--
 ; ===========================================================================
 +
-	move	#$2300,sr
+	move.w	#$2300,sr
 	rts
 ; End of function ShowCreditsScreen
 
@@ -3977,7 +3977,7 @@ LoadTitleCard:
 	move.l	#vdpComm(tiles_to_bytes(ArtTile_LevelName),VRAM,WRITE),d0
 
 loc_157EC:
-	move	#$2700,sr
+	move.w	#$2700,sr
 	lea	(Level_Layout).w,a1
 	lea	(VDP_data_port).l,a6
 	move.l	d0,4(a6)
@@ -4000,7 +4000,7 @@ loc_15812:
 ; ===========================================================================
 
 loc_1581A:
-	move	#$2300,sr
+	move.w	#$2300,sr
 	rts
 ; ===========================================================================
 ; byte_15820:
