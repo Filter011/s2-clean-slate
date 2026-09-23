@@ -424,7 +424,6 @@ ObjB2_Start_DEZ:
 ObjB2_Deactivate_level:
 	move.w	#1,(Level_Inactive_flag).w
 	clr.b	(Last_star_pole_hit).w
-	clr.b	(Last_star_pole_hit_2P).w
 	rts
 ; ===========================================================================
 ; loc_3AC56:

@@ -109,7 +109,7 @@ loc_40DC6:
 Hud_ChkTime:
 	tst.b	(Update_HUD_timer).w	; does the time need updating?
 	beq.s	Hud_ChkLives	; if not, branch
-	tst.w	(Game_paused).w	; is the game paused?
+	tst.b	(Game_paused).w	; is the game paused?
 	bne.s	Hud_ChkLives	; if yes, branch
 	lea	(Timer).w,a1
 	cmpi.l	#(9<<(8*2))|(59<<(8*1))|(59<<(8*0)),(a1)+	; is the time 9.59?
@@ -217,7 +217,7 @@ loc_40EDC:
 	bsr.w	Hud_TimeRingBonus
 
 loc_40F18:
-	tst.w	(Game_paused).w
+	tst.b	(Game_paused).w
 	bne.s	return_40F4E
 	lea	(Timer+4).w,a1
 	addq.b	#1,-(a1)

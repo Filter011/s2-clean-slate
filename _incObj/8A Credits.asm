@@ -20,8 +20,7 @@ Obj8A_Init:
 	move.w	#spriteScreenPositionYCentered(0),y_pixel(a0)
 	move.l	#Obj8A_MapUnc_3EB4E,mappings(a0)
 	move.w	#make_art_tile($05A0,0,0),art_tile(a0)
-	move.w	(Ending_demo_number).w,d0
-	move.b	d0,mapping_frame(a0)
+	move.b	#0,mapping_frame(a0)
 	move.b	#0,render_flags(a0)
 	move.w	#0,priority(a0)
 	cmpi.b	#GameModeID_TitleScreen,(Game_Mode).w	; title screen??

@@ -45,10 +45,6 @@ Obj02_Init:
 	move.w	top_solid_bit(a0),(Saved_Solid_bits).w
 ; loc_1B96E:
 Obj02_Init_Continued:
-	move.w	x_pos(a0),(Saved_x_pos_2P).w
-	move.w	y_pos(a0),(Saved_y_pos_2P).w
-	move.w	art_tile(a0),(Saved_art_tile_2P).w
-	move.w	top_solid_bit(a0),(Saved_Solid_bits_2P).w
 	move.b	#0,flips_remaining(a0)
 	move.b	#4,flip_speed(a0)
 	move.b	#30,air_left(a0)

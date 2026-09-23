@@ -2043,7 +2043,6 @@ CheckGameOver:
 ; loc_1B26E:
 Obj01_Finished:
 	clr.b	(Update_HUD_timer).w
-	clr.b	(Update_HUD_timer_2P).w
 	move.b	#8,routine(a0)	; => Obj01_Gone
 	moveq	#MusID_GameOver,d0
 	jsr	(PlayMusic).w

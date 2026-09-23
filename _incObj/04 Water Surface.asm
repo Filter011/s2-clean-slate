@@ -42,7 +42,7 @@ Obj04_Action:
 ; ===========================================================================
 ; loc_20952:
 Obj04_Animate:
-	tst.w	(Game_paused).w		; is the game paused?
+	tst.b	(Game_paused).w		; is the game paused?
 	bne.s	Obj04_Display		; if yes, branch
 	move.b	#0,objoff_32(a0)	; resume animation
 	subq.b	#3,mapping_frame(a0)	; use normal frames
@@ -81,7 +81,7 @@ Obj04_Action2:
 ; ===========================================================================
 ; loc_209E4:
 Obj04_Animate2:
-	tst.w	(Game_paused).w	; is the game paused?
+	tst.b	(Game_paused).w	; is the game paused?
 	bne.s	BranchTo_JmpTo10_DisplaySprite	; if yes, branch
 	move.b	#0,objoff_32(a0)	; resume animation
 	subq.b	#2,mapping_frame(a0)	; use normal frames
