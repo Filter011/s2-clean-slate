@@ -6,6 +6,8 @@
 
 local common = require "build_tools.lua.common"
 
+local repository = "https://github.com/sonicretro/s2disasm"
+
 -- Just a shim for backwards-compatibility with things like Vladikcomper's debugger.
 -- TODO: Remove this when nothing uses it any more.
 local function message_abort_wrapper(message_printed, abort)
@@ -17,9 +19,9 @@ common.convert_pcm_files_in_directory("sound/PCM")
 common.convert_dpcm_files_in_directory("sound/DAC")
 
 -- Build the ROM.
-common.build_rom_and_handle_failure("s2", "s2built", "", "-p=0 -z=0," .. "kosinskiplus" .. ",Size_of_Snd_driver_guess,after", true, "https://github.com/sonicretro/s2disasm")
+common.build_rom_and_handle_failure("s2", "s2built", "", "-p=0 -z=0," .. "kosinskiplus" .. ",Size_of_Snd_driver_guess,after", true, repository)
 -- Append debug symbols to ROMs using ConvSym
-local extra_tools = common.find_tools("debug symbol generator", "https://github.com/vladikcomper/md-modules", "https://github.com/sonicretro/s2disasm", "convsym")
+local extra_tools = common.find_tools("debug symbol generator", "https://github.com/vladikcomper/md-modules", repository, "convsym")
 if extra_tools == nil then
 	common.show_flashy_message("Build failed. See above for more details.")
 	os.exit(false)
