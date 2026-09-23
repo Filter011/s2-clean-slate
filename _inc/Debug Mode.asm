@@ -222,7 +222,7 @@ Debug_ResetPlayerStats:
 	andi.b	#1<<status.player.underwater,status(a1) ; Preserve the 'is underwater' flag, and clear everything else.
 	ori.b	#1<<status.player.in_air,status(a1)    ; Set the 'in air' flag.
 	move.b	#2,routine(a1)
-	move.b	#0,routine_secondary(a1)
+	move.b	d0,routine_secondary(a1)
 	rts
 ; End of function Debug_ResetPlayerStats
 
