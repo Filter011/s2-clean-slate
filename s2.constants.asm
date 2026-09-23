@@ -559,7 +559,6 @@ PLCID_Arz2 =		id(PLCptr_Arz2) ; 23
 PLCID_Scz1 =		id(PLCptr_Scz1) ; 24
 PLCID_Scz2 =		id(PLCptr_Scz2) ; 25
 PLCID_Results =		id(PLCptr_Results) ; 26
-PLCID_Signpost =	id(PLCptr_Signpost) ; 27
 PLCID_CpzBoss =		id(PLCptr_CpzBoss) ; 28
 PLCID_EhzBoss =		id(PLCptr_EhzBoss) ; 29
 PLCID_HtzBoss =		id(PLCptr_HtzBoss) ; 2A

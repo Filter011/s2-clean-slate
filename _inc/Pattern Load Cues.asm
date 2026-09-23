@@ -67,7 +67,6 @@ PLCptr_Arz2:		offsetTableEntry.w PlrList_Arz2			; 35
 PLCptr_Scz1:		offsetTableEntry.w PlrList_Scz1			; 36
 PLCptr_Scz2:		offsetTableEntry.w PlrList_Scz2			; 37
 PLCptr_Results:		offsetTableEntry.w PlrList_Results		; 38
-PLCptr_Signpost:	offsetTableEntry.w PlrList_Signpost		; 39
 PLCptr_CpzBoss:		offsetTableEntry.w PlrList_CpzBoss		; 40
 PLCptr_EhzBoss:		offsetTableEntry.w PlrList_EhzBoss		; 41
 PLCptr_HtzBoss:		offsetTableEntry.w PlrList_HtzBoss		; 42
@@ -488,13 +487,6 @@ PlrList_Results: plrlistheader
 	plreq ArtTile_ArtNem_MiniCharacter, ArtNem_MiniSonic
 	plreq ArtTile_ArtNem_Perfect, ArtNem_Perfect
 PlrList_Results_End
-;---------------------------------------------------------------------------------------
-; PATTERN LOAD REQUEST LIST
-; End of level signpost
-;---------------------------------------------------------------------------------------
-PlrList_Signpost: plrlistheader
-	plreq ArtTile_ArtNem_Signpost, ArtNem_Signpost
-PlrList_Signpost_End
 ;---------------------------------------------------------------------------------------
 ; PATTERN LOAD REQUEST LIST
 ; CPZ Boss

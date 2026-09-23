@@ -1792,7 +1792,6 @@ Level_FromCheckpoint:
 	move.w	d0,(Level_Inactive_flag).w
 	move.w	d0,(Rings_Collected).w
 	move.w	d0,(Monitors_Broken).w
-	move.w	d0,(Loser_Time_Left).w
 	move.b	d0,(Super_Sonic_flag).w
 	bsr.w	OscillateNumInit
 	moveq	#1,d0
@@ -2095,8 +2094,6 @@ CheckLoadSignpostArt:
 	cmp.w	(Camera_Min_X_pos).w,d1
 	beq.s	+
 	move.w	d1,(Camera_Min_X_pos).w ; prevent camera from scrolling back to the left
-	moveq	#PLCID_Signpost,d0 ; <== PLC_1F
-	bra.w	LoadPLC2		; load signpost art
 ; ---------------------------------------------------------------------------
 ; loc_4C80:
 +	rts
@@ -4154,12 +4151,7 @@ Objects_CNZ2_2P:	BINCLUDE	"level/objects/CNZ_2_2P.bin"
 ; sprite mappings - Primary sprite table for object 0D (signpost)
 ; -------------------------------------------------------------------------------
 ; SprTbl_0D_Primary:
-Obj0D_MapUnc_195BE:	include "mappings/sprite/obj0D_a.asm"
-; -------------------------------------------------------------------------------
-; sprite mappings - Secondary sprite table for object 0D (signpost)
-; -------------------------------------------------------------------------------
-; SprTbl_0D_Scndary:
-Obj0D_MapUnc_19656:	include "mappings/sprite/obj0D_b.asm"
+Obj0D_MapUnc_195BE:	include "mappings/sprite/obj0D.asm"
 ; -------------------------------------------------------------------------------
 ; dynamic pattern loading cues
 ; -------------------------------------------------------------------------------
@@ -5696,10 +5688,7 @@ ArtNem_Numbers:			BINCLUDE	"art/kosinskiplusm/Numbers.kospm"
 	even
 ArtNem_Checkpoint:		BINCLUDE	"art/kosinskiplusm/Star pole.kospm"
 	even
-ArtNem_Signpost:		BINCLUDE	"art/kosinskiplusm/Signpost.kospm" ; For one-player mode.
-	even
-ArtUnc_Signpost:		BINCLUDE	"art/uncompressed/Signpost.bin" ; For two-player mode.
-	even
+ArtUnc_Signpost:		BINCLUDE	"art/uncompressed/Signpost.bin"
 ArtNem_LeverSpring:		BINCLUDE	"art/kosinskiplusm/Lever spring.kospm"
 	even
 ArtNem_HorizSpike:		BINCLUDE	"art/kosinskiplusm/Long horizontal spike.kospm"

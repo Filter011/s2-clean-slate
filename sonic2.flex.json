@@ -191,21 +191,23 @@
                     ],
                     "format": "Sonic 2.js",
                     "art": {
-                        "path": "art/nemesis/Signpost.nem",
-                        "compression": "Nemesis",
+                        "path": "art/uncompressed/Signpost.bin",
+                        "compression": "Uncompressed",
                         "offset": 0,
                         "extra": []
                     },
                     "mappings": {
-                        "path": "mappings/sprite/obj0D_a.asm",
+                        "path": "mappings/sprite/obj0D.asm",
                         "label": ""
                     },
                     "dplcs": {
-                        "enabled": false,
-                        "path": "",
+                        "enabled": true,
+                        "path": "mappings/spriteDPLC/obj0D.asm",
                         "label": ""
                     },
-                    "config": {}
+                    "config": {
+                        "mapMacros": true
+                    }
                 },
                 {
                     "name": "Monitor",

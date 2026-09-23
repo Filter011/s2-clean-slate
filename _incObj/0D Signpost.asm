@@ -35,12 +35,32 @@ loc_1921E:
 	move.l	#Obj0D_MapUnc_195BE,mappings(a0)
 	move.w	#make_art_tile(ArtTile_ArtNem_Signpost,0,0),art_tile(a0)
 
+    if AssumeSourceAddressInBytes
+	move.l	#ArtUnc_Signpost+(8*8*16),d1
+    else
+	move.l	#dmaSource(ArtUnc_Signpost+(8*8*16)),d1
+    endif
+	move.w	#tiles_to_bytes(ArtTile_ArtNem_Signpost+24),d2
+	moveq	#(8*8*2)/2,d3
+	jsr	(QueueDMATransfer).w
+
+	st.b	(Signpost_prev_frame).w
+	moveq	#0,d1
+	move.w	#$1020,d1
+	move.w	#$80,d4
+	moveq	#0,d5
+    if AssumeSourceAddressInBytes
+	move.l	#ArtUnc_Signpost,d6
+    else
+	move.l	#dmaSource(ArtUnc_Signpost),d6
+    endif
+	bsr.w	loc_19564
+
 loc_1922C:
 	addq.b	#2,routine(a0) ; => Obj0D_Main
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$18,width_pixels(a0)
 	move.w	#4*$80,priority(a0)
-	move.w	#$3C3C,(Loser_Time_Left).w
 
 ; loc_1924C: Obj_0D_sub_2:
 Obj0D_Main:
@@ -59,12 +79,6 @@ Obj0D_Main:
 	move.w	#0,obj0D_spinframe(a0)
 	move.w	(Camera_Max_X_pos).w,(Camera_Min_X_pos).w	; lock screen
 	move.b	#2,routine_secondary(a0) ; => Obj0D_Main_State2
-	cmpi.b	#$C,(Loser_Time_Left).w
-	bhi.s	loc_192A0
-	move.w	(Level_Music).w,d0
-	jsr	(PlayMusic).w	; play zone music
-
-loc_192A0:
 	tst.b	obj0D_finalanim(a0)
 	bne.s	loc_19350
 	move.b	#3,obj0D_finalanim(a0)
@@ -222,20 +236,29 @@ PLCLoad_Signpost:
 	move.w	(a2)+,d5
 	subq.w	#1,d5
 	bmi.s	return_1958C
-	move.w	#tiles_to_bytes(ArtTile_ArtUnc_Signpost),d4
+	move.w	#tiles_to_bytes(ArtTile_ArtNem_Signpost),d4
+    if AssumeSourceAddressInBytes
+	move.l	#ArtUnc_Signpost,d6
+    else
+	move.l	#dmaSource(ArtUnc_Signpost),d6
+    endif
 
 loc_19560:
 	moveq	#0,d1
 	move.w	(a2)+,d1
 
 loc_19564:
-	move.w	d1,d3
-	lsr.w	#8,d3
+	move.w	d1,-(sp)
+	move.b	(sp)+,d3
 	andi.w	#$F0,d3
 	addi.w	#$10,d3
 	andi.w	#$FFF,d1
+    if AssumeSourceAddressInBytes
 	lsl.l	#5,d1
-	addi.l	#ArtUnc_Signpost,d1
+    else
+	lsl.l	#4,d1
+    endif
+	add.l	d6,d1
 	move.w	d4,d2
 	add.w	d3,d4
 	add.w	d3,d4
