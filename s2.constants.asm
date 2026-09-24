@@ -449,13 +449,11 @@ idstart :=	0
 VintID_Lag =		id(Vint_Lag_ptr) ; 0
 VintID_SEGA =		id(Vint_SEGA_ptr) ; 2
 VintID_Title =		id(Vint_Title_ptr) ; 4
-VintID_Unused6 =	id(Vint_Unused6_ptr) ; 6
-VintID_Level =		id(Vint_Level_ptr) ; 8
-VintID_TitleCard =	id(Vint_TitleCard_ptr) ; A
-VintID_UnusedE =	id(Vint_UnusedE_ptr) ; C
-VintID_Fade =		id(Vint_Fade_ptr) ; E
-VintID_PCM =		id(Vint_PCM_ptr) ; 10
-VintID_Menu =		id(Vint_Menu_ptr) ; 12
+VintID_Level =		id(Vint_Level_ptr) ; 6
+VintID_TitleCard =	id(Vint_TitleCard_ptr) ; 8
+VintID_Fade =		id(Vint_Fade_ptr) ; A
+VintID_PCM =		id(Vint_PCM_ptr) ; C
+VintID_Menu =		id(Vint_Menu_ptr) ; E
 
 ; Game modes
 offset :=	GameModesArray

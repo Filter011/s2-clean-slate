@@ -477,13 +477,11 @@ Vint_SwitchTbl: offsetTable
 Vint_Lag_ptr		offsetTableEntry.w Vint_Lag		;   0
 Vint_SEGA_ptr:		offsetTableEntry.w Vint_SEGA		;   2
 Vint_Title_ptr:		offsetTableEntry.w Vint_Title		;   4
-Vint_Unused6_ptr:	offsetTableEntry.w Vint_Unused6		;   6
-Vint_Level_ptr:		offsetTableEntry.w Vint_Level		;   8
-Vint_TitleCard_ptr:	offsetTableEntry.w Vint_TitleCard	;  $A
-Vint_UnusedE_ptr:	offsetTableEntry.w Vint_UnusedE		;  $C
-Vint_Fade_ptr:		offsetTableEntry.w Vint_Fade		;  $E
-Vint_PCM_ptr:		offsetTableEntry.w Vint_PCM		; $10
-Vint_Menu_ptr:		offsetTableEntry.w Vint_Menu		; $12
+Vint_Level_ptr:		offsetTableEntry.w Vint_Level		;   6
+Vint_TitleCard_ptr:	offsetTableEntry.w Vint_TitleCard	;   8
+Vint_Fade_ptr:		offsetTableEntry.w Vint_Fade		;  $A
+Vint_PCM_ptr:		offsetTableEntry.w Vint_PCM		;  $C
+Vint_Menu_ptr:		offsetTableEntry.w Vint_Menu		;  $E
 ; ===========================================================================
 ;VintSub0
 Vint_Lag:
@@ -589,10 +587,6 @@ Vint_Title:
 +
 	bra.w	Set_KosPlus_Bookmark
 ; >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-;VintSub6
-Vint_Unused6:
-	bra.w	Do_ControllerPal
-; >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ;VintSub8
 Vint_Level:
 	bsr.w	ReadJoypads
@@ -616,14 +610,13 @@ Vint_Level:
 
 	bsr.w	ProcessDMAQueue
 
-
 	movem.l	(Camera_RAM).w,d0-d7
 	movem.l	d0-d7,(Camera_RAM_copy).w
 	movem.l	(Scroll_flags).w,d0-d3
 	movem.l	d0-d3,(Scroll_flags_copy).w
-	cmpi.b	#$5C,(Hint_counter_reserve+1).w
+	cmpi.b	#92,(Hint_counter_reserve+1).w
 	bhs.s	Do_Updates
-	move.b	#1,(Do_Updates_in_H_int).w
+	st.b	(Do_Updates_in_H_int).w
 	bra.w	Set_KosPlus_Bookmark
 
 ; ---------------------------------------------------------------------------
@@ -671,13 +664,6 @@ loc_BD6:
 	movem.l	(Scroll_flags).w,d0-d1
 	movem.l	d0-d1,(Scroll_flags_copy).w
 	bra.w	Set_KosPlus_Bookmark
-; ===========================================================================
-;VintSubE
-Vint_UnusedE:
-	bsr.w	Do_ControllerPal
-	addq.b	#1,(VIntSubE_RunCount).w
-	move.b	#VintID_UnusedE,(Vint_routine).w
-	rts
 ; ===========================================================================
 ;VintSub12
 Vint_Fade:
