@@ -67,12 +67,12 @@ Touch_CheckCollision:
 	add.w	d1,d1
 	add.w	d1,d0
 	bcs.s	Touch_CheckHeight
-	bra.w	Touch_NextObj
+	bra.s	Touch_NextObj
 ; ===========================================================================
 
 loc_3F5D6:
 	cmp.w	d4,d0
-	bhi.w	Touch_NextObj
+	bhi.s	Touch_NextObj
 ; loc_3F5DC: Touch_Width: Touch_Height:
 Touch_CheckHeight:
 	moveq	#0,d1
@@ -84,12 +84,12 @@ Touch_CheckHeight:
 	add.w	d1,d1
 	add.w	d1,d0
 	bcs.w	Touch_ChkValue
-	bra.w	Touch_NextObj
+	bra.s	Touch_NextObj
 ; ===========================================================================
 
 loc_3F5F6:
 	cmp.w	d5,d0
-	bhi.w	Touch_NextObj
+	bhi.s	Touch_NextObj
 	; Here ends the duplicate code.
 	bra.w	Touch_ChkValue
 ; ===========================================================================
@@ -521,7 +521,7 @@ Touch_Special:
 	cmpi.b	#7,d1
 	beq.w	loc_3FA18
 	cmpi.b	#$B,d1
-	beq.s	BranchTo_loc_3F85C
+	beq.w	loc_3F85C
 	cmpi.b	#$A,d1
 	beq.s	loc_3FA00
 	cmpi.b	#$C,d1
@@ -541,10 +541,6 @@ Touch_Special:
 	cmpi.b	#$21,d1
 	beq.s	loc_3FA12
 	rts
-; ===========================================================================
-
-BranchTo_loc_3F85C ; BranchTo
-	bra.w	loc_3F85C
 ; ===========================================================================
 
 loc_3F9CE:

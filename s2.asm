@@ -6411,7 +6411,7 @@ SoundDriverLoad:
 	lea	(Z80_RAM).l,a1
 	jsr	(KosPlusDec).w
 	btst	#0,(VDP_control_port+1).l	; check video mode
-	sne	(Z80_RAM+zPalModeByte).l	; set if PAL
+	sne.b	(Z80_RAM+zPalModeByte).l	; set if PAL
 	move.w	d2,(a2)	; hold Z80 reset
 	moveq	#$7F,d3
 	dbf	d3,*
