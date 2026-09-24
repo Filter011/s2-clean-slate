@@ -1908,16 +1908,14 @@ Sonic_ResetOnFloor_Part2:
 	bne.w	Tails_ResetOnFloor_Part2	; if not, branch to the Tails version of this code
 
 	move.b	#AniIDSonAni_Walk,anim(a0)	; use running/walking/standing animation
-	btst	#status.player.rolling,status(a0)
-	beq.s	Sonic_ResetOnFloor_Part3
 	bclr	#status.player.rolling,status(a0)
+	beq.s	Sonic_ResetOnFloor_Part3
 	move.b	#$13,y_radius(a0) ; this increases Sonic's collision height to standing
 	move.b	#9,x_radius(a0)
 	subq.w	#5,y_pos(a0)	; move Sonic up 5 pixels so the increased height doesn't push him into the ground
 ; loc_1B0DA:
 Sonic_ResetOnFloor_Part3:
-	bclr	#status.player.in_air,status(a0)
-	bclr	#status.player.pushing,status(a0)
+	andi.b	#~(1<<status.player.in_air|1<<status.player.pushing),status(a0)
 	move.b	#0,jumping(a0)
 	move.w	#0,(Chain_Bonus_counter).w
 	move.b	#0,flip_angle(a0)

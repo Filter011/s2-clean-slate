@@ -119,7 +119,7 @@ return_2D1B8:
 ; ---------------------------------------------------------------------------
 ; loc_2D1BA:
 Obj4B_TurnAround:
-	sf	Obj4B_shooting_flag(a0)	; reenable shooting
+	sf.b	Obj4B_shooting_flag(a0)	; reenable shooting
 	neg.w	x_vel(a0)		; reverse movement direction
 	bchg	#render_flags.x_flip,render_flags(a0)
 	bchg	#status.npc.x_flip,status(a0)

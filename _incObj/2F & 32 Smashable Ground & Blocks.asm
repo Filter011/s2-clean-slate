@@ -97,6 +97,8 @@ loc_23408:
 loc_23426:
 	move.b	#$C,(MainCharacter+top_solid_bit).w
 	move.b	#$D,(MainCharacter+lrb_solid_bit).w
+
+loc_23470:
 	jmp	(MarkObjGone).l
 ; ===========================================================================
 
@@ -121,10 +123,6 @@ loc_2345C:
 	bclr	#status.player.on_object,status(a1)
 	move.b	#2,routine(a1)
 	rts
-; ===========================================================================
-
-loc_23470:
-	jmp	(MarkObjGone).l
 ; ===========================================================================
 
 loc_234A4:
