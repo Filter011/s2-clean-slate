@@ -444,7 +444,7 @@ V_Int:
 	movem.l	d0-a6,-(sp)
 	lea	(VDP_control_port).l,a5
 	lea	VDP_data_port-VDP_control_port(a5),a6
-	tst.b	(Vint_routine).w
+	tst.b	(Vint_flag).w
 	beq.s	Vint_Lag_Main
 
 	; waits until vertical blanking is taking place
@@ -460,28 +460,17 @@ V_Int:
 	move.w	#$700,d0
 -	dbf	d0,- ; wait here in a loop doing nothing for a while...
 +
-
-	moveq	#0,d0
-	move.b	(Vint_routine).w,d0
-	move.b	#VintID_Lag,(Vint_routine).w
+	sf.b	(Vint_flag).w
 	st.b	(Hint_flag).w	; allows horizontal interrupt code to run
-	move.w	Vint_SwitchTbl(pc,d0.w),d0
-	jsr	Vint_SwitchTbl(pc,d0.w)
+	move.l	(Vint_routine).w,d0
+	beq.s	VintRet
+	movea.l	d0,a0
+	jsr	(a0)
 
 VintRet:
 	movem.l	(sp)+,d0-a6
 	addq.l	#1,(Vint_runcount).w
 	rte
-; ===========================================================================
-Vint_SwitchTbl: offsetTable
-Vint_Lag_ptr		offsetTableEntry.w Vint_Lag		;   0
-Vint_SEGA_ptr:		offsetTableEntry.w Vint_SEGA		;   2
-Vint_Title_ptr:		offsetTableEntry.w Vint_Title		;   4
-Vint_Level_ptr:		offsetTableEntry.w Vint_Level		;   6
-Vint_TitleCard_ptr:	offsetTableEntry.w Vint_TitleCard	;   8
-Vint_Fade_ptr:		offsetTableEntry.w Vint_Fade		;  $A
-Vint_PCM_ptr:		offsetTableEntry.w Vint_PCM		;  $C
-Vint_Menu_ptr:		offsetTableEntry.w Vint_Menu		;  $E
 ; ===========================================================================
 ;VintSub0
 Vint_Lag:
@@ -939,7 +928,7 @@ PauseGame:
 	startZ80
 ; loc_13B2:
 Pause_Loop:
-	move.b	#VintID_Level,(Vint_routine).w
+	move.l	#Vint_Level,(Vint_routine).w
 	bsr.w	WaitForVint
 	tst.b	(Slow_motion_flag).w	; is slow-motion cheat on?
 	beq.s	Pause_ChkStart		; if not, branch
@@ -1064,9 +1053,10 @@ PlaneMapToVRAM_H80_SpecialStage:
 
 ; sub_3384: DelayProgram:
 WaitForVint:
+	st.b	(Vint_flag).w
 	move.w	#$2300,sr
 
--	tst.b	(Vint_routine).w
+-	tst.b	(Vint_flag).w
 	bne.s	-
 	rts
 ; End of function WaitForVint
@@ -1148,7 +1138,7 @@ SegaScreen_Contin:
 	move.w	d0,(VDP_control_port).l
 ; loc_390E:
 Sega_WaitPalette:
-	move.b	#VintID_SEGA,(Vint_routine).w
+	move.l	#Vint_SEGA,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	jsr	(RunObjects).l
@@ -1156,12 +1146,12 @@ Sega_WaitPalette:
 	bsr.w	Process_KosPlus_Module_Queue
 	tst.b	(SegaScr_PalDone_Flag).w
 	beq.s	Sega_WaitPalette
-	move.b	#VintID_SEGA,(Vint_routine).w
+	move.l	#Vint_SEGA,(Vint_routine).w
 	bsr.w	WaitForVint
 	move.w	#3*60,(Demo_Time_left).w	; 3 seconds
 ; loc_3940:
 Sega_WaitEnd:
-	move.b	#VintID_PCM,(Vint_routine).w
+	move.l	#Vint_PCM,(Vint_routine).w
 	bsr.w	WaitForVint
 	tst.w	(Demo_Time_left).w
 	beq.s	Sega_GotoTitle
@@ -1253,7 +1243,7 @@ TitleScreen:
 	bsr.w	Queue_KosPlus_Module
 
 .loop:
-	move.b	#VintID_Title,(Vint_routine).w
+	move.l	#Vint_Title,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	bsr.w	Process_KosPlus_Module_Queue
@@ -1342,7 +1332,7 @@ TitleScreen:
 	move.b	#2,(IntroSonic+subtype).w
 
 	; Run it for a frame, so that it initialises.
-	move.b	#VintID_Title,(Vint_routine).w
+	move.l	#Vint_Title,(Vint_routine).w
 	bsr.w	WaitForVint
 	jsr	(RunObjects).l
 	jsr	(BuildSprites).l
@@ -1380,7 +1370,7 @@ TitleScreen:
 
 ; loc_3C14:
 TitleScreen_Loop:
-	move.b	#VintID_Title,(Vint_routine).w
+	move.l	#Vint_Title,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 
@@ -1711,7 +1701,7 @@ Level_PlayBgm:
 	move.b	#ObjID_TitleCard,(TitleCard+id).w ; load Obj34 (level title card) at $FFFFB080
 ; loc_40DA:
 Level_TtlCard:
-	move.b	#VintID_TitleCard,(Vint_routine).w
+	move.l	#Vint_TitleCard,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	jsr	(RunObjects).l
@@ -1722,7 +1712,7 @@ Level_TtlCard:
 	bne.s	Level_TtlCard		; if not, branch
 	tst.w	(KosPlus_modules_left).w		; are there any items in the pattern load cue?
 	bne.s	Level_TtlCard		; if yes, branch
-	move.b	#VintID_TitleCard,(Vint_routine).w
+	move.l	#Vint_TitleCard,(Vint_routine).w
 	bsr.w	WaitForVint
 	jsr	(Hud_Base).l
 +
@@ -1816,7 +1806,7 @@ Level_FromCheckpoint:
 	move.b	#$E,(TitleCard_Left+routine).w	; make the left part move offscreen
 	move.w	#$A,(TitleCard_Left+titlecard_location).w
 
--	move.b	#VintID_TitleCard,(Vint_routine).w
+-	move.l	#Vint_TitleCard,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	jsr	(RunObjects).l
@@ -1845,7 +1835,7 @@ Level_FromCheckpoint:
 ; loc_4360:
 Level_MainLoop:
 	bsr.w	PauseGame
-	move.b	#VintID_Level,(Vint_routine).w
+	move.l	#Vint_Level,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	addq.w	#1,(Level_frame_counter).w ; add 1 to level timer
@@ -1894,7 +1884,7 @@ Level_MainLoop:
 	move.w	#$3F,(Palette_fade_range).w
 	clr.w	(PalChangeSpeed).w
 -
-	move.b	#VintID_Level,(Vint_routine).w
+	move.l	#Vint_Level,(Vint_routine).w
 	bsr.w	WaitForVint
 	bsr.w	MoveSonicInDemo
 	jsr	(RunObjects).l
@@ -2242,7 +2232,7 @@ MenuScreen_Options:
 	move.l	d0,(Camera_Y_pos).w
 	move.w	d0,(Correct_cheat_entries).w
 	move.w	d0,(Correct_cheat_entries_2).w
-	move.b	#VintID_Menu,(Vint_routine).w
+	move.l	#Vint_Menu,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	bsr.w	Process_KosPlus_Module_Queue
@@ -2252,7 +2242,7 @@ MenuScreen_Options:
 	bsr.w	Pal_FadeFromBlack
 ; loc_9060:
 OptionScreen_Main:
-	move.b	#VintID_Menu,(Vint_routine).w
+	move.l	#Vint_Menu,(Vint_routine).w
 	bsr.w	WaitForVint
 	move.w	#$2700,sr
 	bsr.w	OptionScreen_DrawUnselected
@@ -2643,7 +2633,7 @@ MenuScreen_LevelSelect:
 	move.w	d0,(Correct_cheat_entries).w
 	move.w	d0,(Correct_cheat_entries_2).w
 
-	move.b	#VintID_Menu,(Vint_routine).w
+	move.l	#Vint_Menu,(Vint_routine).w
 	bsr.w	WaitForVint
 
 	move.w	(VDP_Reg1_val).w,d0
@@ -2654,7 +2644,7 @@ MenuScreen_LevelSelect:
 
 ;loc_93AC:
 LevelSelect_Main:	; routine running during level select
-	move.b	#VintID_Menu,(Vint_routine).w
+	move.l	#Vint_Menu,(Vint_routine).w
 	bsr.w	WaitForVint
 
 	move.w	#$2700,sr

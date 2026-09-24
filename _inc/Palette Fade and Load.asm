@@ -22,7 +22,7 @@ Pal_FadeFromBlack:
 
 .nextframe:
 	move.w	d4,-(sp)
-	move.b	#VintID_Fade,(Vint_routine).w
+	move.l	#Vint_Fade,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	bsr.w	Process_KosPlus_Module_Queue
@@ -123,7 +123,7 @@ Pal_FadeToBlack:
 
 .nextframe:
 	move.w	d4,-(sp)
-	move.b	#VintID_Fade,(Vint_routine).w
+	move.l	#Vint_Fade,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	bsr.w	Process_KosPlus_Module_Queue
@@ -227,7 +227,7 @@ Pal_FadeFromWhite:
 
 .nextframe:
 	move.w	d4,-(sp)
-	move.b	#VintID_Fade,(Vint_routine).w
+	move.l	#Vint_Fade,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	bsr.w	Process_KosPlus_Module_Queue
@@ -329,7 +329,7 @@ Pal_FadeToWhite:
 
 .nextframe:
 	move.w	d4,-(sp)
-	move.b	#VintID_Fade,(Vint_routine).w
+	move.l	#Vint_Fade,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	bsr.w	Process_KosPlus_Module_Queue

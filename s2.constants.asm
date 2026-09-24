@@ -441,20 +441,6 @@ idstart :=	0		; value to add to all IDs
 ; function using these variables
 id function ptr,((ptr-offset)/ptrsize+idstart)
 
-; V-Int routines
-offset :=	Vint_SwitchTbl
-ptrsize :=	1
-idstart :=	0
-
-VintID_Lag =		id(Vint_Lag_ptr) ; 0
-VintID_SEGA =		id(Vint_SEGA_ptr) ; 2
-VintID_Title =		id(Vint_Title_ptr) ; 4
-VintID_Level =		id(Vint_Level_ptr) ; 6
-VintID_TitleCard =	id(Vint_TitleCard_ptr) ; 8
-VintID_Fade =		id(Vint_Fade_ptr) ; A
-VintID_PCM =		id(Vint_PCM_ptr) ; C
-VintID_Menu =		id(Vint_Menu_ptr) ; E
-
 ; Game modes
 offset :=	GameModesArray
 ptrsize :=	1
@@ -1437,10 +1423,11 @@ Palette_fade_length:		ds.b	1	; Number of entries to change in the palette fading
 MiscLevelVariables:
 VIntSubE_RunCount:		ds.b	1
 				ds.b	1	; unused
-Vint_routine:			ds.b	1	; was "Delay_Time" ; routine counter for V-int
-				ds.b	1	; unused
+Vint_routine:			ds.l	1	; was "Delay_Time" ; routine counter for V-int
 Sprite_count:			ds.b	1	; the number of sprites drawn in the current frame
-				ds.b	5	; unused
+				ds.b	1	; unused
+Vint_flag:			ds.b	1
+				ds.b	1	; unused
 PalCycle_Frame:			ds.w	1	; ColorID loaded in PalCycle
 PalCycle_Timer:			ds.w	1	; number of frames until next PalCycle call
 RNG_seed:			ds.l	1	; used for random number generation

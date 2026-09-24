@@ -53,7 +53,7 @@ LoadZoneTiles:
     endif
 	bsr.w	QueueDMATransfer
 	move.w	d7,-(sp)
-	move.b	#VintID_TitleCard,(Vint_routine).w
+	move.l	#Vint_TitleCard,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	bsr.w	Process_KosPlus_Module_Queue
