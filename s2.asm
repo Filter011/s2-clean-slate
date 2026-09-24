@@ -454,7 +454,7 @@ V_Int:
 
 	move.l	#vdpComm($0000,VSRAM,WRITE),(a5)
 	move.l	(Vscroll_Factor).w,(a6) ; send screen y-axis pos. to VSRAM
-	btst	#6,(Graphics_Flags).w	; is Megadrive PAL?
+	btst	#0,1(a5)		; is Megadrive PAL?
 	beq.s	+			; if not, branch
 
 	move.w	#$700,d0
@@ -494,7 +494,7 @@ Vint_Lag_Main:
 	tst.b	(Water_flag).w
 	beq.s	Vint0_noWater
 	move.w	(a5),d0
-	btst	#6,(Graphics_Flags).w ; is Megadrive PAL?
+	btst	#0,1(a5)	; is Megadrive PAL?
 	beq.s	+		; if not, branch
 
 	move.w	#$700,d0
@@ -524,8 +524,8 @@ Vint_Lag_Main:
 
 Vint0_noWater:
 	move.w	(a5),d0
-	btst	#6,(Graphics_Flags).w	; is Megadrive PAL?
-	beq.s	+			; if not, branch
+	btst	#0,1(a5)	; is Megadrive PAL?
+	beq.s	+		; if not, branch
 
 	move.w	#$700,d0
 -	dbf	d0,- ; wait here in a loop doing nothing for a while...

@@ -37,14 +37,14 @@ Obj04_Action:
 	andi.b	#button_start_mask,d0
 	beq.s	loc_20962		; if not, branch
 	addq.b	#3,mapping_frame(a0)	; use different frames
-	move.b	#1,objoff_32(a0)	; stop animation
-	bra.s	Obj04_Display
+	st.b	objoff_32(a0)	; stop animation
+	jmp	(DisplaySprite).l
 ; ===========================================================================
 ; loc_20952:
 Obj04_Animate:
 	tst.b	(Game_paused).w		; is the game paused?
 	bne.s	Obj04_Display		; if yes, branch
-	move.b	#0,objoff_32(a0)	; resume animation
+	clr.b	objoff_32(a0)	; resume animation
 	subq.b	#3,mapping_frame(a0)	; use normal frames
 
 loc_20962:
@@ -76,14 +76,14 @@ Obj04_Action2:
 	andi.b	#button_start_mask,d0
 	beq.s	loc_209F4		; if not, branch
 	addq.b	#2,mapping_frame(a0)    ; use different frames
-	move.b	#1,objoff_32(a0)		; stop animation
-	bra.s	BranchTo_JmpTo10_DisplaySprite
+	st.b	objoff_32(a0)		; stop animation
+	jmp	(DisplaySprite).l
 ; ===========================================================================
 ; loc_209E4:
 Obj04_Animate2:
 	tst.b	(Game_paused).w	; is the game paused?
 	bne.s	BranchTo_JmpTo10_DisplaySprite	; if yes, branch
-	move.b	#0,objoff_32(a0)	; resume animation
+	clr.b	objoff_32(a0)	; resume animation
 	subq.b	#2,mapping_frame(a0)	; use normal frames
 
 loc_209F4:
