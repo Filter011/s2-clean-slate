@@ -2547,17 +2547,13 @@ MenuScreen_LevelSelect:
 	lea	MapEng_LevSel(pc),a0	; 2 bytes per 8x8 tile, compressed
 	moveq	#ArtTile_VRAM_Start,d0
 	bsr.w	EniDec
-	lea	(Chunk_Table).l,a1
-	lea	(MapEng_LevSel).l,a0	; 2 bytes per 8x8 tile, compressed
-	move.w	#ArtTile_VRAM_Start,d0
-	bsr.w	EniDec
 	save
 	codepage	LEVELSELECT	; This is here so we can use '*' instead of '$1A'
 	lea	(Chunk_Table).l,a3
-	lea	(LevelSelectText).l,a1
-	lea	(LevSel_MappingOffsets).l,a5
+	lea	LevelSelectText(pc),a1
+	lea	LevSel_MappingOffsets(pc),a5
 	moveq	#0,d0
-	move.w	#$D-1,d1		; This is how many entries there are in LevelSelectText
+	moveq	#$D-1,d1		; This is how many entries there are in LevelSelectText
 
 .writezone:
 	move.w	(a5)+,d3	; Get relative address in plane map to write to
