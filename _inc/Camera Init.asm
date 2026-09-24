@@ -6,6 +6,7 @@ InitCameraValues:
 	bne.s	+			; if yes, branch
 	move.w	d0,(Camera_BG_Y_pos).w
 	move.w	d0,(Camera_BG2_Y_pos).w
+	move.w	d0,(Camera_BG3_Y_pos).w
 	move.w	d1,(Camera_BG_X_pos).w
 	move.w	d1,(Camera_BG2_X_pos).w
 	move.w	d1,(Camera_BG3_X_pos).w
