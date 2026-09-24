@@ -28,7 +28,7 @@ Obj2C_Init:
 	move.b	subtype(a0),d0
 	move.b	Obj2C_CollisionFlags(pc,d0.w),collision_flags(a0)
 	move.l	#Obj31_MapUnc_20E74,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Powerups,0,1),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Powerups|high_priority,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$80,width_pixels(a0)
 	move.w	#4*$80,priority(a0)
@@ -121,7 +121,7 @@ loc_261EC:
 	andi.b	#1,d0
 	move.b	d0,mapping_frame(a1)
 	move.l	#Obj2C_MapUnc_2631E,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_Leaves,3,1),art_tile(a1)
+	move.w	#ArtTile_ArtNem_Leaves|palette_line_3|high_priority,art_tile(a1)
 	move.b	#1<<render_flags.on_screen|1<<render_flags.level_fg,render_flags(a1)
 	move.b	#8,width_pixels(a1)
 	move.w	#1*$80,priority(a1)

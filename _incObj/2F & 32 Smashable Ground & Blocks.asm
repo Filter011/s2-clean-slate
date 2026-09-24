@@ -28,7 +28,7 @@ Obj2F_Properties:
 Obj2F_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj2F_MapUnc_236FA,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,2,1),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt|palette_line_2|high_priority,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#4*$80,priority(a0)
@@ -187,13 +187,13 @@ Obj32_Index:	offsetTable
 Obj32_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj32_MapUnc_23852,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_HtzRock,2,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_HtzRock|palette_line_2,art_tile(a0)
 	move.b	#$18,width_pixels(a0)
 	move.l	#Obj32_VelArray1,objoff_3C(a0)
 	cmpi.b	#chemical_plant_zone,(Current_Zone).w
 	bne.s	+
 	move.l	#Obj32_MapUnc_23886,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZMetalBlock,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_CPZMetalBlock|palette_line_3,art_tile(a0)
 	move.b	#$10,width_pixels(a0)
 	move.l	#Obj32_VelArray2,objoff_3C(a0)
 +

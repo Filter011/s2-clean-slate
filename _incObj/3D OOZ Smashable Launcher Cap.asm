@@ -19,10 +19,10 @@ Obj3D_Index:	offsetTable
 Obj3D_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj3D_MapUnc_250BA,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_StripedBlocksVert,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_StripedBlocksVert|palette_line_3,art_tile(a0)
 	tst.b	subtype(a0)
 	beq.s	+
-	move.w	#make_art_tile(ArtTile_ArtNem_StripedBlocksHoriz,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_StripedBlocksHoriz|palette_line_3,art_tile(a0)
 	move.b	#2,mapping_frame(a0)
 +
 	move.b	#1<<render_flags.level_fg,render_flags(a0)

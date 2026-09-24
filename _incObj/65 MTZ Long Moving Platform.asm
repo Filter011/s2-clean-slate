@@ -32,7 +32,7 @@ Obj65_Properties:
 Obj65_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj65_Obj6A_Obj6B_MapUnc_26EC8,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt|palette_line_3,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#4*$80,priority(a0)
 	moveq	#0,d0
@@ -52,7 +52,7 @@ Obj65_Init:
 	bne.s	loc_26B6E
 	addq.b	#4,routine(a0)
 	move.l	#Obj65_MapUnc_26F04,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_MtzCog,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_MtzCog|palette_line_3,art_tile(a0)
 	bra.w	loc_26EC2
 ; ===========================================================================
 
@@ -86,7 +86,7 @@ loc_26B6E:
 	bset	#render_flags.x_flip,render_flags(a1)
 +
 	move.l	#Obj65_MapUnc_26F04,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_MtzCog,3,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_MtzCog|palette_line_3,art_tile(a1)
 	ori.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$10,width_pixels(a1)
 	move.w	#4*$80,priority(a1)

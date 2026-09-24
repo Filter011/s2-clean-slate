@@ -27,15 +27,15 @@ Obj19_Init:
 	addq.b	#2,routine(a0) ; => Obj19_Main
 	move.l	#Obj19_MapUnc_2222A,mappings(a0)
 
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZElevator,3,0),art_tile(a0) ; set default art
+	move.w	#ArtTile_ArtNem_CPZElevator|palette_line_3,art_tile(a0) ; set default art
 
 	cmpi.b	#oil_ocean_zone,(Current_Zone).w ; are we in OOZ?
 	bne.s	+			; if not, branch
-	move.w	#make_art_tile(ArtTile_ArtNem_OOZElevator,3,0),art_tile(a0) ; set OOZ art
+	move.w	#ArtTile_ArtNem_OOZElevator|palette_line_3,art_tile(a0) ; set OOZ art
 +
 	cmpi.b	#wing_fortress_zone,(Current_Zone).w ; are we in WFZ?
 	bne.s	+			; if not, branch
-	move.w	#make_art_tile(ArtTile_ArtNem_WfzFloatingPlatform,1,1),art_tile(a0) ; set WTZ art
+	move.w	#ArtTile_ArtNem_WfzFloatingPlatform|palette_line_1|high_priority,art_tile(a0) ; set WTZ art
 +
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	moveq	#0,d0

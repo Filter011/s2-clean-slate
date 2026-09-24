@@ -31,7 +31,7 @@ Obj50_Index:	offsetTable
 Obj50_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj50_MapUnc_2CF94,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Aquis,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Aquis|palette_line_1,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$A,collision_flags(a0)
 	move.w	#4*$80,priority(a0)
@@ -63,7 +63,7 @@ Obj50_Init:
 	addi.w	#$A,x_pos(a1)
 	addi.w	#-6,y_pos(a1)
 	move.l	#Obj50_MapUnc_2CF94,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_Aquis,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_Aquis|palette_line_1,art_tile(a1)
 	ori.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.w	#3*$80,priority(a1)
 	move.b	status(a0),status(a1)
@@ -149,7 +149,7 @@ Obj50_ChkIfShoot:
 	move.w	x_pos(a0),x_pos(a1)	; align with parent object
 	move.w	y_pos(a0),y_pos(a1)
 	move.l	#Obj50_MapUnc_2CF94,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_Aquis,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_Aquis|palette_line_1,art_tile(a1)
 	ori.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.w	#3*$80,priority(a1)
 	move.b	#$98,collision_flags(a1)

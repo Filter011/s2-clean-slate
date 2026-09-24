@@ -146,6 +146,6 @@ loc_39526:
 	rts
 ; ===========================================================================
 ObjAD_SubObjData:
-	subObjData ObjAD_Obj98_MapUnc_395B4,make_art_tile(ArtTile_ArtNem_WfzScratch,0,0),1<<render_flags.level_fg,4,$18,0
+	subObjData ObjAD_Obj98_MapUnc_395B4,ArtTile_ArtNem_WfzScratch,1<<render_flags.level_fg,4,$18,0
 ObjAD_SubObjData2:
-	subObjData ObjAD_Obj98_MapUnc_395B4,make_art_tile(ArtTile_ArtNem_WfzScratch,0,0),1<<render_flags.level_fg,5,$10,0
+	subObjData ObjAD_Obj98_MapUnc_395B4,ArtTile_ArtNem_WfzScratch,1<<render_flags.level_fg,5,$10,0

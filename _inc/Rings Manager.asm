@@ -279,16 +279,16 @@ BuildRings_NextRing:
 MapUnc_ManagerRings:
 
 ;frame1:
-	dc.w make_art_tile(ArtTile_ArtNem_Ring,1,0)
+	dc.w ArtTile_ArtNem_Ring|palette_line_1
 
 ;frame2:
-	dc.w make_art_tile(ArtTile_ArtNem_Ring_sparkles,1,0)
+	dc.w ArtTile_ArtNem_Ring_sparkles|palette_line_1
 
 ;frame3:
-	dc.w $1800+make_art_tile(ArtTile_ArtNem_Ring_sparkles,1,0)
+	dc.w $1800+ArtTile_ArtNem_Ring_sparkles|palette_line_1
 
 ;frame4:
-	dc.w $800+make_art_tile(ArtTile_ArtNem_Ring_sparkles,1,0)
+	dc.w $800+ArtTile_ArtNem_Ring_sparkles|palette_line_1
 
 ;frame5:
-	dc.w $1000+make_art_tile(ArtTile_ArtNem_Ring_sparkles,1,0)
+	dc.w $1000+ArtTile_ArtNem_Ring_sparkles|palette_line_1

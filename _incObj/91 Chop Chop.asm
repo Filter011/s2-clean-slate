@@ -153,4 +153,4 @@ Obj91_PlayerInRange:
 ; ===========================================================================
 ; off_36EE6:
 Obj91_SubObjData:
-	subObjData Obj91_MapUnc_36EF6,make_art_tile(ArtTile_ArtNem_ChopChop,1,0),1<<render_flags.level_fg,4,$10,2
+	subObjData Obj91_MapUnc_36EF6,ArtTile_ArtNem_ChopChop|palette_line_1,1<<render_flags.level_fg,4,$10,2

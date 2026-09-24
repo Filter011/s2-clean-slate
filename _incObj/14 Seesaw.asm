@@ -23,7 +23,7 @@ Obj14_Index:	offsetTable
 Obj14_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj14_MapUnc_21CF0,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_HtzSeeSaw,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_HtzSeeSaw,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#4*$80,priority(a0)
 	move.b	#$30,width_pixels(a0)
@@ -155,7 +155,7 @@ return_21AA0:
 Obj14_Ball_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj14_MapUnc_21D7C,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Sol,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Sol,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#4*$80,priority(a0)
 	move.b	#$8B,collision_flags(a0)

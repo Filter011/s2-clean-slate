@@ -190,12 +190,12 @@ ObjC6_State4:
 ; ===========================================================================
 ; off_3D0B2:
 ObjC6_SubObjData3:
-	subObjData ObjC6_MapUnc_3D0EE,make_art_tile(ArtTile_ArtKos_LevelArt,0,0),1<<render_flags.level_fg,5,$18,0
+	subObjData ObjC6_MapUnc_3D0EE,ArtTile_ArtKos_LevelArt,1<<render_flags.level_fg,5,$18,0
 ; off_3D0BC:
 ObjC6_SubObjData4:
-	subObjData ObjC6_MapUnc_3D1DE,make_art_tile(ArtTile_ArtNem_ConstructionStripes_1,1,0),1<<render_flags.level_fg,1,8,0
+	subObjData ObjC6_MapUnc_3D1DE,ArtTile_ArtNem_ConstructionStripes_1|palette_line_1,1<<render_flags.level_fg,1,8,0
 ; off_3D0C6:
 ObjC6_SubObjData:
-	subObjData ObjC6_MapUnc_3D0EE,make_art_tile(ArtTile_ArtKos_LevelArt,0,0),1<<render_flags.level_fg,5,4,0
+	subObjData ObjC6_MapUnc_3D0EE,ArtTile_ArtKos_LevelArt,1<<render_flags.level_fg,5,4,0
 ChildObject_3D0D0:	childObjectData objoff_3E, ObjID_Eggman, $A8
 ChildObject_3D0D4:	childObjectData objoff_3C, ObjID_Eggman, $AA

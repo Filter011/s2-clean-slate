@@ -26,4 +26,4 @@ ObjBF_Animate:
 ; ===========================================================================
 ; off_3BECE:
 ObjBE_SubObjData2:
-	subObjData ObjBF_MapUnc_3BEE0,make_art_tile(ArtTile_ArtNem_WfzUnusedBadnik,3,1),1<<render_flags.level_fg,4,4,4
+	subObjData ObjBF_MapUnc_3BEE0,ArtTile_ArtNem_WfzUnusedBadnik|palette_line_3|high_priority,1<<render_flags.level_fg,4,4,4

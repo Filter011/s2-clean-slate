@@ -23,4 +23,4 @@ ObjBB_Main:
 ; ===========================================================================
 ; off_3BB96:
 ObjBB_SubObjData:
-	subObjData ObjBB_MapUnc_3BBA0,make_art_tile(ArtTile_ArtNem_Unknown,1,0),1<<render_flags.level_fg,4,$C,9
+	subObjData ObjBB_MapUnc_3BBA0,ArtTile_ArtNem_Unknown|palette_line_1,1<<render_flags.level_fg,4,$C,9

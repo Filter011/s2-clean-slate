@@ -180,4 +180,4 @@ loc_3D416:
 ; ===========================================================================
 ; off_3D440:
 ObjC8_SubObjData:
-	subObjData ObjC8_MapUnc_3D450,make_art_tile(ArtTile_ArtNem_Crawl,0,1),1<<render_flags.level_fg,3,$10,$D7
+	subObjData ObjC8_MapUnc_3D450,ArtTile_ArtNem_Crawl|high_priority,1<<render_flags.level_fg,3,$10,$D7

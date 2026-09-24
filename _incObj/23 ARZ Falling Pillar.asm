@@ -17,7 +17,7 @@ Obj23_Index:	offsetTable
 Obj23_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj23_MapUnc_259E6,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt|palette_line_1,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$10,width_pixels(a0)
 	move.b	#$20,y_radius(a0)

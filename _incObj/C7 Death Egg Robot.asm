@@ -1131,7 +1131,7 @@ loc_3DF36:
 loc_3DF4C:
 	move.b	#6,routine_secondary(a0)
 	move.l	#Obj58_MapUnc_2D50A,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_FieryExplosion,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_FieryExplosion,art_tile(a0)
 	move.w	#1*$80,priority(a0)
 	move.b	#7,anim_frame_duration(a0)
 	move.b	#0,mapping_frame(a0)
@@ -1904,4 +1904,4 @@ ChildObjC7_EggmanBomb:
 	dc.b $1C
 ;off_3E590
 ObjC7_SubObjData:
-	subObjData ObjC7_MapUnc_3E5F8,make_art_tile(ArtTile_ArtNem_DEZBoss,0,0),1<<render_flags.level_fg,4,$38,$00
+	subObjData ObjC7_MapUnc_3E5F8,ArtTile_ArtNem_DEZBoss,1<<render_flags.level_fg,4,$38,$00

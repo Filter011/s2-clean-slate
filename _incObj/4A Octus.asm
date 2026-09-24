@@ -40,7 +40,7 @@ JmpTo47_DeleteObject ; JmpTo
 ; loc_2CA52:
 Obj4A_Init:
 	move.l	#Obj4A_MapUnc_2CBFE,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Octus,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Octus|palette_line_1,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$A,collision_flags(a0)
 	move.w	#4*$80,priority(a0)
@@ -152,7 +152,7 @@ Obj4A_FireBullet:
 	move.b	#ObjID_Octus,id(a1) ; load obj4A
 	move.b	#6,routine(a1)
 	move.l	#Obj4A_MapUnc_2CBFE,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_Octus,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_Octus|palette_line_1,art_tile(a1)
 	move.w	#4*$80,priority(a1)
 	move.b	#$10,width_pixels(a1)
 	move.w	x_pos(a0),x_pos(a1)

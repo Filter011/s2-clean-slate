@@ -24,7 +24,7 @@ Obj45_Init:
 	; Much of this object's code is copied from the spring object, Obj41.
 	addq.b	#2,routine(a0)
 	move.l	#Obj45_MapUnc_2451A,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_PushSpring,2,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_PushSpring|palette_line_2,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#16,width_pixels(a0)
 	move.w	#4*$80,priority(a0)
@@ -44,7 +44,7 @@ Obj45_InitHorizontal:
 	move.b	#4,routine(a0)
 	move.b	#1,anim(a0)
 	move.b	#$A,mapping_frame(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_PushSpring,2,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_PushSpring|palette_line_2,art_tile(a0)
 	move.b	#20,width_pixels(a0)
 	move.w	x_pos(a0),obj45_original_x_pos(a0)
 ;loc_2416E:

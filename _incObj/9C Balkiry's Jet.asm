@@ -65,10 +65,10 @@ loc_37AF2:
 ; ===========================================================================
 ; off_37B32:
 Obj9A_SubObjData:
-	subObjData Obj9A_Obj98_MapUnc_37B62,make_art_tile(ArtTile_ArtNem_Turtloid,0,0),1<<render_flags.level_fg,5,$18,0
+	subObjData Obj9A_Obj98_MapUnc_37B62,ArtTile_ArtNem_Turtloid,1<<render_flags.level_fg,5,$18,0
 ; off_37B3C:
 Obj9B_SubObjData:
-	subObjData Obj9A_Obj98_MapUnc_37B62,make_art_tile(ArtTile_ArtNem_Turtloid,0,0),1<<render_flags.level_fg,4,$C,$1A
+	subObjData Obj9A_Obj98_MapUnc_37B62,ArtTile_ArtNem_Turtloid,1<<render_flags.level_fg,4,$C,$1A
 ; off_37B46:
 Obj9C_SubObjData:
-	subObjData Obj9A_Obj98_MapUnc_37B62,make_art_tile(ArtTile_ArtNem_Turtloid,0,0),1<<render_flags.level_fg,5,8,0
+	subObjData Obj9A_Obj98_MapUnc_37B62,ArtTile_ArtNem_Turtloid,1<<render_flags.level_fg,5,8,0

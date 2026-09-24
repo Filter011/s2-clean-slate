@@ -335,8 +335,8 @@ word_3A514:
 
 ; off_3A58A:
 ObjB0_SubObjData:
-	subObjData ObjB1_MapUnc_3A5A6,make_art_tile(ArtTile_ArtUnc_Giant_Sonic,2,1),0,1,$10,0
+	subObjData ObjB1_MapUnc_3A5A6,ArtTile_ArtUnc_Giant_Sonic|palette_line_2|high_priority,0,1,$10,0
 
 ; off_3A594:
 ObjB1_SubObjData:
-	subObjData ObjB1_MapUnc_3A5A6,make_art_tile(ArtTile_ArtNem_Sega_Logo+2,0,0),0,2,8,0
+	subObjData ObjB1_MapUnc_3A5A6,ArtTile_ArtNem_Sega_Logo+2,0,2,8,0

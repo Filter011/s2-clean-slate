@@ -35,4 +35,4 @@ ObjBC_Main:
 ; ===========================================================================
 ; off_3BBFE:
 ObjBC_SubObjData2:
-	subObjData ObjBC_MapUnc_3BC08,make_art_tile(ArtTile_ArtNem_WfzThrust,2,0),1<<render_flags.level_fg,4,$10,0
+	subObjData ObjBC_MapUnc_3BC08,ArtTile_ArtNem_WfzThrust|palette_line_2,1<<render_flags.level_fg,4,$10,0

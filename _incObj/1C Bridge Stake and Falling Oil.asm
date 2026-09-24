@@ -24,27 +24,27 @@ objsubdecl macro frame, mapaddr,artaddr,width,priority
 
 ; dword_111E6:
 Obj1C_InitData:
-	objsubdecl 0, Obj1C_MapUnc_11552, make_art_tile(ArtTile_ArtNem_BoltEnd_Rope,2,0), 4, 6
-	objsubdecl 1, Obj1C_MapUnc_11552, make_art_tile(ArtTile_ArtNem_BoltEnd_Rope,2,0), 4, 6
-	objsubdecl 1, Obj11_MapUnc_FC70,  make_art_tile(ArtTile_ArtNem_EHZ_Bridge,2,0), 4, 1
-	objsubdecl 2, Obj1C_MapUnc_11552, make_art_tile(ArtTile_ArtNem_BoltEnd_Rope,1,0), $10, 6
-	objsubdecl 3, Obj16_MapUnc_21F14, make_art_tile(ArtTile_ArtNem_HtzZipline,2,0), 8, 4
-	objsubdecl 4, Obj16_MapUnc_21F14, make_art_tile(ArtTile_ArtNem_HtzZipline,2,0), 8, 4
-	objsubdecl 1, Obj16_MapUnc_21F14, make_art_tile(ArtTile_ArtNem_HtzZipline,2,0), $20, 1
-	objsubdecl 0, Obj1C_MapUnc_113D6, make_art_tile(ArtTile_ArtKos_LevelArt,2,0), 8, 1
-	objsubdecl 1, Obj1C_MapUnc_113D6, make_art_tile(ArtTile_ArtKos_LevelArt,2,0), 8, 1
-	objsubdecl 0, Obj1C_MapUnc_113EE, make_art_tile(ArtTile_ArtUnc_Waterfall3,2,0), 4, 4
-	objsubdecl 0, Obj1C_MapUnc_11406, make_art_tile(ArtTile_ArtNem_Oilfall2,2,0), 4, 4
-	objsubdecl 1, Obj1C_MapUnc_11406, make_art_tile(ArtTile_ArtNem_Oilfall2,2,0), 4, 4
-	objsubdecl 2, Obj1C_MapUnc_11406, make_art_tile(ArtTile_ArtNem_Oilfall2,2,0), 4, 4
-	objsubdecl 3, Obj1C_MapUnc_11406, make_art_tile(ArtTile_ArtNem_Oilfall2,2,0), 4, 4
-	objsubdecl 4, Obj1C_MapUnc_11406, make_art_tile(ArtTile_ArtNem_Oilfall2,2,0), 4, 4
-	objsubdecl 5, Obj1C_MapUnc_11406, make_art_tile(ArtTile_ArtNem_Oilfall2,2,0), 4, 4
-	objsubdecl 0, Obj1C_MapUnc_114AE, make_art_tile(ArtTile_ArtNem_Oilfall2,2,0), $18, 4
-	objsubdecl 1, Obj1C_MapUnc_114AE, make_art_tile(ArtTile_ArtNem_Oilfall2,2,0), $18, 4
-	objsubdecl 2, Obj1C_MapUnc_114AE, make_art_tile(ArtTile_ArtNem_Oilfall2,2,0), 8, 4
-	objsubdecl 3, Obj1C_MapUnc_114AE, make_art_tile(ArtTile_ArtNem_Oilfall2,2,0), 8, 4
-	objsubdecl 4, Obj1C_MapUnc_114AE, make_art_tile(ArtTile_ArtNem_Oilfall2,2,0), 8, 4
+	objsubdecl 0, Obj1C_MapUnc_11552, ArtTile_ArtNem_BoltEnd_Rope|palette_line_2, 4, 6
+	objsubdecl 1, Obj1C_MapUnc_11552, ArtTile_ArtNem_BoltEnd_Rope|palette_line_2, 4, 6
+	objsubdecl 1, Obj11_MapUnc_FC70,  ArtTile_ArtNem_EHZ_Bridge|palette_line_2, 4, 1
+	objsubdecl 2, Obj1C_MapUnc_11552, ArtTile_ArtNem_BoltEnd_Rope|palette_line_1, $10, 6
+	objsubdecl 3, Obj16_MapUnc_21F14, ArtTile_ArtNem_HtzZipline|palette_line_2, 8, 4
+	objsubdecl 4, Obj16_MapUnc_21F14, ArtTile_ArtNem_HtzZipline|palette_line_2, 8, 4
+	objsubdecl 1, Obj16_MapUnc_21F14, ArtTile_ArtNem_HtzZipline|palette_line_2, $20, 1
+	objsubdecl 0, Obj1C_MapUnc_113D6, ArtTile_ArtKos_LevelArt|palette_line_2, 8, 1
+	objsubdecl 1, Obj1C_MapUnc_113D6, ArtTile_ArtKos_LevelArt|palette_line_2, 8, 1
+	objsubdecl 0, Obj1C_MapUnc_113EE, ArtTile_ArtUnc_Waterfall3|palette_line_2, 4, 4
+	objsubdecl 0, Obj1C_MapUnc_11406, ArtTile_ArtNem_Oilfall2|palette_line_2, 4, 4
+	objsubdecl 1, Obj1C_MapUnc_11406, ArtTile_ArtNem_Oilfall2|palette_line_2, 4, 4
+	objsubdecl 2, Obj1C_MapUnc_11406, ArtTile_ArtNem_Oilfall2|palette_line_2, 4, 4
+	objsubdecl 3, Obj1C_MapUnc_11406, ArtTile_ArtNem_Oilfall2|palette_line_2, 4, 4
+	objsubdecl 4, Obj1C_MapUnc_11406, ArtTile_ArtNem_Oilfall2|palette_line_2, 4, 4
+	objsubdecl 5, Obj1C_MapUnc_11406, ArtTile_ArtNem_Oilfall2|palette_line_2, 4, 4
+	objsubdecl 0, Obj1C_MapUnc_114AE, ArtTile_ArtNem_Oilfall2|palette_line_2, $18, 4
+	objsubdecl 1, Obj1C_MapUnc_114AE, ArtTile_ArtNem_Oilfall2|palette_line_2, $18, 4
+	objsubdecl 2, Obj1C_MapUnc_114AE, ArtTile_ArtNem_Oilfall2|palette_line_2, 8, 4
+	objsubdecl 3, Obj1C_MapUnc_114AE, ArtTile_ArtNem_Oilfall2|palette_line_2, 8, 4
+	objsubdecl 4, Obj1C_MapUnc_114AE, ArtTile_ArtNem_Oilfall2|palette_line_2, 8, 4
 ; byte_1128E:
 Obj1C_Radii:
 	dc.b   0

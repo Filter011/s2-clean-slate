@@ -19,7 +19,7 @@ Obj52_Index:	offsetTable
 ; loc_2FC68:
 Obj52_Init:
 	move.l	#Obj52_MapUnc_302BC,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Eggpod_2,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Eggpod_2,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$90,mainspr_width(a0)
 	move.w	#4*$80,priority(a0)
@@ -240,7 +240,7 @@ off_2FEFE:	offsetTable
 
 loc_2FF02:
 	move.l	#Obj52_MapUnc_302BC,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_HTZBoss,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_HTZBoss,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#4*$80,priority(a0)
 	addq.b	#2,routine_secondary(a0)
@@ -297,7 +297,7 @@ loc_2FF94:
 	move.b	#ObjID_HTZBoss,id(a1) ; load obj52
 	move.b	#6,boss_subtype(a1)
 	move.l	#Obj52_MapUnc_302BC,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_HTZBoss,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_HTZBoss,art_tile(a1)
 	ori.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.w	#3*$80,priority(a1)
 	addq.b	#2,routine_secondary(a1)
@@ -339,7 +339,7 @@ loc_30008:
 	move.b	#4,mapping_frame(a0)
 	move.w	#0,y_vel(a0)
 	move.l	#Obj20_MapUnc_23294,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_HtzFireball1,0,1),art_tile(a0)
+	move.w	#ArtTile_ArtNem_HtzFireball1|high_priority,art_tile(a0)
 	move.b	#0,mapping_frame(a0)
 	move.w	#9,objoff_32(a0)
 	move.b	#3,objoff_36(a0)
@@ -489,7 +489,7 @@ Obj52_CreateSmoke
 	move.b	#ObjID_HTZBoss,id(a1) ; load obj52
 	move.b	#8,boss_subtype(a1)
 	move.l	#Obj52_MapUnc_30258,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_BossSmoke_2,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_BossSmoke_2,art_tile(a1)
 	ori.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.w	#1*$80,priority(a1)
 	move.w	x_pos(a0),x_pos(a1)

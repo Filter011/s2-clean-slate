@@ -108,4 +108,4 @@ Obj8C_FlyAway:
 ; ===========================================================================
 ; off_36A3E:
 Obj8C_SubObjData:
-	subObjData Obj8C_MapUnc_36A4E,make_art_tile(ArtTile_ArtNem_Whisp,1,1),1<<render_flags.level_fg,4,$C,$B
+	subObjData Obj8C_MapUnc_36A4E,ArtTile_ArtNem_Whisp|palette_line_1|high_priority,1<<render_flags.level_fg,4,$C,$B

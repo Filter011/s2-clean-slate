@@ -18,7 +18,7 @@ Obj3C_Index:	offsetTable
 Obj3C_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj3C_MapUnc_15ECC,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_BreakWall,2,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_BreakWall|palette_line_2,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#4*$80,priority(a0)

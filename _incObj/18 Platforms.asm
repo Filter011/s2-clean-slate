@@ -51,11 +51,11 @@ Obj18_Init:
 	move.b	(a2)+,width_pixels(a0)
 	move.b	(a2)+,mapping_frame(a0)
 	move.l	#Obj18_MapUnc_107F6,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,2,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt|palette_line_2,art_tile(a0)
 	cmpi.b	#aquatic_ruin_zone,(Current_Zone).w
 	bne.s	.notMapARZ
 	move.l	#Obj18_MapUnc_1084E,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,2,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt|palette_line_2,art_tile(a0)
 
 .notMapARZ:
 	move.b	#1<<render_flags.level_fg,render_flags(a0)

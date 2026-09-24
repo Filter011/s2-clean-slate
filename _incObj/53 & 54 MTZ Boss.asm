@@ -18,7 +18,7 @@ Obj54_Index:	offsetTable
 ; loc_3229E:
 Obj54_Init:
 	move.l	#Obj54_MapUnc_32DC6,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_MTZBoss,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_MTZBoss,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#$2B50,x_pos(a0)
 	move.w	#$380,y_pos(a0)
@@ -51,7 +51,7 @@ Obj54_Init:
 	move.b	#6,boss_subtype(a1)		; => Obj54_LaserShooter
 	move.b	#$13,mapping_frame(a1)
 	move.l	#Obj54_MapUnc_32DC6,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_MTZBoss,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_MTZBoss,art_tile(a1)
 	ori.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.w	#6*$80,priority(a1)
 	move.w	x_pos(a0),x_pos(a1)
@@ -579,7 +579,7 @@ Obj53_Init:
 	move.l	objoff_34(a0),objoff_34(a1)
 	move.b	#ObjID_MTZBossOrb,id(a1) ; load obj53
 	move.l	#Obj54_MapUnc_32DC6,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_MTZBoss,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_MTZBoss,art_tile(a1)
 	ori.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.w	#3*$80,priority(a1)
 	addq.b	#2,routine(a1)		; => Obj53_Main
@@ -874,7 +874,7 @@ off_32CBC:	offsetTable
 ;loc_32CC0
 Obj54_Laser_Init:
 	move.l	#Obj54_MapUnc_32DC6,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_MTZBoss,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_MTZBoss,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#5*$80,priority(a0)
 	move.b	#$12,mapping_frame(a0)

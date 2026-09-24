@@ -18,7 +18,7 @@ Obj6A_Index:	offsetTable
 Obj6A_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj65_Obj6A_Obj6B_MapUnc_26EC8,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt|palette_line_3,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#4*$80,priority(a0)
 	move.b	#$20,width_pixels(a0)
@@ -29,7 +29,7 @@ Obj6A_Init:
 	bne.w	loc_27BC4
 	addq.b	#2,routine(a0)
 	move.l	#Obj6A_MapUnc_27D30,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Crate,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Crate|palette_line_3,art_tile(a0)
 	move.b	#$20,width_pixels(a0)
 	move.b	#$20,y_radius(a0)
 	move.l	#byte_27CF4,objoff_2C(a0)

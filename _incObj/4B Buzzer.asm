@@ -53,7 +53,7 @@ JmpTo49_DeleteObject ; JmpTo
 ; loc_2D0C8:
 Obj4B_Init:
 	move.l	#Obj4B_MapUnc_2D2EA,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Buzzer,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Buzzer,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$A,collision_flags(a0)
 	move.b	#$10,width_pixels(a0)
@@ -69,7 +69,7 @@ Obj4B_Init:
 	move.b	#ObjID_Buzzer,id(a1) ; load obj4B
 	move.b	#4,routine(a1)	; => Obj4B_Flame
 	move.l	#Obj4B_MapUnc_2D2EA,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_Buzzer,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_Buzzer,art_tile(a1)
 	move.w	#4*$80,priority(a1)
 	move.b	#$10,width_pixels(a1)
 	move.b	status(a0),status(a1)
@@ -193,7 +193,7 @@ Obj4B_ShootProjectile:
 	move.b	#ObjID_Buzzer,id(a1) ; load obj4B
 	move.b	#6,routine(a1)	; => Obj4B_Projectile
 	move.l	#Obj4B_MapUnc_2D2EA,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_Buzzer,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_Buzzer,art_tile(a1)
 	move.w	#4*$80,priority(a1)
 	move.b	#$98,collision_flags(a1)
 	move.b	#$10,width_pixels(a1)

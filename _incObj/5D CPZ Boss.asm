@@ -47,7 +47,7 @@ Obj5D_Index:	offsetTable
 Obj5D_Init:
 	; main vehicle
 	move.l	#Obj5D_MapUnc_2ED8C,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Eggpod_3,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Eggpod_3|palette_line_1,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$20,width_pixels(a0)
 	move.w	#$2B80,x_pos(a0)
@@ -67,7 +67,7 @@ Obj5D_Init:
 	move.l	a0,Obj5D_parent(a1)
 	move.l	a1,Obj5D_parent(a0)
 	move.l	#Obj5D_MapUnc_2ED8C,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_Eggpod_3,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_Eggpod_3,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#3*$80,priority(a1)
@@ -85,7 +85,7 @@ Obj5D_Init:
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
 	move.l	#Obj5D_MapUnc_2EE88,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_EggpodJets_1,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_EggpodJets_1,art_tile(a1)
 	move.b	#1,anim_frame_duration(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
@@ -101,7 +101,7 @@ Obj5D_Init:
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZBoss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#2*$80,priority(a1)
@@ -116,7 +116,7 @@ loc_2D8AC:
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZBoss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#4*$80,priority(a1)
@@ -135,7 +135,7 @@ loc_2D908:
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZBoss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#4*$80,priority(a1)
@@ -530,7 +530,7 @@ Obj5D_Pump:
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
 	move.b	d3,mapping_frame(a1)
 	move.b	#$14,routine(a1)	; => Obj5D_FallingParts
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZBoss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#2*$80,priority(a1)
@@ -600,7 +600,7 @@ Obj5D_Pipe_Extend:
 Obj5D_Pipe_Extend_Part2:
 	move.b #ObjID_CPZBoss,id(a1)	; load obj5D
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZBoss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#5*$80,priority(a1)
@@ -650,7 +650,7 @@ Obj5D_Pipe_Pump_0:
 	move.b	#2,routine_secondary(a1)	; => Obj5D_Pipe_Pump_2
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZBoss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#4*$80,priority(a1)
@@ -835,7 +835,7 @@ Obj5D_Dripper_0:
 	addq.b	#2,routine_secondary(a0)	; => Obj5D_Dripper_2
 	move.b	#ObjID_CPZBoss,id(a0) ; load 0bj5D
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBoss,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_CPZBoss|palette_line_3,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$20,width_pixels(a0)
 	move.w	#4*$80,priority(a0)
@@ -917,7 +917,7 @@ Obj5D_Container_Init:
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZBoss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#4*$80,priority(a1)
@@ -932,7 +932,7 @@ Obj5D_Container_Init:
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBoss,3,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZBoss|palette_line_3,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#4*$80,priority(a1)
@@ -1032,7 +1032,7 @@ loc_2E35C:
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
 	move.b	#$21,mapping_frame(a1)
 	move.b	#$14,routine(a1)	; => Obj5D_FallingParts
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZBoss|palette_line_1,art_tile(a1)
 	move.b	render_flags(a0),render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#2*$80,priority(a1)
@@ -1113,7 +1113,7 @@ loc_2E464:
 	move.b	#$10,routine(a1)		; => Obj5D_Container
 	move.b	#8,routine_secondary(a1)	; => Obj5D_Container_Floor2
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZBoss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#5*$80,priority(a1)
@@ -1144,7 +1144,7 @@ loc_2E4CE:
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	Obj5D_parent(a0),Obj5D_parent(a1)
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZBoss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#4*$80,priority(a1)
@@ -1391,7 +1391,7 @@ Obj5D_Gunk_Droplets_Loop:
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBoss,3,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZBoss|palette_line_3,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#2*$80,priority(a1)
@@ -1497,7 +1497,7 @@ loc_2E9A8:
 +
 	addq.b	#2,routine(a0)
 	move.l	#Obj5D_MapUnc_2EEA0,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_BossSmoke_1,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_BossSmoke_1|palette_line_1,art_tile(a0)
 	move.b	#0,mapping_frame(a0)
 	move.b	#5,anim_frame_duration(a0)
 	movea.l	Obj5D_parent(a0),a1 ; a1=object

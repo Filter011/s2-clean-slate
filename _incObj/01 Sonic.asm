@@ -39,7 +39,7 @@ Obj01_Init:
 	tst.b	(Last_star_pole_hit).w
 	bne.s	Obj01_Init_Continued
 	; only happens when not starting at a checkpoint:
-	move.w	#make_art_tile(ArtTile_ArtUnc_Sonic,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtUnc_Sonic,art_tile(a0)
 	move.b	#$C,top_solid_bit(a0)
 	move.b	#$D,lrb_solid_bit(a0)
 	move.w	x_pos(a0),(Saved_x_pos).w

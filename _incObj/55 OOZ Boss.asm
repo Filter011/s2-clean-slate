@@ -29,7 +29,7 @@ Obj55_Index:	offsetTable
 ; loc_32FA8:
 Obj55_Init:
 	move.l	#Obj55_MapUnc_33756,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_OOZBoss,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_OOZBoss,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	bset	#render_flags.multi_sprite,render_flags(a0)	; object consists of multiple sprites
 	move.b	#0,mainspr_childsprites(a0)
@@ -579,7 +579,7 @@ Obj55_Laser_Index:	offsetTable
 Obj55_Laser_Init:
 	addq.b	#2,routine_secondary(a0)	; => Obj55_Laser_Main
 	move.l	#Obj55_MapUnc_33756,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_OOZBoss,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_OOZBoss,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#4*$80,priority(a0)
 	movea.l	Obj55_Wave_parent(a0),a1 ; a1=object
@@ -655,7 +655,7 @@ Obj55_Laser_CreateWave:
 	move.b	#$D,mapping_frame(a1)
 	move.w	#0,y_vel(a1)
 	move.l	#Obj55_MapUnc_33756,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_OOZBoss,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_OOZBoss,art_tile(a1)
 	ori.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.w	#2*$80,priority(a1)
 	move.w	#5,Obj55_Wave_delay(a1)

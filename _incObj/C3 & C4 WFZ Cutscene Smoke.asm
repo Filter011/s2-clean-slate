@@ -40,4 +40,4 @@ ObjC3_Main:
 ; ===========================================================================
 ; off_3C438:
 ObjC3_SubObjData:
-	subObjData Obj27_MapUnc_21120,make_art_tile(ArtTile_ArtNem_Explosion,0,0),1<<render_flags.level_fg,5,$C,0
+	subObjData Obj27_MapUnc_21120,ArtTile_ArtNem_Explosion,1<<render_flags.level_fg,5,$C,0

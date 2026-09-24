@@ -19,13 +19,13 @@ Obj8A_Init:
 	move.w	#spriteScreenPositionXCentered(0),x_pixel(a0)
 	move.w	#spriteScreenPositionYCentered(0),y_pixel(a0)
 	move.l	#Obj8A_MapUnc_3EB4E,mappings(a0)
-	move.w	#make_art_tile($05A0,0,0),art_tile(a0)
+	move.w	#$05A0,art_tile(a0)
 	move.b	#0,mapping_frame(a0)
 	move.b	#0,render_flags(a0)
 	move.w	#0,priority(a0)
 	cmpi.b	#GameModeID_TitleScreen,(Game_Mode).w	; title screen??
 	bne.s	Obj8A_Display	; if not, branch
-	move.w	#make_art_tile($0300,0,0),art_tile(a0)
+	move.w	#$0300,art_tile(a0)
 	move.b	#$A,mapping_frame(a0)
 	tst.b	(S1_hidden_credits_flag).w
 	beq.s	Obj8A_Display

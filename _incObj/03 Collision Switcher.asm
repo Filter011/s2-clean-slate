@@ -19,7 +19,7 @@ Obj03_Index:	offsetTable
 Obj03_Init:
 	addq.b	#2,routine(a0) ; => Obj03_MainX
 	move.l	#Obj03_MapUnc_1FFB8,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Ring,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Ring|palette_line_1,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#5*$80,priority(a0)

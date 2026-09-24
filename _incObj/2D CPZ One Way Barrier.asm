@@ -17,31 +17,31 @@ Obj2D_Index:	offsetTable
 Obj2D_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj2D_MapUnc_11822,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_HtzValveBarrier,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_HtzValveBarrier|palette_line_1,art_tile(a0)
 	move.b	#8,width_pixels(a0)
 	cmpi.b	#metropolis_zone,(Current_Zone).w
 	beq.s	+
 	cmpi.b	#metropolis_zone_2,(Current_Zone).w
 	bne.s	++
 +
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt|palette_line_3,art_tile(a0)
 	move.b	#$C,width_pixels(a0)
 +
 	cmpi.b	#chemical_plant_zone,(Current_Zone).w
 	bne.s	+
-	move.w	#make_art_tile(ArtTile_ArtNem_ConstructionStripes_2,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_ConstructionStripes_2|palette_line_1,art_tile(a0)
 	move.b	#8,width_pixels(a0)
 	move.b	#3,subtype(a0)
 +
 	cmpi.b	#death_egg_zone,(Current_Zone).w
 	bne.s	+
-	move.w	#make_art_tile(ArtTile_ArtNem_ConstructionStripes_1,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_ConstructionStripes_1|palette_line_1,art_tile(a0)
 	move.b	#8,width_pixels(a0)
 	move.b	#3,subtype(a0)
 +
 	cmpi.b	#aquatic_ruin_zone,(Current_Zone).w
 	bne.s	+
-	move.w	#make_art_tile(ArtTile_ArtNem_ARZBarrierThing,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_ARZBarrierThing|palette_line_1,art_tile(a0)
 	move.b	#8,width_pixels(a0)
 +
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)

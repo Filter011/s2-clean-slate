@@ -19,7 +19,7 @@ Obj17_Index:	offsetTable
 Obj17_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj17_MapUnc_10452,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_GHZ_Spiked_Log,2,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_GHZ_Spiked_Log|palette_line_2,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#3*$80,priority(a0)
 	move.b	#8,width_pixels(a0)
@@ -59,7 +59,7 @@ Obj17_MakeHelix:
 	move.w	d2,y_pos(a1)
 	move.w	d3,x_pos(a1)
 	move.l	mappings(a0),mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_GHZ_Spiked_Log,2,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_GHZ_Spiked_Log|palette_line_2,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.w	#3*$80,priority(a1)
 	move.b	#8,width_pixels(a1)

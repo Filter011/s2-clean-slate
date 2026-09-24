@@ -25,7 +25,7 @@ Obj26_Init:
 	move.b	#$E,y_radius(a0)
 	move.b	#$E,x_radius(a0)
 	move.l	#Obj26_MapUnc_12D36,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Powerups,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Powerups,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#3*$80,priority(a0)
 	move.b	#$F,width_pixels(a0)

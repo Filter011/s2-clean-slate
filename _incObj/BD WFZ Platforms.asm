@@ -120,4 +120,4 @@ loc_3BCF8:
 ; ===========================================================================
 ; off_3BD24:
 ObjBD_SubObjData:
-	subObjData ObjBD_MapUnc_3BD3E,make_art_tile(ArtTile_ArtNem_WfzBeltPlatform,3,1),1<<render_flags.level_fg,4,$18,0
+	subObjData ObjBD_MapUnc_3BD3E,ArtTile_ArtNem_WfzBeltPlatform|palette_line_3|high_priority,1<<render_flags.level_fg,4,$18,0

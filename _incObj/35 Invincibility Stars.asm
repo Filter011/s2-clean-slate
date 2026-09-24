@@ -32,7 +32,7 @@ loc_1D9A4:
 -	move.b	id(a0),id(a1) ; load obj35
 	move.b	#4,objoff_A(a1)		; => loc_1DA80
 	move.l	#Obj35_MapUnc_1DCBC,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_Invincible_stars,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_Invincible_stars,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	bset	#render_flags.multi_sprite,render_flags(a1)
 	move.b	#$10,mainspr_width(a1)

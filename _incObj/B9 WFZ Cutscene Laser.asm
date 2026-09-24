@@ -45,4 +45,4 @@ loc_3BAF8:
 ; ===========================================================================
 ; off_3BB0E:
 ObjB9_SubObjData:
-	subObjData ObjB9_MapUnc_3BB18,make_art_tile(ArtTile_ArtNem_WfzHrzntlLazer,2,1),1<<render_flags.level_fg,1,$60,0
+	subObjData ObjB9_MapUnc_3BB18,ArtTile_ArtNem_WfzHrzntlLazer|palette_line_2|high_priority,1<<render_flags.level_fg,1,$60,0

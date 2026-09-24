@@ -828,7 +828,7 @@ ChildObject_3AFC0:	childObjectData objoff_3A, ObjID_Tornado, $5C
 			childObjectData objoff_3E, ObjID_Tornado, $5A	; seems unused
 ; off_3AFC8:
 ObjB2_SubObjData:
-	subObjData ObjB2_MapUnc_3AFF2,make_art_tile(ArtTile_ArtNem_Tornado,0,1),1<<render_flags.level_fg,4,$60,0
+	subObjData ObjB2_MapUnc_3AFF2,ArtTile_ArtNem_Tornado|high_priority,1<<render_flags.level_fg,4,$60,0
 ; off_3AFD2:
 ObjB2_SubObjData2:
-	subObjData ObjB2_MapUnc_3B292,make_art_tile(ArtTile_ArtNem_TornadoThruster,0,0),1<<render_flags.level_fg,3,$40,0
+	subObjData ObjB2_MapUnc_3B292,ArtTile_ArtNem_TornadoThruster,1<<render_flags.level_fg,3,$40,0

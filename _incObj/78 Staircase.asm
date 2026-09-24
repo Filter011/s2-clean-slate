@@ -40,7 +40,7 @@ Obj78_SubObjectLoop:
 Obj78_LoadSubObject:
 	move.b	id(a0),id(a1) ; load obj78
 	move.l	#Obj6B_MapUnc_2800E,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZStairBlock,3,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZStairBlock|palette_line_3,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.w	#3*$80,priority(a1)
 	move.b	#$10,width_pixels(a1)

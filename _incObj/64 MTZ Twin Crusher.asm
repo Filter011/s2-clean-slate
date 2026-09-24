@@ -39,7 +39,7 @@ Obj64_Init:
 	bset	#render_flags.explicit_height,render_flags(a0)
 +
 	move.l	#Obj64_MapUnc_26A5C,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt|palette_line_1,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#4*$80,priority(a0)
 	move.w	x_pos(a0),objoff_34(a0)

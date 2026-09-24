@@ -28,7 +28,7 @@ Obj39_Init:
 +
 	move.w	#spriteScreenPositionYCentered(0),y_pixel(a0)
 	move.l	#Obj39_MapUnc_14C6C,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Game_Over,0,1),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Game_Over|high_priority,art_tile(a0)
 	move.b	#0,render_flags(a0)
 	move.w	#0,priority(a0)
 ; loc_13FCC:

@@ -257,4 +257,4 @@ loc_3B7F8:
 ; ===========================================================================
 ; off_3B818:
 ObjB6_SubObjData:
-	subObjData ObjB6_MapUnc_3B856,make_art_tile(ArtTile_ArtNem_WfzTiltPlatforms,1,1),1<<render_flags.level_fg,4,$10,0
+	subObjData ObjB6_MapUnc_3B856,ArtTile_ArtNem_WfzTiltPlatforms|palette_line_1|high_priority,1<<render_flags.level_fg,4,$10,0

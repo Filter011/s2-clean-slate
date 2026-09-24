@@ -195,7 +195,7 @@ Debug_ExitDebugMode:
 	move.w	d0,(Debug_placement_mode).w
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.l	#MapUnc_Sonic,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtUnc_Sonic,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtUnc_Sonic,art_tile(a1)
 	bsr.s	Debug_ResetPlayerStats
 	move.b	#$13,y_radius(a1)
 	move.b	#9,x_radius(a1)

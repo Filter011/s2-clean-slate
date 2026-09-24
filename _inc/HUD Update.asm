@@ -30,7 +30,7 @@ BuildHUD:
 	move.w	#spriteScreenPositionX(16),d0	; set X pos
 	move.w	#spriteScreenPositionYCentered(24),d1	; set Y pos
 	lea	HUD_MapUnc_40A9A(pc),a1
-	move.w	#make_art_tile(ArtTile_ArtNem_HUD,0,1),d5	; set art tile and flags
+	move.w	#ArtTile_ArtNem_HUD|high_priority,d5	; set art tile and flags
 	add.w	d4,d4
 	adda.w	(a1,d4.w),a1
 	move.w	(a1)+,d4

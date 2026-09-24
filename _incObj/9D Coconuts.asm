@@ -165,4 +165,4 @@ Obj9D_ThrowData:
 	dc.w	$B, -$100	; 4
 ; off_37D7E:
 Obj9D_SubObjData:
-	subObjData Obj9D_Obj98_MapUnc_37D96,make_art_tile(ArtTile_ArtNem_Coconuts,0,0),1<<render_flags.level_fg,5,$C,9
+	subObjData Obj9D_Obj98_MapUnc_37D96,ArtTile_ArtNem_Coconuts,1<<render_flags.level_fg,5,$C,9

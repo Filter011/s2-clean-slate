@@ -27,7 +27,7 @@ Obj6C_Init:
 	bmi.w	loc_28112
 	addq.b	#2,routine(a0)
 	move.l	#Obj6C_MapUnc_28372,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_LavaCup,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_LavaCup|palette_line_3,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#4*$80,priority(a0)

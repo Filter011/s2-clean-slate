@@ -839,16 +839,16 @@ ChildObject_ObjC5RobotnikPlatform:	childObjectData objoff_3E, ObjID_WFZBoss, $A2
 
 ; off_3CC80:
 ObjC5_SubObjData:		; Laser Case
-	subObjData ObjC5_MapUnc_3CCD8,make_art_tile(ArtTile_ArtNem_WFZBoss,0,0),1<<render_flags.level_fg,4,$20,0
+	subObjData ObjC5_MapUnc_3CCD8,ArtTile_ArtNem_WFZBoss,1<<render_flags.level_fg,4,$20,0
 ; off_3CC8A:
 ObjC5_SubObjData2:		; Laser Walls
-	subObjData ObjC5_MapUnc_3CCD8,make_art_tile(ArtTile_ArtNem_WFZBoss,0,0),1<<render_flags.level_fg,1,8,0
+	subObjData ObjC5_MapUnc_3CCD8,ArtTile_ArtNem_WFZBoss,1<<render_flags.level_fg,1,8,0
 ; off_3CC94:
 ObjC5_SubObjData3:		; Platforms, platform releaser, laser and laser shooter
-	subObjData ObjC5_MapUnc_3CCD8,make_art_tile(ArtTile_ArtNem_WFZBoss,0,0),1<<render_flags.level_fg,5,$10,0
+	subObjData ObjC5_MapUnc_3CCD8,ArtTile_ArtNem_WFZBoss,1<<render_flags.level_fg,5,$10,0
 ; off_3CC9E:
 ObjC6_SubObjData2:		; Robotnik
-	subObjData ObjC6_MapUnc_3D0EE,make_art_tile(ArtTile_ArtKos_LevelArt,0,0),1<<render_flags.level_fg,5,$20,0
+	subObjData ObjC6_MapUnc_3D0EE,ArtTile_ArtKos_LevelArt,1<<render_flags.level_fg,5,$20,0
 ; off_3CCA8:
 ObjC5_SubObjData4:		; Robotnik platform
-	subObjData ObjC5_MapUnc_3CEBC,make_art_tile(ArtTile_ArtNem_WfzFloatingPlatform,1,1),1<<render_flags.level_fg,5,$20,0
+	subObjData ObjC5_MapUnc_3CEBC,ArtTile_ArtNem_WfzFloatingPlatform|palette_line_1|high_priority,1<<render_flags.level_fg,5,$20,0

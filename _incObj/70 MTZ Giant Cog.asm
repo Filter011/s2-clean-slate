@@ -33,7 +33,7 @@ Obj70_LoadSubObject:
 	move.b	id(a0),id(a1) ; load obj70
 	addq.b	#2,routine(a1)
 	move.l	#Obj70_MapUnc_28786,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_MtzWheel,3,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_MtzWheel|palette_line_3,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.w	#4*$80,priority(a1)
 	move.b	#$10,width_pixels(a1)

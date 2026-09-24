@@ -79,4 +79,4 @@ return_37886:
 ; ===========================================================================
 ; off_37888:
 Obj99_SubObjData2:
-	subObjData Obj99_Obj98_MapUnc_3789A,make_art_tile(ArtTile_ArtNem_Nebula,1,1),1<<render_flags.level_fg,4,$10,6
+	subObjData Obj99_Obj98_MapUnc_3789A,ArtTile_ArtNem_Nebula|palette_line_1|high_priority,1<<render_flags.level_fg,4,$10,6

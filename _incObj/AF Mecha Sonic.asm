@@ -704,7 +704,7 @@ ChildObject_39DC6:	childObjectData objoff_3C, ObjID_MechaSonic, $48
 ChildObject_39DCA:	childObjectData objoff_3A, ObjID_MechaSonic, $A4
 ; off_39DCE:
 ObjAF_SubObjData2:
-	subObjData ObjAF_Obj98_MapUnc_39E68,make_art_tile(ArtTile_ArtNem_SilverSonic,1,0),1<<render_flags.level_fg,4,$10,$1A
+	subObjData ObjAF_Obj98_MapUnc_39E68,ArtTile_ArtNem_SilverSonic|palette_line_1,1<<render_flags.level_fg,4,$10,$1A
 ; off_39DD8:
 ObjAF_SubObjData3:
-	subObjData ObjAF_MapUnc_3A08C,make_art_tile(ArtTile_ArtNem_DEZWindow,0,0),1<<render_flags.level_fg,6,$10,0
+	subObjData ObjAF_MapUnc_3A08C,ArtTile_ArtNem_DEZWindow,1<<render_flags.level_fg,6,$10,0

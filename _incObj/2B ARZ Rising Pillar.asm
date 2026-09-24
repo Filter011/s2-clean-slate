@@ -18,7 +18,7 @@ Obj2B_Index:	offsetTable
 Obj2B_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj2B_MapUnc_25C6E,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt|palette_line_1,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg|1<<render_flags.explicit_height,render_flags(a0)
 	move.b	#$1C,width_pixels(a0)
 	move.b	#$20,y_radius(a0)

@@ -23,7 +23,7 @@ Obj57_Index:	offsetTable
 ;loc_30FB8:
 Obj57_Init:
 	move.l	#Obj57_MapUnc_316EC,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_MCZBoss,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_MCZBoss,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#$21A0,x_pos(a0)
 	move.w	#$560,y_pos(a0)
@@ -340,7 +340,7 @@ Obj57_LoadStoneSpike:
 	move.w	d1,x_pos(a1)
 	move.w	#$5F0,y_pos(a1)
 	move.l	#Obj57_MapUnc_316EC,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtUnc_FallingRocks,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtUnc_FallingRocks,art_tile(a1)
 	ori.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.w	#3*$80,priority(a1)
 	move.b	#$D,mapping_frame(a1)

@@ -22,7 +22,7 @@ Obj41_Index:	offsetTable
 Obj41_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj41_MapUnc_1901C,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_VrtclSprng,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_VrtclSprng,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#4*$80,priority(a0)
@@ -45,7 +45,7 @@ Obj41_Init_Horizontal:
 	move.b	#4,routine(a0)
 	move.b	#2,anim(a0)
 	move.b	#3,mapping_frame(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_HrzntlSprng,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_HrzntlSprng,art_tile(a0)
 	move.b	#8,width_pixels(a0)
 	bra.s	Obj41_Init_Common
 ; ===========================================================================
@@ -61,7 +61,7 @@ Obj41_Init_DiagonallyUp:
 	move.b	#8,routine(a0)
 	move.b	#4,anim(a0)
 	move.b	#7,mapping_frame(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_DignlSprng,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_DignlSprng,art_tile(a0)
 	bra.s	Obj41_Init_Common
 ; ===========================================================================
 ; loc_18936:
@@ -69,7 +69,7 @@ Obj41_Init_DiagonallyDown:
 	move.b	#$A,routine(a0)
 	move.b	#4,anim(a0)
 	move.b	#$A,mapping_frame(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_DignlSprng,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_DignlSprng,art_tile(a0)
 	bset	#status.npc.y_flip,status(a0)
 ; loc_18954:
 Obj41_Init_Up:

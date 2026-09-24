@@ -28,7 +28,7 @@ Obj82_Properties:
 Obj82_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj82_MapUnc_2A476,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg|1<<render_flags.explicit_height,render_flags(a0)
 	move.w	#3*$80,priority(a0)
 	moveq	#0,d0

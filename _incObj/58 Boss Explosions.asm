@@ -17,7 +17,7 @@ Obj58_Index:	offsetTable
 Obj58_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj58_MapUnc_2D50A,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_FieryExplosion,0,1),art_tile(a0)
+	move.w	#ArtTile_ArtNem_FieryExplosion|high_priority,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#0,priority(a0)
 	move.b	#0,collision_flags(a0)

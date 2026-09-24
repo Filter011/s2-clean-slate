@@ -469,13 +469,13 @@ ChildObject_391E4:	childObjectData objoff_3C, ObjID_GrabberLegs, $38
 ChildObject_391E8:	childObjectData objoff_3A, ObjID_GrabberString, $3C
 ; off_391EC:
 ObjA7_SubObjData:
-	subObjData ObjA7_ObjA8_ObjA9_Obj98_MapUnc_3921A,make_art_tile(ArtTile_ArtNem_Grabber,1,1),1<<render_flags.level_fg,4,$10,$B
+	subObjData ObjA7_ObjA8_ObjA9_Obj98_MapUnc_3921A,ArtTile_ArtNem_Grabber|palette_line_1|high_priority,1<<render_flags.level_fg,4,$10,$B
 ; off_391F6:
 ObjA7_SubObjData2:
-	subObjData ObjA7_ObjA8_ObjA9_Obj98_MapUnc_3921A,make_art_tile(ArtTile_ArtNem_Grabber,1,1),1<<render_flags.level_fg,1,$10,$D7
+	subObjData ObjA7_ObjA8_ObjA9_Obj98_MapUnc_3921A,ArtTile_ArtNem_Grabber|palette_line_1|high_priority,1<<render_flags.level_fg,1,$10,$D7
 ; off_39200:
 ObjA8_SubObjData:
-	subObjData ObjA7_ObjA8_ObjA9_Obj98_MapUnc_3921A,make_art_tile(ArtTile_ArtNem_Grabber,1,1),1<<render_flags.level_fg,4,4,0
+	subObjData ObjA7_ObjA8_ObjA9_Obj98_MapUnc_3921A,ArtTile_ArtNem_Grabber|palette_line_1|high_priority,1<<render_flags.level_fg,4,4,0
 ; off_3920A:
 ObjA8_SubObjData2:
-	subObjData ObjAA_MapUnc_39228,make_art_tile(ArtTile_ArtNem_Grabber,1,1),1<<render_flags.level_fg,5,4,0
+	subObjData ObjAA_MapUnc_39228,ArtTile_ArtNem_Grabber|palette_line_1|high_priority,1<<render_flags.level_fg,5,4,0

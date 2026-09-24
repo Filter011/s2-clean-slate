@@ -154,4 +154,4 @@ loc_37066:
 ; ===========================================================================
 ; off_3707C:
 Obj92_SubObjData:
-	subObjData Obj92_Obj93_MapUnc_37092,make_art_tile(ArtTile_ArtKos_LevelArt,0,0),1<<render_flags.level_fg,4,$10,$12
+	subObjData Obj92_Obj93_MapUnc_37092,ArtTile_ArtKos_LevelArt,1<<render_flags.level_fg,4,$10,$12

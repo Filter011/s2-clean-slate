@@ -51,7 +51,7 @@ loc_3F228:
 	move.w	y_pos(a0),y_pos(a1)
 	move.w	y_pos(a0),objoff_30(a1)
 	move.l	#Obj3E_MapUnc_3F436,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_Capsule,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_Capsule|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.on_screen|1<<render_flags.level_fg,render_flags(a1)
 	moveq	#0,d0
 	move.b	(a2)+,d0

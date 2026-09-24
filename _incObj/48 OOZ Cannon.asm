@@ -38,7 +38,7 @@ Obj48_Properties:
 Obj48_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj48_MapUnc_254FE,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_LaunchBall,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_LaunchBall|palette_line_3,art_tile(a0)
 	move.b	subtype(a0),d0
 	andi.w	#$F,d0
 	btst	#status.npc.x_flip,status(a0)

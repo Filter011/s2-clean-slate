@@ -31,4 +31,4 @@ ObjB7_Main:
 ; ===========================================================================
 ; off_3B8DA:
 ObjB7_SubObjData:
-	subObjData ObjB7_MapUnc_3B8E4,make_art_tile(ArtTile_ArtNem_WfzVrtclLazer,2,1),1<<render_flags.level_fg,4,$18,$A9
+	subObjData ObjB7_MapUnc_3B8E4,ArtTile_ArtNem_WfzVrtclLazer|palette_line_2|high_priority,1<<render_flags.level_fg,4,$18,$A9

@@ -184,4 +184,4 @@ loc_3C26C:
 ; ===========================================================================
 ; off_3C276:
 ObjC1_SubObjData:
-	subObjData ObjC1_MapUnc_3C280,make_art_tile(ArtTile_ArtNem_BreakPanels,3,1),1<<render_flags.level_fg,4,$40,$E1
+	subObjData ObjC1_MapUnc_3C280,ArtTile_ArtNem_BreakPanels|palette_line_3|high_priority,1<<render_flags.level_fg,4,$40,$E1

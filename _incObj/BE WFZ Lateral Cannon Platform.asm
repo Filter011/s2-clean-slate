@@ -80,4 +80,4 @@ loc_3BE04:
 ; ===========================================================================
 ; off_3BE2C:
 ObjBE_SubObjData:
-	subObjData ObjBE_MapUnc_3BE46,make_art_tile(ArtTile_ArtNem_WfzGunPlatform,3,1),1<<render_flags.level_fg,4,$18,0
+	subObjData ObjBE_MapUnc_3BE46,ArtTile_ArtNem_WfzGunPlatform|palette_line_3|high_priority,1<<render_flags.level_fg,4,$18,0

@@ -17,7 +17,7 @@ Obj7C_Index:	offsetTable
 Obj7C_Init:
 	addq.b	#2,routine(a0) ; => Obj7C_Main
 	move.l	#Obj7C_MapUnc_2103C,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZMetalThings,2,1),art_tile(a0)
+	move.w	#ArtTile_ArtNem_CPZMetalThings|palette_line_2|high_priority,art_tile(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#7*$80,priority(a0)
 	move.b	#0,render_flags(a0)

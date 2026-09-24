@@ -18,7 +18,7 @@ ObjD8_Index:	offsetTable
 ObjD8_Init:
 	addq.b	#2,routine(a0)
 	move.l	#ObjD8_MapUnc_2C8C4,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_CNZMiniBumper,2,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_CNZMiniBumper|palette_line_2,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#1*$80,priority(a0)

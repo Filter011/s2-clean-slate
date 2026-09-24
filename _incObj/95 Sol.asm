@@ -19,7 +19,7 @@ Obj95_Index:	offsetTable
 ; loc_37116:
 Obj95_Init:
 	move.l	#Obj95_MapUnc_372E6,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#4*$80,priority(a0)
 	move.b	#$B,collision_flags(a0)

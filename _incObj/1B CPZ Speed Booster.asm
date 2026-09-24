@@ -23,7 +23,7 @@ Obj1B_BoosterSpeeds:
 Obj1B_Init:
 	addq.b	#2,routine(a0) ; => Obj1B_Main
 	move.l	#Obj1B_MapUnc_223E2,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZBooster,3,1),art_tile(a0)
+	move.w	#ArtTile_ArtNem_CPZBooster|palette_line_3|high_priority,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$20,width_pixels(a0)
 	move.w	#1*$80,priority(a0)

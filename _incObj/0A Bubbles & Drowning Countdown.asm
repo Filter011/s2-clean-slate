@@ -41,7 +41,7 @@ Obj0A_Init:
 	beq.s	+
 	move.l	#Obj24_MapUnc_1FC18,mappings(a0)
 +
-	move.w	#make_art_tile(ArtTile_ArtNem_BigBubbles,0,1),art_tile(a0)
+	move.w	#ArtTile_ArtNem_BigBubbles|high_priority,art_tile(a0)
 	move.b	#1<<render_flags.on_screen|1<<render_flags.level_fg,render_flags(a0)
 	move.b	#16,width_pixels(a0)
 	move.w	#1*$80,priority(a0)

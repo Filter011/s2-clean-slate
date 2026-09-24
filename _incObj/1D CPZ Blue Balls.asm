@@ -51,7 +51,7 @@ Obj1D_InitBall:
 	move.w	x_pos(a0),x_pos(a1)
 	move.w	y_pos(a0),y_pos(a1)
 	move.l	#Obj1D_MapUnc_22576,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZDroplet,3,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_CPZDroplet|palette_line_3,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.w	#3*$80,priority(a1)
 	move.b	#%10001011,collision_flags(a1)

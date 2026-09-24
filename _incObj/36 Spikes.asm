@@ -38,7 +38,7 @@ Obj36_InitData:
 Obj36_Init:
 	addq.b	#2,routine(a0)	; => Obj36_Upright
 	move.l	#Obj36_MapUnc_15B68,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Spikes,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Spikes|palette_line_1,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#4*$80,priority(a0)
 	move.b	subtype(a0),d0
@@ -54,7 +54,7 @@ Obj36_Init:
 	cmpi.b	#4,d0			; do spikes face sideways?
 	blo.s	+			; if not, branch
 	addq.b	#2,routine(a0)	; => Obj36_Sideways
-	move.w	#make_art_tile(ArtTile_ArtNem_HorizSpike,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_HorizSpike|palette_line_1,art_tile(a0)
 +
 	btst	#status.npc.y_flip,status(a0)		; are spikes upside-down?
 	beq.s	+			; if not, branch

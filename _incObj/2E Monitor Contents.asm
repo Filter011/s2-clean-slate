@@ -18,7 +18,7 @@ Obj2E_Index:	offsetTable
 ; loc_12868:
 Obj2E_Init:
 	addq.b	#2,routine(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Powerups,0,1),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Powerups|high_priority,art_tile(a0)
 	move.b	#1<<render_flags.static_mappings|1<<render_flags.level_fg,render_flags(a0)
 	move.w	#3*$80,priority(a0)
 	move.b	#8,width_pixels(a0)

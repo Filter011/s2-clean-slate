@@ -20,7 +20,7 @@ Obj38_Main:
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#1*$80,priority(a0)
 	move.b	#$18,width_pixels(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Shield,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Shield,art_tile(a0)
 ; loc_1D92C:
 Obj38_Shield:
 	movea.w	parent(a0),a2 ; a2=character

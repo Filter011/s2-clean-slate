@@ -99,4 +99,4 @@ byte_3BA2A:
 	even
 ; off_3BA36:
 ObjB8_SubObjData:
-	subObjData ObjB8_Obj98_MapUnc_3BA46,make_art_tile(ArtTile_ArtNem_WfzWallTurret,0,0),1<<render_flags.level_fg,4,$10,0
+	subObjData ObjB8_Obj98_MapUnc_3BA46,ArtTile_ArtNem_WfzWallTurret,1<<render_flags.level_fg,4,$10,0

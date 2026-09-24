@@ -36,4 +36,4 @@ ObjB4_Main:
 ; ===========================================================================
 ; off_3B3AC:
 ObjB4_SubObjData:
-	subObjData ObjB4_MapUnc_3B3BE,make_art_tile(ArtTile_ArtNem_WfzVrtclPrpllr,1,1),1<<render_flags.level_fg,4,4,$A8
+	subObjData ObjB4_MapUnc_3B3BE,ArtTile_ArtNem_WfzVrtclPrpllr|palette_line_1|high_priority,1<<render_flags.level_fg,4,4,$A8

@@ -148,4 +148,4 @@ loc_3C062:
 ; ===========================================================================
 ; off_3C08E:
 ObjC0_SubObjData:
-	subObjData ObjC0_MapUnc_3C098,make_art_tile(ArtTile_ArtNem_WfzLaunchCatapult,1,0),1<<render_flags.level_fg,4,$10,0
+	subObjData ObjC0_MapUnc_3C098,ArtTile_ArtNem_WfzLaunchCatapult|palette_line_1,1<<render_flags.level_fg,4,$10,0

@@ -26,7 +26,7 @@ byte_283C0:
 Obj6E_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj6E_MapUnc_2852C,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt|palette_line_3,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#4*$80,priority(a0)
 	moveq	#0,d0
@@ -43,7 +43,7 @@ Obj6E_Init:
 	cmpi.b	#3,d0
 	bne.s	loc_28432
 	addq.b	#2,routine(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_MtzWheelIndent,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_MtzWheelIndent|palette_line_3,art_tile(a0)
 	move.w	#5*$80,priority(a0)
 	bra.w	loc_284BC
 ; ===========================================================================

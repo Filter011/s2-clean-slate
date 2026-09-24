@@ -26,7 +26,7 @@ Obj67_Index:	offsetTable
 Obj67_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj67_MapUnc_27548,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_MtzSpinTubeFlash,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_MtzSpinTubeFlash|palette_line_3,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#5*$80,priority(a0)

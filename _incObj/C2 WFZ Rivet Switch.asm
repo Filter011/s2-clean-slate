@@ -52,4 +52,4 @@ ObjC2_Bust:
 ; ===========================================================================
 ; off_3C3B8:
 ObjC2_SubObjData:
-	subObjData ObjC2_MapUnc_3C3C2,make_art_tile(ArtTile_ArtNem_WfzSwitch,1,1),1<<render_flags.level_fg,4,$10,0
+	subObjData ObjC2_MapUnc_3C3C2,ArtTile_ArtNem_WfzSwitch|palette_line_1|high_priority,1<<render_flags.level_fg,4,$10,0

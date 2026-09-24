@@ -1128,7 +1128,7 @@ SegaScreen:
 
 	lea	(Chunk_Table).l,a1
 	lea	(MapEng_SEGA).l,a0
-	moveq	#make_art_tile(ArtTile_VRAM_Start,0,0),d0
+	moveq	#ArtTile_VRAM_Start,d0
 	bsr.w	EniDec
 
 	lea	(Chunk_Table).l,a1
@@ -1294,7 +1294,7 @@ TitleScreen:
 	; Decompress the first part of the title screen background plane map...
 	lea	(Chunk_Table).l,a1
 	lea	(MapEng_TitleScreen).l,a0
-	move.w	#make_art_tile(ArtTile_ArtNem_Title,2,0),d0
+	move.w	#ArtTile_ArtNem_Title|palette_line_2,d0
 	bsr.w	EniDec
 
 	; ...and send it to VRAM.
@@ -1307,7 +1307,7 @@ TitleScreen:
 	; Decompress the second part of the title screen background plane map...
 	lea	(Chunk_Table).l,a1
 	lea	(MapEng_TitleBack).l,a0
-	move.w	#make_art_tile(ArtTile_ArtNem_Title,2,0),d0
+	move.w	#ArtTile_ArtNem_Title|palette_line_2,d0
 	bsr.w	EniDec
 
 	; ...and send it to VRAM.
@@ -1320,7 +1320,7 @@ TitleScreen:
 	; Decompress the title screen emblem plane map...
 	lea	(Chunk_Table).l,a1
 	lea	(MapEng_TitleLogo).l,a0
-	move.w	#make_art_tile(ArtTile_ArtNem_Title,3,1),d0
+	move.w	#ArtTile_ArtNem_Title|palette_line_3|high_priority,d0
 	bsr.w	EniDec
 
 	; ...add the copyright text to it...
@@ -1577,9 +1577,9 @@ TailsNameCheat_Buttons:
 CopyrightText:
   irpc chr,"@ 1992 SEGA"
     if "chr"<>" "
-	dc.w  make_art_tile(ArtTile_ArtNem_FontStuff_TtlScr + 'chr'|0,0,0)
+	dc.w  ArtTile_ArtNem_FontStuff_TtlScr + 'chr'|0
     else
-	dc.w  make_art_tile(ArtTile_VRAM_Start,0,0)
+	dc.w  ArtTile_VRAM_Start
     endif
   endm
 CopyrightText_End:
@@ -2213,7 +2213,7 @@ MenuScreen:
 	bsr.w	Queue_KosPlus_Module
 	lea	(Chunk_Table).l,a1
 	lea	(MapEng_MenuBack).l,a0
-	move.w	#make_art_tile(ArtTile_VRAM_Start,3,0),d0
+	move.w	#ArtTile_VRAM_Start|palette_line_3,d0
 	bsr.w	EniDec
 	lea	(Chunk_Table).l,a1
 	move.l	#vdpComm(VRAM_Plane_B_Name_Table,VRAM,WRITE),d0
@@ -2229,11 +2229,11 @@ MenuScreen:
 MenuScreen_Options:
 	lea	(Chunk_Table).l,a1
 	lea	MapEng_Options(pc),a0
-	moveq	#make_art_tile(ArtTile_ArtNem_MenuBox,0,0),d0
+	moveq	#ArtTile_ArtNem_MenuBox,d0
 	bsr.w	EniDec
 	lea	(Chunk_Table+$160).l,a1
 	lea	MapEng_Options(pc),a0
-	move.w	#make_art_tile(ArtTile_ArtNem_MenuBox,1,0),d0
+	move.w	#ArtTile_ArtNem_MenuBox|palette_line_1,d0
 	bsr.w	EniDec
 	clr.b	(Options_menu_box).w
 	bsr.w	OptionScreen_DrawSelected
@@ -2545,11 +2545,11 @@ MenuScreen_LevelSelect:
 	; Load foreground (sans zone icon)
 	lea	(Chunk_Table).l,a1
 	lea	MapEng_LevSel(pc),a0	; 2 bytes per 8x8 tile, compressed
-	moveq	#make_art_tile(ArtTile_VRAM_Start,0,0),d0
+	moveq	#ArtTile_VRAM_Start,d0
 	bsr.w	EniDec
 	lea	(Chunk_Table).l,a1
 	lea	(MapEng_LevSel).l,a0	; 2 bytes per 8x8 tile, compressed
-	move.w	#make_art_tile(ArtTile_VRAM_Start,0,0),d0
+	move.w	#ArtTile_VRAM_Start,d0
 	bsr.w	EniDec
 	save
 	codepage	LEVELSELECT	; This is here so we can use '*' instead of '$1A'
@@ -2568,7 +2568,7 @@ MenuScreen_LevelSelect:
 
 .writeletter:
 	move.b	(a1)+,d0	; Get character from string
-	;ori.w	#make_art_tile($000,0,0),d0
+	;ori.w	#$000,d0
 	move.w	d0,(a2)+	; Send it to plane map
 	dbf	d2,.writeletter	; Loop for entire string
 	cmpi.W	#$4,d1
@@ -2581,34 +2581,34 @@ MenuScreen_LevelSelect:
 	sub.w	d3,d2		; Get remaining space in string
 	bcs.s	.stringfull	; If there is none, skip ahead
 .blankloop:
-	move.w	#make_art_tile(' ',0,0),(a2)+	; Full the remaining space with blank characters
+	move.w	#' ',(a2)+	; Full the remaining space with blank characters
 	dbf	d2,.blankloop
 .stringfull:
-	move.w	#make_art_tile('1',0,0),(a2)	; Write (act) '1'
+	move.w	#'1',(a2)	; Write (act) '1'
 	lea	$28*2(a2),a2	; Next line
-	move.w	#make_art_tile('2',0,0),(a2)	; Write (act) '2'
+	move.w	#'2',(a2)	; Write (act) '2'
 	dbf	d1,.writezone
 
 	; Assuming the last line was the sound test...
-	move.w	#make_art_tile(' ',0,0),(a2)	; Get rid of (act) '2'
+	move.w	#' ',(a2)	; Get rid of (act) '2'
 	lea	-$28*2(a2),a2	; Go back to (act) '1'
-	move.w	#make_art_tile('*',0,0),(a2)	; Replace that with '*'
+	move.w	#'*',(a2)	; Replace that with '*'
 
 	lea	-$28*4(a2),a2	; Go back to (act)
-	move.w	#make_art_tile(' ',0,0),(a2)	; Get rid of (act)
+	move.w	#' ',(a2)	; Get rid of (act)
 	lea	-$28*2(a2),a2	; Go back to (act)
-	move.w	#make_art_tile(' ',0,0),(a2)	; Get rid of (act)
+	move.w	#' ',(a2)	; Get rid of (act)
 	lea	-$28*4(a2),a2	; Go back to (act)
-	move.w	#make_art_tile(' ',0,0),(a2)	; Get rid of (act)
+	move.w	#' ',(a2)	; Get rid of (act)
 	lea	-$28*2(a2),a2	; Go back to (act)
-	move.w	#make_art_tile(' ',0,0),(a2)	; Get rid of (act)
+	move.w	#' ',(a2)	; Get rid of (act)
 	lea	-$28*4(a2),a2	; Go back to (act)
-	move.w	#make_art_tile(' ',0,0),(a2)	; Get rid of (act)
+	move.w	#' ',(a2)	; Get rid of (act)
 	lea	-$28*2(a2),a2	; Go back to (act)
-	move.w	#make_art_tile(' ',0,0),(a2)	; Get rid of (act)
+	move.w	#' ',(a2)	; Get rid of (act)
 
 	; Overwrite duplicate METROPOLIS 1 with 3
-	move.w	#make_art_tile('3',0,0),(Chunk_Table+planeLocH28($24,5)).l
+	move.w	#'3',(Chunk_Table+planeLocH28($24,5)).l
 
 	restore
 
@@ -2625,7 +2625,7 @@ MenuScreen_LevelSelect:
 	; Load zone icon
 	lea	(Chunk_Table+planeLoc(40,0,28)).l,a1
 	lea	MapEng_LevSelIcon(pc),a0
-	move.w	#make_art_tile(ArtTile_ArtNem_LevelSelectPics,0,0),d0
+	move.w	#ArtTile_ArtNem_LevelSelectPics,d0
 	bsr.w	EniDec
 
 	bsr.w	LevelSelect_DrawIcon
@@ -3280,7 +3280,7 @@ creditText macro pal,ss
 	if ((vram_src & $FF) <> $0) && ((vram_src & $FF) <> $1)
 		fatal "The low byte of vram_src was $\{vram_src & $FF}, but it must be $00 or $01."
 	endif
-	dc.b (make_art_tile(vram_src,pal,0) & $FF00) >> 8
+	dc.b (vram_src|(pal<<13) & $FF00) >> 8
 	irpc char,ss
 	dc.b "char"
 	switch "char"
@@ -3683,7 +3683,7 @@ TitleScreen_SetFinalState:
 ; sub_135EA:
 TitleScreen_InitSprite:
 	move.l	#Obj0E_MapUnc_136A8,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_TitleSprites,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_TitleSprites,art_tile(a1)
 	move.w	#4*$80,priority(a1)
 	rts
 ; End of function TitleScreen_InitSprite
@@ -4986,34 +4986,34 @@ byte_376A8:
 ; ===========================================================================
 ; off_37764:
 Obj94_SubObjData2:
-	subObjData Obj94_Obj98_MapUnc_37678,make_art_tile(ArtTile_ArtNem_Rexon,1,0),1<<render_flags.on_screen|1<<render_flags.level_fg,4,4,$98
+	subObjData Obj94_Obj98_MapUnc_37678,ArtTile_ArtNem_Rexon|palette_line_1,1<<render_flags.on_screen|1<<render_flags.level_fg,4,4,$98
 ; off_3776E:
 Obj99_SubObjData:
-	subObjData Obj99_Obj98_MapUnc_3789A,make_art_tile(ArtTile_ArtNem_Nebula,1,1),1<<render_flags.on_screen|1<<render_flags.level_fg,4,8,$8B
+	subObjData Obj99_Obj98_MapUnc_3789A,ArtTile_ArtNem_Nebula|palette_line_1|high_priority,1<<render_flags.on_screen|1<<render_flags.level_fg,4,8,$8B
 ; off_37778:
 Obj9A_SubObjData2:
-	subObjData Obj9A_Obj98_MapUnc_37B62,make_art_tile(ArtTile_ArtNem_Turtloid,0,0),1<<render_flags.on_screen|1<<render_flags.level_fg,4,4,$98
+	subObjData Obj9A_Obj98_MapUnc_37B62,ArtTile_ArtNem_Turtloid,1<<render_flags.on_screen|1<<render_flags.level_fg,4,4,$98
 ; off_37782:
 Obj9D_SubObjData2:
-	subObjData Obj9D_Obj98_MapUnc_37D96,make_art_tile(ArtTile_ArtNem_Coconuts,0,0),1<<render_flags.on_screen|1<<render_flags.level_fg,4,8,$8B
+	subObjData Obj9D_Obj98_MapUnc_37D96,ArtTile_ArtNem_Coconuts,1<<render_flags.on_screen|1<<render_flags.level_fg,4,8,$8B
 ; off_3778C:
 ObjA4_SubObjData2:
-	subObjData ObjA4_Obj98_MapUnc_38A96,make_art_tile(ArtTile_ArtNem_MtzSupernova,0,1),1<<render_flags.on_screen|1<<render_flags.level_fg,5,4,$98
+	subObjData ObjA4_Obj98_MapUnc_38A96,ArtTile_ArtNem_MtzSupernova|high_priority,1<<render_flags.on_screen|1<<render_flags.level_fg,5,4,$98
 ; off_37796:
 ObjA6_SubObjData:
-	subObjData ObjA5_ObjA6_Obj98_MapUnc_38CCA,make_art_tile(ArtTile_ArtNem_Spiny,1,0),1<<render_flags.on_screen|1<<render_flags.level_fg,5,4,$98
+	subObjData ObjA5_ObjA6_Obj98_MapUnc_38CCA,ArtTile_ArtNem_Spiny|palette_line_1,1<<render_flags.on_screen|1<<render_flags.level_fg,5,4,$98
 ; off_377A0:
 ObjA7_SubObjData3:
-	subObjData ObjA7_ObjA8_ObjA9_Obj98_MapUnc_3921A,make_art_tile(ArtTile_ArtNem_Grabber,1,1),1<<render_flags.on_screen|1<<render_flags.level_fg,4,4,$98
+	subObjData ObjA7_ObjA8_ObjA9_Obj98_MapUnc_3921A,ArtTile_ArtNem_Grabber|palette_line_1|high_priority,1<<render_flags.on_screen|1<<render_flags.level_fg,4,4,$98
 ; off_377AA:
 ObjAD_SubObjData3:
-	subObjData ObjAD_Obj98_MapUnc_395B4,make_art_tile(ArtTile_ArtNem_WfzScratch,0,0),1<<render_flags.on_screen|1<<render_flags.level_fg,5,4,$98
+	subObjData ObjAD_Obj98_MapUnc_395B4,ArtTile_ArtNem_WfzScratch,1<<render_flags.on_screen|1<<render_flags.level_fg,5,4,$98
 ; off_377B4:
 ObjAF_SubObjData:
-	subObjData ObjAF_Obj98_MapUnc_39E68,make_art_tile(ArtTile_ArtNem_CNZBonusSpike,1,0),1<<render_flags.on_screen|1<<render_flags.level_fg,5,4,$98
+	subObjData ObjAF_Obj98_MapUnc_39E68,ArtTile_ArtNem_CNZBonusSpike|palette_line_1,1<<render_flags.on_screen|1<<render_flags.level_fg,5,4,$98
 ; off_377BE:
 ObjB8_SubObjData2:
-	subObjData ObjB8_Obj98_MapUnc_3BA46,make_art_tile(ArtTile_ArtNem_WfzWallTurret,0,0),1<<render_flags.on_screen|1<<render_flags.level_fg,3,4,$98
+	subObjData ObjB8_Obj98_MapUnc_3BA46,ArtTile_ArtNem_WfzWallTurret,1<<render_flags.on_screen|1<<render_flags.level_fg,3,4,$98
 
 ; ===========================================================================
 	include "_incObj/99 Nebula.asm"

@@ -32,11 +32,11 @@ Obj7A_Properties:
 Obj7A_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj7A_MapUnc_29564,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZStairBlock,3,1),art_tile(a0)
+	move.w	#ArtTile_ArtNem_CPZStairBlock|palette_line_3|high_priority,art_tile(a0)
 	cmpi.b	#mystic_cave_zone,(Current_Zone).w
 	bne.s	+
 	move.l	#Obj15_Obj7A_MapUnc_10256,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt,art_tile(a0)
 +
 	moveq	#0,d1
 	move.b	subtype(a0),d1

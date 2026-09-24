@@ -21,7 +21,7 @@ Obj25_Init:
 	addq.b	#2,routine(a0)
 	move.w	x_pos(a0),objoff_32(a0)
 	move.l	#Obj25_MapUnc_12382,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Ring,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Ring|palette_line_1,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#2*$80,priority(a0)
 	move.b	#$47,collision_flags(a0)
@@ -36,7 +36,7 @@ Obj25_Collect:
 	addq.b	#2,routine(a0)
 	move.b	#0,collision_flags(a0)
 	move.w	#1*$80,priority(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Ring_sparkles,1,0),obGfx(a0)
+	move.w	#ArtTile_ArtNem_Ring_sparkles|palette_line_1,obGfx(a0)
 	bsr.s	CollectRing
 ; Obj_25_sub_6:
 Obj25_Sparkle:
@@ -126,7 +126,7 @@ Obj37_Init:
 	move.w	x_pos(a0),x_pos(a1)
 	move.w	y_pos(a0),y_pos(a1)
 	move.l	#Obj25_MapUnc_12382,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_Ring_loss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_Ring_loss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.on_screen|1<<render_flags.level_fg,render_flags(a1)
 	move.w	#3*$80,priority(a1)
 	move.b	#$47,collision_flags(a1)

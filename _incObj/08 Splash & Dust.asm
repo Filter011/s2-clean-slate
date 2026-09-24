@@ -27,7 +27,7 @@ Obj08_Init:
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#1*$80,priority(a0)
 	move.b	#$10,width_pixels(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_SonicDust,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_SonicDust,art_tile(a0)
 	move.w	#MainCharacter,parent(a0)
 	move.w	#tiles_to_bytes(ArtTile_ArtNem_SonicDust),obj08_vram_address(a0)
 

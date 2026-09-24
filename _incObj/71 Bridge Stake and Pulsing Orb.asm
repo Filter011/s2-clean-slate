@@ -15,9 +15,9 @@ Obj71_Index:	offsetTable
 ; ---------------------------------------------------------------------------
 ; dword_11302:
 Obj71_InitData:
-	objsubdecl 3, Obj11_MapUnc_FC28,  make_art_tile(ArtTile_ArtNem_HPZ_Bridge,3,0), 4, 1		; Hidden Palace bridge
-	objsubdecl 0, Obj71_MapUnc_11396, make_art_tile(ArtTile_ArtNem_HPZOrb,3,1), $10, 1		; Hidden Palace pulsing orb
-	objsubdecl 0, Obj71_MapUnc_11576, make_art_tile(ArtTile_ArtNem_MtzLavaBubble,2,0), $10, 1	; MTZ lava bubble
+	objsubdecl 3, Obj11_MapUnc_FC28,  ArtTile_ArtNem_HPZ_Bridge|palette_line_3, 4, 1		; Hidden Palace bridge
+	objsubdecl 0, Obj71_MapUnc_11396, ArtTile_ArtNem_HPZOrb|palette_line_3|high_priority, $10, 1		; Hidden Palace pulsing orb
+	objsubdecl 0, Obj71_MapUnc_11576, ArtTile_ArtNem_MtzLavaBubble|palette_line_2, $10, 1	; MTZ lava bubble
 ; ===========================================================================
 ; loc_1131A:
 Obj71_Init:

@@ -17,7 +17,7 @@ Obj29_Index:	offsetTable
 Obj29_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj29_MapUnc_11ED0,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Numbers,0,1),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Numbers|high_priority,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#1*$80,priority(a0)
 	move.b	#8,width_pixels(a0)

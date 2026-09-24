@@ -28,7 +28,7 @@ Obj15_Index:	offsetTable
 Obj15_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj15_MapUnc_101E8,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_OOZSwingPlat,2,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_OOZSwingPlat|palette_line_2,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#3*$80,priority(a0)
 	move.b	#$20,width_pixels(a0)
@@ -38,14 +38,14 @@ Obj15_Init:
 	cmpi.b	#mystic_cave_zone,(Current_Zone).w
 	bne.s	+
 	move.l	#Obj15_Obj7A_MapUnc_10256,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt,art_tile(a0)
 	move.b	#$18,width_pixels(a0)
 	move.b	#8,y_radius(a0)
 +
 	cmpi.b	#aquatic_ruin_zone,(Current_Zone).w
 	bne.s	+
 	move.l	#Obj15_Obj83_MapUnc_1021E,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt,art_tile(a0)
 	move.b	#$20,width_pixels(a0)
 	move.b	#8,y_radius(a0)
 +

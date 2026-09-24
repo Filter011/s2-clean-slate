@@ -170,4 +170,4 @@ loc_37F74:
 ; ===========================================================================
 ; off_37FE8:
 Obj9E_SubObjData:
-	subObjData Obj9E_MapUnc_37FF2,make_art_tile(ArtTile_ArtNem_Crawlton,1,0),1<<render_flags.level_fg,4,$80,$B
+	subObjData Obj9E_MapUnc_37FF2,ArtTile_ArtNem_Crawlton|palette_line_1,1<<render_flags.level_fg,4,$80,$B

@@ -30,7 +30,7 @@ Obj43_Properties:
 ; loc_23E66:
 Obj43_Init:
 	addq.b	#2,routine(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_SpikyThing,2,1),art_tile(a0)
+	move.w	#ArtTile_ArtNem_SpikyThing|palette_line_2|high_priority,art_tile(a0)
 	moveq	#0,d1
 	move.b	subtype(a0),d1
 	lea	Obj43_Properties(pc,d1.w),a2

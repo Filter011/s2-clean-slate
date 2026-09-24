@@ -85,10 +85,10 @@ Bear:		obj28decl -$200,-$300,Obj28_MapUnc_11E40
 Obj28_Init:
 	addq.b	#2,routine(a0)
 	jsr	(RandomNumber).w
-	move.w	#make_art_tile(ArtTile_ArtNem_Animal_1,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Animal_1,art_tile(a0)
 	andi.w	#1,d0
 	beq.s	+
-	move.w	#make_art_tile(ArtTile_ArtNem_Animal_2,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Animal_2,art_tile(a0)
 +
 	moveq	#0,d1
 	move.b	(Current_Zone).w,d1

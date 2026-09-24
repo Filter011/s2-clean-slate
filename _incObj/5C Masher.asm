@@ -21,7 +21,7 @@ Obj5C_Index:	offsetTable
 Obj5C_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj5C_MapUnc_2D442,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Masher,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Masher,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#4*$80,priority(a0)
 	move.b	#9,collision_flags(a0)

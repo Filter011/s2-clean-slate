@@ -24,7 +24,7 @@ Obj81_Index:	offsetTable
 Obj81_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj81_MapUnc_2A24E,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_MCZGateLog,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_MCZGateLog|palette_line_3,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#5*$80,priority(a0)
 	move.b	#8,width_pixels(a0)

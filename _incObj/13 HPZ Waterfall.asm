@@ -18,7 +18,7 @@ Obj13_Index:	offsetTable
 Obj13_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj13_MapUnc_20528,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_HPZ_Waterfall,3,1),art_tile(a0)
+	move.w	#ArtTile_ArtNem_HPZ_Waterfall|palette_line_3|high_priority,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#1*$80,priority(a0)
@@ -46,7 +46,7 @@ Obj13_LoadSubObject:
 	move.w	x_pos(a0),x_pos(a1)
 	move.w	y_pos(a0),y_pos(a1)
 	move.l	#Obj13_MapUnc_20528,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_HPZ_Waterfall,3,1),art_tile(a1)
+	move.w	#ArtTile_ArtNem_HPZ_Waterfall|palette_line_3|high_priority,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$10,width_pixels(a1)
 	move.w	#1*$80,priority(a1)

@@ -388,4 +388,4 @@ loc_37668:
 ; ===========================================================================
 ; off_3766E:
 Obj94_SubObjData:
-	subObjData Obj94_Obj98_MapUnc_37678,make_art_tile(ArtTile_ArtNem_Rexon,3,0),1<<render_flags.level_fg,4,$10,0
+	subObjData Obj94_Obj98_MapUnc_37678,ArtTile_ArtNem_Rexon|palette_line_3,1<<render_flags.level_fg,4,$10,0

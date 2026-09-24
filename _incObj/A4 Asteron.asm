@@ -123,4 +123,4 @@ word_38A68.counter = ((word_38A68.end - word_38A68) / 6) - 1
 
 ; off_38A86:
 ObjA4_SubObjData:
-	subObjData ObjA4_Obj98_MapUnc_38A96,make_art_tile(ArtTile_ArtNem_MtzSupernova,0,1),1<<render_flags.level_fg,4,$10,$B
+	subObjData ObjA4_Obj98_MapUnc_38A96,ArtTile_ArtNem_MtzSupernova|high_priority,1<<render_flags.level_fg,4,$10,$B

@@ -89,4 +89,4 @@ ObjB5_CheckPlayer:
 ; ===========================================================================
 ; off_3B4DE:
 ObjB5_SubObjData:
-	subObjData ObjB5_MapUnc_3B548,make_art_tile(ArtTile_ArtNem_WfzHrzntlPrpllr,1,1),1<<render_flags.level_fg,4,$40,0
+	subObjData ObjB5_MapUnc_3B548,ArtTile_ArtNem_WfzHrzntlPrpllr|palette_line_1|high_priority,1<<render_flags.level_fg,4,$40,0

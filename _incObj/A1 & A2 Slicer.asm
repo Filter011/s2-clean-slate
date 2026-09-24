@@ -219,7 +219,7 @@ ObjA1_Pincer_Offsets:
 	dc.b -$10,    0	; 3
 ; off_385C0
 ObjA1_SubObjData:
-	subObjData ObjA1_MapUnc_385E2,make_art_tile(ArtTile_ArtNem_MtzMantis,1,0),1<<render_flags.level_fg,5,$10,6
+	subObjData ObjA1_MapUnc_385E2,ArtTile_ArtNem_MtzMantis|palette_line_1,1<<render_flags.level_fg,5,$10,6
 ; off_385CA:
 ObjA2_SubObjData:
-	subObjData ObjA1_MapUnc_385E2,make_art_tile(ArtTile_ArtNem_MtzMantis,1,0),1<<render_flags.level_fg,4,$10,$9A
+	subObjData ObjA1_MapUnc_385E2,ArtTile_ArtNem_MtzMantis|palette_line_1,1<<render_flags.level_fg,4,$10,$9A

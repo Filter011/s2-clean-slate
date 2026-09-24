@@ -38,4 +38,4 @@ ObjB3_Main:
 ; ===========================================================================
 ; off_3B322:
 ObjB3_SubObjData:
-	subObjData ObjB3_MapUnc_3B32C,make_art_tile(ArtTile_ArtNem_Clouds,2,0),1<<render_flags.level_fg,6,$30,0
+	subObjData ObjB3_MapUnc_3B32C,ArtTile_ArtNem_Clouds|palette_line_2,1<<render_flags.level_fg,6,$30,0

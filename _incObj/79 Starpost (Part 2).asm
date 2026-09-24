@@ -7,7 +7,7 @@ Obj79_MakeSpecialStars:
 	bne.s	+	; rts
 	move.b	id(a0),id(a1) ; load obj79
 	move.l	#Obj79_MapUnc_1F4A0,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_Checkpoint,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_Checkpoint,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#8,routine(a1) ; => Obj79_Star
 	move.w	x_pos(a0),d0

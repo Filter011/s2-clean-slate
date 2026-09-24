@@ -17,7 +17,7 @@ ObjD2_Index:	offsetTable
 ObjD2_Init:
 	addq.b	#2,routine(a0)
 	move.l	#ObjD2_MapUnc_2B694,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_CNZSnake,2,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_CNZSnake|palette_line_2,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#8,width_pixels(a0)
 	move.w	#4*$80,priority(a0)

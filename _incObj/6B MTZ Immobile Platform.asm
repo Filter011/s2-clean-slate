@@ -26,11 +26,11 @@ Obj6B_Properties:
 Obj6B_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj65_Obj6A_Obj6B_MapUnc_26EC8,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtKos_LevelArt,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtKos_LevelArt|palette_line_3,art_tile(a0)
 	cmpi.b	#chemical_plant_zone,(Current_Zone).w
 	bne.s	+
 	move.l	#Obj6B_MapUnc_2800E,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_CPZStairBlock,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_CPZStairBlock|palette_line_3,art_tile(a0)
 +
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#3*$80,priority(a0)

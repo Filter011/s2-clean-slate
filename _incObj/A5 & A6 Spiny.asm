@@ -186,4 +186,4 @@ loc_38C6E:
 ; ===========================================================================
 ; off_38CAE:
 ObjA5_SubObjData:
-	subObjData ObjA5_ObjA6_Obj98_MapUnc_38CCA,make_art_tile(ArtTile_ArtNem_Spiny,1,0),1<<render_flags.level_fg,4,8,$B
+	subObjData ObjA5_ObjA6_Obj98_MapUnc_38CCA,ArtTile_ArtNem_Spiny|palette_line_1,1<<render_flags.level_fg,4,8,$B

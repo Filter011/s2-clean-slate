@@ -344,7 +344,7 @@ return_382EE:
 ; ===========================================================================
 ; off_382F0:
 Obj9F_SubObjData:
-	subObjData Obj9F_MapUnc_38314,make_art_tile(ArtTile_ArtNem_Shellcracker,0,0),1<<render_flags.level_fg,5,$18,$A
+	subObjData Obj9F_MapUnc_38314,ArtTile_ArtNem_Shellcracker,1<<render_flags.level_fg,5,$18,$A
 ; off_382FA:
 ObjA0_SubObjData:
-	subObjData Obj9F_MapUnc_38314,make_art_tile(ArtTile_ArtNem_Shellcracker,0,0),1<<render_flags.level_fg,4,$C,$9A
+	subObjData Obj9F_MapUnc_38314,ArtTile_ArtNem_Shellcracker,1<<render_flags.level_fg,4,$C,$9A

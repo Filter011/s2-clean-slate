@@ -29,13 +29,13 @@ Obj11_Index:	offsetTable
 Obj11_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj11_MapUnc_FC70,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_EHZ_Bridge,2,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_EHZ_Bridge|palette_line_2,art_tile(a0)
 	move.w	#3*$80,priority(a0)
 	cmpi.b	#hidden_palace_zone,(Current_Zone).w	; is this an HPZ bridge?
 	bne.s	+			; if not, branch
 	addq.b	#4,routine(a0)
 	move.l	#Obj11_MapUnc_FC28,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_HPZ_Bridge,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_HPZ_Bridge|palette_line_3,art_tile(a0)
 +
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$80,width_pixels(a0)

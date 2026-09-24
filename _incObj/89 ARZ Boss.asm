@@ -52,7 +52,7 @@ Obj89_Init:
 ; loc_304D4:
 Obj89_Init_RaisePillars:
 	move.b	#1,(Screen_Shaking_Flag).w	; make screen shake
-	move.w	#make_art_tile(ArtTile_ArtNem_ARZBoss,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_ARZBoss,art_tile(a0)
 	move.l	#Obj89_MapUnc_30E04,mappings(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$20,mainspr_width(a0)
@@ -85,7 +85,7 @@ Obj89_Init_RaisePillars:
 	move.b	#ObjID_ARZBoss,id(a1) ; load obj89
 	move.l	#Obj89_MapUnc_30D68,mappings(a1)
 	ori.b	#1<<render_flags.level_fg,render_flags(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_ARZBoss,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_ARZBoss,art_tile(a1)
 	move.b	#$10,width_pixels(a1)
 	move.w	#4*$80,priority(a1)
 	move.w	#$2A50,x_pos(a1)
@@ -599,7 +599,7 @@ Obj89_Pillar_Shoot:
 	move.b	#ObjID_ARZBoss,id(a1) ; load obj89
 	move.b	#8,boss_subtype(a1)	; => Obj89_Pillar_BulgingEyes
 	move.l	#Obj89_MapUnc_30D68,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_ARZBoss,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_ARZBoss,art_tile(a1)
 	ori.b	#1<<render_flags.level_fg,render_flags(a1)
 	moveq	#0,d6
 	move.b	#2,mapping_frame(a1)
@@ -709,7 +709,7 @@ Obj89_Arrow_Index:	offsetTable
 ; loc_30BC8:
 Obj89_Arrow_Init:
 	move.l	#Obj89_MapUnc_30D68,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_ARZBoss,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_ARZBoss,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#-$70,mainspr_width(a0)
 	move.w	#4*$80,priority(a0)

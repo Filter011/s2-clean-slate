@@ -35,11 +35,11 @@ Obj85_Index:	offsetTable
 Obj85_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj85_MapUnc_2B07E,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_CNZVertPlunger,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_CNZVertPlunger,art_tile(a0)
 	tst.b	subtype(a0)
 	beq.s	+
 	move.l	#Obj85_MapUnc_2B0EC,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_CNZDiagPlunger,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_CNZDiagPlunger,art_tile(a0)
 +
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	bset	#render_flags.multi_sprite,render_flags(a0)

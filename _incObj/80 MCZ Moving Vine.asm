@@ -28,7 +28,7 @@ Obj80_Init:
 	bne.s	Obj80_MCZ_Init
 	addq.b	#2,routine(a0)
 	move.l	#Obj80_MapUnc_29DD0,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_WfzHook_Fudge,1,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_WfzHook_Fudge|palette_line_1,art_tile(a0)
 	move.w	#$A0,objoff_2E(a0)
 	move.b	subtype(a0),d0
 	move.b	d0,d1
@@ -53,7 +53,7 @@ Obj80_Init:
 ; loc_29A1C:
 Obj80_MCZ_Init:
 	move.l	#Obj80_MapUnc_29C64,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_VinePulley,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_VinePulley|palette_line_3,art_tile(a0)
 	move.w	#$B0,objoff_2E(a0)
 	move.b	subtype(a0),d0
 	bpl.s	+

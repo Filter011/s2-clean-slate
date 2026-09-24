@@ -163,4 +163,4 @@ loc_3888E:
 ; ===========================================================================
 ; off_388AC:
 ObjA3_SubObjData:
-	subObjData ObjA3_MapUnc_388F0,make_art_tile(ArtTile_ArtNem_Flasher,0,1),1<<render_flags.level_fg,4,$10,6
+	subObjData ObjA3_MapUnc_388F0,ArtTile_ArtNem_Flasher|high_priority,1<<render_flags.level_fg,4,$10,6

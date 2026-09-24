@@ -28,7 +28,7 @@ Obj27_InitWithAnimal:
 Obj27_Init:
 	addq.b	#2,routine(a0) ; => Obj27_Main
 	move.l	#Obj27_MapUnc_21120,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_Explosion,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Explosion,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#1*$80,priority(a0)
 	move.b	#0,collision_flags(a0)

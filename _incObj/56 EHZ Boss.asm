@@ -36,7 +36,7 @@ Obj56_Index:	offsetTable
 ; loc_2EF36:
 Obj56_Init:
 	move.l	#Obj56_MapUnc_2FAF8,mappings(a0)	; main object
-	move.w	#make_art_tile(ArtTile_ArtNem_Eggpod_1,1,0),art_tile(a0) ; vehicle with ability to fly, bottom part
+	move.w	#ArtTile_ArtNem_Eggpod_1|palette_line_1,art_tile(a0) ; vehicle with ability to fly, bottom part
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$81,subtype(a0)
 	move.w	#$29D0,x_pos(a0)
@@ -56,7 +56,7 @@ Obj56_Init:
 	move.l	a0,objoff_34(a1)	; link top and bottom to each other
 	move.l	a1,objoff_34(a0)	; i.e. addresses for cross references
 	move.l	#Obj56_MapUnc_2FAF8,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_Eggpod_1,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_Eggpod_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#4*$80,priority(a1)
@@ -72,7 +72,7 @@ Obj56_Init:
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
 	move.l	a0,objoff_34(a1)	; linked to main object
 	move.l	#Obj56_MapUnc_2FA58,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_EHZBoss,0,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_EHZBoss,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$30,width_pixels(a1)
 	move.b	#$10,y_radius(a1)
@@ -91,7 +91,7 @@ Obj56_Init:
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
 	move.l	a0,objoff_34(a1)	; linked to main object
 	move.l	#Obj56_MapUnc_2F970,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_EggChoppers,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_EggChoppers|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$40,width_pixels(a1)
 	move.w	#3*$80,priority(a1)
@@ -110,7 +110,7 @@ loc_2F098:
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
 	move.l	a0,objoff_34(a1)	; linked to main object
 	move.l	#Obj56_MapUnc_2FA58,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_EHZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_EHZBoss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$10,width_pixels(a1)
 	move.w	#2*$80,priority(a1)
@@ -132,7 +132,7 @@ loc_2F098:
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
 	move.l	a0,objoff_34(a1)	; linked to main object
 	move.l	#Obj56_MapUnc_2FA58,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_EHZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_EHZBoss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$10,width_pixels(a1)
 	move.w	#2*$80,priority(a1)
@@ -154,7 +154,7 @@ loc_2F098:
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
 	move.l	a0,objoff_34(a1)	; linked to main object
 	move.l	#Obj56_MapUnc_2FA58,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_EHZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_EHZBoss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$10,width_pixels(a1)
 	move.w	#3*$80,priority(a1)
@@ -176,7 +176,7 @@ loc_2F098:
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
 	move.l	a0,objoff_34(a1)	; linked to main object
 	move.l	#Obj56_MapUnc_2FA58,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_EHZBoss,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_EHZBoss|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#2*$80,priority(a1)
@@ -323,7 +323,7 @@ loc_2F3A2:	; Obj56_VehicleMain_SubA_0:
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
 	move.l	a0,objoff_34(a1)	; linked to main object
 	move.l	#Obj56_MapUnc_2F970,mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_EggChoppers,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_EggChoppers|palette_line_1,art_tile(a1)
 	move.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$20,width_pixels(a1)
 	move.w	#3*$80,priority(a1)

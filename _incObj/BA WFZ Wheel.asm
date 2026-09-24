@@ -23,4 +23,4 @@ ObjBA_Main:
 ; ===========================================================================
 ; off_3BB66:
 ObjBA_SubObjData:
-	subObjData ObjBA_MapUnc_3BB70,make_art_tile(ArtTile_ArtNem_WfzConveyorBeltWheel,2,1),1<<render_flags.level_fg,4,$10,0
+	subObjData ObjBA_MapUnc_3BB70,ArtTile_ArtNem_WfzConveyorBeltWheel|palette_line_2|high_priority,1<<render_flags.level_fg,4,$10,0

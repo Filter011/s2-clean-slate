@@ -17,7 +17,7 @@ Obj51_Index:	offsetTable
 ; loc_31904:
 Obj51_Init:
 	move.l	#Obj51_MapUnc_320EA,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_CNZBoss_Fudge,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_CNZBoss_Fudge,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#$2A46,x_pos(a0)
 	move.w	#$654,y_pos(a0)
@@ -521,7 +521,7 @@ off_31F40:	offsetTable
 
 loc_31F48:
 	move.l	#Obj51_MapUnc_320EA,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_CNZBoss_Fudge,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_CNZBoss_Fudge,art_tile(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#7*$80,priority(a0)
 	addq.b	#2,routine_secondary(a0)
@@ -592,7 +592,7 @@ loc_31FF8:
 loc_32030:
 	moveq	#SndID_BossExplosion,d0
 	jsr	(PlaySound).w
-	move.w	#make_art_tile(ArtTile_ArtNem_CNZBoss_Fudge,0,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_CNZBoss_Fudge,art_tile(a0)
 	move.b	#7,anim(a0)
 	move.w	#-$300,y_vel(a0)
 	move.w	#-$100,x_vel(a0)

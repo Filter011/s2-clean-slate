@@ -169,7 +169,7 @@ Obj90_Index:	offsetTable
 ; loc_36BE6:
 Obj90_Init:
 	bsr.w	LoadSubObject
-	move.w	#make_art_tile(ArtTile_ArtNem_Grounder,2,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_Grounder|palette_line_2,art_tile(a0)
 	move.w	objoff_2E(a0),d0
 	move.b	Obj90_Directions(pc,d0.w),x_vel(a0)
 	move.b	Obj90_Directions+1(pc,d0.w),y_vel(a0)
@@ -270,10 +270,10 @@ byte_36CBC:
 	dc.b -$10,  -4	; 6
 ; off_36CC4:
 Obj8D_SubObjData:
-	subObjData Obj8D_MapUnc_36CF0,make_art_tile(ArtTile_ArtNem_Grounder,1,1),1<<render_flags.level_fg,5,$10,2
+	subObjData Obj8D_MapUnc_36CF0,ArtTile_ArtNem_Grounder|palette_line_1|high_priority,1<<render_flags.level_fg,5,$10,2
 ; off_36CCE:
 Obj90_SubObjData:
-	subObjData Obj90_MapUnc_36D00,make_art_tile(ArtTile_ArtKos_LevelArt,0,0),1<<render_flags.on_screen|1<<render_flags.level_fg,4,$10,0
+	subObjData Obj90_MapUnc_36D00,ArtTile_ArtKos_LevelArt,1<<render_flags.on_screen|1<<render_flags.level_fg,4,$10,0
 ; off_36CD8:
 Obj90_SubObjData2:
-	subObjData Obj90_MapUnc_36CFA,make_art_tile(ArtTile_ArtNem_Grounder,1,1),1<<render_flags.on_screen|1<<render_flags.level_fg,4,8,0
+	subObjData Obj90_MapUnc_36CFA,ArtTile_ArtNem_Grounder|palette_line_1|high_priority,1<<render_flags.on_screen|1<<render_flags.level_fg,4,8,0

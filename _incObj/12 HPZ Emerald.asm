@@ -17,7 +17,7 @@ Obj12_Index:	offsetTable
 Obj12_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj12_MapUnc_20382,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_HPZ_Emerald,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_HPZ_Emerald|palette_line_3,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$20,width_pixels(a0)
 	move.w	#4*$80,priority(a0)

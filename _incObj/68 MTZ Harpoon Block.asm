@@ -23,7 +23,7 @@ Obj68_Index:	offsetTable
 Obj68_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj68_Obj6D_MapUnc_27750,mappings(a0)
-	move.w	#make_art_tile(ArtTile_ArtNem_MtzSpikeBlock,3,0),art_tile(a0)
+	move.w	#ArtTile_ArtNem_MtzSpikeBlock|palette_line_3,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#4*$80,priority(a0)
@@ -36,7 +36,7 @@ Obj68_Init:
 	move.w	x_pos(a1),spikearoundblock_initial_x_pos(a1)
 	move.w	y_pos(a1),spikearoundblock_initial_y_pos(a1)
 	move.l	mappings(a0),mappings(a1)
-	move.w	#make_art_tile(ArtTile_ArtNem_MtzSpike,1,0),art_tile(a1)
+	move.w	#ArtTile_ArtNem_MtzSpike|palette_line_1,art_tile(a1)
 	ori.b	#1<<render_flags.level_fg,render_flags(a1)
 	move.b	#$10,width_pixels(a1)
 	move.w	#4*$80,priority(a1)

@@ -34,4 +34,4 @@ ObjAC_Main:
 ; ===========================================================================
 ; off_393C2:
 ObjAC_SubObjData:
-	subObjData ObjAC_MapUnc_393CC,make_art_tile(ArtTile_ArtNem_Balkrie,0,0),1<<render_flags.level_fg,4,$20,8
+	subObjData ObjAC_MapUnc_393CC,ArtTile_ArtNem_Balkrie,1<<render_flags.level_fg,4,$20,8
