@@ -5765,6 +5765,10 @@ Nem_HPZ_Various:		BINCLUDE	"art/kosinskiplusm/HPZ Various.kospm"
 ;---------------------------------------------------------------------------------------
 ; OOZ Assets
 ;---------------------------------------------------------------------------------------
+ArtNem_Octus:			BINCLUDE	"art/kosinskiplusm/Octopus badnik from OOZ.kospm"
+	even
+ArtNem_Aquis:			BINCLUDE	"art/kosinskiplusm/Seahorse from OOZ.kospm"
+	even
 ArtNem_SpikyThing:		BINCLUDE	"art/kosinskiplusm/Spiked ball from OOZ.kospm"
 	even
 ArtNem_BurnerLid:		BINCLUDE	"art/kosinskiplusm/Burner Platform from OOZ.kospm"
@@ -5797,6 +5801,8 @@ ArtNem_OOZBurn:			BINCLUDE	"art/kosinskiplusm/Green flame from OOZ burners.kospm
 ;---------------------------------------------------------------------------------------
 ; CNZ Assets
 ;---------------------------------------------------------------------------------------
+ArtNem_Crawl:			BINCLUDE	"art/kosinskiplusm/Bouncer badnik from CNZ.kospm"
+	even
 ArtNem_CNZSnake:		BINCLUDE	"art/kosinskiplusm/Caterpiller platforms from CNZ.kospm" ; Patterns for appearing and disappearing string of platforms
 	even
 ArtNem_CNZBonusSpike:		BINCLUDE	"art/kosinskiplusm/Spikey ball from CNZ slots.kospm"
@@ -5857,18 +5863,13 @@ ArtNem_ARZBarrierThing:		BINCLUDE	"art/kosinskiplusm/One way barrier from ARZ.ko
 	even
 
 ;---------------------------------------------------------------------------------------
-; EHZ/OOZ Badnik Assets
+; EHZ Badnik Assets
 ;---------------------------------------------------------------------------------------
-; These Badniks being grouped together here is unusual, but can be explained by two things:
-; 1. This is where all Badnik tiles were kept in the earliest prototypes.
-; 2. These are the only Badniks left from those prototypes.
 ArtNem_Buzzer:			BINCLUDE	"art/kosinskiplusm/Buzzer enemy.kospm"
 	even
-ArtNem_Octus:			BINCLUDE	"art/kosinskiplusm/Octopus badnik from OOZ.kospm"
-	even
-ArtNem_Aquis:			BINCLUDE	"art/kosinskiplusm/Seahorse from OOZ.kospm"
-	even
 ArtNem_Masher:			BINCLUDE	"art/kosinskiplusm/EHZ Pirahna badnik.kospm"
+	even
+ArtNem_Coconuts:		BINCLUDE	"art/kosinskiplusm/Coconuts badnik from EHZ.kospm"
 	even
 
 ;---------------------------------------------------------------------------------------
@@ -5927,12 +5928,6 @@ ArtNem_Spiker:			BINCLUDE	"art/kosinskiplusm/Driller badnik from HTZ.kospm"
 ArtNem_Nebula:			BINCLUDE	"art/kosinskiplusm/Bomber badnik from SCZ.kospm"
 	even
 ArtNem_Turtloid:		BINCLUDE	"art/kosinskiplusm/Turtle badnik from SCZ.kospm"
-	even
-
-;---------------------------------------------------------------------------------------
-; EHZ Badnik Assets (again)
-;---------------------------------------------------------------------------------------
-ArtNem_Coconuts:		BINCLUDE	"art/kosinskiplusm/Coconuts badnik from EHZ.kospm"
 	even
 
 ;---------------------------------------------------------------------------------------
@@ -6019,9 +6014,6 @@ ArtNem_RobotnikLower:		BINCLUDE	"art/kosinskiplusm/Robotnik's lower half.kospm"
 ArtNem_DEZWindow:		BINCLUDE	"art/kosinskiplusm/Window in back that Robotnik looks through in DEZ.kospm"
 	even
 ArtNem_DEZBoss:			BINCLUDE	"art/kosinskiplusm/Eggrobo.kospm"
-	even
-; This last-minute badnik addition was mistakenly included with the WFZ/DEZ assets instead of in its own 'CNZ Badnik Assets' section.
-ArtNem_Crawl:			BINCLUDE	"art/kosinskiplusm/Bouncer badnik from CNZ.kospm"
 	even
 ArtNem_TornadoThruster:		BINCLUDE	"art/kosinskiplusm/Rocket thruster for Tornado.kospm"
 	even

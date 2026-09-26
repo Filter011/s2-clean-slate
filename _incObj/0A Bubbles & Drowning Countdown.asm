@@ -243,13 +243,13 @@ Obj0A_Countdown:
 
 	moveq	#0,d0
 	move.b	air_left(a2),d0	; check air remaining
-	cmpi.w	#25,d0
+	cmpi.b	#25,d0
 	beq.s	Obj0A_WarnSound	; play ding sound when there are 25 seconds left
-	cmpi.w	#20,d0
+	cmpi.b	#20,d0
 	beq.s	Obj0A_WarnSound	; play ding sound when there are 20 seconds left
-	cmpi.w	#15,d0
+	cmpi.b	#15,d0
 	beq.s	Obj0A_WarnSound	; play ding sound when there are 15 seconds left
-	cmpi.w	#12,d0
+	cmpi.b	#12,d0
 	bhi.s	Obj0A_ReduceAir	; play drowning theme when there are 12 seconds left
 	bne.s	+
 	; Play countdown music if this is player 1.
@@ -380,7 +380,7 @@ Obj0A_MakeNumberBubbleMaybe:
 	bhs.s	Obj0A_DoneCreatingBubble
 
 	; This player is about to drown.
-	lsr.w	#1,d2
+	lsr.b	#1,d2
 	jsr	(RandomNumber).w
 	andi.w	#3,d0
 	bne.s	+
