@@ -12,7 +12,7 @@ Obj3A: ; (screen-space obj)
 Obj3A_Index:	offsetTable
 		offsetTableEntry.w loc_140AC					;   0
 		offsetTableEntry.w loc_14102					;   2
-		offsetTableEntry.w BranchTo_Obj34_MoveTowardsTargetPosition	;   4
+		offsetTableEntry.w Obj34_MoveTowardsTargetPosition		;   4
 		offsetTableEntry.w loc_14146					;   6
 		offsetTableEntry.w loc_14168					;   8
 		offsetTableEntry.w loc_1419C					;  $A
@@ -81,8 +81,6 @@ return_14138:
 loc_1413A:
 	tst.w	(Perfect_rings_left).w
 	bne.w	DeleteObject
-
-BranchTo_Obj34_MoveTowardsTargetPosition ; BranchTo
 	bra.w	Obj34_MoveTowardsTargetPosition
 ; ===========================================================================
 

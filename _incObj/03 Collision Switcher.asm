@@ -63,7 +63,7 @@ Obj03_Init_CheckX:
 ; loc_1FDA4:
 Obj03_MainX:
 	tst.w	(Debug_placement_mode).w
-	bne.w	return_1FEAC
+	bne.s	.return
 	move.w	x_pos(a0),d1
 	lea	objoff_34(a0),a2
 	lea	(MainCharacter).w,a1 ; a1=character
@@ -71,7 +71,7 @@ Obj03_MainX:
 +	tst.b	(a2)+
 	bne.s	Obj03_MainX_Alt
 	cmp.w	x_pos(a1),d1
-	bhi.w	return_1FEAC
+	bhi.s	.return
 	move.b	#1,-1(a2)
 	move.w	y_pos(a0),d2
 	move.w	d2,d3
@@ -80,13 +80,13 @@ Obj03_MainX:
 	add.w	d4,d3
 	move.w	y_pos(a1),d4
 	cmp.w	d2,d4
-	blt.w	return_1FEAC
+	blt.s	.return
 	cmp.w	d3,d4
-	bge.w	return_1FEAC
+	bge.s	.return
 	move.b	subtype(a0),d0
 	bpl.s	+
 	btst	#status.player.in_air,status(a1)
-	bne.w	return_1FEAC
+	bne.s	.return
 +
 	btst	#render_flags.x_flip,render_flags(a0)
 	bne.s	+
@@ -99,15 +99,17 @@ Obj03_MainX:
 +
 	andi.w	#drawing_mask,art_tile(a1)
 	btst	#5,d0
-	beq.s	return_1FEAC
+	beq.s	.return
 	ori.w	#high_priority,art_tile(a1)
+
+.return:
 	rts
 ; ===========================================================================
 ; loc_1FE38:
 Obj03_MainX_Alt:
 	cmp.w	x_pos(a1),d1
 	bls.s	return_1FEAC
-	move.b	#0,-1(a2)
+	clr.b	-1(a2)
 	move.w	y_pos(a0),d2
 	move.w	d2,d3
 	move.w	objoff_32(a0),d4
@@ -143,7 +145,7 @@ return_1FEAC:
 
 Obj03_MainY:
 	tst.w	(Debug_placement_mode).w
-	bne.w	return_1FFB6
+	bne.s	return_1FEAC
 	move.w	y_pos(a0),d1
 	lea	objoff_34(a0),a2
 	lea	(MainCharacter).w,a1 ; a1=character
@@ -151,7 +153,7 @@ Obj03_MainY:
 +	tst.b	(a2)+
 	bne.s	Obj03_MainY_Alt
 	cmp.w	y_pos(a1),d1
-	bhi.w	return_1FFB6
+	bhi.s	.return
 	move.b	#1,-1(a2)
 	move.w	x_pos(a0),d2
 	move.w	d2,d3
@@ -160,13 +162,13 @@ Obj03_MainY:
 	add.w	d4,d3
 	move.w	x_pos(a1),d4
 	cmp.w	d2,d4
-	blt.w	return_1FFB6
+	blt.s	.return
 	cmp.w	d3,d4
-	bge.w	return_1FFB6
+	bge.s	.return
 	move.b	subtype(a0),d0
 	bpl.s	+
 	btst	#status.player.in_air,status(a1)
-	bne.w	return_1FFB6
+	bne.s	.return
 +
 	btst	#render_flags.x_flip,render_flags(a0)
 	bne.s	+
@@ -179,15 +181,17 @@ Obj03_MainY:
 +
 	andi.w	#drawing_mask,art_tile(a1)
 	btst	#5,d0
-	beq.s	return_1FFB6
+	beq.s	.return
 	ori.w	#high_priority,art_tile(a1)
+
+.return:
 	rts
 ; ===========================================================================
 ; loc_1FF42:
 Obj03_MainY_Alt:
 	cmp.w	y_pos(a1),d1
 	bls.s	return_1FFB6
-	move.b	#0,-1(a2)
+	clr.b	-1(a2)
 	move.w	x_pos(a0),d2
 	move.w	d2,d3
 	move.w	objoff_32(a0),d4

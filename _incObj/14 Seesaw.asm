@@ -50,7 +50,7 @@ loc_219B2:
 Obj14_Main:
 	move.b	objoff_3A(a0),d1
 	btst	#p1_standing_bit,status(a0)
-	beq.s	loc_21A12
+	beq.s	loc_21A38
 	moveq	#2,d1
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.w	x_pos(a0),d0
@@ -60,56 +60,13 @@ Obj14_Main:
 	moveq	#0,d1
 +
 	cmpi.w	#8,d0
-	bhs.s	+
+	bhs.s	Obj14_UpdateMappingAndCollision
 	moveq	#1,d1
-+
-;	btst	#p2_standing_bit,status(a0)
-;	beq.s	Obj14_UpdateMappingAndCollision
-;	moveq	#2,d2
-;	lea	(Sidekick).w,a1 ; a1=character
-;	move.w	x_pos(a0),d0
-;	sub.w	x_pos(a1),d0
-;	bcc.s	+
-;	neg.w	d0
-;	moveq	#0,d2
-;+
-;	cmpi.w	#8,d0
-;	bhs.s	+
-;	moveq	#1,d2
-;+
-;	add.w	d2,d1
-;	cmpi.w	#3,d1
-;	bne.s	+
-;	addq.w	#1,d1
-;+
-;	lsr.w	#1,d1
 	bra.s	Obj14_UpdateMappingAndCollision
-; ===========================================================================
-
-loc_21A12:
-;	btst	#p2_standing_bit,status(a0)
-;	beq.s	loc_21A38
-;	moveq	#2,d1
-;	lea	(Sidekick).w,a1 ; a1=character
-;	move.w	x_pos(a0),d0
-;	sub.w	x_pos(a1),d0
-;	bcc.s	+
-;	neg.w	d0
-;	moveq	#0,d1
-;+
-;	cmpi.w	#8,d0
-;	bhs.s	Obj14_UpdateMappingAndCollision
-;	moveq	#1,d1
-;	bra.s	Obj14_UpdateMappingAndCollision
 ; ===========================================================================
 
 loc_21A38:
 	move.w	(MainCharacter+y_vel).w,d0
-;	move.w	(Sidekick+y_vel).w,d2
-;	cmp.w	d0,d2
-;	blt.s	+
-;	move.w	d2,d0
-;+
 	move.w	d0,objoff_38(a0)
 
 ; loc_21A4A:

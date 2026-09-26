@@ -38,7 +38,7 @@ Obj2F_Init:
 	lea	Obj2F_Properties(pc,d0.w),a2
 	move.b	(a2)+,y_radius(a0)
 	move.b	(a2)+,mapping_frame(a0)
-	move.b	#$20,y_radius(a0)
+	move.b	#$20,y_radius(a0)	; ?
 	bset	#render_flags.explicit_height,render_flags(a0)
 ; loc_23368:
 Obj2F_Main:
@@ -56,8 +56,6 @@ Obj2F_Main:
 	move.b	status(a0),d0
 	andi.b	#standing_mask,d0
 	bne.s	+
-
-BranchTo_JmpTo9_MarkObjGone ; BranchTo
 	jmp	(MarkObjGone).l
 ; ===========================================================================
 +

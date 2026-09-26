@@ -1913,7 +1913,7 @@ Level_SetPlayerMode:
 	move.w	(Player_option).w,(Player_mode).w ; use the option chosen in the Options screen
 	rts
 +
-	move.w	#0,(Player_mode).w	; force Sonic alone
+	clr.w	(Player_mode).w	; force Sonic alone
 	rts
 ; End of function Level_SetPlayerMode
 
@@ -1954,7 +1954,14 @@ InitRingFrame:
 	move.b	d1,(Rings_anim_prev).w			; Make sure initial frame art loads
 	move.b	d1,(Ring_spill_prev).w
 
-LoadRingFrame:
+; ---------------------------------------------------------------------------
+; Subroutine to change global object animation variables (like rings)
+; ---------------------------------------------------------------------------
+
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
+
+; sub_4B64:
+ChangeRingFrame:
 	cmpi.b	#6,(MainCharacter+routine).w	; Is Sonic dead?
 	bhs.s	.end				; If so, branch
 
@@ -1991,20 +1998,9 @@ LoadRingFrame:
     endif
 	move.w	#tiles_to_bytes(ArtTile_ArtNem_Ring_loss),d2
 	moveq	#$80/2,d3
-	jmp	(QueueDMATransfer).w		; (or DMA_68KtoVRAM)
+	jsr	(QueueDMATransfer).w		; (or DMA_68KtoVRAM)
 
 .end:
-	rts
-
-; ---------------------------------------------------------------------------
-; Subroutine to change global object animation variables (like rings)
-; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
-; sub_4B64:
-ChangeRingFrame:
-	bsr.s	LoadRingFrame
 	subq.b	#1,(Rings_anim_counter).w
 	bpl.s	+
 	move.b	#3,(Rings_anim_counter).w
@@ -2848,7 +2844,7 @@ LevelSelect_PickCharacterNumber:
 	addq.w	#1,(Player_option).w
 	cmpi.w	#3,(Player_option).w
 	blo.s	locret_7F60
-	move.w	#0,(Player_option).w
+	clr.w	(Player_option).w
 
 locret_7F60:
 	rts
@@ -3055,7 +3051,7 @@ CheckCheats:	; This is called from 2 places: the options screen and the level se
 	moveq	#SndID_Ring,d0			; Play the ring sound
 	bsr.w	PlaySound
 +
-	move.w	#0,(Correct_cheat_entries).w	; Clear the number of correct entries
+	clr.w	(Correct_cheat_entries).w	; Clear the number of correct entries
 +
 	move.w	(Correct_cheat_entries_2).w,d0	; Do the same procedure with the other cheat
 	adda.w	d0,a2
@@ -3077,7 +3073,7 @@ CheckCheats:	; This is called from 2 places: the options screen and the level se
 	moveq	#MusID_Emerald,d0		; Play the emerald jingle
 	bsr.w	PlayMusic
 +
-	move.w	#0,(Correct_cheat_entries_2).w	; Clear the number of correct entries
+	clr.w	(Correct_cheat_entries_2).w	; Clear the number of correct entries
 +
 	rts
 ; ===========================================================================

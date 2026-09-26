@@ -55,7 +55,7 @@ HUD_MapUnc_40A9A:	include "mappings/sprite/hud_a.asm"
 
 ; sub_40D06:
 AddPoints:
-	move.b	#1,(Update_HUD_score).w
+	st.b	(Update_HUD_score).w
 	lea	(Score).w,a3
 	add.l	d0,(a3)	; add d0*10 to the score
 	move.l	#999999,d1

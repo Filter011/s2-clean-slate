@@ -100,8 +100,7 @@ Obj28_Init:
 	lsl.w	#3,d0
 	lea	Obj28_Properties(pc),a1
 	adda.w	d0,a1
-	move.w	(a1)+,animal_ground_x_vel(a0)
-	move.w	(a1)+,animal_ground_y_vel(a0)
+	move.l	(a1)+,animal_ground_x_vel(a0)	; and animal_ground_y_vel
 	move.l	(a1)+,mappings(a0)
 	move.b	#$C,y_radius(a0)
 	move.b	#1<<render_flags.level_fg|1<<render_flags.x_flip,render_flags(a0)

@@ -68,7 +68,7 @@ loc_2142A:
 	move.b	#1,(WFZ_SCZ_Fire_Toggle).w
 	rts
 ; ---------------------------------------------------------------------------
-+	move.b	#0,(WFZ_SCZ_Fire_Toggle).w
++	clr.b	(WFZ_SCZ_Fire_Toggle).w
 
 return_2146A:
 	rts
@@ -77,7 +77,7 @@ return_2146A:
 loc_2146C:
 	cmp.w	x_pos(a1),d1
 	bls.s	return_2146A
-	move.b	#0,-1(a2)
+	clr.b	-1(a2)
 	move.w	y_pos(a0),d2
 	move.w	d2,d3
 	move.w	objoff_32(a0),d4
@@ -93,5 +93,5 @@ loc_2146C:
 	move.b	#1,(WFZ_SCZ_Fire_Toggle).w
 	rts
 ; ---------------------------------------------------------------------------
-+	move.b	#0,(WFZ_SCZ_Fire_Toggle).w
++	clr.b	(WFZ_SCZ_Fire_Toggle).w
 	rts
