@@ -14,7 +14,6 @@ palptr	macro	ptr,lineno
 PalPointers:
 PalPtr_SEGA:	palptr Pal_SEGA,  0
 PalPtr_Title:	palptr Pal_Title, 1
-PalPtr_MenuB:	palptr Pal_MenuB, 0
 PalPtr_BGND:	palptr Pal_BGND,  0
 PalPtr_EHZ:	palptr Pal_EHZ,   1
 PalPtr_EHZ2:	palptr Pal_EHZ,   1
@@ -36,22 +35,10 @@ PalPtr_SCZ:	palptr Pal_SCZ,   1
 PalPtr_HPZ_U:	palptr Pal_HPZ_U, 0
 PalPtr_CPZ_U:	palptr Pal_CPZ_U, 0
 PalPtr_ARZ_U:	palptr Pal_ARZ_U, 0
-PalPtr_SS:	palptr Pal_SS,    0
 PalPtr_MCZ_B:	palptr Pal_MCZ_B, 1
 PalPtr_CNZ_B:	palptr Pal_CNZ_B, 1
-PalPtr_SS1:	palptr Pal_SS1,   3
-PalPtr_SS2:	palptr Pal_SS2,   3
-PalPtr_SS3:	palptr Pal_SS3,   3
-PalPtr_SS4:	palptr Pal_SS4,   3
-PalPtr_SS5:	palptr Pal_SS5,   3
-PalPtr_SS6:	palptr Pal_SS6,   3
-PalPtr_SS7:	palptr Pal_SS7,   3
-PalPtr_SS1_2p:	palptr Pal_SS1_2p,3
-PalPtr_SS2_2p:	palptr Pal_SS2_2p,3
-PalPtr_SS3_2p:	palptr Pal_SS3_2p,3
 PalPtr_OOZ_B:	palptr Pal_OOZ_B, 1
 PalPtr_Menu:	palptr Pal_Menu,  0
-PalPtr_Result:	palptr Pal_Result,0
 
 ; ----------------------------------------------------------------------------
 ; This macro defines Pal_ABC and Pal_ABC_End, so palptr can compute the size of
@@ -68,7 +55,6 @@ __LABEL___End label *
 
 Pal_SEGA:  palette Sega screen.bin ; SEGA screen palette (Sonic and initial background)
 Pal_Title: palette Title screen.bin ; Title screen Palette
-Pal_MenuB: palette S2B Level Select.bin ; Leftover S2B level select palette
 Pal_BGND:  palette SonicAndTails.bin,SonicAndTails2.bin ; "Sonic and Miles" background palette (also usually the primary palette line)
 Pal_EHZ:   palette EHZ.bin ; Emerald Hill Zone palette
 Pal_WZ:    palette Wood Zone.bin ; Wood Zone palette
@@ -90,16 +76,4 @@ Pal_MCZ_B: palette MCZ Boss.bin ; Mystic Cave Zone boss palette
 Pal_CNZ_B: palette CNZ Boss.bin ; Casino Night Zone boss palette
 Pal_OOZ_B: palette OOZ Boss.bin ; Oil Ocean Zone boss palette
 Pal_Menu:  palette Menu.bin ; Menu palette
-Pal_SS:    palette Special Stage Main.bin ; Special Stage palette
-Pal_SS1:   palette Special Stage 1.bin ; Special Stage 1 palette
-Pal_SS2:   palette Special Stage 2.bin ; Special Stage 2 palette
-Pal_SS3:   palette Special Stage 3.bin ; Special Stage 3 palette
-Pal_SS4:   palette Special Stage 4.bin ; Special Stage 4 palette
-Pal_SS5:   palette Special Stage 5.bin ; Special Stage 5 palette
-Pal_SS6:   palette Special Stage 6.bin ; Special Stage 6 palette
-Pal_SS7:   palette Special Stage 7.bin ; Special Stage 7 palette
-Pal_SS1_2p:palette Special Stage 1 2p.bin ; Special Stage 1 2p palette
-Pal_SS2_2p:palette Special Stage 2 2p.bin ; Special Stage 2 2p palette
-Pal_SS3_2p:palette Special Stage 3 2p.bin ; Special Stage 3 2p palette
-Pal_Result:palette Special Stage Results Screen.bin ; Special Stage Results Screen palette
 ; ===========================================================================
