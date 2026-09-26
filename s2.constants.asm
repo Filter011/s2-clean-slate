@@ -54,7 +54,8 @@ status_secondary =	$2B
 flips_remaining =	$2C ; number of flip revolutions remaining
 flip_speed =		$2D ; number of flip revolutions per frame / 256
 move_lock =		$2E ; and $2F ; horizontal control lock, counts down to 0
-invulnerable_time =	$30 ; and $31 ; time remaining until you stop blinking
+invulnerable_time =	$30 ; time remaining until you stop blinking
+look_delay_counter =	$31
 invincibility_time =	$32 ; and $33 ; remaining
 speedshoes_time =	$34 ; and $35 ; remaining
 next_tilt =		$36 ; angle on ground in front of sprite
@@ -1472,8 +1473,7 @@ PalCycle_Timer3:		ds.w	1
 Ctrl_2_Logical:					; 2 bytes
 Ctrl_2_Held_Logical:		ds.b	1	; 1 byte
 Ctrl_2_Press_Logical:		ds.b	1	; 1 byte
-Sonic_Look_delay_counter:	ds.w	1	; 2 bytes
-Tails_Look_delay_counter:	ds.w	1	; 2 bytes
+				ds.b	4	; unused
 Super_Sonic_frame_count:	ds.w	1
 Camera_ARZ_BG_X_pos:		ds.l	1
 				ds.b	$A	; unused

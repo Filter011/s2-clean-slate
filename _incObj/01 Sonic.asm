@@ -48,18 +48,19 @@ Obj01_Init:
 	move.w	top_solid_bit(a0),(Saved_Solid_bits).w
 
 Obj01_Init_Continued:
-	move.b	#0,flips_remaining(a0)
+	moveq	#0,d1
+	move.b	d1,flips_remaining(a0)
 	move.b	#4,flip_speed(a0)
-	move.b	#0,(Super_Sonic_flag).w
+	move.b	d1,(Super_Sonic_flag).w
 	move.b	#30,air_left(a0)
 	subi.w	#$20,x_pos(a0)
 	addq.w	#4,y_pos(a0)
-	move.w	#0,(Sonic_Pos_Record_Index).w
+	move.w	d1,(Sonic_Pos_Record_Index).w
 
 	moveq	#$3F,d2
 -	bsr.w	Sonic_RecordPos
 	subq.w	#4,a1
-	move.l	#0,(a1)
+	move.l	d1,(a1)
 	dbf	d2,-
 
 	addi.w	#$20,x_pos(a0)
@@ -134,10 +135,10 @@ Obj01_Modes:	offsetTable
 
 ; loc_1A0C6:
 Sonic_Display:
-	move.w	invulnerable_time(a0),d0
+	move.b	invulnerable_time(a0),d0
 	beq.s	Obj01_Display
-	subq.w	#1,invulnerable_time(a0)
-	lsr.w	#3,d0
+	subq.b	#1,invulnerable_time(a0)
+	lsr.b	#3,d0
 	bcc.s	Obj01_ChkInvin
 ; loc_1A0D4:
 Obj01_Display:
@@ -579,10 +580,10 @@ Sonic_Lookup:
 	btst	#button_up,(Ctrl_1_Held_Logical).w	; is up being pressed?
 	beq.s	Sonic_Duck			; if not, branch
 	move.b	#AniIDSonAni_LookUp,anim(a0)			; use "looking up" animation
-	addq.w	#1,(Sonic_Look_delay_counter).w
-	cmpi.w	#$78,(Sonic_Look_delay_counter).w
+	addq.b	#1,look_delay_counter(a0)
+	cmpi.b	#120,look_delay_counter(a0)
 	blo.s	Obj01_ResetScr_Part2
-	move.w	#$78,(Sonic_Look_delay_counter).w
+	move.b	#120,look_delay_counter(a0)
 	cmpi.w	#$C8,(Camera_Y_pos_bias).w
 	beq.s	Obj01_UpdateSpeedOnGround
 	addq.w	#2,(Camera_Y_pos_bias).w
@@ -593,10 +594,10 @@ Sonic_Duck:
 	btst	#button_down,(Ctrl_1_Held_Logical).w	; is down being pressed?
 	beq.s	Obj01_ResetScr			; if not, branch
 	move.b	#AniIDSonAni_Duck,anim(a0)			; use "ducking" animation
-	addq.w	#1,(Sonic_Look_delay_counter).w
-	cmpi.w	#$78,(Sonic_Look_delay_counter).w
+	addq.b	#1,look_delay_counter(a0)
+	cmpi.b	#120,look_delay_counter(a0)
 	blo.s	Obj01_ResetScr_Part2
-	move.w	#$78,(Sonic_Look_delay_counter).w
+	move.b	#120,look_delay_counter(a0)
 	cmpi.w	#8,(Camera_Y_pos_bias).w
 	beq.s	Obj01_UpdateSpeedOnGround
 	subq.w	#2,(Camera_Y_pos_bias).w
@@ -606,7 +607,7 @@ Sonic_Duck:
 ; moves the screen back to its normal position after looking up or down
 ; loc_1A5E0:
 Obj01_ResetScr:
-	move.w	#0,(Sonic_Look_delay_counter).w
+	move.b	#0,look_delay_counter(a0)
 ; loc_1A5E6:
 Obj01_ResetScr_Part2:
 	cmpi.w	#(screen_height/2)-16,(Camera_Y_pos_bias).w	; is screen in its default position?
@@ -1921,7 +1922,7 @@ Sonic_ResetOnFloor_Part3:
 	move.b	#0,flip_angle(a0)
 	move.b	#0,flip_turned(a0)
 	move.b	#0,flips_remaining(a0)
-	move.w	#0,(Sonic_Look_delay_counter).w
+	move.b	#0,look_delay_counter(a0)
 	cmpi.b	#AniIDSonAni_Hang2,anim(a0)
 	bne.s	return_1B11E
 	move.b	#AniIDSonAni_Walk,anim(a0)
@@ -1985,7 +1986,7 @@ Sonic_HurtStop:
 	move.b	d0,obj_control(a0)
 	move.b	#AniIDSonAni_Walk,anim(a0)
 	subq.b	#2,routine(a0)	; => Obj01_Control
-	move.w	#$78,invulnerable_time(a0)
+	move.b	#120,invulnerable_time(a0)
 	move.b	d0,spindash_flag(a0)
 
 return_1B1C8:

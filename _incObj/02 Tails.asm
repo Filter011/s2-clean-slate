@@ -45,12 +45,13 @@ Obj02_Init:
 	move.w	top_solid_bit(a0),(Saved_Solid_bits).w
 ; loc_1B96E:
 Obj02_Init_Continued:
-	move.b	#0,flips_remaining(a0)
+	moveq	#0,d1
+	move.b	d1,flips_remaining(a0)
 	move.b	#4,flip_speed(a0)
 	move.b	#30,air_left(a0)
-	move.w	#0,(Tails_CPU_routine).w	; set AI state to TailsCPU_Init
-	move.w	#0,(Tails_control_counter).w
-	move.w	#0,(Tails_respawn_counter).w
+	move.w	d1,(Tails_CPU_routine).w	; set AI state to TailsCPU_Init
+	move.w	d1,(Tails_control_counter).w
+	move.w	d1,(Tails_respawn_counter).w
 	move.b	#ObjID_TailsTails,(Tails_Tails+id).w ; load Obj05 (Tails' Tails) at $FFFFD000
 	move.w	a0,(Tails_Tails+parent).w ; set its parent object to this
 
@@ -122,10 +123,10 @@ Obj02_Modes:	offsetTable
 
 ; loc_1BA56:
 Tails_Display:
-	move.w	invulnerable_time(a0),d0
+	move.b	invulnerable_time(a0),d0
 	beq.s	Obj02_Display
-	subq.w	#1,invulnerable_time(a0)
-	lsr.w	#3,d0
+	subq.b	#1,invulnerable_time(a0)
+	lsr.b	#3,d0
 	bcc.s	Obj02_ChkInvinc
 ; loc_1BA64:
 Obj02_Display:
@@ -407,10 +408,10 @@ Tails_Lookup:
 	btst	#button_up,(Ctrl_2_Held_Logical).w	; is up being pressed?
 	beq.s	Tails_Duck			; if not, branch
 	move.b	#AniIDSonAni_LookUp,anim(a0)			; use "looking up" animation
-	addq.w	#1,(Tails_Look_delay_counter).w
-	cmpi.w	#$78,(Tails_Look_delay_counter).w
+	addq.b	#1,look_delay_counter(a0)
+	cmpi.b	#120,look_delay_counter(a0)
 	blo.s	Obj02_ResetScr_Part2
-	move.w	#$78,(Tails_Look_delay_counter).w
+	move.b	#120,look_delay_counter(a0)
 	cmpi.w	#$C8,(Camera_Y_pos_bias_P2).w
 	beq.s	Obj02_UpdateSpeedOnGround
 	addq.w	#2,(Camera_Y_pos_bias_P2).w
@@ -421,10 +422,10 @@ Tails_Duck:
 	btst	#button_down,(Ctrl_2_Held_Logical).w	; is down being pressed?
 	beq.s	Obj02_ResetScr			; if not, branch
 	move.b	#AniIDSonAni_Duck,anim(a0)			; use "ducking" animation
-	addq.w	#1,(Tails_Look_delay_counter).w
-	cmpi.w	#$78,(Tails_Look_delay_counter).w
+	addq.b	#1,look_delay_counter(a0)
+	cmpi.b	#120,look_delay_counter(a0)
 	blo.s	Obj02_ResetScr_Part2
-	move.w	#$78,(Tails_Look_delay_counter).w
+	move.b	#120,look_delay_counter(a0)
 	cmpi.w	#8,(Camera_Y_pos_bias_P2).w
 	beq.s	Obj02_UpdateSpeedOnGround
 	subq.w	#2,(Camera_Y_pos_bias_P2).w
@@ -434,7 +435,7 @@ Tails_Duck:
 ; moves the screen back to its normal position after looking up or down
 ; loc_1C1D0:
 Obj02_ResetScr:
-	move.w	#0,(Tails_Look_delay_counter).w
+	move.b	#0,look_delay_counter(a0)
 ; loc_1C1D6:
 Obj02_ResetScr_Part2:
 	cmpi.w	#(screen_height/2)-16,(Camera_Y_pos_bias_P2).w	; is screen in its default position?
@@ -1808,7 +1809,7 @@ Tails_ResetOnFloor_Part3:
 	move.b	#0,flips_remaining(a0)
 	move.b	#0,jumping(a0)
 	move.b	#0,flying(a0)
-	move.w	#0,(Tails_Look_delay_counter).w
+	move.b	#0,look_delay_counter(a0)
 	cmpi.b	#AniIDTailsAni_Fly,anim(a0)
 	bge.s	+
 	cmpi.b	#AniIDSonAni_Hang2,anim(a0)
@@ -1866,7 +1867,7 @@ Tails_HurtStop:
 	move.b	d0,obj_control(a0)
 	move.b	#AniIDSonAni_Walk,anim(a0)
 	move.b	#2,routine(a0)	; => Obj02_Control
-	move.w	#$78,invulnerable_time(a0)
+	move.b	#120,invulnerable_time(a0)
 	move.b	d0,spindash_flag(a0)
 
 return_1CC4E:

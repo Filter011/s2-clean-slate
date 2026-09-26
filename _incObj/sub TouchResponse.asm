@@ -242,8 +242,8 @@ Touch_ChkValue:
 	andi.b	#$3F,d0
 	cmpi.b	#6,d0			; is touch response $46?
 	beq.s	Touch_Monitor		; if yes, branch
-	move.w	(MainCharacter+invulnerable_time).w,d0
-	cmpi.w	#90,d0
+	move.b	(MainCharacter+invulnerable_time).w,d0
+	cmpi.b	#90,d0
 	bhs.s	+
 	move.b	#4,routine(a1)	; set the object's routine counter
 	move.w	a0,parent(a1)
@@ -420,7 +420,7 @@ Touch_NoHurt:
 ; ---------------------------------------------------------------------------
 ; loc_3F86E:
 Touch_Hurt:
-	tst.w	invulnerable_time(a0)
+	tst.b	invulnerable_time(a0)
 	bne.s	Touch_NoHurt
 	movea.l	a1,a2
 
@@ -470,7 +470,7 @@ Hurt_Reverse:
 Hurt_ChkSpikes:
 	move.w	#0,inertia(a0)
 	move.b	#AniIDSonAni_Hurt2,anim(a0)
-	move.w	#$78,invulnerable_time(a0)
+	move.b	#120,invulnerable_time(a0)
 	moveq	#SndID_Hurt,d0	; load normal damage sound
 	cmpi.b	#ObjID_Spikes,id(a2)	; was damage caused by spikes?
 	bne.s	Hurt_Sound	; if not, branch
@@ -724,7 +724,7 @@ BossCollision_MCZ:
 	bsr.w	Boss_DoCollision
 	movem.w	(sp)+,d7/a1
 	move.b	collision_flags(a1),d0
-	cmpi.w	#$78,invulnerable_time(a0)
+	cmpi.b	#120,invulnerable_time(a0)
 	bne.s	+	; rts
 	st.b	boss_hurt_sonic(a1)	; Sonic has just been hurt flag
 +
@@ -749,7 +749,7 @@ BossCollision_MCZ2:
 	beq.s	-			; jump back once for second check
 	move.w	(sp)+,d7
 	move.b	collision_flags(a1),d0
-	cmpi.w	#$78,invulnerable_time(a0)
+	cmpi.b	#120,invulnerable_time(a0)
 	bne.s	+	; rts
 	st.b	boss_hurt_sonic(a1)	; Sonic has just been hurt flag
 +
