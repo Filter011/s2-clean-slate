@@ -160,7 +160,7 @@ Touch_ChkHurt2:
 	bhs.s	+	; rts		; if yes, branch
 	move.w	y_vel(a1),d0
 	ext.l	d0
-	lsl.l	#8,d0
+	asl.l	#8,d0
 	sub.l	d0,y_pos(a1)
 	movea.l	a0,a2
 	movea.l	a1,a0
