@@ -317,7 +317,6 @@ SwScrl_WFZ:
 	lea	(TempArray_LayerDef).w,a2
 	move.l	d0,(a2)+				; Static parts of BG (generally no clouds in them)
 	move.l	d0,(a2)+				; Eggman's getaway ship
-	moveq	#0,d5
 	move.w	(Camera_X_pos_diff).w,d5	; get camera x-diff
 	ext.l	d5
 	asl.l	#5,d5
