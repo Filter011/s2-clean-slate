@@ -22,9 +22,6 @@ debugbuild = 1
 skipChecksumCheck = 1
 ;	| If 1, disables the slow bootup checksum calculation
 ;
-useFullWaterTables = 1
-;	| If 1, zone offset tables for water levels cover all level slots instead of only slots 8-$F
-;	| Set to 1 if you've shifted level IDs around or you want water in levels with a level slot below 8
 flightCarrySonic = 0
 ;	| If 1 and a sidekick character exists, allow Tails as the sidekick to carry MainCharacter
 ;	| Set to 0 as the sidekick functionallity doesn't currently exist
@@ -1647,11 +1644,7 @@ Level_InitWater:
 	tst.b	(Water_flag).w	; does level have water?
 	beq.s	Level_LoadPal	; if not, branch
 	move.w	#$8014,(a6)	; H-INT enabled
-	moveq	#0,d0
 	move.w	(Current_ZoneAndAct).w,d0
-    if useFullWaterTables=0
-	subi.w	#hidden_palace_zone_act_1,d0
-    endif
 	ror.b	#1,d0
 	lsr.w	#6,d0
 	lea	WaterHeight(pc),a1	; load water height array

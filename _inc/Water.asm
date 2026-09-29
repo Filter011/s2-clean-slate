@@ -80,7 +80,6 @@ NonWaterEffects:
 ; End of function WaterEffects
 
 ; ===========================================================================
-    if useFullWaterTables
 WaterHeight: zoneOrderedTable 2,2
 	zoneTableEntry.w  $600, $600	; EHZ
 	zoneTableEntry.w  $600, $600	; Zone 1
@@ -100,27 +99,12 @@ WaterHeight: zoneOrderedTable 2,2
 	zoneTableEntry.w  $410, $510	; ARZ
 	zoneTableEntry.w  $600, $600	; SCZ
     zoneTableEnd
-    else
-; word_4584:
-WaterHeight:
-	dc.w  $600, $600	; HPZ
-	dc.w  $600, $600
-	dc.w  $600, $600	; OOZ
-	dc.w  $600, $600	; MCZ
-	dc.w  $600, $600	; CNZ
-	dc.w  $600, $710	; CPZ
-	dc.w  $600, $600	; DEZ
-	dc.w  $410, $510	; ARZ
-    endif
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_45A4: ; LZDynamicWater:
 DynamicWater:
 	move.w	(Current_ZoneAndAct).w,d0
-    if ~~useFullWaterTables
-	subi.w	#hidden_palace_zone_act_1,d0
-    endif
 	ror.b	#1,d0
 	lsr.w	#6,d0
 	move.w	Dynamic_water_routine_table(pc,d0.w),d0
@@ -139,7 +123,6 @@ DynamicWater:
 ; End of function DynamicWater
 
 ; ===========================================================================
-    if useFullWaterTables
 Dynamic_water_routine_table: zoneOrderedOffsetTable 2,2
 	; EHZ
 	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
@@ -193,34 +176,6 @@ Dynamic_water_routine_table: zoneOrderedOffsetTable 2,2
 	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
 	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
     zoneTableEnd
-    else
-; off_45D8:
-Dynamic_water_routine_table: offsetTable
-	; HPZ
-	offsetTableEntry.w DynamicWaterNull ; Act 1
-	offsetTableEntry.w DynamicWaterNull ; Act 2
-	; Zone 9
-	offsetTableEntry.w DynamicWaterNull ; Act 1
-	offsetTableEntry.w DynamicWaterNull ; Act 2
-	; OOZ
-	offsetTableEntry.w DynamicWaterNull ; Act 1
-	offsetTableEntry.w DynamicWaterNull ; Act 2
-	; MCZ
-	offsetTableEntry.w DynamicWaterNull ; Act 1
-	offsetTableEntry.w DynamicWaterNull ; Act 2
-	; CNZ
-	offsetTableEntry.w DynamicWaterNull ; Act 1
-	offsetTableEntry.w DynamicWaterNull ; Act 2
-	; CPZ
-	offsetTableEntry.w DynamicWaterNull ; Act 1
-	offsetTableEntry.w DynamicWaterCPZ2 ; Act 2
-	; DEZ
-	offsetTableEntry.w DynamicWaterNull ; Act 1
-	offsetTableEntry.w DynamicWaterNull ; Act 2
-	; ARZ
-	offsetTableEntry.w DynamicWaterNull ; Act 1
-	offsetTableEntry.w DynamicWaterNull ; Act 2
-    endif
 ; ===========================================================================
 ; return_45F8:
 DynamicWaterNull:
