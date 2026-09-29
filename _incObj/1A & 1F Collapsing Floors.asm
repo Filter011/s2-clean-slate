@@ -102,8 +102,7 @@ Obj1A_Fragment:
 sub_109DC:
 	btst	#status.player.on_object,status(a1)
 	beq.s	+
-	bclr	#status.player.on_object,status(a1)
-	bclr	#status.player.pushing,status(a1)
+	andi.b	#~(1<<status.player.on_object|1<<status.player.pushing),status(a1)
 	move.b	#AniIDSonAni_Run,prev_anim(a1)	; Force player's animation to restart
 +
 	rts
@@ -212,8 +211,7 @@ Obj1F_Fragment:
 sub_10B36:
 	btst	#status.player.on_object,status(a1)
 	beq.s	+	; rts
-	bclr	#status.player.on_object,status(a1)
-	bclr	#status.player.pushing,status(a1)
+	andi.b	#~(1<<status.player.on_object|1<<status.player.pushing),status(a1)
 	move.b	#AniIDSonAni_Run,prev_anim(a1)	; Force player's animation to restart
 +
 	rts
