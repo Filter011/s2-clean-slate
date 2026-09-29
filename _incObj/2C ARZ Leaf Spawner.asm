@@ -65,14 +65,6 @@ Obj2C_Main:
 loc_26198:
 	addq.w	#8,d0
 	andi.w	#$F,d0
-;	bne.s	Obj2C_RemoveCollision
-;	lea	(Sidekick).w,a2 ; a2=character
-;	bclr	#1,collision_property(a0)
-;	beq.s	Obj2C_RemoveCollision
-;	bsr.s	Obj2C_CreateLeaves
-;	tst.w	objoff_2E(a0)
-;	bne.s	Obj2C_RemoveCollision
-;	move.w	(Level_frame_counter).w,objoff_2E(a0)
 ; loc_261BC:
 Obj2C_RemoveCollision:
 	clr.b	collision_property(a0)

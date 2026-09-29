@@ -141,8 +141,7 @@ loc_22688:
 	move.b	#$81,obj_control(a1)
 	move.b	#AniIDSonAni_Roll,anim(a1)
 	move.w	#$800,inertia(a1)
-	move.w	#0,x_vel(a1)
-	move.w	#0,y_vel(a1)
+	move.l	#0,x_vel(a1)	; and y_vel
 	bclr	#status.npc.p1_pushing,status(a0)
 	bclr	#status.player.pushing,status(a1)
 	bset	#status.player.in_air,status(a1)

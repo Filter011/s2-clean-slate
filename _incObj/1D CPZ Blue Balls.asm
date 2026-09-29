@@ -15,13 +15,6 @@ Obj1D_Index:	offsetTable
 		offsetTableEntry.w Obj1D_MoveArc	; 4
 		offsetTableEntry.w Obj1D_Wait		; 6
 		offsetTableEntry.w Obj1D_MoveStraight	; 8
-; ---------------------------------------------------------------------------
-; unused table of speed values
-; word_22420:
-	dc.w -$480
-	dc.w -$500
-	dc.w -$600
-	dc.w -$700
 ; ===========================================================================
 ; loc_22428:
 Obj1D_Init:

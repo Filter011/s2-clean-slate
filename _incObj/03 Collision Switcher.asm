@@ -24,8 +24,9 @@ Obj03_Init:
 	move.b	#$10,width_pixels(a0)
 	move.w	#5*$80,priority(a0)
 	move.b	subtype(a0),d0
-	btst	#2,d0
-	beq.s	Obj03_Init_CheckX
+	subq.b	#4,d0
+	bcc.s	Obj03_Init_CheckX
+	addq.b	#4,d0
 ;Obj03_Init_CheckY:
 	addq.b	#2,routine(a0) ; => Obj03_MainY
 	andi.w	#7,d0

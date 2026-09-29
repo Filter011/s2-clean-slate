@@ -75,6 +75,7 @@ Obj1C_Init:
 	addq.b	#2,routine(a0)
 	moveq	#0,d0
 	move.b	subtype(a0),d0
+	;mulu.w	#10,d0
 	move.w	d0,d1
 	add.w	d0,d0
 	add.w	d0,d0

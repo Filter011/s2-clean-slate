@@ -23,11 +23,8 @@ Obj2E_Init:
 	move.w	#3*$80,priority(a0)
 	move.b	#8,width_pixels(a0)
 	move.w	#-$300,y_vel(a0)
-	moveq	#0,d0
-	move.b	anim(a0),d0
-
-loc_128C6:			; Determine correct mappings offset.
-	addq.b	#1,d0
+	moveq	#1,d0
+	add.b	anim(a0),d0
 	move.b	d0,mapping_frame(a0)
 	movea.l	#Obj26_MapUnc_12D36,a1
 	add.b	d0,d0
