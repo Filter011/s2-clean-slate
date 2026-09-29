@@ -33,8 +33,8 @@ Obj1B_Init:
 
 ; loc_222F8:
 Obj1B_Main:
-	move.b	(Level_frame_counter+1).w,d0
-	andi.b	#2,d0
+	moveq	#2,d0
+	and.b	(Level_frame_counter+1).w,d0
 	move.b	d0,mapping_frame(a0)
 	move.w	x_pos(a0),d0
 	move.w	d0,d1
@@ -83,8 +83,7 @@ Obj1B_GiveBoost:
 +
 	move.w	#$F,move_lock(a1)	; don't let him turn around for a few frames
 	move.w	x_vel(a1),inertia(a1)	; update his inertia value
-	bclr	#status.npc.p1_pushing,status(a0)
-	bclr	#status.npc.p2_pushing,status(a0)
+	andi.b	#~(1<<status.npc.p1_pushing|1<<status.npc.p2_pushing),status(a0)
 	bclr	#status.player.pushing,status(a1)
 ; loc_223D8:
 Obj1B_GiveBoost_Done:
