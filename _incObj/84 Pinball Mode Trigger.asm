@@ -86,7 +86,7 @@ Obj84_MainX:
 	move.b	#1,pinball_mode(a1) ; enable must-roll "pinball mode"
 	bra.s	loc_212C4
 ; ---------------------------------------------------------------------------
-+	move.b	#0,pinball_mode(a1) ; disable pinball mode
++	clr.b	pinball_mode(a1) ; disable pinball mode
 
 return_21284:
 	rts
@@ -95,7 +95,7 @@ return_21284:
 Obj84_MainX_Alt:
 	cmp.w	x_pos(a1),d1
 	bls.s	return_21284
-	move.b	#0,-1(a2)
+	clr.b	-1(a2)
 	move.w	y_pos(a0),d2
 	move.w	d2,d3
 	move.w	objoff_32(a0),d4
@@ -111,7 +111,7 @@ Obj84_MainX_Alt:
 	move.b	#1,pinball_mode(a1)
 	bra.s	loc_212C4
 ; ---------------------------------------------------------------------------
-+	move.b	#0,pinball_mode(a1)
++	clr.b	pinball_mode(a1)
 	rts
 ; ===========================================================================
 
@@ -158,7 +158,7 @@ Obj84_MainY:
 	move.b	#1,pinball_mode(a1)
 	bra.w	loc_212C4
 ; ---------------------------------------------------------------------------
-+	move.b	#0,pinball_mode(a1)
++	clr.b	pinball_mode(a1)
 
 return_21350:
 	rts
@@ -167,7 +167,7 @@ return_21350:
 Obj84_MainY_Alt:
 	cmp.w	y_pos(a1),d1
 	bls.s	return_21350
-	move.b	#0,-1(a2)
+	clr.b	-1(a2)
 	move.w	x_pos(a0),d2
 	move.w	d2,d3
 	move.w	objoff_32(a0),d4
@@ -183,5 +183,5 @@ Obj84_MainY_Alt:
 	move.b	#1,pinball_mode(a1)
 	bra.w	loc_212C4
 ; ---------------------------------------------------------------------------
-+	move.b	#0,pinball_mode(a1)
++	clr.b	pinball_mode(a1)
 	rts

@@ -57,9 +57,8 @@ Obj78_LoadSubObject:
 
 ; loc_2926C:
 Obj78_Main:
-	moveq	#0,d0
-	move.b	subtype(a0),d0
-	andi.w	#7,d0
+	moveq	#7,d0
+	and.b	subtype(a0),d0
 	add.w	d0,d0
 	move.w	Obj78_Types(pc,d0.w),d1
 	jsr	Obj78_Types(pc,d1.w)

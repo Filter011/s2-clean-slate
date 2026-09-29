@@ -137,8 +137,7 @@ loc_2AD2A:
 	beq.s	return_2AD78
 	move.b	#$81,obj_control(a1)
 	move.w	x_pos(a0),x_pos(a1)
-	move.w	#0,x_vel(a1)
-	move.w	#0,y_vel(a1)
+	move.l	#0,x_vel(a1)	; and y_vel
 	move.w	#0,inertia(a1)
 	bset	#status.player.rolling,status(a1)
 	move.b	#$E,y_radius(a1)
@@ -297,8 +296,7 @@ loc_2AF2E:
 	addi.w	#$13,x_pos(a1)
 	move.w	y_pos(a0),y_pos(a1)
 	subi.w	#$13,y_pos(a1)
-	move.w	#0,x_vel(a1)
-	move.w	#0,y_vel(a1)
+	move.l	#0,x_vel(a1)	; and y_vel
 	move.w	#0,inertia(a1)
 	bset	#status.player.rolling,status(a1)
 	move.b	#$E,y_radius(a1)

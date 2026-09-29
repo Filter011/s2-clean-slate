@@ -142,16 +142,9 @@ byte_3744E:
 
 ; loc_37454:
 Obj97_InitialWait:
-    if gameRevision<2
-	bsr.w	Obj97_CheckHeadIsAlive
-	subq.b	#1,objoff_2A(a0)
-	bmi.s	Obj97_StartRaise
-    else
-	; fixes an occational crash when defeated
 	subq.b	#1,objoff_2A(a0)
 	bmi.s	Obj97_StartRaise
 	bsr.w	Obj97_CheckHeadIsAlive
-    endif
 	jmp	(MarkObjGone).l
 ; ===========================================================================
 
@@ -170,20 +163,11 @@ Obj97_StartRaise:
 
 ; loc_37488:
 Obj97_RaiseHead:
-    if gameRevision<2
-	bsr.w	Obj97_CheckHeadIsAlive
-	moveq	#$10,d0
-	add.w	d0,x_vel(a0)
-	subq.b	#1,objoff_2A(a0)
-	bmi.s	Obj97_StartNormalState
-    else
-	; fixes an occational crash when defeated
 	moveq	#$10,d0
 	add.w	d0,x_vel(a0)
 	subq.b	#1,objoff_2A(a0)
 	bmi.s	Obj97_StartNormalState
 	bsr.w	Obj97_CheckHeadIsAlive
-    endif
 	jsr	(ObjectMove).l
 	jmp	(MarkObjGone).l
 ; ===========================================================================
@@ -289,8 +273,7 @@ loc_3758A:
 	add.b	d1,d0
 	move.b	d0,objoff_2B(a0)
 	subi.b	#$18,d0
-	beq.s	+
-	bcs.s	+
+	ble.s	+
 	cmpi.b	#$10,d0
 	blo.s	++	; rts
 +

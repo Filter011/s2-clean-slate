@@ -117,7 +117,6 @@ WaterHeight:
 
 ; sub_45A4: ; LZDynamicWater:
 DynamicWater:
-	moveq	#0,d0
 	move.w	(Current_ZoneAndAct).w,d0
     if ~~useFullWaterTables
 	subi.w	#hidden_palace_zone_act_1,d0

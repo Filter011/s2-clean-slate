@@ -62,11 +62,10 @@ Obj76_Main:
 	beq.s	loc_28EC2
 	move.b	d6,d0
 	andi.b	#p1_touch_side,d0
-	beq.s	+
+	beq.s	loc_28EC2
 	lea	(MainCharacter).w,a1 ; a1=character
 	jsr	(Touch_ChkHurt2).l
 	bclr	#p1_pushing_bit,status(a0)
-+
 
 loc_28EC2:
 	move.w	objoff_34(a0),d0

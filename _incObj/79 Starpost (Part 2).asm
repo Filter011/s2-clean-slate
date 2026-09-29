@@ -94,7 +94,7 @@ loc_1F5C4:
 	ble.s	loc_1F5D6
 	neg.w	d1
 	addi.w	#$200,d1
-	bmi.w	JmpTo10_DeleteObject
+	bmi.s	JmpTo10_DeleteObject
 	bra.s	loc_1F5B4
 ; ===========================================================================
 

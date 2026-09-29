@@ -20,9 +20,6 @@ Obj82_Properties:
 	;        y_radius
 	dc.b $20,  8	; 0
 	dc.b $1C,$32	; 2
-	; Unused and broken; these don't have an associated frame, so using them crashes the game
-	dc.b $10,$10	; 4
-	dc.b $10,$10	; 6
 ; ===========================================================================
 ; loc_2A2AA:
 Obj82_Init:

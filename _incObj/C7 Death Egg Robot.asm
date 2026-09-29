@@ -710,8 +710,7 @@ loc_3DB5A:
 ; ---------------------------------------------------------------------------
 +
 	move.b	#2,routine_secondary(a0)
-	clr.w	x_vel(a0)
-	clr.w	y_vel(a0)
+	clr.l	x_vel(a0)	; and y_vel
 	rts
 ; ===========================================================================
 ;loc_3DB74
@@ -967,8 +966,7 @@ loc_3DD64:
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.w	x_pos(a1),x_pos(a0)
 	move.w	y_pos(a1),y_pos(a0)
-	move.w	x_vel(a1),objoff_30(a0)
-	move.w	y_vel(a1),objoff_32(a0)
+	move.l	x_vel(a1),objoff_30(a0)	; and y_vel/objoff_32
 	move.w	#$18,angle(a0)
 	jmp	(DisplaySprite).l
 ; ===========================================================================
@@ -1230,8 +1228,7 @@ ObjC7_Beaten:
 	bset	#status.npc.no_balancing,status(a0)
 	clr.b	anim(a0)
 	clr.b	collision_flags(a0)
-	clr.w	x_vel(a0)
-	clr.w	y_vel(a0)
+	clr.l	x_vel(a0)	; and y_vel
 	bsr.w	ObjC7_RemoveCollision
 	bsr.w	ObjC7_Break
 	movea.w	objoff_38(a0),a1 ; a1=object
@@ -1251,8 +1248,7 @@ ObjC7_Break:
 	move.b	#$1E,routine(a3)
 	clr.b	routine_secondary(a3)
 	move.w	#$80,objoff_2A(a3)
-	move.w	(a2)+,x_vel(a3)
-	move.w	(a2)+,y_vel(a3)
+	move.l	(a2)+,x_vel(a3)	; and y_vel
 	dbf	d6,-
 	rts
 ; ===========================================================================

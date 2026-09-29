@@ -119,7 +119,7 @@ loc_3984A:
 	bne.s	loc_3986A
 	moveq	#SndID_MechaSonicBuzz,d0
 	jsr	(PlaySound).w
-	jsr	(DisplaySprite).l	; ?
+;	jsr	(DisplaySprite).l	; ?
 
 loc_3986A:
 	jsr	(ObjCheckFloorDist).l
@@ -338,12 +338,8 @@ loc_39A7C:
 loc_39A96:
 	lea	off_39DE2(pc),a1
 	bsr.w	AnimateSprite_Checked
-	bne.s	BranchTo_loc_399D6
+	bne.w	loc_399D6
 	rts
-; ===========================================================================
-
-BranchTo_loc_399D6 ; BranchTo
-	bra.w	loc_399D6
 ; ===========================================================================
 
 loc_39AAA:

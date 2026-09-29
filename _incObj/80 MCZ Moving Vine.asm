@@ -123,7 +123,7 @@ Obj80_Action:
 	cmpi.b	#4,routine(a1)
 	bhs.s	loc_29B42
 	andi.b	#button_B_mask|button_C_mask|button_A_mask,d0
-	beq.w	loc_29B50
+	beq.s	loc_29B50
 	clr.b	obj_control(a1)
 	clr.b	(a2)
 	move.b	#18,2(a2)

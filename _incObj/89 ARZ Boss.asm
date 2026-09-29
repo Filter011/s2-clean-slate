@@ -207,7 +207,7 @@ Obj89_Main_Sub4:
 	ori.b	#3,2*2(a1)			; reset hammer animation timer
 	addq.b	#2,boss_routine(a0)	; => Obj89_Main_Sub6
 	btst	#render_flags.x_flip,render_flags(a0)
-	sne	obj89_target(a0)		; target opposite side
+	sne.b	obj89_target(a0)		; target opposite side
 	move.w	#$1E,(Boss_Countdown).w
 	moveq	#SndID_Hammer,d0
 	jsr	(PlaySound).w
@@ -553,7 +553,7 @@ Obj89_Pillar_ChkShake:
 +
 	subq.w	#1,obj89_pillar_shake_time(a0)
 	bgt.s	Obj89_Pillar_Shake		; branch, if timer hasn't expired
-	sf	obj89_pillar_shaking(a0)	; stop shaking
+	sf.b	obj89_pillar_shaking(a0)	; stop shaking
 	move.w	#0,obj89_pillar_shake_time(a0)	; clear timer
 	tst.b	obj89_target(a3)		; is boss targeting the left?
 	bne.s	+				; if yes, branch
@@ -704,7 +704,7 @@ Obj89_Arrow_Index:	offsetTable
 		offsetTableEntry.w Obj89_Arrow_Sub2			; 2 - arrow in air
 		offsetTableEntry.w Obj89_Arrow_Sub4			; 4 - arrow stuck
 		offsetTableEntry.w Obj89_Arrow_Sub6			; 6 - falling down
-		offsetTableEntry.w BranchTo_JmpTo55_DeleteObject	; 8 - delete arrow
+		offsetTableEntry.w JmpTo55_DeleteObject			; 8 - delete arrow
 ; ===========================================================================
 ; loc_30BC8:
 Obj89_Arrow_Init:
@@ -739,7 +739,7 @@ Obj89_Arrow_Init_End:
 Obj89_Arrow_Sub2:
 	btst	#status.npc.no_balancing,status(a0)
 	beq.s	+
-	move.b	#8,obj89_arrow_routine(a0)	; => BranchTo_JmpTo55_DeleteObject
+	move.b	#8,obj89_arrow_routine(a0)	; => JmpTo55_DeleteObject
 +
 	move.w	x_pos(a0),d0			; load x position...
 	add.w	x_vel(a0),d0			; ...and add x velocity
@@ -793,7 +793,6 @@ Obj89_Arrow_Sub6:
 ; ===========================================================================
 
 JmpTo55_DeleteObject ; JmpTo
-BranchTo_JmpTo55_DeleteObject ; BranchTo
 	jmp	(DeleteObject).l
 ; ===========================================================================
 ; loc_30CCC:

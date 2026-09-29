@@ -3,33 +3,50 @@
 ; sub_19DC:
 PalCycle_Load:
 	bsr.w	PalCycle_SuperSonic
-	moveq	#0,d0
-	move.b	(Current_Zone).w,d0	; use level number as index into palette cycles
-	add.w	d0,d0			; (multiply by element size = 2 bytes)
+	move.w	(Current_ZoneAndAct).w,d0
+	ror.b	#1,d0
+	lsr.w	#6,d0
 	move.w	PalCycle(pc,d0.w),d0	; load animated palettes offset index into d0
 	jmp	PalCycle(pc,d0.w)	; jump to PalCycle + offset index
 ; End of function PalCycle_Load
 
 ; ===========================================================================
 ; off_19F4:
-PalCycle: zoneOrderedOffsetTable 2,1
-	zoneOffsetTableEntry.w PalCycle_EHZ	; EHZ
-	zoneOffsetTableEntry.w PalCycle_Null	; Zone 1
-	zoneOffsetTableEntry.w PalCycle_WZ	; WZ
-	zoneOffsetTableEntry.w PalCycle_Null	; Zone 3
-	zoneOffsetTableEntry.w PalCycle_MTZ	; MTZ1,2
+PalCycle: zoneOrderedOffsetTable 2,2
+	zoneOffsetTableEntry.w PalCycle_EHZ	; EHZ1
+	zoneOffsetTableEntry.w PalCycle_EHZ	; EHZ2
+	zoneOffsetTableEntry.w PalCycle_Null	; Zone 1 Act 1
+	zoneOffsetTableEntry.w PalCycle_Null	; Zone 1 Act 2
+	zoneOffsetTableEntry.w PalCycle_WZ	; WZ1
+	zoneOffsetTableEntry.w PalCycle_WZ	; WZ2
+	zoneOffsetTableEntry.w PalCycle_Null	; Zone 3 Act 1
+	zoneOffsetTableEntry.w PalCycle_Null	; Zone 3 Act 2
+	zoneOffsetTableEntry.w PalCycle_MTZ	; MTZ1
+	zoneOffsetTableEntry.w PalCycle_MTZ	; MTZ2
 	zoneOffsetTableEntry.w PalCycle_MTZ	; MTZ3
-	zoneOffsetTableEntry.w PalCycle_WFZ	; WFZ
-	zoneOffsetTableEntry.w PalCycle_HTZ	; HTZ
-	zoneOffsetTableEntry.w PalCycle_HPZ	; HPZ
-	zoneOffsetTableEntry.w PalCycle_Null	; Zone 9
-	zoneOffsetTableEntry.w PalCycle_OOZ	; OOZ
-	zoneOffsetTableEntry.w PalCycle_MCZ	; MCZ
-	zoneOffsetTableEntry.w PalCycle_CNZ	; CNZ
-	zoneOffsetTableEntry.w PalCycle_CPZ	; CPZ
-	zoneOffsetTableEntry.w PalCycle_CPZ	; DEZ
-	zoneOffsetTableEntry.w PalCycle_ARZ	; ARZ
-	zoneOffsetTableEntry.w PalCycle_WFZ	; SCZ
+	zoneOffsetTableEntry.w PalCycle_MTZ	; MTZ4
+	zoneOffsetTableEntry.w PalCycle_WFZ	; WFZ1
+	zoneOffsetTableEntry.w PalCycle_WFZ	; WFZ2
+	zoneOffsetTableEntry.w PalCycle_HTZ	; HTZ1
+	zoneOffsetTableEntry.w PalCycle_HTZ	; HTZ2
+	zoneOffsetTableEntry.w PalCycle_HPZ	; HPZ1
+	zoneOffsetTableEntry.w PalCycle_HPZ	; HPZ2
+	zoneOffsetTableEntry.w PalCycle_Null	; Zone 9 Act 1 
+	zoneOffsetTableEntry.w PalCycle_Null	; Zone 9 Act 2
+	zoneOffsetTableEntry.w PalCycle_OOZ	; OOZ1
+	zoneOffsetTableEntry.w PalCycle_OOZ	; OOZ2
+	zoneOffsetTableEntry.w PalCycle_MCZ.act1	; MCZ1
+	zoneOffsetTableEntry.w PalCycle_MCZ	; MCZ2
+	zoneOffsetTableEntry.w PalCycle_CNZ	; CNZ1
+	zoneOffsetTableEntry.w PalCycle_CNZ	; CNZ2
+	zoneOffsetTableEntry.w PalCycle_CPZ	; CPZ1
+	zoneOffsetTableEntry.w PalCycle_CPZ	; CPZ2
+	zoneOffsetTableEntry.w PalCycle_CPZ	; DEZ1
+	zoneOffsetTableEntry.w PalCycle_CPZ	; DEZ2
+	zoneOffsetTableEntry.w PalCycle_ARZ	; ARZ1
+	zoneOffsetTableEntry.w PalCycle_ARZ	; ARZ2
+	zoneOffsetTableEntry.w PalCycle_WFZ	; SCZ1
+	zoneOffsetTableEntry.w PalCycle_WFZ	; SCZ2
     zoneTableEnd
 
 ; ===========================================================================
@@ -166,6 +183,8 @@ PalCycle_OOZ:
 PalCycle_MCZ:
 	tst.b	(Current_Boss_ID).w
 	bne.s	.return
+
+.act1:
 	subq.w	#1,(PalCycle_Timer).w
 	bpl.s	.return
 	move.w	#1,(PalCycle_Timer).w

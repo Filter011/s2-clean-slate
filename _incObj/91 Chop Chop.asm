@@ -63,7 +63,7 @@ Obj91_PrepareCharge:
 Obj91_Waiting:
 	subq.b	#1,Obj91_move_timer(a0)
 	bmi.s	Obj91_MoveTowardsPlayer		; branch, if wait time is over
-	bra.w	Obj91_Animate
+	bra.s	Obj91_Animate
 ; ===========================================================================
 ; loc_36E3C:
 Obj91_MoveTowardsPlayer:
@@ -73,11 +73,10 @@ Obj91_MoveTowardsPlayer:
 	move.b	Obj91_HorizontalSpeeds(pc,d0.w),x_vel(a0)	; horizontal
 	addi.w	#$10,d3
 	cmpi.w	#$20,d3		; is closest character withing $10 pixels above or $F pixels below?
-	blo.s	+		; if not, branch
+	blo.s	Obj91_Animate	; if not, branch
 	lsr.w	#1,d1		; set speed based on closest character
 	move.b	Obj91_VerticalSpeeds(pc,d1.w),1+y_vel(a0)	; vertical
-+
-	bra.w	Obj91_Animate
+	bra.s	Obj91_Animate
 ; ===========================================================================
 ; byte_36E62:
 Obj91_HorizontalSpeeds:

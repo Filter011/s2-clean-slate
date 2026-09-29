@@ -26,7 +26,7 @@ ObjB2_Init:
 	move.b	subtype(a0),d0
 	subi.b	#$4E,d0
 	move.b	d0,routine(a0)
-	cmpi.w	#2,(Player_mode).w
+	cmpi.w	#1,(Player_mode).w
 	bne.s	+
 	cmpi.b	#8,d0
 	bhs.s	+
@@ -463,7 +463,7 @@ loc_3AC84:
 	move.w	x_pos(a0),d0
 	subi.w	#$10,d0
 	move.w	d0,x_pos(a1)
-	cmpi.w	#2,(Player_mode).w
+	cmpi.w	#1,(Player_mode).w
 	bne.s	loc_3ACC8
 	subi.w	#$10,y_pos(a1)
 
