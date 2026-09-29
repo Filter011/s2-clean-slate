@@ -30,12 +30,12 @@ Debug_Init:
 	move.b	#0,mapping_frame(a0)
 	move.b	#AniIDSonAni_Walk,anim(a0)
 	bclr	#status.player.in_air,(MainCharacter+status).w
-	moveq	#0,d0
-	move.b	(Current_Zone).w,d0
+	move.w	(Current_ZoneAndAct).w,d0
 
 .selectlist:
 	lea	DebugObjectLists(pc),a2
-	add.w	d0,d0
+	ror.b	#1,d0
+	lsr.w	#6,d0
 	adda.w	(a2,d0.w),a2
 	move.w	(a2)+,d6
 	cmp.b	(Debug_object).w,d6

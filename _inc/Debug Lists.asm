@@ -5,24 +5,41 @@
 ; account for its third act. Hidden Palace Zone uses Oil Ocean Zone's list.
 ; ---------------------------------------------------------------------------
 ; JmpTbl_DbgObjLists:
-DebugObjectLists: zoneOrderedOffsetTable 2,1
-	zoneOffsetTableEntry.w DbgObjList_EHZ	; EHZ
-	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 1
-	zoneOffsetTableEntry.w DbgObjList_Def	; WZ
-	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 3
-	zoneOffsetTableEntry.w DbgObjList_MTZ	; MTZ1,2
+DebugObjectLists: zoneOrderedOffsetTable 2,2
+	zoneOffsetTableEntry.w DbgObjList_EHZ	; EHZ1
+	zoneOffsetTableEntry.w DbgObjList_EHZ	; EHZ2
+	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 1 Act 1
+	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 1 Act 2
+	zoneOffsetTableEntry.w DbgObjList_Def	; WZ1
+	zoneOffsetTableEntry.w DbgObjList_Def	; WZ2
+	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 3 Act 1
+	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 3 Act 2
+	zoneOffsetTableEntry.w DbgObjList_MTZ	; MTZ1
+	zoneOffsetTableEntry.w DbgObjList_MTZ	; MTZ2
 	zoneOffsetTableEntry.w DbgObjList_MTZ	; MTZ3
-	zoneOffsetTableEntry.w DbgObjList_WFZ	; WFZ
-	zoneOffsetTableEntry.w DbgObjList_HTZ	; HTZ
-	zoneOffsetTableEntry.w DbgObjList_HPZ	; HPZ
-	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 9
-	zoneOffsetTableEntry.w DbgObjList_OOZ	; OOZ
-	zoneOffsetTableEntry.w DbgObjList_MCZ	; MCZ
-	zoneOffsetTableEntry.w DbgObjList_CNZ	; CNZ
-	zoneOffsetTableEntry.w DbgObjList_CPZ	; CPZ
-	zoneOffsetTableEntry.w DbgObjList_Def	; DEZ
-	zoneOffsetTableEntry.w DbgObjList_ARZ	; ARZ
-	zoneOffsetTableEntry.w DbgObjList_SCZ	; SCZ
+	zoneOffsetTableEntry.w DbgObjList_MTZ	; MTZ4
+	zoneOffsetTableEntry.w DbgObjList_WFZ	; WFZ1
+	zoneOffsetTableEntry.w DbgObjList_WFZ	; WFZ2
+	zoneOffsetTableEntry.w DbgObjList_HTZ	; HTZ1
+	zoneOffsetTableEntry.w DbgObjList_HTZ	; HTZ2
+	zoneOffsetTableEntry.w DbgObjList_HPZ	; HPZ1
+	zoneOffsetTableEntry.w DbgObjList_HPZ	; HPZ2
+	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 9 Act 1
+	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 9 Act 2
+	zoneOffsetTableEntry.w DbgObjList_OOZ	; OOZ1
+	zoneOffsetTableEntry.w DbgObjList_OOZ	; OOZ2
+	zoneOffsetTableEntry.w DbgObjList_MCZ	; MCZ1
+	zoneOffsetTableEntry.w DbgObjList_MCZ	; MCZ2
+	zoneOffsetTableEntry.w DbgObjList_CNZ	; CNZ1
+	zoneOffsetTableEntry.w DbgObjList_CNZ	; CNZ2
+	zoneOffsetTableEntry.w DbgObjList_CPZ	; CPZ1
+	zoneOffsetTableEntry.w DbgObjList_CPZ	; CPZ2
+	zoneOffsetTableEntry.w DbgObjList_Def	; DEZ1
+	zoneOffsetTableEntry.w DbgObjList_Def	; DEZ2
+	zoneOffsetTableEntry.w DbgObjList_ARZ	; ARZ1
+	zoneOffsetTableEntry.w DbgObjList_ARZ	; ARZ2
+	zoneOffsetTableEntry.w DbgObjList_SCZ	; SCZ1
+	zoneOffsetTableEntry.w DbgObjList_SCZ	; SCZ2
     zoneTableEnd
 
 ; macro for a debug object list header
