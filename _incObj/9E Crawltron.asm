@@ -99,7 +99,7 @@ loc_37ED4:
 loc_37EFC:
 	movea.w	parent(a0),a1 ; a1=object
 	cmpi.b	#ObjID_Crawlton,id(a1)
-	bne.w	JmpTo65_DeleteObject
+	bne.w	JmpTo64_DeleteObject
 	bclr	#render_flags.x_flip,render_flags(a0)
 	btst	#render_flags.x_flip,render_flags(a1)
 	beq.s	+

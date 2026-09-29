@@ -69,15 +69,6 @@ JmpTo33_DeleteObject ; JmpTo
 	jmp	(DeleteObject).l
 ; ===========================================================================
 loc_27042:
-    if gameRevision>0
-	; REV00 didn't prevent the player from bouncing if they were hurt or dead
-	cmpi.b	#4,routine(a1)
-	blo.s	loc_2704C
-	rts
-    endif
-; ===========================================================================
-
-loc_2704C:
 	move.w	objoff_30(a0),x_vel(a1)
 	move.w	#-$800,x_vel(a1)
 	move.w	#-$800,y_vel(a1)

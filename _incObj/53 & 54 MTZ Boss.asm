@@ -604,7 +604,6 @@ byte_329CC:
 	dc.b $48	; 4
 	dc.b $90	; 5
 	dc.b $D8	; 6
-	rev02even
 byte_329D3:
 	dc.b   0
 	dc.b   1	; 1

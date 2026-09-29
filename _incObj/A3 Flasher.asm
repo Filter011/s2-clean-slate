@@ -45,7 +45,7 @@ loc_38794:
 	subq.w	#1,objoff_30(a0)
 	bmi.s	loc_387FC
 	move.w	objoff_2A(a0),d0
-	bmi.w	JmpTo65_DeleteObject
+	bmi.w	JmpTo64_DeleteObject
 	bclr	#render_flags.x_flip,render_flags(a0)
 	bclr	#status.npc.x_flip,status(a0)
 	tst.w	x_vel(a0)

@@ -115,7 +115,7 @@ loc_3CFC0:
 ; loc_3CFF6:
 ObjC6_State2_State5:
 	subq.w	#1,objoff_2A(a0)
-	bmi.w	JmpTo65_DeleteObject
+	bmi.w	JmpTo64_DeleteObject
 	addi.w	#$10,y_vel(a0)
 	jsr	(ObjectMove).l
 	jmp	(DisplaySprite).l
@@ -183,7 +183,7 @@ loc_3D086:
 ; loc_3D09C:
 ObjC6_State4:
 	subq.w	#1,objoff_2A(a0)
-	bmi.w	JmpTo65_DeleteObject
+	bmi.w	JmpTo64_DeleteObject
 	addi.w	#$10,y_vel(a0)
 	jsr	(ObjectMove).l
 	jmp	(MarkObjGone).l

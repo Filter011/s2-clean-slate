@@ -126,7 +126,7 @@ ObjA2_Init:
 
 ObjA2_Main:
 	_btst	#render_flags.on_screen,render_flags(a0)
-	_beq.w	JmpTo65_DeleteObject
+	_beq.w	JmpTo64_DeleteObject
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	loc_3851A
 	movea.w	objoff_2C(a0),a1 ; a1=object
@@ -163,7 +163,7 @@ loc_3851A:
 
 ObjA2_Main2:
 	subq.w	#1,objoff_2A(a0)
-	bmi.w	JmpTo65_DeleteObject
+	bmi.w	JmpTo64_DeleteObject
 	jsr	(ObjectMoveAndFall).l
 	lea	Ani_objA2(pc),a1
 	jsr	(AnimateSprite).l

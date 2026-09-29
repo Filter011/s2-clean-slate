@@ -199,7 +199,7 @@ Obj90_Directions:
 Obj8F_Move:
 Obj90_Move:
 	_btst	#render_flags.on_screen,render_flags(a0)
-	_beq.w	JmpTo65_DeleteObject
+	_beq.w	JmpTo64_DeleteObject
 	jsr	(ObjectMoveAndFall).l
 	jmp	(MarkObjGone).l
 ; ===========================================================================

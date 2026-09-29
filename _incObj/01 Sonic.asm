@@ -1279,11 +1279,8 @@ Sonic_CheckGoSuper:
 	bne.s	return_1ABA4		; if not, branch
 	cmpi.w	#50,(Ring_count).w	; does Sonic have at least 50 rings?
 	blo.s	return_1ABA4		; if not, branch
-    if gameRevision>=2
-	; fixes a bug where the player can get stuck if transforming at the end of a level
 	tst.b	(Update_HUD_timer).w	; has Sonic reached the end of the act?
 	beq.s	return_1ABA4		; if yes, branch
-    endif
 
 	bclr	#status.player.rolling,status(a0)	; Clear bit 2
 	move.b	#$13,y_radius(a0)
@@ -1378,8 +1375,8 @@ Sonic_CheckSpindash:
 	moveq	#SndID_SpindashRev,d0
 	jsr	(PlaySound).w
 	addq.l	#4,sp
-	move.b	#1,spindash_flag(a0)
-	move.w	#0,spindash_counter(a0)
+	st.b	spindash_flag(a0)
+	clr.w	spindash_counter(a0)
 	cmpi.b	#12,air_left(a0)	; if he's drowning, branch to not make dust
 	blo.s	+
 	move.b	#2,(Sonic_Dust+anim).w
@@ -1409,8 +1406,8 @@ Sonic_UpdateSpindash:
 	move.b	#7,x_radius(a0)
 	move.b	#AniIDSonAni_Roll,anim(a0)
 	addq.w	#5,y_pos(a0)	; add the difference between Sonic's rolling and standing heights
-	move.b	#0,spindash_flag(a0)
 	moveq	#0,d0
+	move.b	d0,spindash_flag(a0)
 	move.b	spindash_counter(a0),d0
 	add.w	d0,d0
 	move.w	SpindashSpeeds(pc,d0.w),inertia(a0)
@@ -1471,7 +1468,7 @@ Sonic_ChargingSpindash:			; If still charging the dash...
 	lsr.w	#5,d0
 	sub.w	d0,spindash_counter(a0)
 	bcc.s	+
-	move.w	#0,spindash_counter(a0)
+	clr.w	spindash_counter(a0)
 +
 	move.b	(Ctrl_1_Press_Logical).w,d0
 	andi.b	#button_B_mask|button_C_mask|button_A_mask,d0
@@ -2023,7 +2020,7 @@ Obj01_Dead:
 ; loc_1B21C:
 CheckGameOver:
 	move.b	#1,(Scroll_lock).w
-	move.b	#0,spindash_flag(a0)
+	clr.b	spindash_flag(a0)
 	move.w	(Camera_Max_Y_pos).w,d0
 	addi.w	#$100,d0
 	cmp.w	y_pos(a0),d0

@@ -306,7 +306,7 @@ loc_3827A:
 loc_38280:
 	jsr	(ObjectMoveAndFall).l
 	subq.w	#1,objoff_2A(a0)
-	bmi.w	JmpTo65_DeleteObject
+	bmi.w	JmpTo64_DeleteObject
 	jmp	(MarkObjGone).l
 ; ===========================================================================
 

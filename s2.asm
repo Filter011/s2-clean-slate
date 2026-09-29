@@ -19,11 +19,6 @@
 ;
 debugbuild = 1
 ;
-gameRevision = 1
-;	| If 0, a REV00 ROM is built
-;	| If 1, a REV01 ROM is built, which contains some fixes
-;	| If 2, a (theoretical) REV02 ROM is built, which contains even more fixes
-;
 skipChecksumCheck = 1
 ;	| If 1, disables the slow bootup checksum calculation
 ;
@@ -341,11 +336,9 @@ GameProgram:
 	tst.w	(VDP_control_port).l
 ; loc_306:
 CheckSumCheck:
-    if gameRevision>0
 	move.w	(VDP_control_port).l,d1
 	btst	#1,d1
 	bne.s	CheckSumCheck	; wait until DMA is completed
-    endif
 	; "MEGA DRIVE hard initial program" ends here.
 	btst	#6,(HW_Expansion_Control).l
 	beq.s	ChecksumTest
@@ -3081,24 +3074,20 @@ level_select_cheat:
 	; 17th September 1965, the birthdate of one of Sonic 2's developers,
 	; Yuji Naka.
 	dc.b $19, $65,   9, $17,   0
-	rev02even
 ; byte_97B7
 continues_cheat:
 	; November 24th, which was Sonic 2's release date in the EU and US.
 	dc.b   1,   1,   2,   4,   0
-	rev02even
 debug_cheat:
 	; 24th November 1992 (also known as "Sonic 2sday"), which was
 	; Sonic 2's release date in the EU and US.
 	dc.b   1,   9,   9,   2,   1,   1,   2,   4,   0
-	rev02even
 ; byte_97C5
 super_sonic_cheat:
 	; Book of Genesis, 41:26, which makes frequent reference to the
 	; number 7. 7 happens to be the number of Chaos Emeralds.
 	; The Mega Drive is known as the Genesis in the US.
 	dc.b   4,   1,   2,   6,   0
-	rev02even
 
 	; set the character set for menu text
 	charset '@',"\27\30\31\32\33\34\35\36\37\38\39\40\41\42\43\44\45\46\47\48\49\50\51\52\53\54\55"
@@ -3267,7 +3256,6 @@ l := lowstring("char")
 	endcase
 	endm
 	dc.b -1
-	rev02even
     endm
 
  charset ; revert character set

@@ -1063,7 +1063,7 @@ loc_3DE82:
 loc_3DEA2:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	tst.b	(a1)
-	beq.w	JmpTo65_DeleteObject
+	beq.w	JmpTo64_DeleteObject
 	subq.w	#1,objoff_2A(a0)
 	bne.s	+
 	move.w	#4,objoff_2A(a0)
@@ -1147,14 +1147,14 @@ loc_3DF80:
 	blo.s	+
 	clr.b	collision_flags(a0)
 	cmpi.b	#7,mapping_frame(a0)
-	beq.w	JmpTo65_DeleteObject
+	beq.w	JmpTo64_DeleteObject
 +
 	jmp	(DisplaySprite).l
 ; ===========================================================================
 ;loc_3DFAA
 ObjC7_FallingPieces:
 	subq.w	#1,objoff_2A(a0)
-	bmi.w	JmpTo65_DeleteObject
+	bmi.w	JmpTo64_DeleteObject
 	jsr	(ObjectMoveAndFall).l
 	jmp	(DisplaySprite).l
 ; ===========================================================================

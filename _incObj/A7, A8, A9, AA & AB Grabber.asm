@@ -196,7 +196,7 @@ ObjA8_Init:
 loc_38F88:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	cmpi.b	#ObjID_Grabber,id(a1)
-	bne.w	JmpTo65_DeleteObject
+	bne.w	JmpTo64_DeleteObject
 	bsr.w	InheritParentXYFlip
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	move.b	mapping_frame(a1),d0
@@ -253,7 +253,7 @@ loc_3901A:
 loc_39022:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	cmpi.b	#ObjID_Grabber,id(a1) ; compare to objA7
-	bne.w	JmpTo65_DeleteObject
+	bne.w	JmpTo64_DeleteObject
 	jmp	(DisplaySprite).l
 ; ===========================================================================
 ; ----------------------------------------------------------------------------
@@ -282,7 +282,7 @@ ObjA9_Init:
 ObjA9_Main:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	cmpi.b	#ObjID_Grabber,id(a1) ; compare to objA7 (grabber badnik)
-	bne.w	JmpTo65_DeleteObject
+	bne.w	JmpTo64_DeleteObject
 	jmp	(DisplaySprite).l
 ; ===========================================================================
 ; ----------------------------------------------------------------------------
@@ -310,7 +310,7 @@ ObjAA_Init:
 ObjAA_Main:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	cmpi.b	#ObjID_Grabber,id(a1) ; compare to objA7 (grabber badnik)
-	bne.w	JmpTo65_DeleteObject
+	bne.w	JmpTo64_DeleteObject
 	move.w	y_pos(a1),d0
 	sub.w	y_pos(a0),d0
 	bmi.s	+

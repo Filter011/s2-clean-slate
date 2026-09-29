@@ -20,7 +20,7 @@ Obj98_Init: ;;
 ; loc_376FE:
 Obj98_Main:
 	_btst	#render_flags.on_screen,render_flags(a0)
-	_beq.w	JmpTo65_DeleteObject
+	_beq.w	JmpTo64_DeleteObject
 	movea.l	objoff_2A(a0),a1
 	jsr	(a1)	; dynamic call! to Obj98_NebulaBombFall, Obj98_TurtloidShotMove, Obj98_CoconutFall, Obj98_CluckerShotMove, Obj98_SpinyShotFall, or Obj98_WallTurretShotMove, assuming the code hasn't been changed
 	jmp	(MarkObjGone).l

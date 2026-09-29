@@ -125,7 +125,7 @@ Obj95_FireballUpdate:
 	jsr	(AnimateSprite).l
 	movea.l	objoff_3C(a0),a1 ; a1=object
 	cmpi.b	#ObjID_Sol,id(a1) ; check if parent object is still alive
-	bne.w	JmpTo65_DeleteObject
+	bne.w	JmpTo64_DeleteObject
 	cmpi.b	#2,mapping_frame(a1)
 	bne.s	Obj95_FireballOrbit
 	cmpi.b	#$40,angle(a0)
@@ -163,7 +163,7 @@ Obj95_FireballOrbit:
 loc_372B8:
 	jsr	(ObjectMove).l
 	_btst	#render_flags.on_screen,render_flags(a0)
-	_beq.w	JmpTo65_DeleteObject
+	_beq.w	JmpTo64_DeleteObject
 	lea	Ani_obj95_b(pc),a1
 	jsr	(AnimateSprite).l
 	jmp	(DisplaySprite).l

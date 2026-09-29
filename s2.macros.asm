@@ -280,7 +280,6 @@ spriteScreenPositionYCentered function pos,spriteScreenPositionY(screen_height/2
 menutxt	macro	text
 	dc.b	strlen(text)-1
 	dc.b	text
-	rev02even
 	endm
 
 childObjectData macro objoff, objectID, subtype

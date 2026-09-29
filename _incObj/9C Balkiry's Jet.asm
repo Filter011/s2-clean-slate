@@ -22,7 +22,7 @@ Obj9C_Main:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	move.b	objoff_32(a0),d0
 	cmp.b	id(a1),d0
-	bne.w	JmpTo65_DeleteObject
+	bne.w	JmpTo64_DeleteObject
 	move.l	x_pos(a1),x_pos(a0)
 	move.l	y_pos(a1),y_pos(a0)
 	movea.l	objoff_2E(a0),a1

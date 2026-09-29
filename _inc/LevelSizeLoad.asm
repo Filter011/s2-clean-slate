@@ -20,12 +20,10 @@ LevelSizeLoad:
 	move.b	d0,(Screen_Shaking_Flag).w
 	move.b	d0,(Scroll_lock).w
 	move.b	d0,(Dynamic_Resize_Routine).w ; load level boundaries
-    if gameRevision>=2
 	move.w	d0,(WFZ_LevEvent_Subrout).w
 	move.w	d0,(WFZ_BG_Y_Speed).w
 	move.w	d0,(Camera_BG_X_offset).w
 	move.w	d0,(Camera_BG_Y_offset).w
-    endif
 	move.w	(Current_ZoneAndAct).w,d0
 	ror.b	#1,d0
 	lsr.w	#4,d0

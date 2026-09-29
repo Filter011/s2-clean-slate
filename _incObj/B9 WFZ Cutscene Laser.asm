@@ -40,7 +40,7 @@ loc_3BAF8:
 	move.w	(Camera_X_pos).w,d1
 	subi.w	#$40,d1
 	cmp.w	d1,d0
-	blt.w	JmpTo65_DeleteObject
+	blt.w	JmpTo64_DeleteObject
 	jmp	(DisplaySprite).l
 ; ===========================================================================
 ; off_3BB0E:

@@ -17,28 +17,16 @@ Obj05AniData:	offsetTable
 		offsetTableEntry.w Obj05Ani_Flying	; $B
 		offsetTableEntry.w Obj05Ani_FlyingFast	; $C
 Obj05Ani_Blank:		dc.b $20,  0,$FF
-	rev02even
 Obj05Ani_Swish:		dc.b   7,  9, $A, $B, $C, $D,$FF
-	rev02even
 Obj05Ani_Flick:		dc.b   3,  9, $A, $B, $C, $D,$FD,  1
-	rev02even
 Obj05Ani_Directional:	dc.b $FC,$49,$4A,$4B,$4C,$FF ; Tails is moving right
-	rev02even
 Obj05Ani_DownLeft:	dc.b   3,$4D,$4E,$4F,$50,$FF ; Tails is moving up-right
-	rev02even
 Obj05Ani_Down:		dc.b   3,$51,$52,$53,$54,$FF ; Tails is moving up
-	rev02even
 Obj05Ani_DownRight:	dc.b   3,$55,$56,$57,$58,$FF ; Tails is moving up-left
-	rev02even
 Obj05Ani_Spindash:	dc.b   2,$81,$82,$83,$84,$FF
-	rev02even
 Obj05Ani_Skidding:	dc.b   2,$87,$88,$89,$8A,$FF
-	rev02even
 Obj05Ani_Pushing:	dc.b   9,$87,$88,$89,$8A,$FF
-	rev02even
 Obj05Ani_Hanging:	dc.b   9,$81,$82,$83,$84,$FF
-	even
 Obj05Ani_Flying:	dc.b   1, $5E, $5F, $FF
-	even
 Obj05Ani_FlyingFast:	dc.b   0, $5E, $5F, $FF
 	even

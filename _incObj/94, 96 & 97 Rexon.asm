@@ -216,7 +216,7 @@ Obj97_DeathDrop:
 	move.w	(Camera_Max_Y_pos).w,d0
 	addi.w	#screen_height,d0
 	cmp.w	y_pos(a0),d0
-	blo.w	JmpTo65_DeleteObject
+	blo.w	JmpTo64_DeleteObject
 	jsr	(ObjectMoveAndFall).l
 	jmp	(MarkObjGone).l
 ; ===========================================================================

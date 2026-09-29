@@ -26,7 +26,7 @@ ObjBC_Main:
 	move.w	objoff_2C(a0),d0
 	move.w	(Camera_BG_X_offset).w,d1
 	cmpi.w	#$380,d1
-	bhs.w	JmpTo65_DeleteObject
+	bhs.w	JmpTo64_DeleteObject
 	add.w	d1,d0
 	move.w	d0,x_pos(a0)
 	bchg	#0,objoff_2A(a0)

@@ -34,7 +34,7 @@ ObjC3_Main:
 	move.b	#7,anim_frame_duration(a0)
 	addq.b	#1,mapping_frame(a0)
 	cmpi.b	#5,mapping_frame(a0)
-	beq.w	JmpTo65_DeleteObject
+	beq.w	JmpTo64_DeleteObject
 +
 	jmp	(DisplaySprite).l
 ; ===========================================================================

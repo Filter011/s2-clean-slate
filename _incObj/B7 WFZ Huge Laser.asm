@@ -24,7 +24,7 @@ ObjB7_Init:
 ; loc_3B8C4:
 ObjB7_Main:
 	subq.b	#1,objoff_2A(a0)
-	beq.w	JmpTo65_DeleteObject
+	beq.w	JmpTo64_DeleteObject
 	bchg	#0,objoff_2B(a0)
 	beq.s	ObjB7_Init.return
 	jmp	(MarkObjGone).l

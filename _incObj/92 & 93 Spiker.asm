@@ -121,7 +121,7 @@ Obj93_Init:
 
 loc_37028:
 	_btst	#render_flags.on_screen,render_flags(a0)
-	_beq.w	JmpTo65_DeleteObject
+	_beq.w	JmpTo64_DeleteObject
 	bchg	#render_flags.x_flip,render_flags(a0)
 	jsr	(ObjectMove).l
 	jmp	(MarkObjGone).l

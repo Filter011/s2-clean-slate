@@ -11,7 +11,6 @@ byte_18FEE:
 	dc.b  $F
 	dc.b   0	; 1
 	dc.b $FF	; 2
-	rev02even
 byte_18FF1:
 	dc.b   0
 	dc.b   1	; 1
@@ -25,12 +24,10 @@ byte_18FF1:
 	dc.b   2	; 9
 	dc.b $FD	; 10
 	dc.b   0	; 11
-	rev02even
 byte_18FFD:
 	dc.b  $F
 	dc.b   3	; 1
 	dc.b $FF	; 2
-	rev02even
 byte_19000:
 	dc.b   0
 	dc.b   4	; 1
@@ -44,12 +41,10 @@ byte_19000:
 	dc.b   5	; 9
 	dc.b $FD	; 10
 	dc.b   2	; 11
-	rev02even
 byte_1900C:
 	dc.b  $F
 	dc.b   7	; 1
 	dc.b $FF	; 2
-	rev02even
 byte_1900F:
 	dc.b   0
 	dc.b   8	; 1

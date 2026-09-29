@@ -53,7 +53,7 @@ Obj85_Init:
 	move.w	y_pos(a0),objoff_34(a0)
 	move.w	x_pos(a0),d2
 	move.w	y_pos(a0),d3
-;	addi.w	#0,d3	; ???
+;	addi.w	#0,d3	; ?
 	move.b	#1,mainspr_childsprites(a0)
 	lea	subspr_data(a0),a2
 	move.w	d2,(a2)+	; sub2_x_pos
@@ -150,10 +150,6 @@ return_2AD78:
 ; ===========================================================================
 
 loc_2AD7A:
-    if gameRevision>0
-	cmpi.b	#4,routine(a1)
-	bhs.s	return_2AD78
-    endif
 	subq.b	#1,d0
 	bne.w	loc_2AE0C
 	_btst	#render_flags.on_screen,render_flags(a1)
@@ -309,10 +305,6 @@ return_2AF78:
 ; ===========================================================================
 
 loc_2AF7A:
-    if gameRevision>0
-	cmpi.b	#4,routine(a1)
-	bhs.s	return_2AF78
-    endif
 	subq.b	#1,d0
 	bne.w	loc_2B018
 	_btst	#render_flags.on_screen,render_flags(a1)

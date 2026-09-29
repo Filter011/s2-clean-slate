@@ -367,7 +367,7 @@ ObjC5_LaserWallDelete:
 	move.b	#$10,objoff_30(a0)
 	addq.b	#1,d1
 	cmpi.b	#5,d1
-	bhs.w	JmpTo65_DeleteObject
+	bhs.w	JmpTo64_DeleteObject
 	move.b	d1,anim_frame(a0)
 	move.b	d1,anim_frame_duration(a0)
 
@@ -461,7 +461,7 @@ ObjC5_PlatformReleaserDestroyP: 	; P=Platforms
 ObjC5_PlatformReleaserDelete:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	cmpi.b	#ObjID_WFZBoss,id(a1)
-	bne.w	JmpTo65_DeleteObject
+	bne.w	JmpTo64_DeleteObject
 	jsr	(Boss_LoadExplosion).l
 	jmp	(DisplaySprite).l
 ; ===========================================================================
@@ -572,7 +572,7 @@ ObjC5_PlatformHurtCollision:
 ObjC5_PlatformHurtFollowPlatform:
 	movea.w	objoff_2C(a0),a1 ; a1=object (platform)
 	btst	#status.npc.p1_pushing,status(a1)
-	bne.w	JmpTo65_DeleteObject
+	bne.w	JmpTo64_DeleteObject
 	move.w	x_pos(a1),x_pos(a0)
 	move.w	y_pos(a1),d0
 	addi.w	#$C,d0
@@ -583,7 +583,7 @@ ObjC5_PlatformHurtFollowPlatform:
 ObjC5_LaserShooter:
 	movea.w	objoff_2C(a0),a1 ; a1=object (laser case)
 	btst	#status.npc.p1_pushing,status(a1)
-	bne.w	JmpTo65_DeleteObject
+	bne.w	JmpTo64_DeleteObject
 	moveq	#0,d0
 	move.b	routine_secondary(a0),d0
 	move.w	ObjC5_LaserShooterIndex(pc,d0.w),d1
@@ -617,7 +617,7 @@ ObjC5_LaserShooterDown:
 ObjC5_Laser:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	btst	#status.npc.p1_pushing,status(a1)
-	bne.w	JmpTo65_DeleteObject
+	bne.w	JmpTo64_DeleteObject
 	moveq	#0,d0
 	move.b	routine_secondary(a0),d0
 	move.w	ObjC5_LaserIndex(pc,d0.w),d1
