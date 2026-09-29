@@ -173,7 +173,7 @@ loc_17564:
 ; ===========================================================================
 
 CNZ_Bumper_next:
-	lea	next_bumper(a1),a1
+	addq.l	#next_bumper,a1
 	cmpa.l	a1,a2
 	bne.s	CNZ_Bumper_loop
 
