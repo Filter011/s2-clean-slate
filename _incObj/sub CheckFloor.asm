@@ -23,7 +23,7 @@ Sonic_CheckFloor:
 	add.w	d0,d3
 	lea	(Primary_Angle).w,a4
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	bsr.w	FindFloor
 	move.w	d1,-(sp)
 	move.w	y_pos(a0),d2
@@ -37,10 +37,10 @@ Sonic_CheckFloor:
 	sub.w	d0,d3
 	lea	(Secondary_Angle).w,a4
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	bsr.w	FindFloor
 	move.w	(sp)+,d0
-	move.b	#0,d2
+	clr.b	d2
 
 loc_1ECC6:
 	move.b	(Secondary_Angle).w,d3
@@ -70,9 +70,9 @@ CheckFloorDist_Part2:
 	addi.w	#$A,d2
 	lea	(Primary_Angle).w,a4
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	bsr.w	FindFloor
-	move.b	#0,d2
+	clr.b	d2
 
 ; d2 what to use as angle if (Primary_Angle).w is odd
 ; returns angle in d3, or value in d2 if angle was odd
@@ -100,15 +100,15 @@ ChkFloorEdge_Part2:
 	move.l	(Secondary_Collision).w,(Collision_addr).w
 +
 	lea	(Primary_Angle).w,a4
-	move.b	#0,(a4)
+	clr.b	(a4)
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	move.b	top_solid_bit(a0),d5
 	bsr.w	FindFloor
 	move.b	(Primary_Angle).w,d3
 	btst	#0,d3
 	beq.s	+
-	move.b	#0,d3
+	clr.b	d3
 +
 	rts
 ; ===========================================================================
@@ -127,15 +127,15 @@ ChkFloorEdge2:
 	move.l	(Secondary_Collision).w,(Collision_addr).w
 +
 	lea	(Primary_Angle).w,a4
-	move.b	#0,(a4)
+	clr.b	(a4)
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	move.b	top_solid_bit(a1),d5
 	bsr.w	FindFloor
 	move.b	(Primary_Angle).w,d3
 	btst	#0,d3
 	beq.s	return_1EDF8
-	move.b	#0,d3
+	clr.b	d3
 
 return_1EDF8:
 	rts
@@ -156,15 +156,15 @@ ObjCheckFloorDist:
 	ext.w	d0
 	add.w	d0,d2
 	lea	(Primary_Angle).w,a4
-	move.b	#0,(a4)
+	clr.b	(a4)
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	moveq	#$C,d5
 	bsr.w	FindFloor
 	move.b	(Primary_Angle).w,d3
 	btst	#0,d3
 	beq.s	+
-	move.b	#0,d3
+	clr.b	d3
 +
 	rts
 ; ===========================================================================
@@ -183,9 +183,9 @@ FireCheckFloorDist:
 	ext.w	d0
 	add.w	d0,d2
 	lea	(Primary_Angle).w,a4
-	move.b	#0,(a4)
+	clr.b	(a4)
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	moveq	#$C,d5
 	bra.w	FindFloor
 ; End of function FireCheckFloorDist
@@ -204,9 +204,9 @@ RingCheckFloorDist:
 	ext.w	d0
 	add.w	d0,d2
 	lea	(Primary_Angle).w,a4
-	move.b	#0,(a4)
+	clr.b	(a4)
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	moveq	#$C,d5
 	bra.w	Ring_FindFloor
 ; End of function RingCheckFloorDist
@@ -231,7 +231,7 @@ CheckRightCeilingDist:
 	add.w	d0,d3
 	lea	(Primary_Angle).w,a4
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	bsr.w	FindWall
 	move.w	d1,-(sp)
 	move.w	y_pos(a0),d2
@@ -245,7 +245,7 @@ CheckRightCeilingDist:
 	add.w	d0,d3
 	lea	(Secondary_Angle).w,a4
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	bsr.w	FindWall
 	move.w	(sp)+,d0
 	move.b	#-$40,d2
@@ -273,7 +273,7 @@ CheckRightWallDist_Part2:
 	addi.w	#$A,d3
 	lea	(Primary_Angle).w,a4
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	bsr.w	FindWall
 	move.b	#$C0,d2
 	bra.w	loc_1ECFE
@@ -286,9 +286,9 @@ ObjCheckRightWallDist:
 	add.w	x_pos(a0),d3
 	move.w	y_pos(a0),d2
 	lea	(Primary_Angle).w,a4
-	move.b	#0,(a4)
+	clr.b	(a4)
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	moveq	#$D,d5
 	bsr.w	FindWall
 	move.b	(Primary_Angle).w,d3
@@ -475,7 +475,7 @@ ObjCheckLeftWallDist:
 	move.w	y_pos(a0),d2
 	eori.w	#$F,d3
 	lea	(Primary_Angle).w,a4
-	move.b	#0,(a4)
+	clr.b	(a4)
 	movea.w	#-$10,a3
 	move.w	#$400,d6
 	moveq	#$D,d5
