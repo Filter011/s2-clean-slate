@@ -1,7 +1,7 @@
 Supersonic_Header:
 	smpsHeaderStartSong 2
 	smpsHeaderVoice     Supersonic_Voices
-	smpsHeaderChan      $06, $03
+	smpsHeaderChan      $06, $01
 	smpsHeaderTempo     $01, $FA
 
 	smpsHeaderDAC       Supersonic_DAC
@@ -11,8 +11,6 @@ Supersonic_Header:
 	smpsHeaderFM        Supersonic_FM4,	$F4, $13
 	smpsHeaderFM        Supersonic_FM5,	$F4, $13
 	smpsHeaderPSG       Supersonic_PSG1,	$D0, $01, $00, fTone_09
-	smpsHeaderPSG       Supersonic_PSG2,	$D0, $03, $00, $00
-	smpsHeaderPSG       Supersonic_PSG3,	$00, $03, $00, fTone_04
 
 ; FM1 Data
 Supersonic_FM1:
@@ -180,14 +178,6 @@ Supersonic_PSG1:
 Supersonic_Call06:
 	dc.b	nA6, $03, nAb6, nG6, nFs6, nF6, nE6, nEb6, nD6
 	smpsReturn
-
-; PSG2 Data
-Supersonic_PSG2:
-	smpsStop
-
-; PSG3 Data
-Supersonic_PSG3:
-	smpsStop
 
 ; DAC Data
 Supersonic_DAC:

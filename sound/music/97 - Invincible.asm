@@ -29,7 +29,7 @@ Invincible_Loop07:
 	dc.b	nA5, nRst, nG5, $0F, nRst, $03, nB5, $18, nRst, $06
 	smpsLoop            $00, $02, Invincible_Loop07
 	smpsAlterVol        $FD
-	dc.b	nRst, $30, nRst, nA5, $04, nB5, nCs6, nD6, nE6, nFs6, nB5, nCs6
+	dc.b	nRst, $60, nA5, $04, nB5, nCs6, nD6, nE6, nFs6, nB5, nCs6
 	dc.b	nEb6, nE6, nFs6, nAb6, nCs6, nEb6, nF6, nFs6, nAb6, nBb6, nF6, nFs6
 	dc.b	nAb6, nBb6, nC7, nCs7
 	smpsAlterVol        $03
