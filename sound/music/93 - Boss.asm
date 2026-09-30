@@ -93,8 +93,8 @@ Boss_Loop06:
 	smpsLoop            $00, $02, Boss_Loop06
 
 Boss_Loop07:
-	dc.b	nRst, $30
-	smpsLoop            $00, $10, Boss_Loop07
+	dc.b	nRst, $60
+	smpsLoop            $00, $08, Boss_Loop07
 	smpsAlterNote       $03
 	smpsAlterVol        $FC
 
@@ -120,8 +120,8 @@ Boss_FM5:
 Boss_Jump00:
 	smpsModOff
 	smpsSetvoice        $01
-	dc.b	nRst, $30, nRst, $24, nD5, $06, nE5, nF5, $0C, nF5, nE5, nE5
-	dc.b	nD5, nD5, nE5, nRst, nRst, $30, nRst, $24, nD5, $06, nE5, nF5
+	dc.b	nRst, $54, nD5, $06, nE5, nF5, $0C, nF5, nE5, nE5
+	dc.b	nD5, nD5, nE5, nRst, nRst, $54, nD5, $06, nE5, nF5
 	dc.b	$0C, nE5, nEb5, nE5, nAb5, $18, nE5
 
 Boss_Loop05:
