@@ -1,9 +1,8 @@
 ;loc_3FCC4:
 AniArt_Load:
-	moveq	#0,d0
-	move.b	(Current_Zone).w,d0
-	add.w	d0,d0
-	add.w	d0,d0
+	move.w	(Current_ZoneAndAct).w,d0
+	ror.b	#1,d0
+	lsr.w	#5,d0
 	move.w	PLC_DYNANM+2(pc,d0.w),d1
 	lea	PLC_DYNANM(pc,d1.w),a2
 	move.w	PLC_DYNANM(pc,d0.w),d0
@@ -13,7 +12,7 @@ AniArt_Load:
 ; ---------------------------------------------------------------------------
 ; ZONE ANIMATION PROCEDURES AND SCRIPTS
 ;
-; Each zone gets two entries in this jump table. The first entry points to the
+; Each zone gets two entries for each act in this jump table. The first entry points to the
 ; zone's animation procedure (usually Dynamic_Normal, but some zones have special
 ; procedures for complicated animations). The second points to the zone's animation
 ; script.
@@ -21,56 +20,107 @@ AniArt_Load:
 ; Note that Animated_Null is not a valid animation script, so don't pair it up
 ; with anything except Dynamic_Null, or bad things will happen (for example, a bus error exception).
 ; ---------------------------------------------------------------------------
-PLC_DYNANM: zoneOrderedOffsetTable 2,2
-	zoneOffsetTableEntry.w Dynamic_Normal	; EHZ
+PLC_DYNANM: zoneOrderedOffsetTable 2,4
+	zoneOffsetTableEntry.w Dynamic_Normal	; EHZ1
 	zoneOffsetTableEntry.w Animated_EHZ
 
-	zoneOffsetTableEntry.w Dynamic_Null	; Zone 1
+	zoneOffsetTableEntry.w Dynamic_Normal	; EHZ2
+	zoneOffsetTableEntry.w Animated_EHZ
+
+	zoneOffsetTableEntry.w Dynamic_Null	; Zone 1 Act 1
 	zoneOffsetTableEntry.w Animated_Null
 
-	zoneOffsetTableEntry.w Dynamic_Null	; WZ
+	zoneOffsetTableEntry.w Dynamic_Null	; Zone 1 Act 2
 	zoneOffsetTableEntry.w Animated_Null
 
-	zoneOffsetTableEntry.w Dynamic_Null	; Zone 3
+	zoneOffsetTableEntry.w Dynamic_Null	; WZ1
 	zoneOffsetTableEntry.w Animated_Null
 
-	zoneOffsetTableEntry.w Dynamic_Normal	; MTZ1,2
+	zoneOffsetTableEntry.w Dynamic_Null	; WZ2
+	zoneOffsetTableEntry.w Animated_Null
+
+	zoneOffsetTableEntry.w Dynamic_Null	; Zone 3 Act 1
+	zoneOffsetTableEntry.w Animated_Null
+
+	zoneOffsetTableEntry.w Dynamic_Null	; Zone 3 Act 2
+	zoneOffsetTableEntry.w Animated_Null
+
+	zoneOffsetTableEntry.w Dynamic_Normal	; MTZ1
+	zoneOffsetTableEntry.w Animated_MTZ
+
+	zoneOffsetTableEntry.w Dynamic_Normal	; MTZ2
 	zoneOffsetTableEntry.w Animated_MTZ
 
 	zoneOffsetTableEntry.w Dynamic_Normal	; MTZ3
 	zoneOffsetTableEntry.w Animated_MTZ
 
-	zoneOffsetTableEntry.w Dynamic_Null	; WFZ
+	zoneOffsetTableEntry.w Dynamic_Normal	; MTZ4
+	zoneOffsetTableEntry.w Animated_MTZ
+
+	zoneOffsetTableEntry.w Dynamic_Null	; WFZ1
 	zoneOffsetTableEntry.w Animated_Null
 
-	zoneOffsetTableEntry.w Dynamic_HTZ	; HTZ
+	zoneOffsetTableEntry.w Dynamic_Null	; WFZ2
+	zoneOffsetTableEntry.w Animated_Null
+
+	zoneOffsetTableEntry.w Dynamic_HTZ	; HTZ1
 	zoneOffsetTableEntry.w Animated_HTZ
 
-	zoneOffsetTableEntry.w Dynamic_Normal	; HPZ
+	zoneOffsetTableEntry.w Dynamic_HTZ	; HTZ2
+	zoneOffsetTableEntry.w Animated_HTZ
+
+	zoneOffsetTableEntry.w Dynamic_Normal	; HPZ1
 	zoneOffsetTableEntry.w Animated_HPZ
 
-	zoneOffsetTableEntry.w Dynamic_Null	; Zone 9
+	zoneOffsetTableEntry.w Dynamic_Normal	; HPZ2
+	zoneOffsetTableEntry.w Animated_HPZ
+
+	zoneOffsetTableEntry.w Dynamic_Null	; Zone 9 Act 1
 	zoneOffsetTableEntry.w Animated_Null
 
-	zoneOffsetTableEntry.w Dynamic_Normal	; OOZ
+	zoneOffsetTableEntry.w Dynamic_Null	; Zone 9 Act 2
+	zoneOffsetTableEntry.w Animated_Null
+
+	zoneOffsetTableEntry.w Dynamic_Normal	; OOZ1
 	zoneOffsetTableEntry.w Animated_OOZ
 
-	zoneOffsetTableEntry.w Dynamic_Null	; MCZ
+	zoneOffsetTableEntry.w Dynamic_Normal	; OOZ2
+	zoneOffsetTableEntry.w Animated_OOZ
+
+	zoneOffsetTableEntry.w Dynamic_Null	; MCZ1
 	zoneOffsetTableEntry.w Animated_Null
 
-	zoneOffsetTableEntry.w Dynamic_CNZ	; CNZ
+	zoneOffsetTableEntry.w Dynamic_Null	; MCZ2
+	zoneOffsetTableEntry.w Animated_Null
+
+	zoneOffsetTableEntry.w Dynamic_CNZ	; CNZ1
 	zoneOffsetTableEntry.w Animated_CNZ
 
-	zoneOffsetTableEntry.w Dynamic_Normal	; CPZ
+	zoneOffsetTableEntry.w Dynamic_CNZ	; CNZ2
+	zoneOffsetTableEntry.w Animated_CNZ
+
+	zoneOffsetTableEntry.w Dynamic_Normal	; CPZ1
 	zoneOffsetTableEntry.w Animated_CPZ
 
-	zoneOffsetTableEntry.w Dynamic_Normal	; DEZ
+	zoneOffsetTableEntry.w Dynamic_Normal	; CPZ2
+	zoneOffsetTableEntry.w Animated_CPZ
+
+	zoneOffsetTableEntry.w Dynamic_Normal	; DEZ1
 	zoneOffsetTableEntry.w Animated_DEZ
 
-	zoneOffsetTableEntry.w Dynamic_ARZ	; ARZ
+	zoneOffsetTableEntry.w Dynamic_Normal	; DEZ2
+	zoneOffsetTableEntry.w Animated_DEZ
+
+	zoneOffsetTableEntry.w Dynamic_ARZ	; ARZ1
 	zoneOffsetTableEntry.w Animated_ARZ
 
-	zoneOffsetTableEntry.w Dynamic_Null	; SCZ
+	zoneOffsetTableEntry.w Dynamic_ARZ	; ARZ2
+	zoneOffsetTableEntry.w Animated_ARZ
+
+	zoneOffsetTableEntry.w Dynamic_Null	; SCZ1
+	zoneOffsetTableEntry.w Animated_Null
+
+	zoneOffsetTableEntry.w Dynamic_Null	; SCZ2
 	zoneOffsetTableEntry.w Animated_Null
     zoneTableEnd
 ; ===========================================================================
