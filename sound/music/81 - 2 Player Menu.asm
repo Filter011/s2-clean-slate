@@ -33,7 +33,7 @@ Results_screen_2p_FM1:
 	smpsPan             panCenter, $00
 	smpsSetvoice        $01
 	smpsCall            Results_screen_2p_Call05
-	dc.b	nRst, $18, nD5, $03, nB4, nRst, nD5, nRst, $0C, nRst, $18, nCs5
+	dc.b	nRst, $18, nD5, $03, nB4, nRst, nD5, nRst, $24, nCs5
 	dc.b	$03, nCs5, nRst, nCs5, nA4, $06, nCs5
 	smpsCall            Results_screen_2p_Call05
 	dc.b	nRst, $0C, nB4, nRst, nCs5, nRst, nD5, nRst, nE5, nRst, $18, nD6
@@ -64,7 +64,7 @@ Results_screen_2p_Call0B:
 	smpsReturn
 
 Results_screen_2p_Call05:
-	dc.b	nRst, $18, nD5, $03, nB4, nRst, nD5, nRst, $0C, nRst, $18, nCs5
+	dc.b	nRst, $18, nD5, $03, nB4, nRst, nD5, nRst, $24, nCs5
 	dc.b	$03, nA4, nRst, nCs5, nRst, $0C
 	smpsReturn
 
@@ -104,11 +104,11 @@ Results_screen_2p_FM3:
 	smpsSetvoice        $02
 	smpsCall            Results_screen_2p_Call00
 	smpsAlterVol        $F9
-	dc.b	nRst, $1E, nA4, $03, nB4, nD5, nRst, $09, nRst, $1E, nE5, $03
-	dc.b	nFs5, nD5, nRst, $09, nRst, $1E, nA4, $03, nB4, nD5, nRst, $09
-	dc.b	nRst, $18, nFs5, $03, nFs5, nRst, nFs5, nE5, $06, nD5, nRst, $1E
-	dc.b	nA4, $03, nB4, nD5, nRst, $09, nRst, $1E, nFs5, $06, nD5, $03
-	dc.b	nRst, $09, nRst, $1E, nA4, $03, nB4, nD5, nRst, $09, nRst, $18
+	dc.b	nRst, $1E, nA4, $03, nB4, nD5, nRst, $27, nE5, $03
+	dc.b	nFs5, nD5, nRst, $27, nA4, $03, nB4, nD5, nRst, $21
+	dc.b	nFs5, $03, nFs5, nRst, nFs5, nE5, $06, nD5, nRst, $1E
+	dc.b	nA4, $03, nB4, nD5, nRst, $27, nFs5, $06, nD5, $03
+	dc.b	nRst, $27, nA4, $03, nB4, nD5, nRst, $21
 	dc.b	nG5, $03, nFs5, nG5, nAb5, nA5, nRst, nD6, nRst
 	smpsAlterVol        $07
 	smpsSetvoice        $01
@@ -130,9 +130,9 @@ Results_screen_2p_Call02:
 	smpsReturn
 
 Results_screen_2p_Call00:
-	dc.b	nRst, $1E, nA4, $03, nB4, nD5, nRst, $09, nRst, $1E, nE5, $03
-	dc.b	nFs5, nD5, nRst, $09, nRst, $1E, nA4, $03, nB4, nD5, nRst, $09
-	dc.b	nRst, $18, nG5, $03, nFs5, nG5, nAb5, nA5, nD5, nRst, nD5, $03
+	dc.b	nRst, $1E, nA4, $03, nB4, nD5, nRst, $27, nE5, $03
+	dc.b	nFs5, nD5, nRst, $27, nA4, $03, nB4, nD5, nRst, $21
+	dc.b	nG5, $03, nFs5, nG5, nAb5, nA5, nD5, nRst, nD5, $03
 	smpsReturn
 
 ; FM5 Data
