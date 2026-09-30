@@ -542,14 +542,18 @@ smpsFMvoice macro voice,songID
 ; F0wwxxyyzz - Modulation - ww: wait time - xx: modulation speed - yy: change per step - zz: number of steps
 smpsModSet macro wait,speed,change,step
 	dc.b	$F0
-;	if (SonicDriverVer>=3)&&(SourceDriver<3)
-;		dc.b	wait+1,speed,change,((step+1) * speed) & $FF
-;	elseif (SonicDriverVer<3)&&(SourceDriver>=3)
-;		dc.b	wait-1,speed,change,conv0To256(step)/conv0To256(speed)-1
-;	else
-		dc.b	wait+1,speed,change,((step+1) * speed) & $FF
-;	endif
-	;dc.b	speed,change,step
+	if SourceDriver==1
+		dc.b	wait+2
+	elseif SourceDriver==2
+		dc.b	wait+1
+	else
+		dc.b	wait
+	endif
+	if SourceDriver<3
+		dc.b	speed,change,((step+1) * speed) & $FF
+	else
+		dc.b	speed,change,step
+	endif
 	endm
 
 ; Turn on Modulation
