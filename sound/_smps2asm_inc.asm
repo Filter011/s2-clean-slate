@@ -547,7 +547,7 @@ smpsModSet macro wait,speed,change,step
 ;	elseif (SonicDriverVer<3)&&(SourceDriver>=3)
 ;		dc.b	wait-1,speed,change,conv0To256(step)/conv0To256(speed)-1
 ;	else
-		dc.b	wait+1,speed,change,step
+		dc.b	wait+1,speed,change,((step+1) * speed) & $FF
 ;	endif
 	;dc.b	speed,change,step
 	endm

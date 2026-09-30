@@ -2,7 +2,7 @@
 
 ; sub_481E:
 MoveSonicInDemo:
-	tst.w	(Demo_mode_flag).w	; is demo mode on?
+	tst.b	(Demo_mode_flag).w	; is demo mode on?
 	bne.s	MoveDemo_On	; if yes, branch
 	rts
 ; ===========================================================================

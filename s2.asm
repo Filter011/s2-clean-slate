@@ -1244,7 +1244,7 @@ TitleScreen:
 	moveq	#0,d0
 	move.b	d0,(Last_star_pole_hit).w
 	move.w	d0,(Debug_placement_mode).w
-	move.w	d0,(Demo_mode_flag).w
+	move.b	d0,(Demo_mode_flag).w
 	move.w	d0,(PalCycle_Timer).w
 	move.b	d0,(Level_started_flag).w
 	move.b	d0,(Debug_mode_flag).w
@@ -1339,8 +1339,7 @@ TitleScreen:
     if debugbuild
 	; Sonic 2 Beta 4 reveals that these were the original instructions.
 	; The original source code may have been able to produce debug builds with this enabled.
-	move.w	#$101,(Level_select_flag).w
-	move.w	#$101,(Debug_mode_flag).w
+	move.l	#$1010101,(Level_select_flag).w
     endif
 
 	; Reset Sonic's position record buffer.
@@ -1471,7 +1470,7 @@ TitleScreen_Demo:
 	blo.s	+
 	move.w	#0,(Demo_number).w
 +
-	move.w	#1,(Demo_mode_flag).w
+	st.b	(Demo_mode_flag).w
 	move.b	#GameModeID_Demo,(Game_Mode).w ; => Level (Demo mode)
 	move.b	#3,(Life_count).w
 

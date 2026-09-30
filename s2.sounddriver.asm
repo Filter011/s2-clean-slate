@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.9.19.1 (stable)
+; S2CS Driver version: 26.9.29 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -930,29 +930,14 @@ zDoModulation:
 	dec	(ix+zTrack.ModulationWait)	; Decrement timer
 	ret	nz				; if non-zero, return
 	inc	(ix+zTrack.ModulationWait)	; Otherwise, increment timer
+	ld	e,(ix+zTrack.ModulationPtrLow)
+	ld	d,(ix+zTrack.ModulationPtrHigh)	; 'de' points to modulation setting
+	inc	de				; skip passed 'ww' period of time
 	dec	(ix+zTrack.ModulationSpeed)	; Decrement modulation speed counter
-	ret	nz				; Return if not yet zero
-	ld	l,(ix+zTrack.ModulationPtrLow)
-	ld	h,(ix+zTrack.ModulationPtrHigh)	; 'hl' points to modulation setting
-	inc	hl				; skip passed 'ww' period of time
-	ld	a,(hl)				; Get modulation speed
+	jr	nz,.notzero
+	ld	a,(de)				; Get modulation speed
 	ld	(ix+zTrack.ModulationSpeed),a	; Restore speed counter
-	ld	a,(ix+zTrack.ModulationSteps)	; Get number of steps in modulation
-	or	a
-	jr	nz,.calcfreq			; If not zero, skip to .calcfreq
 
-	; If steps have reached zero...
-	inc	hl				; passed mod speed
-	inc	hl				; passed mod change per mod step
-	ld	a,(hl)				; get number of steps in modulation
-	ld	(ix+zTrack.ModulationSteps),a	; restore modulation steps
-	ld	a,(ix+zTrack.ModulationDelta)	; get modulation change per mod step
-	neg					; flip it negative
-	ld	(ix+zTrack.ModulationDelta),a	; store negated value
-	ret
-
-.calcfreq:
-	dec	(ix+zTrack.ModulationSteps)	; Decrement the step
 	ld	l,(ix+zTrack.ModulationValLow)
 	ld	h,(ix+zTrack.ModulationValHigh)	; Get 16-bit modulation value
 
@@ -965,6 +950,18 @@ zDoModulation:
 	add	hl,bc				; Add to current modulation value
 	ld	(ix+zTrack.ModulationValLow),l
 	ld	(ix+zTrack.ModulationValHigh),h	; Store new 16-bit modulation value
+
+.notzero:
+	dec	(ix+zTrack.ModulationSteps)	; Decrement the step
+	ret	nz				; If not zero, return
+
+	inc	de				; passed mod speed
+	inc	de				; passed mod change per mod step
+	ld	a,(de)				; get number of steps in modulation
+	ld	(ix+zTrack.ModulationSteps),a	; restore modulation steps
+	ld	a,(ix+zTrack.ModulationDelta)	; get modulation change per mod step
+	neg					; flip it negative
+	ld	(ix+zTrack.ModulationDelta),a	; store negated value
 	ret
 ; End of function zDoModulation
 
