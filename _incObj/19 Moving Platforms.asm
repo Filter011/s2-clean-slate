@@ -82,9 +82,8 @@ JmpTo20_DeleteObject ; JmpTo
 ; ---------------------------------------------------------------------------
 ; loc_220E8:
 Obj19_Move:
-	moveq	#0,d0
-	move.b	subtype(a0),d0
-	andi.w	#$F,d0
+	moveq	#$F,d0
+	and.b	subtype(a0),d0
 	add.w	d0,d0
 	move.w	Obj19_MoveTypes(pc,d0.w),d1
 	jmp	Obj19_MoveTypes(pc,d1.w)

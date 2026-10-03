@@ -34,7 +34,7 @@ Obj25_Animate:
 ; Obj_25_sub_4:
 Obj25_Collect:
 	addq.b	#2,routine(a0)
-	move.b	#0,collision_flags(a0)
+	clr.b	collision_flags(a0)
 	move.w	#1*$80,priority(a0)
 	move.w	#ArtTile_ArtNem_Ring_sparkles|palette_line_1,obGfx(a0)
 	bsr.s	CollectRing
@@ -155,10 +155,12 @@ Obj37_Init:
 +
 	moveq	#SndID_RingSpill,d0
 	jsr	(PlaySound2).w
-	move.w	#0,(Ring_count).w
-	move.b	#$80,(Update_HUD_rings).w
-	move.b	#0,(Extra_life_flags).w
-	move.b	#-1,(Ring_spill_anim_counter).w
+	moveq	#0,d0
+	moveq	#-1,d1
+	move.w	d0,(Ring_count).w
+	move.b	d1,(Update_HUD_rings).w
+	move.b	d0,(Extra_life_flags).w
+	move.b	d1,(Ring_spill_anim_counter).w
 
 ; Obj_37_sub_2:
 Obj37_Main:

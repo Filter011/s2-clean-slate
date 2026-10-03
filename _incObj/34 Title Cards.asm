@@ -96,24 +96,13 @@ Obj34_Wait:
 Obj34_BackgroundIn:	; the blue background (green when playing as Knuckles), coming in
 	moveq	#$10,d0
 	moveq	#8,d1
-;	tst.w	(Two_player_mode).w	; if two-player mode is on (1)
-;	sne	d6			; then set d6 to $FF, else set d6 to $00
-;	beq.s	+
-;	moveq	#$20,d0
-;	moveq	#7,d1
-+
 	move.w	titlecard_location(a0),d2
 	cmp.w	d0,d2
-	beq.s	++	; rts
+	beq.s	+	; rts
 	lsl.w	d1,d2
 	move.w	#VRAM_Plane_A_Name_Table,d0
 	add.w	d2,d0
 	move.w	d0,titlecard_vram_dest(a0)
-;	tst.b	d6
-;	beq.s	+
-;	addi.w	#VRAM_Plane_A_Name_Table_2P,d2
-;	move.w	d2,titlecard_vram_dest_2P(a0)
-+
 	addq.w	#1,titlecard_location(a0)
 +
 	rts
@@ -124,23 +113,10 @@ Obj34_BottomPartIn:	; the yellow part at the bottom, coming in
 	move.w	titlecard_location(a0),d0
 	bmi.w	Obj34_MoveTowardsTargetPosition
 	add.w	d0,d0
-;	move.w	#$80*$14/2,d1		; $14 half-cells down (for 2P mode)
-;	tst.w	(Two_player_mode).w
-;	sne	d6
-;	bne.s	+
-;	add.w	d1,d1				; double distance down for 1P mode
-	move.w	#($80*$14/2)*2,d1
-+
 	move.w	#VRAM_Plane_A_Name_Table,d2
 	add.w	d0,d2
-	add.w	d1,d2
+	addi.w	#($80*$14/2)*2,d2
 	move.w	d2,titlecard_vram_dest(a0)
-;	tst.b	d6
-;	beq.s	+
-;	addi.w	#VRAM_Plane_A_Name_Table_2P,d1
-;	add.w	d0,d1
-;	move.w	d1,titlecard_vram_dest_2P(a0)
-+
 	subq.w	#2,titlecard_location(a0)
 	move.w	titlecard_location(a0),titlecard_split_point(a0)
 	cmpi.w	#6,titlecard_location(a0) ; if titlecard_location(a0) is 6,
@@ -153,10 +129,6 @@ Obj34_LeftPartIn:	; the red part on the left, coming in
 	tst.w	titlecard_location(a0)
 	bmi.w	Obj34_MoveTowardsTargetPosition
 	move.w	#VRAM_Plane_A_Name_Table,titlecard_vram_dest(a0)
-;	tst.w	(Two_player_mode).w
-;	beq.s	+
-;	move.w	#VRAM_Plane_A_Name_Table_2P,titlecard_vram_dest_2P(a0)
-+
 	addq.w	#2,titlecard_location(a0)
 	move.w	titlecard_location(a0),titlecard_split_point(a0)
 	cmpi.w	#$E,titlecard_location(a0)
@@ -200,16 +172,19 @@ Obj34_MoveTowardsTargetPosition:
 	move.w	x_pixel(a0),d1
 	cmp.w	titlecard_x_target(a0),d1
 	beq.s	.display
-	bhi.s	+
+	bgt.s	+
 	neg.w	d0
 +
 	sub.w	d0,x_pixel(a0)
 	; If target lies very far off-screen, then don't bother trying to display it.
 	; This is because the sprite coordinates are prone to overflow and underflow.
 	cmpi.w	#$200,x_pixel(a0)
-	bhi.s	.return
+	bgt.s	.return
+
 .display:
-	bra.w	DisplaySprite
+	; Do not display unless close to the visible portion of the screen.
+	cmpi.w	#spriteScreenPositionX(-48),x_pixel(a0)
+	bgt.w	DisplaySprite
 .return:
 	rts
 ; End of function Obj34_MoveTowardsTargetPosition
@@ -227,17 +202,11 @@ Obj34_LeftPartOut:	; red part on the left, going out
 	add.w	d0,d0
 	move.w	#VRAM_Plane_A_Name_Table,titlecard_vram_dest(a0)
 	add.w	d0,titlecard_vram_dest(a0)
-;	tst.w	(Two_player_mode).w
-;	beq.s	+
-;	move.w	#VRAM_Plane_A_Name_Table_2P,titlecard_vram_dest_2P(a0)
-;	add.w	d0,titlecard_vram_dest_2P(a0)
-+
 	subq.w	#4,titlecard_location(a0)
 	cmpi.w	#-2,titlecard_location(a0)
-	bne.s	+
+	bne.s	loc_13EC4
 	clr.w	titlecard_location(a0)
-+
-	bra.w	loc_13EC4
+	bra.s	loc_13EC4
 ; ===========================================================================
 ; loc_13E84:
 Obj34_BottomPartOut:	; yellow part at the bottom, going out
@@ -249,23 +218,10 @@ Obj34_BottomPartOut:	; yellow part at the bottom, going out
 ; ---------------------------------------------------------------------------
 +
 	add.w	d0,d0
-;	move.w	#$80*$14/2,d1		; $14 half-cells down (for 2P mode)
-;	tst.w	(Two_player_mode).w
-;	sne	d6
-;	bne.s	+
-;	add.w	d1,d1				; double distance down for 1P mode
-	move.w	#($80*$14/2)*2,d1		; $14 half-cells down (for 2P mode)
-+
 	move.w	#VRAM_Plane_A_Name_Table,d2
 	add.w	d0,d2
-	add.w	d1,d2
+	addi.w	#($80*$14/2)*2,d2
 	move.w	d2,titlecard_vram_dest(a0)
-;	tst.b	d6
-;	beq.s	+
-;	addi.w	#VRAM_Plane_A_Name_Table_2P,d1
-;	add.w	d0,d1
-;	move.w	d1,titlecard_vram_dest_2P(a0)
-+
 	addq.w	#4,titlecard_location(a0)
 
 loc_13EC4:
@@ -337,5 +293,4 @@ Obj34_LoadStandardWaterAndAnimalArt:
 	move.b	(Current_Zone).w,d0
 	move.b	Animal_PLCTable(pc,d0.w),d0 ; load the animal graphics for the current zone
 	jsr	(LoadPLC).w
-+
 	bra.w	DeleteObject		; delete the title card object

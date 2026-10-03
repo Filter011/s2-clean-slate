@@ -189,9 +189,8 @@ Obj18_Nudge:
 
 ; sub_10638:
 Obj18_Move:
-	moveq	#0,d0
-	move.b	subtype(a0),d0
-	andi.w	#%1111,d0		; filter for t bits
+	moveq	#%1111,d0		; filter for t bits
+	and.b	subtype(a0),d0
 	add.w	d0,d0
 	move.w	Obj18_Behaviours(pc,d0.w),d1
 	jmp	Obj18_Behaviours(pc,d1.w)
@@ -341,7 +340,7 @@ Obj18_Fall:
 .moveY:
 	move.w	y_vel(a0),d0
 	ext.l	d0
-	lsl.l	#8,d0
+	asl.l	#8,d0
 	add.l	d0,obj18_y_actual(a0)
 	addi.w	#$38,y_vel(a0)
 	move.w	(Camera_Max_Y_pos).w,d0

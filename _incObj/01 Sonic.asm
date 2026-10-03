@@ -1318,10 +1318,10 @@ Sonic_Super:
 	tst.b	(Super_Sonic_flag).w	; Ignore all this code if not Super Sonic
 	beq.s	return_1ABA4
 	tst.b	(Update_HUD_timer).w
-	beq.s	Sonic_RevertToNormal ; ?
+	beq.s	Sonic_RevertToNormal	; ?
 	subq.w	#1,(Super_Sonic_frame_count).w
 	bpl.s	return_1ABA4
-	move.w	#60,(Super_Sonic_frame_count).w	; Reset frame counter to 60
+	move.w	#60-1,(Super_Sonic_frame_count).w	; Reset frame counter to 59
 	tst.w	(Ring_count).w
 	beq.s	Sonic_RevertToNormal
 	ori.b	#1,(Update_HUD_rings).w

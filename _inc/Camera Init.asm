@@ -21,8 +21,8 @@ InitCameraValues:
 ; ===========================================================================
 ; off_C296:
 InitCam_Index: zoneOrderedOffsetTable 2,2
-	zoneOffsetTableEntry.w InitCam_EHZ	; EHZ1
-	zoneOffsetTableEntry.w InitCam_EHZ	; EHZ2
+	zoneOffsetTableEntry.w InitCam_EHZ_HTZ	; EHZ1
+	zoneOffsetTableEntry.w InitCam_EHZ_HTZ	; EHZ2
 	zoneOffsetTableEntry.w InitCam_Null	; Zone 1 Act 1
 	zoneOffsetTableEntry.w InitCam_Null	; Zone 1 Act 2
 	zoneOffsetTableEntry.w InitCam_Null	; WZ1
@@ -35,8 +35,8 @@ InitCam_Index: zoneOrderedOffsetTable 2,2
 	zoneOffsetTableEntry.w InitCam_Std	; MTZ4
 	zoneOffsetTableEntry.w InitCam_Null	; WFZ1
 	zoneOffsetTableEntry.w InitCam_Null	; WFZ2
-	zoneOffsetTableEntry.w InitCam_HTZ	; HTZ1
-	zoneOffsetTableEntry.w InitCam_HTZ	; HTZ2
+	zoneOffsetTableEntry.w InitCam_EHZ_HTZ	; HTZ1
+	zoneOffsetTableEntry.w InitCam_EHZ_HTZ	; HTZ2
 	zoneOffsetTableEntry.w InitCam_HPZ	; HPZ1
 	zoneOffsetTableEntry.w InitCam_HPZ	; HPZ2
 	zoneOffsetTableEntry.w InitCam_Null	; Zone 9 Act 1
@@ -58,9 +58,7 @@ InitCam_Index: zoneOrderedOffsetTable 2,2
     zoneTableEnd
 ; ===========================================================================
 ;loc_C2B8:
-InitCam_EHZ:
-;loc_C2F4:
-InitCam_HTZ:
+InitCam_EHZ_HTZ:
 	moveq	#0,d2
 	move.l	d2,(Camera_BG_X_pos).w
 	move.l	d2,(Camera_BG_Y_pos).w

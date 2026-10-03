@@ -76,8 +76,7 @@ loc_230C2:
 	move.b	#8,routine(a1)
 	move.w	x_pos(a0),x_pos(a1)
 	move.w	y_pos(a0),y_pos(a1)
-	move.w	x_vel(a0),x_vel(a1)
-	move.w	y_vel(a0),y_vel(a1)
+	move.l	x_vel(a0),x_vel(a1)	; and y_vel
 	move.b	#8,y_radius(a1)
 	move.b	#8,x_radius(a1)
 	move.l	mappings(a0),mappings(a1)

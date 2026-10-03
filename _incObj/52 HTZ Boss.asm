@@ -186,7 +186,7 @@ loc_2FE6E:
 loc_2FE7C:
 	move.w	#-$E0,(Boss_Y_vel).w
 	move.b	#0,boss_routine(a0)
-	sf	objoff_38(a0)
+	sf.b	objoff_38(a0)
 	move.w	(MainCharacter+x_pos).w,d0
 	subi.w	#$2FC0,d0
 	bmi.s	loc_2FEA8
@@ -199,7 +199,7 @@ loc_2FE7C:
 loc_2FEA8:
 	move.w	#$2F40,x_pos(a0)
 	move.w	#$5A0,(Boss_Y_pos).w
-	sf	boss_defeated(a0)
+	sf.b	boss_defeated(a0)
 
 loc_2FEB8:
 	move.w	x_pos(a0),d0
@@ -289,7 +289,7 @@ loc_2FF78:
 
 loc_2FF80:
 	jsr	(AllocateObject).l
-	bne.w	return_30006
+	bne.s	return_30006
 	move.w	x_pos(a0),x_pos(a1)
 	move.w	y_pos(a0),y_pos(a1)
 
