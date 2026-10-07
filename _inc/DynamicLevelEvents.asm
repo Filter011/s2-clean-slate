@@ -6,9 +6,9 @@
 RunDynamicLevelEvents:
 	move.w	(Current_ZoneAndAct).w,d0
 	ror.b	#1,d0
-	lsr.w	#6,d0
-	move.w	DynamicLevelEventIndex(pc,d0.w),d0
-	jsr	DynamicLevelEventIndex(pc,d0.w)
+	lsr.w	#5,d0
+	movea.l	DynamicLevelEventIndex(pc,d0.w),a0
+	jsr	(a0)
 	moveq	#2,d1
 	move.w	(Camera_Max_Y_pos_target).w,d0
 	sub.w	(Camera_Max_Y_pos).w,d0
@@ -43,41 +43,41 @@ RunDynamicLevelEvents:
 
 ; ===========================================================================
 ; off_E636:
-DynamicLevelEventIndex: zoneOrderedOffsetTable 2,2
-	zoneOffsetTableEntry.w LevEvents_EHZ	; EHZ1
-	zoneOffsetTableEntry.w LevEvents_EHZ2	; EHZ2
-	zoneOffsetTableEntry.w LevEvents_001	; Zone 1 Act 1
-	zoneOffsetTableEntry.w LevEvents_001	; Zone 1 Act 2
-	zoneOffsetTableEntry.w LevEvents_WZ	; WZ1
-	zoneOffsetTableEntry.w LevEvents_WZ	; WZ2
-	zoneOffsetTableEntry.w LevEvents_003	; Zone 3 Act 1
-	zoneOffsetTableEntry.w LevEvents_003	; Zone 3 Act 2
-	zoneOffsetTableEntry.w LevEvents_MTZ	; MTZ1
-	zoneOffsetTableEntry.w LevEvents_MTZ	; MTZ2
-	zoneOffsetTableEntry.w LevEvents_MTZ3	; MTZ3
-	zoneOffsetTableEntry.w LevEvents_MTZ3	; MTZ4
-	zoneOffsetTableEntry.w LevEvents_WFZ	; WFZ1
-	zoneOffsetTableEntry.w LevEvents_WFZ	; WFZ2
-	zoneOffsetTableEntry.w LevEvents_HTZ	; HTZ1
-	zoneOffsetTableEntry.w LevEvents_HTZ2	; HTZ2
-	zoneOffsetTableEntry.w LevEvents_HPZ	; HPZ1
-	zoneOffsetTableEntry.w LevEvents_HPZ	; HPZ2
-	zoneOffsetTableEntry.w LevEvents_009	; Zone 9 Act 1
-	zoneOffsetTableEntry.w LevEvents_009	; Zone 9 Act 2
-	zoneOffsetTableEntry.w LevEvents_OOZ	; OOZ1
-	zoneOffsetTableEntry.w LevEvents_OOZ2	; OOZ2
-	zoneOffsetTableEntry.w LevEvents_MCZ	; MCZ1
-	zoneOffsetTableEntry.w LevEvents_MCZ2	; MCZ2
-	zoneOffsetTableEntry.w LevEvents_CNZ	; CNZ1
-	zoneOffsetTableEntry.w LevEvents_CNZ2	; CNZ2
-	zoneOffsetTableEntry.w LevEvents_CPZ	; CPZ1
-	zoneOffsetTableEntry.w LevEvents_CPZ2	; CPZ2
-	zoneOffsetTableEntry.w LevEvents_DEZ	; DEZ1
-	zoneOffsetTableEntry.w LevEvents_DEZ	; DEZ2
-	zoneOffsetTableEntry.w LevEvents_ARZ	; ARZ1
-	zoneOffsetTableEntry.w LevEvents_ARZ2	; ARZ2
-	zoneOffsetTableEntry.w LevEvents_SCZ	; SCZ1
-	zoneOffsetTableEntry.w LevEvents_SCZ2	; SCZ2
+DynamicLevelEventIndex: zoneOrderedOffsetTable 4,2
+	zoneTableEntry.l LevEvents_EHZ	; EHZ1
+	zoneTableEntry.l LevEvents_EHZ2	; EHZ2
+	zoneTableEntry.l LevEvents_001	; Zone 1 Act 1
+	zoneTableEntry.l LevEvents_001	; Zone 1 Act 2
+	zoneTableEntry.l LevEvents_WZ	; WZ1
+	zoneTableEntry.l LevEvents_WZ	; WZ2
+	zoneTableEntry.l LevEvents_003	; Zone 3 Act 1
+	zoneTableEntry.l LevEvents_003	; Zone 3 Act 2
+	zoneTableEntry.l LevEvents_MTZ	; MTZ1
+	zoneTableEntry.l LevEvents_MTZ	; MTZ2
+	zoneTableEntry.l LevEvents_MTZ3	; MTZ3
+	zoneTableEntry.l LevEvents_MTZ3	; MTZ4
+	zoneTableEntry.l LevEvents_WFZ	; WFZ1
+	zoneTableEntry.l LevEvents_WFZ	; WFZ2
+	zoneTableEntry.l LevEvents_HTZ	; HTZ1
+	zoneTableEntry.l LevEvents_HTZ2	; HTZ2
+	zoneTableEntry.l LevEvents_HPZ	; HPZ1
+	zoneTableEntry.l LevEvents_HPZ	; HPZ2
+	zoneTableEntry.l LevEvents_009	; Zone 9 Act 1
+	zoneTableEntry.l LevEvents_009	; Zone 9 Act 2
+	zoneTableEntry.l LevEvents_OOZ	; OOZ1
+	zoneTableEntry.l LevEvents_OOZ2	; OOZ2
+	zoneTableEntry.l LevEvents_MCZ	; MCZ1
+	zoneTableEntry.l LevEvents_MCZ2	; MCZ2
+	zoneTableEntry.l LevEvents_CNZ	; CNZ1
+	zoneTableEntry.l LevEvents_CNZ2	; CNZ2
+	zoneTableEntry.l LevEvents_CPZ	; CPZ1
+	zoneTableEntry.l LevEvents_CPZ2	; CPZ2
+	zoneTableEntry.l LevEvents_DEZ	; DEZ1
+	zoneTableEntry.l LevEvents_DEZ	; DEZ2
+	zoneTableEntry.l LevEvents_ARZ	; ARZ1
+	zoneTableEntry.l LevEvents_ARZ2	; ARZ2
+	zoneTableEntry.l LevEvents_SCZ	; SCZ1
+	zoneTableEntry.l LevEvents_SCZ2	; SCZ2
     zoneTableEnd
 ; ===========================================================================
 ; loc_E658:

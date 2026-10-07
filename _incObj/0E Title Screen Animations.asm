@@ -32,7 +32,6 @@ Obj0E_Index: offsetTable
 ; ===========================================================================
 ; loc_12E38:
 Obj0E_Init:
-	addq.b	#2,routine(a0)	; useless, because it's overwritten with the subtype below
 	move.l	#Obj0E_MapUnc_136A8,mappings(a0)
 	move.w	#ArtTile_ArtNem_TitleSprites,art_tile(a0)
 	move.w	#4*$80,priority(a0)

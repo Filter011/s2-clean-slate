@@ -79,8 +79,7 @@ Obj_CapSpeed:
 	bls.s	+	; if yes, branch
 	move.w	d1,d3	; else, cap speed
 +	; update speed
-	move.w	d2,x_vel(a0)
-	move.w	d3,y_vel(a0)
+	movem.w	d2-d3,x_vel(a0)	; and y_vel
 	rts
 ; ===========================================================================
 ; ---------------------------------------------------------------------------

@@ -13,48 +13,48 @@ InitCameraValues:
 +
 	move.w	(Current_ZoneAndAct).w,d2
 	ror.b	#1,d2
-	lsr.w	#6,d2
-	move.w	InitCam_Index(pc,d2.w),d2
-	jmp	InitCam_Index(pc,d2.w)
+	lsr.w	#5,d2
+	movea.l	InitCam_Index(pc,d2.w),a0
+	jmp	(a0)
 ; End of function InitCameraValues
 
 ; ===========================================================================
 ; off_C296:
-InitCam_Index: zoneOrderedOffsetTable 2,2
-	zoneOffsetTableEntry.w InitCam_EHZ_HTZ	; EHZ1
-	zoneOffsetTableEntry.w InitCam_EHZ_HTZ	; EHZ2
-	zoneOffsetTableEntry.w InitCam_Null	; Zone 1 Act 1
-	zoneOffsetTableEntry.w InitCam_Null	; Zone 1 Act 2
-	zoneOffsetTableEntry.w InitCam_Null	; WZ1
-	zoneOffsetTableEntry.w InitCam_Null	; WZ2
-	zoneOffsetTableEntry.w InitCam_Null	; Zone 3 Act 1
-	zoneOffsetTableEntry.w InitCam_Null	; Zone 3 Act 2
-	zoneOffsetTableEntry.w InitCam_Std	; MTZ1
-	zoneOffsetTableEntry.w InitCam_Std	; MTZ2
-	zoneOffsetTableEntry.w InitCam_Std	; MTZ3
-	zoneOffsetTableEntry.w InitCam_Std	; MTZ4
-	zoneOffsetTableEntry.w InitCam_Null	; WFZ1
-	zoneOffsetTableEntry.w InitCam_Null	; WFZ2
-	zoneOffsetTableEntry.w InitCam_EHZ_HTZ	; HTZ1
-	zoneOffsetTableEntry.w InitCam_EHZ_HTZ	; HTZ2
-	zoneOffsetTableEntry.w InitCam_HPZ	; HPZ1
-	zoneOffsetTableEntry.w InitCam_HPZ	; HPZ2
-	zoneOffsetTableEntry.w InitCam_Null	; Zone 9 Act 1
-	zoneOffsetTableEntry.w InitCam_Null	; Zone 9 Act 2
-	zoneOffsetTableEntry.w InitCam_OOZ	; OOZ1
-	zoneOffsetTableEntry.w InitCam_OOZ	; OOZ2
-	zoneOffsetTableEntry.w InitCam_MCZ	; MCZ1
-	zoneOffsetTableEntry.w InitCam_MCZ	; MCZ2
-	zoneOffsetTableEntry.w InitCam_CNZ	; CNZ1
-	zoneOffsetTableEntry.w InitCam_CNZ	; CNZ2
-	zoneOffsetTableEntry.w InitCam_CPZ	; CPZ1
-	zoneOffsetTableEntry.w InitCam_CPZ	; CPZ2
-	zoneOffsetTableEntry.w InitCam_Null	; DEZ1
-	zoneOffsetTableEntry.w InitCam_Null	; DEZ2
-	zoneOffsetTableEntry.w InitCam_ARZ	; ARZ1
-	zoneOffsetTableEntry.w InitCam_ARZ	; ARZ2
-	zoneOffsetTableEntry.w InitCam_SCZ	; SCZ1
-	zoneOffsetTableEntry.w InitCam_SCZ	; SCZ2
+InitCam_Index: zoneOrderedOffsetTable 4,2
+	zoneTableEntry.l InitCam_EHZ_HTZ	; EHZ1
+	zoneTableEntry.l InitCam_EHZ_HTZ	; EHZ2
+	zoneTableEntry.l InitCam_Null	; Zone 1 Act 1
+	zoneTableEntry.l InitCam_Null	; Zone 1 Act 2
+	zoneTableEntry.l InitCam_Null	; WZ1
+	zoneTableEntry.l InitCam_Null	; WZ2
+	zoneTableEntry.l InitCam_Null	; Zone 3 Act 1
+	zoneTableEntry.l InitCam_Null	; Zone 3 Act 2
+	zoneTableEntry.l InitCam_Std	; MTZ1
+	zoneTableEntry.l InitCam_Std	; MTZ2
+	zoneTableEntry.l InitCam_Std	; MTZ3
+	zoneTableEntry.l InitCam_Std	; MTZ4
+	zoneTableEntry.l InitCam_Null	; WFZ1
+	zoneTableEntry.l InitCam_Null	; WFZ2
+	zoneTableEntry.l InitCam_EHZ_HTZ	; HTZ1
+	zoneTableEntry.l InitCam_EHZ_HTZ	; HTZ2
+	zoneTableEntry.l InitCam_HPZ	; HPZ1
+	zoneTableEntry.l InitCam_HPZ	; HPZ2
+	zoneTableEntry.l InitCam_Null	; Zone 9 Act 1
+	zoneTableEntry.l InitCam_Null	; Zone 9 Act 2
+	zoneTableEntry.l InitCam_OOZ	; OOZ1
+	zoneTableEntry.l InitCam_OOZ	; OOZ2
+	zoneTableEntry.l InitCam_MCZ	; MCZ1
+	zoneTableEntry.l InitCam_MCZ	; MCZ2
+	zoneTableEntry.l InitCam_CNZ	; CNZ1
+	zoneTableEntry.l InitCam_CNZ	; CNZ2
+	zoneTableEntry.l InitCam_CPZ	; CPZ1
+	zoneTableEntry.l InitCam_CPZ	; CPZ2
+	zoneTableEntry.l InitCam_Null	; DEZ1
+	zoneTableEntry.l InitCam_Null	; DEZ2
+	zoneTableEntry.l InitCam_ARZ	; ARZ1
+	zoneTableEntry.l InitCam_ARZ	; ARZ2
+	zoneTableEntry.l InitCam_SCZ	; SCZ1
+	zoneTableEntry.l InitCam_SCZ	; SCZ2
     zoneTableEnd
 ; ===========================================================================
 ;loc_C2B8:

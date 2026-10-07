@@ -90,23 +90,6 @@ loc_3D2D4:
 +
 	bsr.s	loc_3D3A4
 +
-;	lea	(Sidekick).w,a1 ; a1=character
-;	bclr	#1,collision_property(a0)
-;	beq.s	+++
-;	cmpi.b	#AniIDSonAni_Roll,anim(a1)
-;	bne.s	loc_3D36C
-;	btst	#status.player.in_air,status(a1)
-;	bne.s	++
-;	bsr.w	Obj_GetOrientationToPlayer
-;	btst	#render_flags.x_flip,render_flags(a0)
-;	beq.s	+
-;	subq.w	#2,d0
-+
-;	tst.w	d0
-;	bne.s	loc_3D390
-+
-;	bsr.s	loc_3D3A4
-+
 	clr.b	collision_property(a0)
 
 BranchTo18_JmpTo39_MarkObjGone ; BranchTo

@@ -296,7 +296,7 @@ Obj02_MdFly:
 	bsr.w	Tails_LevelBound
 	jsr	(ObjectMove).l
 	bsr.w	Tails_JumpAngle
-    if flightCarrySonic=1
+    if flightCarrySonic
 	bsr.w	Tails_DoLevelCollision
 	bra.w	Tails_CarrySonic
     else
@@ -1223,7 +1223,7 @@ Tails_FlyingAnimation:
 ; ---------------------------------------------------------------------------
 ; Subroutine to control Sonic being carried by Tails during flight
 ; ---------------------------------------------------------------------------
-    if flightCarrySonic=1
+    if flightCarrySonic
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
@@ -2113,8 +2113,8 @@ TAnim_Roll:
 +
 	lsr.w	#8,d2
 	move.b	d2,anim_frame_duration(a0)
-	move.b	status(a0),d1
-	andi.b	#1<<status.player.x_flip,d1
+	moveq	#1<<status.player.x_flip,d1
+	and.b	status(a0),d1
 	andi.b	#~(1<<render_flags.x_flip|1<<render_flags.y_flip),render_flags(a0)
 	or.b	d1,render_flags(a0)
 	bra.w	TAnim_Do2
@@ -2132,8 +2132,8 @@ TAnim_Push:
 	lsr.w	#6,d2
 	move.b	d2,anim_frame_duration(a0)
 	lea	TailsAni_Push(pc),a1
-	move.b	status(a0),d1
-	andi.b	#1<<status.player.x_flip,d1
+	moveq	#1<<status.player.x_flip,d1
+	and.b	status(a0),d1
 	andi.b	#~(1<<render_flags.x_flip|1<<render_flags.y_flip),render_flags(a0)
 	or.b	d1,render_flags(a0)
 	bra.w	TAnim_Do2
