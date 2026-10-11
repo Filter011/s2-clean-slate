@@ -22,8 +22,8 @@ ObjPtr_TitleIntro:	dc.l Obj0E	; Title screen intro animation
 ObjPtr_TitleMenu:	dc.l Obj0F	; Title screen menu
 ObjPtr_TailsSS:		dc.l ObjNull	; Tails in Special Stage
 ObjPtr_Bridge:		dc.l Obj11	; Bridge in Emerald Hill Zone and Hidden Palace Zone
-ObjPtr_HPZEmerald:	dc.l Obj12	; Emerald from Hidden Palace Zone (unused)
-ObjPtr_HPZWaterfall:	dc.l Obj13	; Waterfall in Hidden Palace Zone (unused)
+ObjPtr_HPZEmerald:	dc.l Obj12	; Emerald from Hidden Palace Zone
+ObjPtr_HPZWaterfall:	dc.l Obj13	; Waterfall in Hidden Palace Zone
 ObjPtr_Seesaw:		dc.l Obj14	; Seesaw from Hill Top Zone
 ObjPtr_SwingingPlatform:dc.l Obj15	; Swinging platform from Aquatic Ruin Zone
 ObjPtr_HTZLift:		dc.l Obj16	; Diagonally moving lift from HTZ
