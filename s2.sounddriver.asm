@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.9.29 (stable)
+; S2CS Driver version: 26.10.14 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -12,11 +12,10 @@
 ; Optimise FM Frequencies
 ; This is enabled by default to give the sound driver more headspace for code.
 ; Disable this option if you want to improve sound driver processing.
-OptimiseFMFreq = 1
+OptimiseFMFreq = 0
 
 ; Frequency Alignment
-; Do not set to 0 at the current moment.
-FreqNoAlign = 1
+FreqAlign = 0
 
 ; ---------------------------------------------------------------------------
 ; NOTES:
@@ -891,7 +890,7 @@ zFMSetFreq:
     endif
 	add	a,zFrequencies&0FFh
 	ld	(.storefreq+2),a		; Store into the instruction after .storefreq (self-modifying code)
-    if FreqNoAlign
+    if FreqAlign=0
 	ld	d,a
 	adc	a,(zFrequencies&0FF00h)>>8
 	sub	d
@@ -976,7 +975,7 @@ zMakePSGFrequencies macro
 ; This the note -> frequency setting lookup
 ; the same array is found at $729CE in Sonic 1, and at $C9C44 in Ristar
 ; zword_359:
-	if FreqNoAlign=0
+	if FreqAlign
 	ensure1byteoffset (12*2)*7
 	endif
 zPSGFrequencies:
@@ -1116,7 +1115,7 @@ zPSGSetFreq:
 	add	a,a				; Multiply note value by 2
 	add	a,zPSGFrequencies&0FFh		; Point to proper place in table
 	ld	(.storefreq+2),a		; store into the following instruction (self-modifying code)
-	if FreqNoAlign
+	if FreqAlign=0
 	ld	d,a
 	adc	a,(zPSGFrequencies&0FF00h)>>8
 	sub	d
@@ -1157,8 +1156,7 @@ zPSGDoVolFX:
 	ld	a,(ix+zTrack.VoiceIndex)	; Current PSG tone -> 'a'
 	or	a				; Test it
 	jr	z,zPSGUpdateVol			; If tone is zero, jump to zPSGUpdateVol
-	ld	hl,zPSG_EnvTbl			; hl points to PSG envelope table
-	dec	a
+	ld	hl,zPSG_EnvTbl-2		; hl points to PSG envelope table
 	add	a,a				; a *= 2
 	ld	e,a
 	ld	d,0				; de = a
@@ -1268,7 +1266,7 @@ zMakeFMFrequenciesOctave macro octave
 	endm
 
 ; lookup table of FM note frequencies for instruments and sound effects
-	if FreqNoAlign=0
+	if FreqAlign
     if OptimiseFMFreq
 	ensure1byteoffset 12*2
     else
