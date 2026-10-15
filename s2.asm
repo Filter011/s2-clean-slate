@@ -333,8 +333,8 @@ GameProgram:
 	tst.w	(VDP_control_port).l
 ; loc_306:
 CheckSumCheck:
-	move.w	(VDP_control_port).l,d1
-	btst	#1,d1
+	moveq	#%0010,d1
+	and.b	(VDP_control_port+1).l,d1
 	bne.s	CheckSumCheck	; wait until DMA is completed
 	; "MEGA DRIVE hard initial program" ends here.
 	btst	#6,(HW_Expansion_Control).l
