@@ -391,23 +391,12 @@ GameClrRAM:
 	move.b	d0,(HW_Port_2_Control).l	; init port 2 (joypad 2)
 	move.b	d0,(HW_Expansion_Control).l	; init port 3 (expansion/extra)
 	startZ80
-	move.b	#GameModeID_SegaScreen,(Game_Mode).w ; set Game Mode to Sega Screen
+	move.l	#SegaScreen,(Game_Mode).w ; set Game Mode to Sega Screen
 ; loc_394:
 MainGameLoop:
-	moveq	#0,d0
-	move.b	(Game_Mode).w,d0	; load Game Mode
-	movea.l	GameModesArray(pc,d0.w),a0
+	movea.l	(Game_Mode).w,a0	; load Game Mode
 	jsr	(a0)	; jump to apt location in ROM
 	bra.s	MainGameLoop		; loop indefinitely
-; ===========================================================================
-; loc_3A2:
-GameModesArray: ;;
-GameMode_SegaScreen:	dc.l	SegaScreen		; SEGA screen mode
-GameMode_TitleScreen:	dc.l	TitleScreen		; Title screen mode
-GameMode_Demo:		dc.l	Level			; Demo mode
-GameMode_Level:		dc.l	Level			; Zone play mode
-GameMode_OptionsMenu:	dc.l	MenuScreen		; Options mode
-GameMode_LevelSelect:	dc.l	MenuScreen		; Level select mode
 ; ===========================================================================
     if skipChecksumCheck=0	; checksum error code
 ; loc_3CE:
@@ -467,13 +456,11 @@ Vint_Lag:
 	addq.w	#4,sp	; do not return to caller (avoids VintRet running twice, saves 176 cycles)
 
 Vint_Lag_Main:
-	cmpi.b	#GameModeID_TitleCard|GameModeID_Demo,(Game_Mode).w	; pre-level Demo Mode?
-	beq.s	.isInLevelMode
-	cmpi.b	#GameModeID_TitleCard|GameModeID_Level,(Game_Mode).w	; pre-level Zone play mode?
-	beq.s	.isInLevelMode
-	cmpi.b	#GameModeID_Demo,(Game_Mode).w	; Demo Mode?
-	beq.s	.isInLevelMode
-	cmpi.b	#GameModeID_Level,(Game_Mode).w	; Zone play mode?
+	tst.b	(GameModeFlag_TitleCard).w	; pre-level?
+	bne.s	.isInLevelMode
+	tst.b	(Demo_mode_flag).w	; Demo Mode?
+	bne.s	.isInLevelMode
+	cmpi.l	#Level,(Game_Mode).w	; Zone play mode?
 	beq.s	.isInLevelMode
 
 	bra.s	VintRet
@@ -924,7 +911,7 @@ Pause_Loop:
 	beq.s	Pause_ChkStart		; if not, branch
 	btst	#button_A,(Ctrl_1_Press).w	; is button A pressed?
 	beq.s	Pause_ChkBC		; if not, branch
-	move.b	#GameModeID_TitleScreen,(Game_Mode).w ; set game mode to 4 (title screen)
+	move.l	#TitleScreen,(Game_Mode).w ; set game mode to 4 (title screen)
 	bra.s	Pause_Resume
 ; ===========================================================================
 ; loc_13D4:
@@ -1153,7 +1140,7 @@ Sega_GotoTitle:
 	moveq	#0,d0
 	move.w	d0,(SegaScr_PalDone_Flag).w
 	move.w	d0,(SegaScr_VInt_Subrout).w
-	move.b	#GameModeID_TitleScreen,(Game_Mode).w	; => TitleScreen
+	move.l	#TitleScreen,(Game_Mode).w	; => TitleScreen
 	rts
 ; ===========================================================================
 ; loc_3998:
@@ -1410,7 +1397,7 @@ TitleScreen_Loop:
 	; At this point, the start button has been pressed and it's time to
 	; enter one player mode, two player mode, or the options menu.
 
-	move.b	#GameModeID_Level,(Game_Mode).w ; => Level (Zone play mode)
+	move.l	#Level,(Game_Mode).w ; => Level (Zone play mode)
 
 	move.b	#3,(Life_count).w
 
@@ -1438,7 +1425,7 @@ TitleScreen_Loop:
 	beq.s	+			; if not, branch
 	btst	#button_A,(Ctrl_1_Held).w ; is A held down?
 	beq.s	+	 		; if not, branch
-	move.b	#GameModeID_LevelSelect,(Game_Mode).w ; => LevelSelectMenu
+	move.l	#MenuScreen_LevelSelect,(Game_Mode).w ; => LevelSelectMenu
 	rts
 ; ---------------------------------------------------------------------------
 +
@@ -1450,7 +1437,7 @@ TitleScreen_Loop:
 ; ---------------------------------------------------------------------------
 ; loc_3D20:
 TitleScreen_ChoseOptions:
-	move.b	#GameModeID_OptionsMenu,(Game_Mode).w ; => OptionsMenu
+	move.l	#MenuScreen_Options,(Game_Mode).w ; => OptionsMenu
 	clr.b	(Options_menu_box).w
 	rts
 ; ===========================================================================
@@ -1471,7 +1458,7 @@ TitleScreen_Demo:
 	move.w	#0,(Demo_number).w
 +
 	st.b	(Demo_mode_flag).w
-	move.b	#GameModeID_Demo,(Game_Mode).w ; => Level (Demo mode)
+	move.l	#Level,(Game_Mode).w ; => Level (Demo mode)
 	move.b	#3,(Life_count).w
 
 	moveq	#0,d0
@@ -1559,7 +1546,7 @@ CopyrightText_End:
 ; ---------------------------------------------------------------------------
 ; loc_3EC4:
 Level:
-	bset	#GameModeFlag_TitleCard,(Game_Mode).w ; add $80 to screen mode (for pre level sequence)
+	st.b	(GameModeFlag_TitleCard).w ; add $80 to screen mode (for pre level sequence)
 	move.b	#MusID_FadeOut,d0
 	bsr.w	PlayMusic	; fade out music
 	bsr.w	ClearPLC
@@ -1812,7 +1799,7 @@ Level_FromCheckpoint:
 	move.b	#1,(Level_started_flag).w
 
 ; Level_StartGame: loc_435A:
-	bclr	#GameModeFlag_TitleCard,(Game_Mode).w ; clear $80 from the game mode
+	sf.b	(GameModeFlag_TitleCard).w ; clear $80 from the game mode
 
 ; ---------------------------------------------------------------------------
 ; Main level loop (when all title card and loading sequences are finished)
@@ -1844,9 +1831,9 @@ Level_MainLoop:
 	bsr.w	CheckLoadSignpostArt
 	jsr	(BuildSprites).l
 	jsr	(ObjectsManager).l
-	cmpi.b	#GameModeID_Demo,(Game_Mode).w	; check if in demo mode
-	beq.s	+
-	cmpi.b	#GameModeID_Level,(Game_Mode).w	; check if in normal play mode
+	tst.b	(Demo_mode_flag).w	; check if in demo mode
+	bne.s	+
+	cmpi.l	#Level,(Game_Mode).w	; check if in normal play mode
 	beq.s	Level_MainLoop
 	rts
 ; ---------------------------------------------------------------------------
@@ -1855,15 +1842,15 @@ Level_MainLoop:
 	bne.s	+
 	tst.w	(Demo_Time_left).w
 	beq.s	+
-	cmpi.b	#GameModeID_Demo,(Game_Mode).w
-	beq.w	Level_MainLoop
-	move.b	#GameModeID_SegaScreen,(Game_Mode).w ; => SegaScreen
+	tst.b	(Demo_mode_flag).w
+	bne.w	Level_MainLoop
+	move.l	#SegaScreen,(Game_Mode).w ; => SegaScreen
 	rts
 ; ---------------------------------------------------------------------------
 +
-	cmpi.b	#GameModeID_Demo,(Game_Mode).w
-	bne.s	+
-	move.b	#GameModeID_SegaScreen,(Game_Mode).w ; => SegaScreen
+	tst.b	(Demo_mode_flag).w
+	beq.s	+
+	move.l	#SegaScreen,(Game_Mode).w ; => SegaScreen
 +
 	move.w	#1*60,(Demo_Time_left).w	; 1 second
 	move.w	#$3F,(Palette_fade_range).w
@@ -1893,11 +1880,14 @@ Level_MainLoop:
 
 ; sub_4450:
 Level_SetPlayerMode:
-	cmpi.b	#GameModeID_TitleCard|GameModeID_Demo,(Game_Mode).w ; pre-level demo mode?
-	beq.s	+			; if yes, branch
+	tst.b	(Demo_mode_flag).w	; demo mode?
+	bne.s	+			; if yes, branch
+-
 	move.w	(Player_option).w,(Player_mode).w ; use the option chosen in the Options screen
 	rts
 +
+	tst.b	(GameModeFlag_TitleCard).w	; pre-level?
+	beq.s	-			; if not, branch
 	clr.w	(Player_mode).w	; force Sonic alone
 	rts
 ; End of function Level_SetPlayerMode
@@ -2138,7 +2128,7 @@ MenuScreenTextToRAM:
 
 ; ===========================================================================
 ; loc_8BD4:
-MenuScreen:
+MenuScreen_Options:
 	bsr.w	Pal_FadeToBlack
 	move.w	#$2700,sr
 	move.w	(VDP_Reg1_val).w,d0
@@ -2178,12 +2168,6 @@ MenuScreen:
 	moveq	#28-1,d2
 	bsr.w	PlaneMapToVRAM_H40	; fullscreen background
 
-	cmpi.b	#GameModeID_LevelSelect,(Game_Mode).w	; level select menu?
-	beq.w	MenuScreen_LevelSelect	; if yes, branch
-
-; ===========================================================================
-; loc_8FCC:
-MenuScreen_Options:
 	lea	(Chunk_Table).l,a1
 	lea	MapEng_Options(pc),a0
 	moveq	#ArtTile_ArtNem_MenuBox,d0
@@ -2252,13 +2236,13 @@ OptionScreen_Select:
 	move.w	d0,(Got_Emerald).w
 	move.l	d0,(Got_Emeralds_array).w
 	move.l	d0,(Got_Emeralds_array+4).w
-	move.b	#GameModeID_Level,(Game_Mode).w ; => Level (Zone play mode)
+	move.l	#Level,(Game_Mode).w ; => Level (Zone play mode)
 	rts
 ; ===========================================================================
 ; loc_90D8:
 OptionScreen_Select_Other:
 	; When pressing START on the sound test option, return to the SEGA screen
-	move.b	#GameModeID_SegaScreen,(Game_Mode).w ; => SegaScreen
+	move.l	#SegaScreen,(Game_Mode).w ; => SegaScreen
 	rts
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
@@ -2499,6 +2483,45 @@ levselstr macro str
 planeLocH28 function col,line,(($50 * line) + (2 * col))
 
 MenuScreen_LevelSelect:
+	bsr.w	Pal_FadeToBlack
+	move.w	#$2700,sr
+	move.w	(VDP_Reg1_val).w,d0
+	andi.b	#$BF,d0
+	move.w	d0,(VDP_control_port).l
+	bsr.w	ClearScreen
+	lea	(VDP_control_port).l,a6
+	move.w	#$8004,(a6)		; H-INT disabled
+	move.w	#$8200|(VRAM_Menu_Plane_A_Name_Table/$400),(a6)		; PNT A base: $C000
+	move.w	#$8400|(VRAM_Menu_Plane_B_Name_Table/$2000),(a6)	; PNT B base: $E000
+	move.w	#$8200|(VRAM_Menu_Plane_A_Name_Table/$400),(a6)		; PNT A base: $C000
+	move.w	#$8700,(a6)		; Background palette/color: 0/0
+	move.w	#$8C81,(a6)		; H res 40 cells, no interlace, S/H disabled
+	move.w	#$9001,(a6)		; Scroll table size: 64x32
+
+	clearRAM Object_Display_Lists,Object_Display_Lists_End
+	clearRAM Object_RAM,Object_RAM_End
+
+	; load background + graphics of font/LevSelPics
+	ResetDMAQueue
+	lea	(ArtNem_FontStuff).l,a1
+	move.w	#tiles_to_bytes(ArtTile_ArtNem_FontStuff),d2
+	bsr.w	Queue_KosPlus_Module
+	lea	(ArtNem_MenuBox).l,a1
+	move.w	#tiles_to_bytes(ArtTile_ArtNem_MenuBox),d2
+	bsr.w	Queue_KosPlus_Module
+	lea	(ArtNem_LevelSelectPics).l,a1
+	move.w	#tiles_to_bytes(ArtTile_ArtNem_LevelSelectPics),d2
+	bsr.w	Queue_KosPlus_Module
+	lea	(Chunk_Table).l,a1
+	lea	(MapEng_MenuBack).l,a0
+	move.w	#ArtTile_VRAM_Start|palette_line_3,d0
+	bsr.w	EniDec
+	lea	(Chunk_Table).l,a1
+	move.l	#vdpComm(VRAM_Plane_B_Name_Table,VRAM,WRITE),d0
+	moveq	#40-1,d1
+	moveq	#28-1,d2
+	bsr.w	PlaneMapToVRAM_H40	; fullscreen background
+
 	; Load foreground (sans zone icon)
 	lea	(Chunk_Table).l,a1
 	lea	MapEng_LevSel(pc),a0	; 2 bytes per 8x8 tile, compressed
@@ -2660,7 +2683,7 @@ LevelSelect_PressStart:
 
 ;loc_944C:
 LevelSelect_Return:
-	move.b	#GameModeID_SegaScreen,(Game_Mode).w ; => SegaScreen
+	move.l	#SegaScreen,(Game_Mode).w ; => SegaScreen
 	rts
 ; ===========================================================================
 ; -----------------------------------------------------------------------------
@@ -2701,7 +2724,7 @@ LevelSelect_Order:
 LevelSelect_StartZone:
 	andi.w	#$3FFF,d0
 	move.w	d0,(Current_ZoneAndAct).w
-	move.b	#GameModeID_Level,(Game_Mode).w ; => Level (Zone play mode)
+	move.l	#Level,(Game_Mode).w ; => Level (Zone play mode)
 	move.b	#3,(Life_count).w
 	moveq	#0,d0
 	move.w	d0,(Ring_count).w

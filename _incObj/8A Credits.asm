@@ -23,7 +23,7 @@ Obj8A_Init:
 	move.b	#0,mapping_frame(a0)
 	move.b	#0,render_flags(a0)
 	move.w	#0,priority(a0)
-	cmpi.b	#GameModeID_TitleScreen,(Game_Mode).w	; title screen??
+	cmpi.l	#TitleScreen,(Game_Mode).w	; title screen?
 	bne.s	Obj8A_Display	; if not, branch
 	move.w	#$0300,art_tile(a0)
 	move.b	#$A,mapping_frame(a0)

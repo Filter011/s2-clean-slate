@@ -64,7 +64,7 @@ Obj39_Wait:
 Obj39_Dismiss:
 	tst.b	(Time_Over_flag).w
 	bne.s	Obj39_TimeOver
-	move.b	#GameModeID_SegaScreen,(Game_Mode).w ; => SegaScreen
+	move.l	#SegaScreen,(Game_Mode).w ; => SegaScreen
 	bra.s	Obj39_Check2PMode
 ; ===========================================================================
 ; loc_14034:

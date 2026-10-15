@@ -9,9 +9,9 @@ RunObjects:
 	lea	(Object_RAM).w,a0 ; a0=object
 
 	moveq	#(Object_RAM_End-Object_RAM)/object_size-1,d7 ; run the first $80 objects out of levels
-	cmpi.b	#GameModeID_Demo,(Game_Mode).w	; demo mode?
-	beq.s	+	; if in a level in a demo, branch
-	cmpi.b	#GameModeID_Level,(Game_Mode).w	; regular level mode?
+	tst.b	(Demo_mode_flag).w	; demo mode?
+	bne.s	+	; if in a level in a demo, branch
+	cmpi.l	#Level,(Game_Mode).w	; regular level mode?
 	bne.s	RunObject ; if not in a level, branch to RunObject
 +
 	move.w	#(LevelOnly_Object_RAM_End-Object_RAM)/object_size-1,d7	; run the first $90 objects in levels

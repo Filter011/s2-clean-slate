@@ -555,7 +555,7 @@ loc_3D9D6:
 
 	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
-	move.b	#GameModeID_SegaScreen,(Game_Mode).w ; => EndingSequence
+	move.l	#SegaScreen,(Game_Mode).w ; => EndingSequence
 	jmp	(DeleteObject).l
 ; ===========================================================================
 

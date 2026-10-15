@@ -204,7 +204,7 @@ loc_14270:
 loc_1428C:
 	move.w	(a1,d0.w),d0
 	bpl.s	loc_1429C
-	move.b	#GameModeID_SegaScreen,(Game_Mode).w ; => SegaScreen
+	move.l	#SegaScreen,(Game_Mode).w ; => SegaScreen
 	rts
 ; ===========================================================================
 

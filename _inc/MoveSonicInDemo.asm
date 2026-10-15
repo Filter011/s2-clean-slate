@@ -11,7 +11,7 @@ MoveDemo_On:
 	move.b	(Ctrl_1_Press).w,d0
 	andi.b	#button_start_mask,d0
 	beq.s	+
-	move.b	#GameModeID_TitleScreen,(Game_Mode).w ; => TitleScreen
+	move.l	#TitleScreen,(Game_Mode).w ; => TitleScreen
 +
 	lea	DemoScriptPointers(pc),a1 ; load pointer to input data
 	moveq	#0,d0

@@ -442,20 +442,6 @@ idstart :=	0		; value to add to all IDs
 ; function using these variables
 id function ptr,((ptr-offset)/ptrsize+idstart)
 
-; Game modes
-offset :=	GameModesArray
-ptrsize :=	1
-idstart :=	0
-
-GameModeID_SegaScreen =		id(GameMode_SegaScreen) ; 0
-GameModeID_TitleScreen =	id(GameMode_TitleScreen) ; 4
-GameModeID_Demo =		id(GameMode_Demo) ; 8
-GameModeID_Level =		id(GameMode_Level) ; C
-GameModeID_OptionsMenu =	id(GameMode_OptionsMenu) ; 10
-GameModeID_LevelSelect =	id(GameMode_LevelSelect) ; 14
-GameModeFlag_TitleCard =	7 ; flag bit
-GameModeID_TitleCard =		1<<GameModeFlag_TitleCard ; flag mask
-
 ; palette IDs
 offset :=	PalPointers
 ptrsize :=	8
@@ -1379,8 +1365,7 @@ KosPlus_module_destination: =	KosPlus_module_queue+4	; word ; the VRAM destinati
 
 				ds.b	$40A	; unused
 
-Game_Mode:			ds.b	1	; see GameModesArray (master level trigger, Mstr_Lvl_Trigger)
-				ds.b	1	; unused
+Game_Mode:			ds.l	1	; see GameModesArray (master level trigger, Mstr_Lvl_Trigger)
 Ctrl_1_Logical:					; 2 bytes
 Ctrl_1_Held_Logical:		ds.b	1	; 1 byte
 Ctrl_1_Press_Logical:		ds.b	1	; 1 byte
@@ -1390,7 +1375,8 @@ Ctrl_1_Press:			ds.b	1	; 1 byte
 Ctrl_2:						; 2 bytes
 Ctrl_2_Held:			ds.b	1	; 1 byte
 Ctrl_2_Press:			ds.b	1	; 1 byte
-				ds.b	4	; unused
+GameModeFlag_TitleCard:		ds.b	1	; flag
+				ds.b	1	; unused
 VDP_Reg1_val:			ds.w	1	; normal value of VDP register #1 when display is disabled
 				ds.b	6	; unused
 Demo_Time_left:			ds.w	1	; 2 bytes
