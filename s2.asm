@@ -427,13 +427,14 @@ V_Int:
 	beq.s	Vint_Lag_Main
 
 	; waits until vertical blanking is taking place
--	moveq	#8,d0
+-	moveq	#%1000,d0
 	and.w	(a5),d0
 	beq.s	-
 
 	move.l	#vdpComm($0000,VSRAM,WRITE),(a5)
 	move.l	(Vscroll_Factor).w,(a6) ; send screen y-axis pos. to VSRAM
-	btst	#0,1(a5)		; is Megadrive PAL?
+	moveq	#%0001,d0
+	and.w	(a5),d0			; is Megadrive PAL?
 	beq.s	+			; if not, branch
 
 	move.w	#$700,d0
@@ -470,8 +471,8 @@ Vint_Lag_Main:
 .isInLevelMode:
 	tst.b	(Water_flag).w
 	beq.s	Vint0_noWater
-	move.w	(a5),d0
-	btst	#0,1(a5)	; is Megadrive PAL?
+	moveq	#%0001,d0
+	and.w	(a5),d0		; is Megadrive PAL?
 	beq.s	+		; if not, branch
 
 	move.w	#$700,d0
@@ -500,8 +501,8 @@ Vint_Lag_Main:
 ; ---------------------------------------------------------------------------
 
 Vint0_noWater:
-	move.w	(a5),d0
-	btst	#0,1(a5)	; is Megadrive PAL?
+	moveq	#%0001,d0
+	and.w	(a5),d0		; is Megadrive PAL?
 	beq.s	+		; if not, branch
 
 	move.w	#$700,d0
