@@ -1030,10 +1030,11 @@ PlaneMapToVRAM_H80_SpecialStage:
 
 ; sub_3384: DelayProgram:
 WaitForVint:
-	st.b	(Vint_flag).w
+	lea	(Vint_flag).w,a0
+	st.b	(a0)
 	move.w	#$2300,sr
 
--	tst.b	(Vint_flag).w
+-	tst.b	(a0)
 	bne.s	-
 	rts
 ; End of function WaitForVint
