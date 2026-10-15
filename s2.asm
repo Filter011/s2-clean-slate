@@ -590,8 +590,6 @@ Vint_Level:
 ; Subroutine to run a demo for an amount of time
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_7E6: Demo_Time:
 Do_Updates:
 	jsr	(LoadTilesAsYouMove).l
@@ -718,7 +716,6 @@ loc_1072:
 ; ---------------------------------------------------------------------------
 ; Subroutine to read joypad input, and send it to the RAM
 ; ---------------------------------------------------------------------------
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_111C:
 ReadJoypads:
@@ -886,8 +883,6 @@ PlaySoundExit:
 ; Subroutine to pause the game
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_1388:
 PauseGame:
 	tst.b	(Life_count).w	; do you have any lives left?
@@ -975,8 +970,6 @@ Pause_SlowMo:
 ; d2 = heigth
 ; a1 = source address
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_140E: ShowVDPGraphics: PlaneMapToVRAM:
 PlaneMapToVRAM_H40:
 	lea	(VDP_data_port).l,a6
@@ -998,8 +991,6 @@ PlaneMapToVRAM_H40:
 ; Alternate subroutine to transfer a plane map to VRAM
 ; (used for Special Stage background)
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_142E: ShowVDPGraphics2: PlaneMapToVRAM2:
 PlaneMapToVRAM_H80_SpecialStage:
@@ -1026,8 +1017,6 @@ PlaneMapToVRAM_H80_SpecialStage:
 ; ---------------------------------------------------------------------------
 ; Subroutine to perform vertical synchronization
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_3384: DelayProgram:
 WaitForVint:
@@ -1878,8 +1867,6 @@ Level_MainLoop:
 ; the demo mode and in 2P mode
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_4450:
 Level_SetPlayerMode:
 	tst.b	(Demo_mode_flag).w	; demo mode?
@@ -1934,8 +1921,6 @@ InitRingFrame:
 ; ---------------------------------------------------------------------------
 ; Subroutine to change global object animation variables (like rings)
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_4B64:
 ChangeRingFrame:
@@ -2115,8 +2100,6 @@ Anim_SonicMilesBG:	zoneanimstart
 ; a1 = data source
 ; a2 = destination
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_8FBE:
 MenuScreenTextToRAM:
@@ -3209,8 +3192,6 @@ loc_B272:
 ;	d0	32-bit VDP command word for a VRAM write to specified address.
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 
 sub_B29E:
 	andi.l	#$FFFF,d0
@@ -3920,8 +3901,6 @@ loc_1578C:
 ; Output:
 ;	d0	32-bit VDP command word for a VRAM write to specified address.
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 
 sub_15792:

@@ -40,8 +40,7 @@ Obj01_Init:
 	bne.s	Obj01_Init_Continued
 	; only happens when not starting at a checkpoint:
 	move.w	#ArtTile_ArtUnc_Sonic,art_tile(a0)
-	move.b	#$C,top_solid_bit(a0)
-	move.b	#$D,lrb_solid_bit(a0)
+	move.w	#$0C0D,top_solid_bit(a0)	; and lrb_solid_bit
 	move.w	x_pos(a0),(Saved_x_pos).w
 	move.w	y_pos(a0),(Saved_y_pos).w
 	move.w	art_tile(a0),(Saved_art_tile).w
@@ -191,8 +190,6 @@ Obj01_ExitChk:
 ; and input/status flags for Tails' AI to follow
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1A15C:
 Sonic_RecordPos:
 	move.w	(Sonic_Pos_Record_Index).w,d0
@@ -213,8 +210,6 @@ Sonic_RecordPos:
 ; ---------------------------------------------------------------------------
 ; Subroutine for Sonic when he's underwater
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 obj0a_character = objoff_3C
 
@@ -394,8 +389,6 @@ Obj01_MdJump:
 ; ---------------------------------------------------------------------------
 ; Subroutine to make Sonic walk/run
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1A35A:
 Sonic_Move:
@@ -665,8 +658,8 @@ Obj01_Traction:
 ; stops Sonic from running through walls that meet the ground
 ; loc_1A64E:
 Obj01_CheckWallsOnGround:
-	move.b	obAngle(a0),d0				; get Sonic's current angle in relation to the floor
-	andi.b	#$3F,d0					; is he standing on a flat surface in any of the four quadrants?
+	moveq	#$3F,d0					; is he standing on a flat surface in any of the four quadrants?
+	and.b	angle(a0),d0				; get Sonic's current angle in relation to the floor
 	beq.s	.noearlyexit				; if yes, skip the upside-down exit below
 	move.b	angle(a0),d0
 	addi.b	#$40,d0
@@ -832,17 +825,14 @@ return_1A7C4:
 ; Subroutine to change Sonic's speed as he rolls
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1A7C6:
 Sonic_RollSpeed:
 	move.w	(Sonic_top_speed).w,d6
 	add.w	d6,d6
 	move.w	(Sonic_acceleration).w,d5
 	asr.w	#1,d5	; natural roll deceleration = 1/2 normal acceleration
-	move.w	#$20,d4	; controlled roll deceleration... interestingly,
-			; this should be Sonic_deceleration/4 according to Tails_RollSpeed,
-			; which means Sonic is much better than Tails at slowing down his rolling when he's underwater
+	move.w	(Sonic_deceleration),d4
+	asr.w	#2,d4
 	_btst	#status_secondary.sliding,status_secondary(a0)
 	_bne.w	Obj01_Roll_ResetScr
 	tst.w	move_lock(a0)
@@ -989,8 +979,6 @@ Sonic_BrakeRollingLeft:
 ; Subroutine for moving Sonic left or right when he's in the air
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1A8E8:
 Sonic_ChgJumpDir:
 	move.w	(Sonic_top_speed).w,d6
@@ -1068,8 +1056,6 @@ return_1A972:
 ; Subroutine to prevent Sonic from leaving the boundaries of a level
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1A974:
 Sonic_LevelBound:
 	move.l	x_pos(a0),d1
@@ -1112,7 +1098,7 @@ Sonic_Boundary_Bottom: ;;
 ; loc_1A9BA:
 Sonic_Boundary_Sides:
 	move.w	d0,x_pos(a0)
-	move.w	#0,2+x_pos(a0) ; subpixel x
+	move.w	#0,x_sub(a0) ; subpixel x
 	move.w	#0,x_vel(a0)
 	move.w	#0,inertia(a0)
 	bra.s	Sonic_Boundary_CheckBottom
@@ -1121,8 +1107,6 @@ Sonic_Boundary_Sides:
 ; ---------------------------------------------------------------------------
 ; Subroutine allowing Sonic to start rolling when he's moving
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1A9D2:
 Sonic_Roll:
@@ -1143,14 +1127,13 @@ Obj01_NoRoll:
 ; ---------------------------------------------------------------------------
 ; loc_1A9FA:
 Obj01_ChkRoll:
-	btst	#status.player.rolling,status(a0)	; is Sonic already rolling?
+	bset	#status.player.rolling,status(a0)	; is Sonic already rolling?
 	beq.s	Obj01_DoRoll	; if not, branch
 	rts
 
 ; ---------------------------------------------------------------------------
 ; loc_1AA04:
 Obj01_DoRoll:
-	bset	#status.player.rolling,status(a0)
 	move.b	#$E,y_radius(a0)
 	move.b	#7,x_radius(a0)
 	move.b	#AniIDSonAni_Roll,anim(a0)	; use "rolling" animation
@@ -1170,8 +1153,6 @@ return_1AA36:
 ; ---------------------------------------------------------------------------
 ; Subroutine allowing Sonic to jump
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1AA38:
 Sonic_Jump:
@@ -1210,12 +1191,11 @@ Sonic_Jump:
 	clr.b	stick_to_convex(a0)
 	moveq	#SndID_Jump,d0
 	jsr	(PlaySound).w	; play jumping sound
-	btst	#status.player.rolling,status(a0)
+	bset	#status.player.rolling,status(a0)
 	bne.s	return_1AAE6
 	move.b	#$E,y_radius(a0)
 	move.b	#7,x_radius(a0)
 	move.b	#AniIDSonAni_Roll,anim(a0)	; use "jumping" animation
-	bset	#status.player.rolling,status(a0)
 	addq.w	#5,y_pos(a0)
 
 return_1AAE6:
@@ -1227,8 +1207,6 @@ return_1AAE6:
 ; Subroutine letting Sonic control the height of the jump
 ; when the jump button is released
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; ===========================================================================
 ; loc_1AAF0:
@@ -1269,8 +1247,6 @@ return_1AB36:
 ; if he has enough rings and emeralds
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1AB38: test_set_SS:
 Sonic_CheckGoSuper:
 	tst.b	(Super_Sonic_flag).w	; is Sonic already Super?
@@ -1310,8 +1286,6 @@ return_1ABA4:
 ; ---------------------------------------------------------------------------
 ; Subroutine doing the extra logic for Super Sonic
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1ABA6:
 Sonic_Super:
@@ -1360,8 +1334,6 @@ return_1AC3C:
 ; Subroutine to check for starting to charge a spindash
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1AC3E:
 Sonic_CheckSpindash:
 	tst.b	spindash_flag(a0)
@@ -1392,8 +1364,6 @@ return_1AC8C:
 ; ---------------------------------------------------------------------------
 ; Subrouting to update an already-charging spindash
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1AC8E:
 Sonic_UpdateSpindash:
@@ -1500,8 +1470,6 @@ loc_1AD8C:
 ; Subroutine to slow the Player walking up a slope
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1AD96:
 Player_SlopeResist:
 	moveq	#$60,d0
@@ -1529,8 +1497,6 @@ return_1ADCA:
 ; ---------------------------------------------------------------------------
 ; Subroutine to push the Player down a slope while they're rolling
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1ADCC:
 Player_RollRepel:
@@ -1569,8 +1535,6 @@ return_1AE06:
 ; Subroutine to push the Player down a slope
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1AE08:
 Player_SlopeRepel:
 	tst.b	stick_to_convex(a0)
@@ -1601,8 +1565,6 @@ loc_1AE44:
 ; Subroutine to return Sonic's angle to 0 as he jumps
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1AE4A:
 Sonic_JumpAngle:
 	move.b	angle(a0),d0	; get Sonic's angle
@@ -1629,8 +1591,6 @@ Sonic_JumpAngleSet:
 ; ---------------------------------------------------------------------------
 ; Updates Sonic's secondary angle if he's tumbling
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1AE64:
 Sonic_JumpFlip:
@@ -1671,8 +1631,6 @@ return_1AEA8:
 ; ---------------------------------------------------------------------------
 ; Subroutine for Sonic to interact with the floor and walls when he's in the air
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1AEAA: Sonic_Floor:
 Sonic_DoLevelCollision:
@@ -1892,8 +1850,6 @@ return_1B09E:
 ; Subroutine to reset Sonic's mode when he lands on the floor
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1B0A0:
 Sonic_ResetOnFloor:
 	tst.b	pinball_mode(a0)
@@ -1914,12 +1870,13 @@ Sonic_ResetOnFloor_Part2:
 ; loc_1B0DA:
 Sonic_ResetOnFloor_Part3:
 	andi.b	#~(1<<status.player.in_air|1<<status.player.pushing),status(a0)
-	move.b	#0,jumping(a0)
-	move.w	#0,(Chain_Bonus_counter).w
-	move.b	#0,flip_angle(a0)
-	move.b	#0,flip_turned(a0)
-	move.b	#0,flips_remaining(a0)
-	move.b	#0,look_delay_counter(a0)
+	moveq	#0,d0
+	move.b	d0,jumping(a0)
+	move.w	d0,(Chain_Bonus_counter).w
+	move.b	d0,flip_angle(a0)
+	move.b	d0,flip_turned(a0)
+	move.b	d0,flips_remaining(a0)
+	move.b	d0,look_delay_counter(a0)
 	cmpi.b	#AniIDSonAni_Hang2,anim(a0)
 	bne.s	return_1B11E
 	move.b	#AniIDSonAni_Walk,anim(a0)
@@ -2098,8 +2055,6 @@ Obj01_Respawning:
 ; Subroutine to animate Sonic's sprites
 ; See also: AnimateSprite
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1B350:
 Sonic_Animate:

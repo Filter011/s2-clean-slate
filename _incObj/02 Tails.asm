@@ -37,8 +37,7 @@ Obj02_Init:
 	bne.s	Obj02_Init_Continued
 	; only happens when not starting at a checkpoint:
 	move.w	#ArtTile_ArtUnc_Tails,art_tile(a0)
-	move.b	#$C,top_solid_bit(a0)
-	move.b	#$D,lrb_solid_bit(a0)
+	move.w	#$C0D,top_solid_bit(a0)	; and lrb_solid_bit
 	move.w	x_pos(a0),(Saved_x_pos).w
 	move.w	y_pos(a0),(Saved_y_pos).w
 	move.w	art_tile(a0),(Saved_art_tile).w
@@ -172,8 +171,6 @@ Obj02_ExitChk:
 ; Subroutine to record Tails' previous positions for invincibility stars
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1BF38:
 Tails_RecordPos:
 	move.w	(Tails_Pos_Record_Index).w,d0
@@ -189,8 +186,6 @@ Tails_RecordPos:
 ; ---------------------------------------------------------------------------
 ; Subroutine for Tails when he's underwater
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1BF52:
 Tails_Water:
@@ -322,8 +317,6 @@ Obj02_MdRoll:
 ; ---------------------------------------------------------------------------
 ; Subroutine to make Tails walk/run
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1C0AC:
 Tails_Move:
@@ -489,8 +482,8 @@ Obj02_Traction:
 ; stops Tails from running through walls that meet the ground
 ; loc_1C232:
 Obj02_CheckWallsOnGround:
-	move.b	obAngle(a0),d0				; get Tails's current angle in relation to the floor
-	andi.b	#$3F,d0					; is he standing on a flat surface in any of the four quadrants?
+	moveq	#$3F,d0					; is he standing on a flat surface in any of the four quadrants?
+	and.b	obAngle(a0),d0				; get Tails's current angle in relation to the floor
 	beq.s	.noearlyexit				; if yes, skip the upside-down exit below
 	move.b	angle(a0),d0
 	addi.b	#$40,d0
@@ -658,15 +651,14 @@ return_1C3A8:
 ; Subroutine to change Tails' speed as he rolls
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1C3AA:
 Tails_RollSpeed:
 	move.w	(Tails_top_speed).w,d6
 	add.w	d6,d6
 	move.w	(Tails_acceleration).w,d5
 	asr.w	#1,d5	; natural roll deceleration = 1/2 normal acceleration
-	move.w	#$20,d4
+	move.w	(Tails_deceleration),d4
+	asr.w	#2,d4
 	_btst	#status_secondary.sliding,status_secondary(a0)
 	_bne.w	Obj02_Roll_ResetScr
 	tst.w	move_lock(a0)
@@ -813,8 +805,6 @@ Tails_BrakeRollingLeft:
 ; Subroutine for moving Tails left or right when he's in the air
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1C4CE:
 Tails_ChgJumpDir:
 	move.w	(Tails_top_speed).w,d6
@@ -886,8 +876,6 @@ return_1C558:
 ; Subroutine to prevent Tails from leaving the boundaries of a level
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1C55A:
 Tails_LevelBound:
 	move.l	x_pos(a0),d1
@@ -930,7 +918,7 @@ Tails_Boundary_Bottom: ;;
 ; loc_1C5A0:
 Tails_Boundary_Sides:
 	move.w	d0,x_pos(a0)
-	move.w	#0,2+x_pos(a0) ; subpixel x
+	move.w	#0,x_sub(a0) ; subpixel x
 	move.w	#0,x_vel(a0)
 	move.w	#0,inertia(a0)
 	bra.s	Tails_Boundary_CheckBottom
@@ -939,8 +927,6 @@ Tails_Boundary_Sides:
 ; ---------------------------------------------------------------------------
 ; Subroutine allowing Tails to start rolling when he's moving
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1C5B8:
 Tails_Roll:
@@ -961,14 +947,13 @@ Obj02_NoRoll:
 ; ---------------------------------------------------------------------------
 ; loc_1C5E0:
 Obj02_ChkRoll:
-	btst	#status.player.rolling,status(a0)	; is Tails already rolling?
+	bset	#status.player.rolling,status(a0)	; is Tails already rolling?
 	beq.s	Obj02_DoRoll				; if not, branch
 	rts
 
 ; ---------------------------------------------------------------------------
 ; loc_1C5EA:
 Obj02_DoRoll:
-	bset	#status.player.rolling,status(a0)
 	move.b	#$E,y_radius(a0)
 	move.b	#7,x_radius(a0)
 	move.b	#AniIDSonAni_Roll,anim(a0)	; use "rolling" animation
@@ -987,8 +972,6 @@ return_1C61C:
 ; ---------------------------------------------------------------------------
 ; Subroutine allowing Tails to jump
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1C61E:
 Tails_Jump:
@@ -1023,12 +1006,11 @@ Tails_Jump:
 	clr.b	stick_to_convex(a0)
 	moveq	#SndID_Jump,d0
 	jsr	(PlaySound).w	; play jumping sound
-	btst	#status.player.rolling,status(a0)
+	bset	#status.player.rolling,status(a0)
 	bne.s	return_1C6C2
 	move.b	#$E,y_radius(a0)
 	move.b	#7,x_radius(a0)
 	move.b	#AniIDSonAni_Roll,anim(a0)	; use "jumping" animation
-	bset	#status.player.rolling,status(a0)
 	addq.w	#1,y_pos(a0)
 
 return_1C6C2:
@@ -1073,8 +1055,6 @@ return_1C70C:
 ; Subroutine to check if Tails should start flying
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 Tails_CheckFlying:
 	tst.b	flying(a0)			; is Tails already flying?
 	bne.s	.noflight			; if yes, branch
@@ -1104,8 +1084,6 @@ Tails_CheckFlying:
 ; ---------------------------------------------------------------------------
 ; Subroutine controlling Tails' flying (and swimming)
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 Tails_Flying:
 	move.b	(Level_frame_counter+1).w,d0	; get the universal timer value
@@ -1225,8 +1203,6 @@ Tails_FlyingAnimation:
 ; ---------------------------------------------------------------------------
     if flightCarrySonic
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 Tails_CarrySonic:ss
 	tst.w	(Player_mode).w				; is this a Sonic & Tails game?
 	bne.w	Tails_CarryNoGrab			; if not, branch
@@ -1291,8 +1267,6 @@ Tails_CarrySonic:ss
 ; Subroutine to check for Tails to start carrying Sonic
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 Tails_CheckCarry:
 	tst.b	carry_delay(a0)			; is the delay timer running?
 	beq.s	.notimer			; if 0, branch
@@ -1336,8 +1310,6 @@ Tails_CheckCarry:
 ; Subroutine to update Sonic's position and collision when he's being carried
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 Tails_CarryUpdatePosition:
 	move.w	x_pos(a0),x_pos(a1)		; align Sonic and Tails on X-axis
 	move.w	y_pos(a0),y_pos(a1)		; align Sonic and Tails on Y-axis
@@ -1362,8 +1334,6 @@ Tails_CarryNoGrab:
 ; ---------------------------------------------------------------------------
 ; Subroutine to check for starting to charge a spindash
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1C70E:
 Tails_CheckSpindash:
@@ -1397,8 +1367,6 @@ return_1C75C:
 ; Subrouting to update an already-charging spindash
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1C75E:
 Tails_UpdateSpindash:
 	move.b	(Ctrl_2_Held_Logical).w,d0
@@ -1410,8 +1378,8 @@ Tails_UpdateSpindash:
 	move.b	#7,x_radius(a0)
 	move.b	#AniIDSonAni_Roll,anim(a0)
 	addq.w	#1,y_pos(a0)	; add the difference between Tails' rolling and standing heights
-	move.b	#0,spindash_flag(a0)
 	moveq	#0,d0
+	move.b	d0,spindash_flag(a0)
 	move.b	spindash_counter(a0),d0
 	add.w	d0,d0
 	move.w	Tails_SpindashSpeeds(pc,d0.w),inertia(a0)
@@ -1489,8 +1457,6 @@ loc_1C83C:
 ; Subroutine to return Tails' angle to 0 as he jumps
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1C8FA:
 Tails_JumpAngle:
 	move.b	angle(a0),d0	; get Tails' angle
@@ -1498,10 +1464,8 @@ Tails_JumpAngle:
 	bpl.s	loc_1C90A	; if higher than 0, branch
 
 	addq.b	#2,d0		; increase angle
-	bcc.s	BranchTo_Tails_JumpAngleSet
+	bcc.s	Tails_JumpAngleSet
 	moveq	#0,d0
-
-BranchTo_Tails_JumpAngleSet ; BranchTo
 	bra.s	Tails_JumpAngleSet
 ; ===========================================================================
 
@@ -1520,8 +1484,6 @@ Tails_JumpAngleSet:
 ; Updates Tails' secondary angle if he's tumbling
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1C914:
 Tails_JumpFlip:
 	move.b	flip_angle(a0),d0
@@ -1532,13 +1494,11 @@ Tails_JumpFlip:
 Tails_JumpRightFlip:
 	move.b	flip_speed(a0),d1
 	add.b	d1,d0
-	bcc.s	BranchTo_Tails_JumpFlipSet
+	bcc.s	Tails_JumpFlipSet
 	subq.b	#1,flips_remaining(a0)
-	bcc.s	BranchTo_Tails_JumpFlipSet
+	bcc.s	Tails_JumpFlipSet
 	move.b	#0,flips_remaining(a0)
 	moveq	#0,d0
-
-BranchTo_Tails_JumpFlipSet ; BranchTo
 	bra.s	Tails_JumpFlipSet
 ; ===========================================================================
 ; loc_1C938:
@@ -1563,8 +1523,6 @@ return_1C958:
 ; ---------------------------------------------------------------------------
 ; Subroutine for Tails to interact with the floor and walls when he's in the air
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1C95A: Tails_Floor:
 Tails_DoLevelCollision:
@@ -1770,7 +1728,7 @@ Tails_HitFloor2:
 	bpl.s	return_1CB4E
 	add.w	d1,y_pos(a0)
 	move.b	d3,angle(a0)
-	bsr.w	Tails_ResetOnFloor
+	bsr.s	Tails_ResetOnFloor
 	move.w	#0,y_vel(a0)
 	move.w	x_vel(a0),inertia(a0)
 
@@ -1784,8 +1742,6 @@ return_1CB4E:
 ; Subroutine to reset Tails' mode when he lands on the floor
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1CB50:
 Tails_ResetOnFloor:
 	tst.b	pinball_mode(a0)
@@ -1793,23 +1749,22 @@ Tails_ResetOnFloor:
 ; loc_1CB5C:
 Tails_ResetOnFloor_Part2:
 	move.b	#AniIDSonAni_Walk,anim(a0)	; use running/walking/standing animation
-	btst	#status.player.rolling,status(a0)
-	beq.s	Tails_ResetOnFloor_Part3
 	bclr	#status.player.rolling,status(a0)
+	beq.s	Tails_ResetOnFloor_Part3
 	move.b	#$F,y_radius(a0) ; this slightly increases Tails' collision height to standing
 	move.b	#9,x_radius(a0)
 	subq.w	#1,y_pos(a0)	; move Tails up 1 pixel so the increased height doesn't push him slightly into the ground
 ; loc_1CB80:
 Tails_ResetOnFloor_Part3:
-	bclr	#status.player.in_air,status(a0)
-	bclr	#status.player.pushing,status(a0)
-	move.w	#0,(Chain_Bonus_counter).w
-	move.b	#0,flip_angle(a0)
-	move.b	#0,flip_turned(a0)
-	move.b	#0,flips_remaining(a0)
-	move.b	#0,jumping(a0)
-	move.b	#0,flying(a0)
-	move.b	#0,look_delay_counter(a0)
+	andi.b	#~(1<<status.player.in_air|1<<status.player.pushing),status(a0)
+	moveq	#0,d0
+	move.w	d0,(Chain_Bonus_counter).w
+	move.b	d0,flip_angle(a0)
+	move.b	d0,flip_turned(a0)
+	move.b	d0,flips_remaining(a0)
+	move.b	d0,jumping(a0)
+	move.b	d0,flying(a0)
+	move.b	d0,look_delay_counter(a0)
 	cmpi.b	#AniIDTailsAni_Fly,anim(a0)
 	bge.s	+
 	cmpi.b	#AniIDSonAni_Hang2,anim(a0)
@@ -1925,8 +1880,6 @@ Obj02_Respawning:
 ; Subroutine to animate Tails' sprites
 ; See also: AnimateSprite and Sonic_Animate
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1CDC4:
 Tails_Animate:
