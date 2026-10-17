@@ -1780,8 +1780,7 @@ Correct_cheat_entries_2:	ds.w	1	; for 14 continues or 7 emeralds codes
 Demo_mode_flag:			ds.b	1	; -1 if a demo is playing
 				ds.b	1	; unused
 Demo_number:			ds.w	1	; which demo will play next (2 bytes)
-				ds.b	4	; unused
-Graphics_Flags:			ds.w	1	; misc. bitfield
+				ds.b	6	; unused
 Debug_mode_flag:		ds.w	1	; (2 bytes)
 Checksum_fourcc:		ds.l	1	; (4 bytes)
 

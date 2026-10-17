@@ -367,9 +367,6 @@ ChecksumLoop:
 -	move.l	d7,(a6)+
 	dbf	d6,-
 
-	move.b	(HW_Version).l,d0
-	andi.b	#$C0,d0
-	move.b	d0,(Graphics_Flags).w
 	st.b	(Checksum_fourcc).w ; set flag so checksum won't be run again
 ; loc_370:
 GameInit:
@@ -1081,7 +1078,7 @@ SegaScreen:
 	moveq	#28-1,d2	; 28 cells tall
 	bsr.w	PlaneMapToVRAM_H80_SpecialStage
 
-	tst.b	(Graphics_Flags).w ; are we on a Japanese Mega Drive?
+	tst.b	(HW_Version).l ; are we on a Japanese Mega Drive?
 	bmi.s	SegaScreen_Contin ; if not, branch
 
 	; load an extra sprite to hide the TM (trademark) symbol on the SEGA screen
@@ -1488,7 +1485,7 @@ TailsNameCheat:
 	; Switch the detected console's region between Japanese and
 	; international. This affects the presence of trademark symbols, and
 	; causes Tails' name to swap between 'Tails' and 'Miles'.
-	bchg	#7,(Graphics_Flags).w
+	bchg	#7,(HW_Version).l
 
 	moveq	#SndID_Ring,d0 ; play the ring sound for a successfully entered cheat
 	bsr.w	PlaySound
@@ -1572,7 +1569,7 @@ Level:
 	bne.s	Level_ClrRam
 	addq.w	#PLCID_MilesLife-PLCID_MilesLife2P,d0
 +
-	tst.b	(Graphics_Flags).w
+	tst.b	(HW_Version).l
 	bpl.s	+
 	addq.w	#PLCID_TailsLife2P-PLCID_MilesLife2P,d0
 +
@@ -2390,7 +2387,7 @@ OptionScreen_DrawUnselected:
 ;loc_9268
 OptionScreen_SelectTextPtr:
 	lea	off_92D2(pc),a4
-	tst.b	(Graphics_Flags).w
+	tst.b	(HW_Version).l
 	bpl.s	+
 	lea	off_92DE(pc),a4
 

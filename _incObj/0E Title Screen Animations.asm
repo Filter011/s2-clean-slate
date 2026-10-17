@@ -222,7 +222,7 @@ Obj0E_Sonic_FlashBackground:
 Obj0E_Sonic_SpawnFallingStar:
 	; Wait a different amount of time on PAL consoles so that it's timed
 	; right with the music.
-	btst	#6,(Graphics_Flags).w
+	btst	#0,(VDP_control_port+1).l
 	beq.s	+
 	cmpi.w	#400,obj0e_current_frame(a0)
 	beq.s	++
@@ -357,7 +357,7 @@ Obj0E_LogoTop_Index: offsetTable
 Obj0E_LogoTop_Init:
 	; Don't show the trademark symbol on Japanese consoles.
 	move.b	#$B,mapping_frame(a0)
-	tst.b	(Graphics_Flags).w
+	tst.b	(HW_Version).l
 	bmi.s	+
 	move.b	#$A,mapping_frame(a0)
 +

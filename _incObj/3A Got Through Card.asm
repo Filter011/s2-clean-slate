@@ -61,7 +61,7 @@ loc_14102:
 	cmpi.w	#1,(Player_mode).w
 	bne.s	loc_14118
 	addq.w	#1,d0
-	tst.b	(Graphics_Flags).w
+	tst.b	(HW_Version).l
 	bpl.s	loc_14118
 	addq.w	#1,d0
 
