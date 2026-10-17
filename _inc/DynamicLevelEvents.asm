@@ -420,7 +420,7 @@ LevEvents_HTZ_Routine1:
 	move.w	d0,(Camera_BG_X_offset).w
 	move.w	#320,(Camera_BG_Y_offset).w
 	subi.w	#$100,(Camera_BG_Y_pos).w
-	move.w	#0,(HTZ_Terrain_Delay).w
+	move.w	d0,(HTZ_Terrain_Delay).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ_Routine2
 -
 	rts
@@ -532,7 +532,7 @@ LevEvents_HTZ_Routine3:
 	move.w	d0,(Camera_BG_X_offset).w
 	move.w	#320,(Camera_BG_Y_offset).w
 	subi.w	#$100,(Camera_BG_Y_pos).w
-	move.w	#0,(HTZ_Terrain_Delay).w
+	move.w	d0,(HTZ_Terrain_Delay).w
 	subq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ_Routine2
 -
 	rts
@@ -545,7 +545,7 @@ LevEvents_HTZ_Routine3_Part2:
 	moveq	#0,d1
 	move.w	d1,(Camera_BG_X_pos_diff).w
 	move.w	d1,(Camera_BG_Y_pos_diff).w
-	bsr.w	ScrollBG
+	bsr.s	ScrollBG
 	or.w	d0,d1
 	bne.s	-	; rts
 	move.b	#0,(Screen_Shaking_Flag_HTZ).w
@@ -633,7 +633,7 @@ LevEvents_HTZ2_Routine1:
 	move.w	d0,(Camera_BG_X_offset).w
 	move.w	#$2C0,(Camera_BG_Y_offset).w
 	subi.w	#$100,(Camera_BG_Y_pos).w
-	move.w	#0,(HTZ_Terrain_Delay).w
+	move.w	d0,(HTZ_Terrain_Delay).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine2
 	cmpi.w	#$380,(Camera_Y_pos).w
 	blo.s	+	; rts
@@ -751,7 +751,7 @@ LevEvents_HTZ2_Routine3:
 	move.w	d0,(Camera_BG_X_offset).w
 	move.w	#$2C0,(Camera_BG_Y_offset).w
 	subi.w	#$100,(Camera_BG_Y_pos).w
-	move.w	#0,(HTZ_Terrain_Delay).w
+	move.w	d0,(HTZ_Terrain_Delay).w
 	subq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine2
 -
 	rts
@@ -858,7 +858,7 @@ LevEvents_HTZ2_Routine5:
 	addi.w	#$480,(Camera_BG_X_pos).w
 	move.w	#$300,(Camera_BG_Y_offset).w
 	subi.w	#$100,(Camera_BG_Y_pos).w
-	move.w	#0,(HTZ_Terrain_Delay).w
+	move.w	d0,(HTZ_Terrain_Delay).w
 	subq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine4
 -
 	rts
