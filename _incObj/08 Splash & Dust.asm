@@ -4,7 +4,6 @@
 
 obj08_previous_frame = objoff_30
 obj08_dust_timer = objoff_32
-obj08_vram_address = objoff_3C
 
 ; Sprite_1DD20:
 Obj08:
@@ -29,7 +28,6 @@ Obj08_Init:
 	move.b	#$10,width_pixels(a0)
 	move.w	#ArtTile_ArtNem_SonicDust,art_tile(a0)
 	move.w	#MainCharacter,parent(a0)
-	move.w	#tiles_to_bytes(ArtTile_ArtNem_SonicDust),obj08_vram_address(a0)
 
 ; loc_1DD90:
 Obj08_Main:
@@ -153,7 +151,7 @@ Obj08_LoadDustOrSplashArt:
 	move.w	(a2)+,d5
 	subq.w	#1,d5
 	bmi.s	return_1DF36
-	move.w	obj08_vram_address(a0),d4
+	move.w	#tiles_to_bytes(ArtTile_ArtNem_SonicDust),d4
     if AssumeSourceAddressInBytes
 	move.l	#ArtUnc_SplashAndDust,d6
     else

@@ -18,12 +18,10 @@ Obj49_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj49_MapUnc_20C50,mappings(a0)
 	move.w	#ArtTile_ArtNem_Waterfall|palette_line_1,art_tile(a0)
-	move.b	#1<<render_flags.level_fg,render_flags(a0)
+	move.b	#1<<render_flags.level_fg|1<<render_flags.explicit_height,render_flags(a0)
 	move.b	#$20,width_pixels(a0)
-	move.w	x_pos(a0),objoff_30(a0)
 	move.w	#0,priority(a0)
 	move.b	#$80,y_radius(a0)
-	bset	#render_flags.explicit_height,render_flags(a0)
 ; loc_20BEA:
 Obj49_ChkDel:
 	moveq	#-$80,d0
@@ -36,7 +34,7 @@ Obj49_ChkDel:
 	subi.w	#$40,d1
 	addi.w	#$40,d2
 	move.b	subtype(a0),d3
-	move.b	#0,mapping_frame(a0)
+	clr.b	mapping_frame(a0)
 	move.w	(MainCharacter+x_pos).w,d0
 	cmp.w	d1,d0
 	blo.s	loc_20C36
