@@ -34,9 +34,9 @@ Obj7C_Main:
 	add.w	d1,d0
 	neg.w	d0
 	move.w	d0,x_pixel(a0)
-	move.w	(Camera_Y_pos).w,d1
+	moveq	#$7F,d1
+	and.w	(Camera_Y_pos).w,d1
 	asr.w	#1,d1
-	andi.w	#$3F,d1
 	neg.w	d1
 	addi.w	#$100,d1
 	move.w	d1,y_pixel(a0)
