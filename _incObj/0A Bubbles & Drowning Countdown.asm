@@ -296,8 +296,9 @@ Obj0A_ReduceAir:
 	move.w	#0,x_vel(a0)
 	move.w	#0,inertia(a0)
 	move.b	#2,routine(a0)
+	clr.b	(Update_HUD_timer).w
 	movea.l	(sp)+,a0 ; load obj address ; restore a0 = obj0A
-	move.b	#1,(Deform_lock).w
+	st.b	(Deform_lock).w
 	rts
 ; ===========================================================================
 ; loc_1D708:
@@ -371,8 +372,8 @@ Obj0A_MakeNumberBubbleMaybe:
 	; The player has not drowned.
 
 	; If it's not time to create a number bubble, then skip this.
-	btst	#7,obj0a_flags(a0)
-	beq.s	Obj0A_DoneCreatingBubble
+	tst.b	obj0a_flags(a0)
+	bpl.s	Obj0A_DoneCreatingBubble
 
 	moveq	#0,d2
 	move.b	air_left(a2),d2
