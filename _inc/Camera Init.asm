@@ -43,16 +43,16 @@ InitCam_Index: zoneOrderedOffsetTable 4,2
 	zoneTableEntry.l InitCam_Null	; Zone 9 Act 2
 	zoneTableEntry.l InitCam_OOZ	; OOZ1
 	zoneTableEntry.l InitCam_OOZ	; OOZ2
-	zoneTableEntry.l InitCam_MCZ	; MCZ1
-	zoneTableEntry.l InitCam_MCZ	; MCZ2
+	zoneTableEntry.l InitCam_MCZ1	; MCZ1
+	zoneTableEntry.l InitCam_MCZ2	; MCZ2
 	zoneTableEntry.l InitCam_CNZ	; CNZ1
 	zoneTableEntry.l InitCam_CNZ	; CNZ2
 	zoneTableEntry.l InitCam_CPZ	; CPZ1
 	zoneTableEntry.l InitCam_CPZ	; CPZ2
 	zoneTableEntry.l InitCam_Null	; DEZ1
 	zoneTableEntry.l InitCam_Null	; DEZ2
-	zoneTableEntry.l InitCam_ARZ	; ARZ1
-	zoneTableEntry.l InitCam_ARZ	; ARZ2
+	zoneTableEntry.l InitCam_ARZ1	; ARZ1
+	zoneTableEntry.l InitCam_ARZ2	; ARZ2
 	zoneTableEntry.l InitCam_SCZ	; SCZ1
 	zoneTableEntry.l InitCam_SCZ	; SCZ2
     zoneTableEnd
@@ -98,17 +98,17 @@ InitCam_OOZ:
 	rts
 ; ===========================================================================
 ;loc_C332:
-InitCam_MCZ:
+InitCam_MCZ1:
 	moveq	#0,d2
 	move.l	d2,(Camera_BG_X_pos).w
-	tst.b	(Current_Act).w
-	bne.s	+
 	divu.w	#3,d0
 	subi.w	#$140,d0
 	move.w	d0,(Camera_BG_Y_pos).w
 	rts
 ; ===========================================================================
-+
+InitCam_MCZ2:
+	moveq	#0,d2
+	move.l	d2,(Camera_BG_X_pos).w
 	divu.w	#6,d0
 	subi.w	#$10,d0
 	move.w	d0,(Camera_BG_Y_pos).w
@@ -133,15 +133,13 @@ InitCam_CPZ:
 	rts
 ; ===========================================================================
 ;loc_C38C:
-InitCam_ARZ:
-	tst.b	(Current_Act).w
-	beq.s	+
+InitCam_ARZ2:
 	subi.w	#$E0,d0
 	lsr.w	#1,d0
 	move.w	d0,(Camera_BG_Y_pos).w
 	bra.s	loc_C3A6
 ; ===========================================================================
-+
+InitCam_ARZ1:
 	subi.w	#$180,d0
 	move.w	d0,(Camera_BG_Y_pos).w
 

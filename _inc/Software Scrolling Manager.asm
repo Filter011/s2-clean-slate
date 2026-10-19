@@ -7,12 +7,9 @@ DeformBgLayer:
 ; ---------------------------------------------------------------------------
 +
 	moveq	#0,d0
-	move.w	d0,(Scroll_flags).w
-	move.w	d0,(Scroll_flags_BG).w
-	move.w	d0,(Scroll_flags_BG2).w
-	move.w	d0,(Scroll_flags_BG3).w
-	move.w	d0,(Camera_X_pos_diff).w
-	move.w	d0,(Camera_Y_pos_diff).w
+	move.l	d0,(Scroll_flags).w	; and Scroll_flags_BG
+	move.l	d0,(Scroll_flags_BG2).w	; and Scroll_flags_BG3
+	move.l	d0,(Camera_X_pos_diff).w	; and Camera_Y_pos_diff
 
 	; Sky Chase Zone handles scrolling manually, in 'SwScrl_SCZ'.
 	cmpi.b	#sky_chase_zone,(Current_Zone).w
@@ -233,7 +230,6 @@ SwScrl_EHZ:
 	divs.w	#$30,d0
 	ext.l	d0
 	asl.l	#8,d0
-	moveq	#0,d3
 	move.w	d2,d3
 	asr.w	#3,d3
 
