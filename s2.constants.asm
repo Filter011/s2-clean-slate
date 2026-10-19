@@ -1406,9 +1406,7 @@ PalCycle_Frame:			ds.w	1	; ColorID loaded in PalCycle
 PalCycle_Timer:			ds.w	1	; number of frames until next PalCycle call
 RNG_seed:			ds.l	1	; used for random number generation
 Game_paused:			ds.b	1
-				ds.b	5	; unused
-DMA_data_thunk:			ds.w	1	; Used as a RAM holder for the final DMA command word. Data will NOT be preserved across V-INTs, so consider this space reserved.
-				ds.b	2	; unused
+				ds.b	9	; unused
 Hint_flag:			ds.b	1	; unless this is 1, H-int won't run
 				ds.b	1	; unused
 

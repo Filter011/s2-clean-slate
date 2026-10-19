@@ -22,10 +22,9 @@ dma68kToVDP macro source,dest,length,type
 	move.l	#(($9400|((((length)>>1)&$FF00)>>8))<<16)|($9300|(((length)>>1)&$FF)),(a5)
 	move.l	#(($9600|((((source)>>1)&$FF00)>>8))<<16)|($9500|(((source)>>1)&$FF)),(a5)
 	move.w	#$9700|(((((source)>>1)&$FF0000)>>16)&$7F),(a5)
-	move.l	#((vdpComm(dest,type,DMA)>>16)<<16)+(vdpComm(dest,type,DMA)&$FFFF),d0
-	move.l	d0,(a5)
-	swap	d0
-	move.w	d0,(DMA_data_thunk).w
+	move.w	#(vdpComm(dest,type,DMA)>>16)&$FFFF,(a5)
+	move.w	#vdpComm(dest,type,DMA)&$FFFF,-(sp)
+	move.w	(sp)+,(a5)
     endm
 
 ; tells the VDP to fill a region of VRAM with a certain byte
@@ -35,7 +34,7 @@ dmaFillVRAM macro byte,addr,length
 	move.l	#(($9400|((((length)-1)&$FF00)>>8))<<16)|($9300|(((length)-1)&$FF)),(a5) ; DMA length ...
 	move.w	#$9780,(a5) ; VRAM fill
 	move.l	#vdpComm(addr,VRAM,DMA),(a5) ; Start at ...
-	move.w	#(byte)|((byte)<<8),(VDP_data_port).l ; Fill with byte
+	move.w	#(byte)|((byte)<<8),VDP_data_port-VDP_control_port(a5) ; Fill with byte
 .loop:	move.w	(a5),d1
 	btst	#1,d1
 	bne.s	.loop ; busy loop until the VDP is finished filling...
