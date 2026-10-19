@@ -2,28 +2,18 @@
 ; Subroutine to load level boundaries and start locations
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_BFBC:
 LevelSizeLoad:
 	moveq	#0,d0
-	move.w	d0,(Scroll_flags).w
-	move.w	d0,(Scroll_flags_BG).w
-	move.w	d0,(Scroll_flags_BG2).w
-	move.w	d0,(Scroll_flags_BG3).w
-	move.w	d0,(Scroll_flags_copy).w
-	move.w	d0,(Scroll_flags_BG_copy).w
-	move.w	d0,(Scroll_flags_BG2_copy).w
-	move.w	d0,(Scroll_flags_BG3_copy).w
+	move.l	d0,(Scroll_flags).w	; and Scroll_flags_BG
+	move.l	d0,(Scroll_flags_BG2).w	; and Scroll_flags_BG3
+	move.l	d0,(Scroll_flags_copy).w	; and Scroll_flags_BG_copy
+	move.l	d0,(Scroll_flags_BG2_copy).w	; and Scroll_flags_BG3_copy
 	move.b	d0,(Deform_lock).w
-	move.b	d0,(Screen_Shaking_Flag_HTZ).w
-	move.b	d0,(Screen_Shaking_Flag).w
-	move.b	d0,(Scroll_lock).w
+	move.l	d0,(Screen_Shaking_Flag_HTZ).w	; and Screen_Shaking_Flag, and Scroll_lock + Scroll_lock_P2
 	move.b	d0,(Dynamic_Resize_Routine).w ; load level boundaries
-	move.w	d0,(WFZ_LevEvent_Subrout).w
-	move.w	d0,(WFZ_BG_Y_Speed).w
-	move.w	d0,(Camera_BG_X_offset).w
-	move.w	d0,(Camera_BG_Y_offset).w
+	move.l	d0,(WFZ_LevEvent_Subrout).w	; and WFZ_BG_Y_Speed
+	move.l	d0,(Camera_BG_X_offset).w	; and Camera_BG_Y_offset
 	move.w	(Current_ZoneAndAct).w,d0
 	ror.b	#1,d0
 	lsr.w	#4,d0

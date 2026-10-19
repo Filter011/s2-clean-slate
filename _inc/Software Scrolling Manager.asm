@@ -269,13 +269,13 @@ SwScrl_EHZ:
 	swap	d3
 	dbf	d1,-
 
-	; 22+58+21+11+16+16+15+18+45=222.
-	; Only 222 out of 224 lines have been processed.
+	move.w	d4,(a1)+
+	move.w	d3,(a1)+
+	move.w	d4,(a1)+
+	move.w	d3,(a1)+
 
-	move.w	d4,(a1)+
-	move.w	d3,(a1)+
-	move.w	d4,(a1)+
-	move.w	d3,(a1)+
+	; 22+58+21+11+16+16+15+18+45+2=224.
+	; 224 lines have been processed.
 
 	rts
 ; ===========================================================================
@@ -491,7 +491,6 @@ SwScrl_HTZ:
 
 	; Start by reducing to 44% (100% divided by 2.28)...
 	move.w	d2,d0
-	moveq	#0,d1
 	move.w	d0,d1
 	asr.w	#1,d0 ; Divide d0 by 2
 	swap	d1
@@ -679,7 +678,6 @@ HTZ_Screen_Shake:
 
 	rts
 ; ===========================================================================
-; unused...
 ; loc_CBA0:
 SwScrl_HPZ:
 	; Set the flags to dynamically load the background as it moves.
@@ -729,7 +727,6 @@ SwScrl_HPZ:
 	ext.l	d0
 	asl.l	#4,d0
 	asl.l	#8,d0
-	moveq	#0,d3
 	move.w	d2,d3
 	asr.w	#1,d3
 	lea	(TempArray_LayerDef+(8+7+26+7)*2).w,a2
@@ -1300,7 +1297,6 @@ SwScrl_CNZ_GenerateScrollValues:
 	ext.l	d0
 	asl.l	#5,d0
 	asl.l	#8,d0
-	moveq	#0,d3
 	move.w	d2,d3
 
 	moveq	#7-1,d1
