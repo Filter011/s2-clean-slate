@@ -51,8 +51,6 @@ HUD_MapUnc_40A9A:	include "mappings/sprite/hud_a.asm"
 ; subroutine to add to Player 1's score
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_40D06:
 AddPoints:
 	st.b	(Update_HUD_score).w
@@ -79,11 +77,8 @@ AddPoints:
 ; Subroutine to update the HUD
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_40D8A:
 HudUpdate:
-	lea	(VDP_data_port).l,a6
 	tst.w	(Debug_mode_flag).w	; is debug mode on?
 	bne.w	loc_40E9A	; if yes, branch
 	tst.b	(Update_HUD_score).w	; does the score need updating?
@@ -242,8 +237,6 @@ return_40F4E:
 ; Subroutine to initialize ring counter on the HUD
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_4105A:
 ; Hud_LoadZero:
 Hud_InitRings:
@@ -256,13 +249,11 @@ Hud_InitRings:
 ; Subroutine to load uncompressed HUD patterns ("E", "0", colon)
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_4106E:
 Hud_Base:
 	lea	(VDP_data_port).l,a6
 	bsr.w	Hud_Lives
-	move.l	#vdpComm(tiles_to_bytes(ArtTile_HUD_Score_E),VRAM,WRITE),(VDP_control_port).l
+	move.l	#vdpComm(tiles_to_bytes(ArtTile_HUD_Score_E),VRAM,WRITE),VDP_control_port-VDP_data_port(a6)
 	lea	Hud_TilesBase(pc),a2
 	moveq	#(Hud_TilesBase_End-Hud_TilesBase)-1,d2
 
