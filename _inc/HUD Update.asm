@@ -141,7 +141,7 @@ Hud_ChkBonus:
 	tst.b	(Update_Bonus_score).w	; do time/ring bonus counters need updating?
 	beq.s	Hud_End	; if not, branch
 	clr.b	(Update_Bonus_score).w
-	move.l	#vdpComm(tiles_to_bytes(ArtTile_HUD_Bonus_Score),VRAM,WRITE),(VDP_control_port).l
+	move.l	#vdpComm(tiles_to_bytes(ArtTile_HUD_Bonus_Score),VRAM,WRITE),VDP_control_port-VDP_data_port(a6)
 	moveq	#0,d1
 	move.w	(Total_Bonus_Countdown).w,d1
 	bsr.w	Hud_TimeRingBonus
@@ -197,7 +197,7 @@ loc_40EDC:
 	tst.b	(Update_Bonus_score).w
 	beq.s	loc_40F18
 	clr.b	(Update_Bonus_score).w
-	move.l	#vdpComm(tiles_to_bytes(ArtTile_HUD_Bonus_Score),VRAM,WRITE),(VDP_control_port).l
+	move.l	#vdpComm(tiles_to_bytes(ArtTile_HUD_Bonus_Score),VRAM,WRITE),VDP_control_port-VDP_data_port(a6)
 	moveq	#0,d1
 	move.w	(Total_Bonus_Countdown).w,d1
 	bsr.w	Hud_TimeRingBonus
@@ -240,7 +240,7 @@ return_40F4E:
 ; sub_4105A:
 ; Hud_LoadZero:
 Hud_InitRings:
-	move.l	#vdpComm(tiles_to_bytes(ArtTile_HUD_Rings),VRAM,WRITE),(VDP_control_port).l
+	move.l	#vdpComm(tiles_to_bytes(ArtTile_HUD_Rings),VRAM,WRITE),VDP_control_port-VDP_data_port(a6)
 	lea	Hud_TilesRings(pc),a2
 	moveq	#(Hud_TilesBase_End-Hud_TilesRings)-1,d2
 	bra.s	loc_41090
@@ -316,11 +316,9 @@ Hud_TilesBase_End
 ; Subroutine to load debug mode numbers patterns
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_410E4:
 HudDb_XY:
-	move.l	#vdpComm(tiles_to_bytes(ArtTile_HUD_Score_E),VRAM,WRITE),(VDP_control_port).l
+	move.l	#vdpComm(tiles_to_bytes(ArtTile_HUD_Score_E),VRAM,WRITE),VDP_control_port-VDP_data_port(a6)
 	move.w	(Camera_X_pos).w,d1
 	swap	d1
 	move.w	(MainCharacter+x_pos).w,d1
@@ -356,8 +354,6 @@ loc_4111E:
 ; Subroutine to load rings numbers patterns
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_4113C:
 Hud_Rings:
 	lea	Hud_100(pc),a2
@@ -368,8 +364,6 @@ Hud_Rings:
 ; ---------------------------------------------------------------------------
 ; Subroutine to load score numbers patterns
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_41146:
 Hud_Score:
@@ -433,8 +427,6 @@ Hud_1:		hud_counter 1
 ; ---------------------------------------------------------------------------
 ; Subroutine to load time numbers patterns
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_41214:
 Hud_Mins:
@@ -529,8 +521,6 @@ Hud_ClrBonusLoop:
 ; ---------------------------------------------------------------------------
 ; Subroutine to load uncompressed lives counter patterns (Tails)
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_412E2:
 Hud_Lives:
