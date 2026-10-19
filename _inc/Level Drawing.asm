@@ -839,7 +839,6 @@ ProcessAndWriteBlock_Vertical:
 GetBlock:
 	add.w	(a3),d5
 	add.w	4(a3),d4
-	lea	(Block_Table).w,a1
 	move.w	d4,d3		; d3 = camera Y pos + offset
 	add.w	d3,d3
 	andi.w	#$F00,d3	; limit to units of $100 ($100 = $80 * 2, $80 = height of a 128x128)
@@ -860,6 +859,7 @@ GetBlock:
 	move.w	(a0),d3
 	andi.w	#$3FF,d3
 	lsl.w	#3,d3
+	lea	(Block_Table).w,a1
 	adda.w	d3,a1
 	rts
 ; End of function GetBlock

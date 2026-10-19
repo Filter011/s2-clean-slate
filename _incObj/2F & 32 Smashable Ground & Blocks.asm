@@ -29,7 +29,7 @@ Obj2F_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj2F_MapUnc_236FA,mappings(a0)
 	move.w	#ArtTile_ArtKos_LevelArt|palette_line_2|high_priority,art_tile(a0)
-	move.b	#1<<render_flags.level_fg,render_flags(a0)
+	move.b	#1<<render_flags.level_fg|1<<render_flags.explicit_height,render_flags(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#4*$80,priority(a0)
 	moveq	#0,d0
@@ -39,7 +39,6 @@ Obj2F_Init:
 	move.b	(a2)+,y_radius(a0)
 	move.b	(a2)+,mapping_frame(a0)
 	move.b	#$20,y_radius(a0)	; ?
-	bset	#render_flags.explicit_height,render_flags(a0)
 ; loc_23368:
 Obj2F_Main:
 	move.w	(Chain_Bonus_counter).w,objoff_38(a0)

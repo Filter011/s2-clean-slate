@@ -50,8 +50,8 @@ Obj7D_Init:
 	jsr	(AddPoints).l
 
 Obj7D_NoAdd:
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo11_DeleteObject
@@ -71,8 +71,8 @@ word_1F6D2:
 Obj7D_Main:
 	subq.w	#1,objoff_30(a0)
 	bmi.s	JmpTo12_DeleteObject
-	move.w	x_pos(a0),d0
-	andi.w	#$FF80,d0
+	moveq	#-$80,d0
+	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo12_DeleteObject

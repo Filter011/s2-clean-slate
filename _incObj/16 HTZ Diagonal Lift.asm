@@ -22,8 +22,6 @@ Obj16_Init:
 	move.b	#$20,width_pixels(a0)
 	move.b	#0,mapping_frame(a0)
 	move.w	#1*$80,priority(a0)
-	move.w	x_pos(a0),objoff_30(a0)
-	move.w	y_pos(a0),objoff_32(a0)
 	move.b	#$40,y_radius(a0)
 	bset	#render_flags.explicit_height,render_flags(a0)
 	moveq	#0,d0

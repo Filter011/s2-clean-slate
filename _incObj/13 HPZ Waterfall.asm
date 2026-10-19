@@ -41,7 +41,7 @@ Obj13_Init:
 Obj13_LoadSubObject:
 	jsr	(AllocateObjectAfterCurrent).l
 	bne.s	+	; rts
-	move.b	#ObjID_HPZWaterfall,id(a1) ; load obj13
+	move.b	id(a0),id(a1) ; load obj13
 	addq.b	#4,routine(a1)
 	move.w	x_pos(a0),x_pos(a1)
 	move.w	y_pos(a0),y_pos(a1)
