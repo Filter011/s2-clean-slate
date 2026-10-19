@@ -39,9 +39,10 @@ Obj0F_Main:
 	btst	#button_down,d0
 	beq.s	+
 	addq.b	#1,d2
-	cmpi.b	#2,d2
-	blo.s	+
-	moveq	#0,d2
+;	cmpi.b	#2,d2
+;	blo.s	+
+;	moveq	#0,d2
+	andi.b	#1,d2
 +
 	move.b	d2,mapping_frame(a0)
 	move.b	d2,(Title_screen_option).w

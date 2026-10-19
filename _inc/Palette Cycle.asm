@@ -5,48 +5,48 @@ PalCycle_Load:
 	bsr.w	PalCycle_SuperSonic
 	move.w	(Current_ZoneAndAct).w,d0
 	ror.b	#1,d0
-	lsr.w	#6,d0
-	move.w	PalCycle(pc,d0.w),d0	; load animated palettes offset index into d0
-	jmp	PalCycle(pc,d0.w)	; jump to PalCycle + offset index
+	lsr.w	#5,d0
+	movea.l	PalCycle(pc,d0.w),a0	; load animated palettes offset index into d0
+	jmp	(a0)			; jump to PalCycle + offset index
 ; End of function PalCycle_Load
 
 ; ===========================================================================
 ; off_19F4:
-PalCycle: zoneOrderedOffsetTable 2,2
-	zoneOffsetTableEntry.w PalCycle_EHZ	; EHZ1
-	zoneOffsetTableEntry.w PalCycle_EHZ	; EHZ2
-	zoneOffsetTableEntry.w PalCycle_Null	; Zone 1 Act 1
-	zoneOffsetTableEntry.w PalCycle_Null	; Zone 1 Act 2
-	zoneOffsetTableEntry.w PalCycle_WZ	; WZ1
-	zoneOffsetTableEntry.w PalCycle_WZ	; WZ2
-	zoneOffsetTableEntry.w PalCycle_Null	; Zone 3 Act 1
-	zoneOffsetTableEntry.w PalCycle_Null	; Zone 3 Act 2
-	zoneOffsetTableEntry.w PalCycle_MTZ	; MTZ1
-	zoneOffsetTableEntry.w PalCycle_MTZ	; MTZ2
-	zoneOffsetTableEntry.w PalCycle_MTZ	; MTZ3
-	zoneOffsetTableEntry.w PalCycle_MTZ	; MTZ4
-	zoneOffsetTableEntry.w PalCycle_WFZ	; WFZ1
-	zoneOffsetTableEntry.w PalCycle_WFZ	; WFZ2
-	zoneOffsetTableEntry.w PalCycle_HTZ	; HTZ1
-	zoneOffsetTableEntry.w PalCycle_HTZ	; HTZ2
-	zoneOffsetTableEntry.w PalCycle_HPZ	; HPZ1
-	zoneOffsetTableEntry.w PalCycle_HPZ	; HPZ2
-	zoneOffsetTableEntry.w PalCycle_Null	; Zone 9 Act 1 
-	zoneOffsetTableEntry.w PalCycle_Null	; Zone 9 Act 2
-	zoneOffsetTableEntry.w PalCycle_OOZ	; OOZ1
-	zoneOffsetTableEntry.w PalCycle_OOZ	; OOZ2
-	zoneOffsetTableEntry.w PalCycle_MCZ.act1	; MCZ1
-	zoneOffsetTableEntry.w PalCycle_MCZ	; MCZ2
-	zoneOffsetTableEntry.w PalCycle_CNZ	; CNZ1
-	zoneOffsetTableEntry.w PalCycle_CNZ	; CNZ2
-	zoneOffsetTableEntry.w PalCycle_CPZ	; CPZ1
-	zoneOffsetTableEntry.w PalCycle_CPZ	; CPZ2
-	zoneOffsetTableEntry.w PalCycle_CPZ	; DEZ1
-	zoneOffsetTableEntry.w PalCycle_CPZ	; DEZ2
-	zoneOffsetTableEntry.w PalCycle_ARZ	; ARZ1
-	zoneOffsetTableEntry.w PalCycle_ARZ	; ARZ2
-	zoneOffsetTableEntry.w PalCycle_WFZ	; SCZ1
-	zoneOffsetTableEntry.w PalCycle_WFZ	; SCZ2
+PalCycle: zoneOrderedOffsetTable 4,2
+	zoneTableEntry.l PalCycle_EHZ	; EHZ1
+	zoneTableEntry.l PalCycle_EHZ	; EHZ2
+	zoneTableEntry.l PalCycle_Null	; Zone 1 Act 1
+	zoneTableEntry.l PalCycle_Null	; Zone 1 Act 2
+	zoneTableEntry.l PalCycle_WZ	; WZ1
+	zoneTableEntry.l PalCycle_WZ	; WZ2
+	zoneTableEntry.l PalCycle_Null	; Zone 3 Act 1
+	zoneTableEntry.l PalCycle_Null	; Zone 3 Act 2
+	zoneTableEntry.l PalCycle_MTZ	; MTZ1
+	zoneTableEntry.l PalCycle_MTZ	; MTZ2
+	zoneTableEntry.l PalCycle_MTZ	; MTZ3
+	zoneTableEntry.l PalCycle_MTZ	; MTZ4
+	zoneTableEntry.l PalCycle_WFZ	; WFZ1
+	zoneTableEntry.l PalCycle_WFZ	; WFZ2
+	zoneTableEntry.l PalCycle_HTZ	; HTZ1
+	zoneTableEntry.l PalCycle_HTZ	; HTZ2
+	zoneTableEntry.l PalCycle_HPZ	; HPZ1
+	zoneTableEntry.l PalCycle_HPZ	; HPZ2
+	zoneTableEntry.l PalCycle_Null	; Zone 9 Act 1 
+	zoneTableEntry.l PalCycle_Null	; Zone 9 Act 2
+	zoneTableEntry.l PalCycle_OOZ	; OOZ1
+	zoneTableEntry.l PalCycle_OOZ	; OOZ2
+	zoneTableEntry.l PalCycle_MCZ.act1	; MCZ1
+	zoneTableEntry.l PalCycle_MCZ	; MCZ2
+	zoneTableEntry.l PalCycle_CNZ	; CNZ1
+	zoneTableEntry.l PalCycle_CNZ	; CNZ2
+	zoneTableEntry.l PalCycle_CPZ	; CPZ1
+	zoneTableEntry.l PalCycle_CPZ	; CPZ2
+	zoneTableEntry.l PalCycle_CPZ	; DEZ1
+	zoneTableEntry.l PalCycle_CPZ	; DEZ2
+	zoneTableEntry.l PalCycle_ARZ	; ARZ1
+	zoneTableEntry.l PalCycle_ARZ	; ARZ2
+	zoneTableEntry.l PalCycle_WFZ	; SCZ1
+	zoneTableEntry.l PalCycle_WFZ	; SCZ2
     zoneTableEnd
 
 ; ===========================================================================
