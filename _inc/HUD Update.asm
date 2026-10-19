@@ -464,11 +464,6 @@ loc_4122C:
 
 loc_41234:
 	add.l	d3,d1
-	tst.w	d2
-	beq.s	loc_4123E
-	moveq	#1,d4
-
-loc_4123E:
 	lsl.w	#6,d2
 	move.l	d0,4(a6)
 	lea	(a1,d2.w),a3
