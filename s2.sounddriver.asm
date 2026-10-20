@@ -1521,7 +1521,7 @@ zBGMLoad:
 	call	zInitMusicPlayback
 	ld	a,(zCurSong)			; So, let's take your desired song, put it into 'a'
     if MusID__First=01h
-	dec	a
+	dec	a				; Make it a zero-based entry ...
     else
 	sub	MusID__First			; Make it a zero-based entry ...
     endif
@@ -1536,7 +1536,7 @@ zBGMLoad:
 	ld	hl,zMasterPlaylist		; Get address of the zMasterPlaylist
 	add	hl,de				; Offset by 16-bit
 	ld	a,(hl)				; Get bank for the song to play
-	ld	(zAbsVar.SongBank),a			; Save the song's bank...
+	ld	(zAbsVar.SongBank),a		; Save the song's bank...
 	ex	de,hl
 	bankswitch
 	ex	de,hl
