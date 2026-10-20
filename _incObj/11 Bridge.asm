@@ -82,8 +82,7 @@ Obj11_MakeBdgSegment:
 	move.w	y_pos(a0),y_pos(a1)
 	move.l	mappings(a0),mappings(a1)
 	move.w	art_tile(a0),art_tile(a1)
-	move.b	render_flags(a0),render_flags(a1)
-	bset	#render_flags.multi_sprite,render_flags(a1)
+	move.b	#1<<render_flags.level_fg|1<<render_flags.multi_sprite,render_flags(a1)
 	move.b	#$40,mainspr_width(a1)
 	move.b	d1,mainspr_childsprites(a1)
 	subq.b	#1,d1
@@ -255,7 +254,7 @@ sub_F872:
 
 loc_F8F0:
 	move.w	d1,-(sp)
-	jsr	(PlatformObject11_cont).l
+	bsr.w	PlatformObject11_cont
 	move.w	(sp)+,d1
 	btst	d6,status(a0)
 	beq.s	+	; rts
@@ -286,12 +285,6 @@ sub_F912:
 	swap	d2
 	move.b	byte_F950(pc,d0.w),d2
 	moveq	#0,d0
-;	tst.w	(Sidekick+x_vel).w
-;	bne.s	+
-;	move.b	(Vint_runcount+3).w,d0
-;	andi.w	#$1C,d0
-;	lsr.w	#1,d0
-;+
 	moveq	#0,d6
 	move.b	byte_F950+1(pc,d0.w),d6
 	swap	d6
@@ -316,11 +309,6 @@ byte_F950:
 	beq.s	+
 	move.b	objoff_3F(a0),d3
 +
-;	move.b	status(a0),d0
-;	andi.b	#p2_standing,d0
-;	beq.s	+
-;	move.b	objoff_3B(a0),d4
-;+
 	movea.l	Obj11_child1(a0),a1
 	lea	sub9_mapframe+next_subspr(a1),a2
 	lea	sub2_mapframe(a1),a1

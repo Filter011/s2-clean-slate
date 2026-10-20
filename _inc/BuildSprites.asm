@@ -174,7 +174,7 @@ Build_1AF1C:
 	moveq	#0,d3
 	move.b	mainspr_childsprites(a0),d3
 	subq.w	#1,d3
-	bcs.w	BuildSprites_NextObj
+	blo.w	BuildSprites_NextObj
 	lea	subspr_data(a0),a0
 
 Build_1AF2A:
@@ -212,9 +212,9 @@ Build_1AF62:
 
 BuildSpr_Draw:
 	lsr.b	#1,d6
-	bcs.s	BuildSpr_FlipX
+	blo.s	BuildSpr_FlipX
 	lsr.b	#1,d6
-	bcs.w	BuildSpr_FlipY
+	blo.w	BuildSpr_FlipY
 ; End of function BuildSpr_Draw
 
 
@@ -248,7 +248,7 @@ BuildSpr_Normal:
 
 BuildSpr_FlipX:
 	lsr.b	#1,d6		; is object also y-flipped?
-	bcs.s	BuildSpr_FlipXY	; if yes, branch
+	blo.s	BuildSpr_FlipXY	; if yes, branch
 
 .loop:
 	move.b	(a1)+,d2	; y position
@@ -354,9 +354,9 @@ BuildSpr_FlipY:
 
 sub_1B070:
 	lsr.b	#1,d6
-	bcs.s	Build_1B0C2
+	blo.s	Build_1B0C2
 	lsr.b	#1,d6
-	bcs.w	Build_1B19C
+	blo.w	Build_1B19C
 
 Build_1B07A:
 	move.b	(a1)+,d2
@@ -398,7 +398,7 @@ Build_1B0BA:
 
 Build_1B0C2:
 	lsr.b	#1,d6
-	bcs.s	Build_1B12C
+	blo.s	Build_1B12C
 
 Build_1B0C6:
 	move.b	(a1)+,d2

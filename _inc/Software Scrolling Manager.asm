@@ -230,6 +230,7 @@ SwScrl_EHZ:
 	divs.w	#$30,d0
 	ext.l	d0
 	asl.l	#8,d0
+	moveq	#0,d3
 	move.w	d2,d3
 	asr.w	#3,d3
 
@@ -727,6 +728,7 @@ SwScrl_HPZ:
 	ext.l	d0
 	asl.l	#4,d0
 	asl.l	#8,d0
+	moveq	#0,d3
 	move.w	d2,d3
 	asr.w	#1,d3
 	lea	(TempArray_LayerDef+(8+7+26+7)*2).w,a2
@@ -1297,6 +1299,7 @@ SwScrl_CNZ_GenerateScrollValues:
 	ext.l	d0
 	asl.l	#5,d0
 	asl.l	#8,d0
+	moveq	#0,d3
 	move.w	d2,d3
 
 	moveq	#7-1,d1

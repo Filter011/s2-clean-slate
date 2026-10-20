@@ -91,7 +91,7 @@ loc_252F0:
 	cmpi.b	#6,routine(a1)
 	bhs.w	return_253C4
 	tst.w	(Debug_placement_mode).w
-	bne.w	return_253C4
+	bne.s	return_253C4
 	btst	#status.player.on_object,status(a1)
 	beq.s	+
 	moveq	#0,d0
@@ -124,12 +124,10 @@ loc_252F0:
 	move.b	#$81,obj_control(a1)
 	move.b	#2,anim(a1)
 	move.w	#$1000,inertia(a1)
-	move.w	#0,x_vel(a1)
-	move.w	#0,y_vel(a1)
+	move.l	#0,x_vel(a1)	; and y_vel
 	bclr	#status.npc.p1_pushing,status(a0)
 	bclr	#status.player.pushing,status(a1)
-	bset	#status.player.in_air,status(a1)
-	bset	#status.player.on_object,status(a1)
+	ori.b	#1<<status.player.in_air|1<<status.player.on_object,status(a1)
 	move.b	objoff_3F(a0),mapping_frame(a0)
 	moveq	#SndID_Roll,d0
 	jmp	(PlaySound).w

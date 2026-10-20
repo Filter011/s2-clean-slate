@@ -116,12 +116,11 @@ Obj84_MainX_Alt:
 ; ===========================================================================
 
 loc_212C4:
-	btst	#status.player.rolling,status(a1)
+	bset	#status.player.rolling,status(a1)
 	beq.s	+
 	rts
 ; ---------------------------------------------------------------------------
-+	bset	#status.player.rolling,status(a1)
-	move.b	#$E,y_radius(a1)
++	move.b	#$E,y_radius(a1)
 	move.b	#7,x_radius(a1)
 	move.b	#AniIDSonAni_Roll,anim(a1)
 	addq.w	#5,y_pos(a1)
@@ -131,7 +130,6 @@ loc_212C4:
 ; ===========================================================================
 ; loc_212F6:
 Obj84_MainY:
-
 	tst.w	(Debug_placement_mode).w
 	bne.s	return_21350
 	move.w	y_pos(a0),d1
@@ -156,7 +154,7 @@ Obj84_MainY:
 	btst	#render_flags.x_flip,render_flags(a0)
 	bne.s	+
 	move.b	#1,pinball_mode(a1)
-	bra.w	loc_212C4
+	bra.s	loc_212C4
 ; ---------------------------------------------------------------------------
 +	clr.b	pinball_mode(a1)
 

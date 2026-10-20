@@ -22,7 +22,7 @@ RunDynamicLevelEvents:
 	andi.w	#$FFFE,(Camera_Max_Y_pos).w
 +
 	add.w	d1,(Camera_Max_Y_pos).w
-	move.b	#1,(Camera_Max_Y_Pos_Changing).w
+	st.b	(Camera_Max_Y_Pos_Changing).w
 +
 	rts
 ; ===========================================================================
@@ -37,7 +37,7 @@ RunDynamicLevelEvents:
 	add.w	d1,d1
 +
 	add.w	d1,(Camera_Max_Y_pos).w
-	move.b	#1,(Camera_Max_Y_Pos_Changing).w
+	st.b	(Camera_Max_Y_Pos_Changing).w
 	rts
 ; End of function RunDynamicLevelEvents
 

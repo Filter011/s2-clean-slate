@@ -44,19 +44,6 @@ loc_1921E:
 	moveq	#(8*8*2)/2,d3
 	jsr	(QueueDMATransfer).w
 
-	st.b	(Signpost_prev_frame).w
-	moveq	#0,d1
-	move.w	#$1020,d1
-	move.w	#$80,d4
-	moveq	#0,d5
-    if AssumeSourceAddressInBytes
-	move.l	#ArtUnc_Signpost,d6
-    else
-	move.l	#dmaSource(ArtUnc_Signpost),d6
-    endif
-	bsr.w	loc_19564
-
-loc_1922C:
 	addq.b	#2,routine(a0) ; => Obj0D_Main
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$18,width_pixels(a0)
@@ -246,8 +233,6 @@ PLCLoad_Signpost:
 loc_19560:
 	moveq	#0,d1
 	move.w	(a2)+,d1
-
-loc_19564:
 	move.w	d1,-(sp)
 	move.b	(sp)+,d3
 	andi.w	#$F0,d3
