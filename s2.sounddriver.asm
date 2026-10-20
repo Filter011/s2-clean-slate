@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.10.20.1 (stable)
+; S2CS Driver version: 26.10.20.2 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -306,6 +306,7 @@ zWriteFMIorII:    rsttarget
 
 WriteFMIIPart:
 	sub	4
+	jp	zWriteFMII
 ; End of function zWriteFMIorII
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
