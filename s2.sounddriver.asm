@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.10.20 (stable)
+; S2CS Driver version: 26.10.20.1 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -1520,7 +1520,11 @@ zPlayMusic:
 zBGMLoad:
 	call	zInitMusicPlayback
 	ld	a,(zCurSong)			; So, let's take your desired song, put it into 'a'
+    if MusID__First=01h
+	dec	a
+    else
 	sub	MusID__First			; Make it a zero-based entry ...
+    endif
 	add	a,a
 	add	a,a
 	ld	e,a				; Transform 'a' into 16-bit de
