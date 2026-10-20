@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.10.20.2 (stable)
+; S2CS Driver version: 26.10.20.3 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -311,17 +311,6 @@ WriteFMIIPart:
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 	align	8
-; zsub_28
-zWriteFMII:    rsttarget
-	; Write reg/data pair to part II; 'a' is register, 'c' is data
-	ld	(zYM2612_A1),a
-	ld	a,c
-	ld	(zYM2612_D1),a
-	ret
-; End of function zWriteFMII
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-	align	8
 ; zsub_18
 zWriteFMI:    rsttarget
 	; Write reg/data pair to part I; 'a' is register, 'c' is data
@@ -330,6 +319,17 @@ zWriteFMI:    rsttarget
 	ld	(zYM2612_D0),a
 	ret
 ; End of function zWriteFMI
+
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
+	align	8
+; zsub_28
+zWriteFMII:    rsttarget
+	; Write reg/data pair to part II; 'a' is register, 'c' is data
+	ld	(zYM2612_A1),a
+	ld	a,c
+	ld	(zYM2612_D1),a
+	ret
+; End of function zWriteFMII
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 	org	38h
@@ -1066,13 +1066,12 @@ zPSGUpdateFreq:
 	or	b			; Apply register bits
 	ld	(zPSG),a		; Write it to PSG!
 	ld	a,l			; Get frequency low byte -> 'a'
-	srl	h			; (h >> 1); lowest bit into carry
-	rra				; (a >> 1); carry from 'h' applied at end
-	srl	h			; ... and so on ...
-	rra
-	rra
-	rra				; in C, basically (hl >> 4) (except possible garbage from the rotation in upper bits)
-	and	3Fh			; keep only lower 6 bits (PSG d4-d9)
+	and	0F0h			; Get high nibble now
+	or	h			; OR in the high byte of the new frequency
+	rrca				; Swap nibbles
+	rrca
+	rrca
+	rrca
 	ld	(zPSG),a		; Write other frequency byte to PSG!
 	ret
 ; End of function zPSGDoNoteOn
