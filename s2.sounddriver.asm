@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.10.14 (stable)
+; S2CS Driver version: 26.10.20 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -413,7 +413,7 @@ zUpdateDAC:
 	ld	a,2Ah			; DAC port
 	ld	(zYM2612_A0),a		; Set DAC port register
 
-	bankswitchToBank MusicPoint1		; Bankswitch to the DAC data
+	bankswitchToBank MusicPoint1	; Bankswitch to the DAC data
 
 	ld	a,(zCurDAC)		; Get currently playing DAC sound
 	or	a
@@ -428,13 +428,14 @@ zUpdateDAC:
 	; If you get here, it's time to start a new DAC sound...
 	ld	a,80h
 	ex	af,af'	;'
-	ld	a,(zCurDAC)		; Get current DAC sound
+	ld	hl,zCurDAC
+	ld	a,(hl)			; Get current DAC sound
 	sub	81h			; Subtract 81h (first DAC index is 81h)
-	ld	(zCurDAC),a		; Store that as current DAC sound
+	ld	(hl),a			; Store that as current DAC sound
 	; The following two instructions are dangerous: they discard the upper
 	; two bits of zCurDAC, meaning you can only have 40h DAC samples.
 	add	a,a
-	add	a,a			; a *= 4 (each DAC entry is a pointer and length, 2+2)
+	add	a,a			; a *= 5 (each DAC entry is a pointer and length, 2+2)
 	add	a,zDACPtrTbl&0FFh	; Get low byte into table -> 'a'
 	ld	(zDACStartAddress+1),a	; Store into the instruction after zDACStartAddress (self-modifying code)
 	add	a,zDACLenTbl-zDACPtrTbl	; How to offset to length versus pointer
@@ -3257,12 +3258,12 @@ zSpedUpTempoTable:
 
 dac_sample_pointer macro label
 label.pointer = $
-	dw	zmake68kPtr(label)
+	zmake68kPtrs	label
 	dw	label.size
     endm
 
 	; DAC sample pointers and lengths
-	ensure1byteoffset 2*2*7
+	ensure1byteoffset 4*7
 
 ; zDACPtr_Index zbyte_1233
 zDACPtrTbl:
