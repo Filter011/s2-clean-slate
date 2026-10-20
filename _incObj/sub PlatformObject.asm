@@ -139,7 +139,7 @@ loc_19D50:
 	bne.s	loc_19D62
 	btst	#status.player.on_object,status(a1)
 	bne.s	loc_19D8E
-	bra.w	PlatformObject_cont
+	bra.s	PlatformObject_cont
 ; ===========================================================================
 
 loc_19D62:
@@ -338,15 +338,15 @@ PlatformObject2_cont:
 
 .inair:
 	tst.w	y_vel(a1)
-	bmi.w	return_19E8E
+	bmi.s	return_19E8E
 .skip
 	move.w	x_pos(a1),d0
 	sub.w	x_pos(a0),d0
 	add.w	d1,d0
-	bmi.w	return_19E8E
+	bmi.s	return_19E8E
 	add.w	d1,d1
 	cmp.w	d1,d0
-	bhs.w	return_19E8E
+	bhs.s	return_19E8E
 	move.w	y_pos(a0),d0
 	sub.w	d3,d0
 	bra.w	PlatformObject_ChkYRange

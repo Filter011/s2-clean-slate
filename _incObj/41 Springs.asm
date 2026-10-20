@@ -248,7 +248,7 @@ loc_18BAA:
 
 loc_18BC6:
 	cmpi.b	#3,anim(a0)
-	beq.w	return_18C7E
+	beq.s	return_18C7E
 	move.w	x_pos(a0),d0
 	move.w	d0,d1
 	addi.w	#$28,d1

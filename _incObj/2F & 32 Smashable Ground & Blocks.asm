@@ -264,7 +264,7 @@ Obj32_Fragment:
 	jsr	(ObjectMove).l
 	addi.w	#$18,y_vel(a0)
 	_btst	#render_flags.on_screen,render_flags(a0)
-	_beq.w	JmpTo22_DeleteObject
+	_beq.s	JmpTo22_DeleteObject
 	jmp	(DisplaySprite).l
 
 JmpTo22_DeleteObject ; JmpTo

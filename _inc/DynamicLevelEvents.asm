@@ -773,7 +773,7 @@ LevEvents_HTZ2_Routine3_Part2:
 ; loc_EDFA:
 LevEvents_HTZ2_Routine4:
 	cmpi.w	#$15F0,(Camera_X_pos).w
-	blo.w	LevEvents_HTZ2_Routine4_Continue
+	blo.s	LevEvents_HTZ2_Routine4_Continue
 	cmpi.w	#$1AC0,(Camera_X_pos).w
 	bhs.s	LevEvents_HTZ2_Routine4_Continue
 	tst.b	(HTZ_Terrain_Direction).w

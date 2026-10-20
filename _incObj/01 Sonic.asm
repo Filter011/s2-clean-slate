@@ -258,7 +258,7 @@ Obj01_InWater:
 ; loc_1A1FE:
 Obj01_OutWater:
 	bclr	#status.player.underwater,status(a0) ; unset underwater flag
-	beq.w	return_1A18C ; if already above water, branch
+	beq.s	return_1A18C ; if already above water, branch
 
 	movea.l	a0,a1
 	bsr.w	ResumeMusic
@@ -834,7 +834,7 @@ Sonic_RollSpeed:
 	move.w	(Sonic_deceleration),d4
 	asr.w	#2,d4
 	_btst	#status_secondary.sliding,status_secondary(a0)
-	_bne.w	Obj01_Roll_ResetScr
+	_bne.s	Obj01_Roll_ResetScr
 	tst.w	move_lock(a0)
 	bne.s	Sonic_ApplyRollSpeed
 	btst	#button_left,(Ctrl_1_Held_Logical).w	; is left being pressed?
@@ -1981,7 +1981,7 @@ CheckGameOver:
 	move.w	(Camera_Max_Y_pos).w,d0
 	addi.w	#$100,d0
 	cmp.w	y_pos(a0),d0
-	bge.w	return_1B31A
+	bge.s	return_1B31A
 	move.b	#8,routine(a0)	; => Obj01_Gone
 	move.w	#60,restart_countdown(a0)
 	addq.b	#1,(Update_HUD_lives).w	; update lives counter
@@ -2156,7 +2156,7 @@ SAnim_WalkRun:
 	andi.b	#6,d0		; angle must be 0, 2, 4 or 6
 	mvabs.w	inertia(a0),d2	; get Sonic's "speed" for animation purposes
 	_btst	#status_secondary.sliding,status_secondary(a0)
-	_beq.w	+
+	_beq.s	+
 	add.w	d2,d2
 +
 	tst.b	(Super_Sonic_flag).w

@@ -121,19 +121,19 @@ Obj34_BottomPartIn:	; the yellow part at the bottom, coming in
 	move.w	titlecard_location(a0),titlecard_split_point(a0)
 	cmpi.w	#6,titlecard_location(a0) ; if titlecard_location(a0) is 6,
 	seq	titlecard_location(a0) ; then set it to $FF, else set it to $00
-	bra.w	Obj34_MoveTowardsTargetPosition
+	bra.s	Obj34_MoveTowardsTargetPosition
 ; ===========================================================================
 ; loc_13DA6:
 Obj34_LeftPartIn:	; the red part on the left, coming in
 	bsr.w	Obj34_Wait
 	tst.w	titlecard_location(a0)
-	bmi.w	Obj34_MoveTowardsTargetPosition
+	bmi.s	Obj34_MoveTowardsTargetPosition
 	move.w	#VRAM_Plane_A_Name_Table,titlecard_vram_dest(a0)
 	addq.w	#2,titlecard_location(a0)
 	move.w	titlecard_location(a0),titlecard_split_point(a0)
 	cmpi.w	#$E,titlecard_location(a0)
 	seq	titlecard_location(a0)
-	bra.w	Obj34_MoveTowardsTargetPosition
+	bra.s	Obj34_MoveTowardsTargetPosition
 ; ===========================================================================
 ; loc_13DDC:
 Obj34_ZoneName:		; the name of the zone, coming in

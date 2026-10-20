@@ -230,7 +230,7 @@ loc_1FB0C:
 	bhs.w	return_1FBCA
 	addi.w	#$10,d1
 	cmp.w	d0,d1
-	blo.w	return_1FBCA
+	blo.s	return_1FBCA
 	bsr.w	ResumeMusic
 	moveq	#SndID_InhalingBubble,d0
 	jsr	(PlaySound).w

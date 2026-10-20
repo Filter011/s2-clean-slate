@@ -48,5 +48,5 @@ Obj2A_Main:
 	moveq	#$40,d2
 	moveq	#$41,d3
 	move.w	x_pos(a0),d4
-	jsr	(SolidObject).l
+	bsr.w	SolidObject
 	bra.w	MarkObjGone

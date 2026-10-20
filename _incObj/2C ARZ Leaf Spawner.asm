@@ -174,7 +174,7 @@ Obj2C_Leaf:
 	bchg	#1,mapping_frame(a0)
 +
 	_btst	#render_flags.on_screen,render_flags(a0)
-	_beq.w	JmpTo29_DeleteObject
+	_beq.s	JmpTo29_DeleteObject
 	jmp	(DisplaySprite).l
 
 JmpTo29_DeleteObject ; JmpTo

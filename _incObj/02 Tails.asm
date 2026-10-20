@@ -660,7 +660,7 @@ Tails_RollSpeed:
 	move.w	(Tails_deceleration),d4
 	asr.w	#2,d4
 	_btst	#status_secondary.sliding,status_secondary(a0)
-	_bne.w	Obj02_Roll_ResetScr
+	_bne.s	Obj02_Roll_ResetScr
 	tst.w	move_lock(a0)
 	bne.s	Tails_ApplyRollSpeed
 	btst	#button_left,(Ctrl_2_Held_Logical).w	; is left being pressed?
@@ -983,7 +983,7 @@ Tails_Jump:
 	addi.b	#$80,d0
 	bsr.w	CalcRoomOverHead
 	cmpi.w	#6,d1		; does Tails have enough room to jump?
-	blt.w	return_1C6C2	; if not, branch
+	blt.s	return_1C6C2	; if not, branch
 	move.w	#$680,d2
 	btst	#status.player.underwater,status(a0)	; Test if underwater
 	beq.s	+
@@ -1983,7 +1983,7 @@ TAnim_WalkRunZoom: ; a0=character
 	andi.b	#6,d0		; angle must be 0, 2, 4 or 6
 	mvabs.w	inertia(a0),d2	; get Tails' "speed" for animation purposes
 	_btst	#status_secondary.sliding,status_secondary(a0)
-	_beq.w	+
+	_beq.s	+
 	add.w	d2,d2
 +
 	move.b	d0,d3

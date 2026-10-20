@@ -126,7 +126,7 @@ loc_25B9A:
 
 loc_25BA4:
 	_btst	#render_flags.on_screen,render_flags(a0)
-	_beq.w	JmpTo28_DeleteObject
+	_beq.s	JmpTo28_DeleteObject
 	jmp	(DisplaySprite).l
 
 JmpTo28_DeleteObject ; JmpTo

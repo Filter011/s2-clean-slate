@@ -137,7 +137,7 @@ SolidObject45:
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
 	btst	d6,status(a0)
-	beq.w	SolidObject45_cont
+	beq.s	SolidObject45_cont
 	btst	#status.player.in_air,status(a1)
 	bne.s	loc_198B8
 	move.w	x_pos(a1),d0
@@ -267,7 +267,7 @@ DoubleSlopedSolid_cont:
 	add.w	d5,d4
 	cmp.w	d4,d3
 	bhs.w	SolidObject_TestClearPush
-	bra.w	SolidObject_ChkBounds
+	bra.s	SolidObject_ChkBounds
 ; ===========================================================================
 ; loc_199E8: SolidObject_cont:
 SolidObject_OnScreenTest:
@@ -344,7 +344,7 @@ SolidObject_ChkBounds:
 	; 'd3' contains Sonic's distance to the nearest object vertical edge.
 	; 'd1' contains the absolute version of 'd3'.
 	cmp.w	d1,d5
-	bhi.w	SolidObject_TopBottom		; Branch, if horizontal distance is greater than vertical distance.
+	bhi.s	SolidObject_TopBottom		; Branch, if horizontal distance is greater than vertical distance.
 ; loc_19A6A:
 SolidObject_LeftRight:
 	; If Sonic is extremely close to the top or bottom, then branch.

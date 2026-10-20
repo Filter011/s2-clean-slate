@@ -118,7 +118,7 @@ Obj3D_Fragment:
 	jsr	(ObjectMove).l
 	addi.w	#$18,y_vel(a0)
 	_btst	#render_flags.on_screen,render_flags(a0)
-	_beq.w	JmpTo26_DeleteObject
+	_beq.s	JmpTo26_DeleteObject
 	jmp	(DisplaySprite).l
 
 JmpTo26_DeleteObject ; JmpTo
@@ -162,7 +162,7 @@ loc_24F84:
 
 loc_24FAA:
 	cmpi.w	#$10,d1
-	bhs.w	return_25034
+	bhs.s	return_25034
 
 loc_24FC2:
 	addq.b	#2,(a4)
@@ -185,8 +185,7 @@ loc_24FF0:
 loc_25002:
 	bclr	#status.npc.p1_pushing,status(a0)
 	bclr	#status.player.pushing,status(a1)
-	bset	#status.player.in_air,status(a1)
-	bset	#status.player.on_object,status(a1)
+	ori.b	#1<<status.player.in_air|1<<status.player.on_object,status(a1)
     if object_size<>$40
 	moveq	#0,d0 ; Clear the high word for the coming division.
     endif

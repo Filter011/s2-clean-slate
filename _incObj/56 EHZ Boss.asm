@@ -50,7 +50,7 @@ Obj56_Init:
 	move.w	x_pos(a0),objoff_30(a0)
 	move.w	y_pos(a0),objoff_38(a0)
 	jsr	(AllocateObjectAfterCurrent).l	; vehicle with ability to fly, top part
-	bne.w	+
+	bne.s	+
 
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
 	move.l	a0,objoff_34(a1)	; link top and bottom to each other
@@ -81,7 +81,7 @@ Obj56_Init:
 	move.l	y_pos(a0),y_pos(a1)
 	move.b	#6,routine(a1)
 +
-	bsr.w	loc_2F098
+	bsr.s	loc_2F098
 	subq.w	#8,objoff_38(a0)
 	move.w	#$2AF0,x_pos(a0)
 	move.w	#$2F8,y_pos(a0)
@@ -318,7 +318,7 @@ off_2F39C:	offsetTable
 loc_2F3A2:	; Obj56_VehicleMain_SubA_0:
 	bclr	#0,objoff_2D(a0)	; Robotnik off ground
 	jsr	(AllocateObjectAfterCurrent).l	; reload propeller after defeat
-	bne.w	+	; rts
+	bne.s	+	; rts
 
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
 	move.l	a0,objoff_34(a1)	; linked to main object

@@ -81,7 +81,7 @@ Obj89_Init_RaisePillars:
 
 	; load first pillar object
 	jsr	(AllocateObject).l
-	bne.w	Obj89_Init_Standard
+	bne.s	Obj89_Init_Standard
 	move.b	#ObjID_ARZBoss,id(a1) ; load obj89
 	move.l	#Obj89_MapUnc_30D68,mappings(a1)
 	ori.b	#1<<render_flags.level_fg,render_flags(a1)
@@ -595,7 +595,7 @@ Obj89_Pillar_ShakeOffsets:
 ; loc_30AB4:
 Obj89_Pillar_Shoot:
 	jsr	(AllocateObject).l
-	bne.w	return_30B40
+	bne.s	return_30B40
 	move.b	#ObjID_ARZBoss,id(a1) ; load obj89
 	move.b	#8,boss_subtype(a1)	; => Obj89_Pillar_BulgingEyes
 	move.l	#Obj89_MapUnc_30D68,mappings(a1)

@@ -134,7 +134,7 @@ Obj52_Mobile_BeginLower:
 	move.b	#$10,(Boss_AnimationArray+2).w
 	move.b	#0,(Boss_AnimationArray+3).w
 	subq.b	#1,objoff_3E(a0)
-	bne.w	Obj52_Mobile_Hover
+	bne.s	Obj52_Mobile_Hover
 	move.w	#$E0,(Boss_Y_vel).w
 	addq.b	#2,boss_routine(a0)
 	bsr.w	loc_2FEDE
@@ -328,7 +328,7 @@ return_30006:
 ; ===========================================================================
 
 loc_30008:
-	bsr.w	Obj52_LavaBall_Move
+	bsr.s	Obj52_LavaBall_Move
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
 	bpl.s	loc_30064

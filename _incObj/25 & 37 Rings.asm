@@ -117,7 +117,7 @@ Obj37_Init:
 ; ===========================================================================
 
 -	bsr.w	AllocateObject
-	bne.w	+++
+	bne.s	+++
 +
 	move.b	#ObjID_LostRings,id(a1) ; load obj37
 	addq.b	#2,routine(a1)

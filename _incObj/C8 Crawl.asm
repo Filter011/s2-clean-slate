@@ -69,9 +69,9 @@ loc_3D2D4:
 	bhs.w	loc_3D39A
 	addi.w	#$40,d3
 	cmpi.w	#$80,d3
-	bhs.w	loc_3D39A
+	bhs.s	loc_3D39A
 	bclr	#status.npc.p1_standing,status(a0)
-	bne.w	loc_3D386
+	bne.s	loc_3D386
 	move.b	collision_property(a0),d0
 	beq.s	BranchTo18_JmpTo39_MarkObjGone
 	bclr	#0,collision_property(a0)

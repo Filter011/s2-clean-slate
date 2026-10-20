@@ -375,7 +375,7 @@ loc_39AE8:
 
 loc_39AF4:
 	subq.b	#1,objoff_2A(a0)
-	bmi.w	loc_39A7C
+	bmi.s	loc_39A7C
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
 	bpl.s	loc_39B0A

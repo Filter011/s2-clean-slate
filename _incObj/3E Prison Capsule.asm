@@ -158,7 +158,7 @@ loc_3F38E:
 	tst.b	routine_secondary(a0)
 	beq.s	+
 	_btst	#render_flags.on_screen,render_flags(a0)
-	_beq.w	JmpTo66_DeleteObject
+	_beq.s	JmpTo66_DeleteObject
 	jsr	(ObjectMoveAndFall).l
 +
 	jmp	(MarkObjGone).l

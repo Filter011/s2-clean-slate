@@ -232,7 +232,7 @@ loc_3F6EE:
 Touch_ChkValue:
 	move.b	collision_flags(a1),d1	; load touch response number
 	andi.b	#$C0,d1			; is touch response $40 or higher?
-	beq.w	Touch_Enemy		; if not, branch
+	beq.s	Touch_Enemy		; if not, branch
 	cmpi.b	#$C0,d1			; is touch response $C0 or higher?
 	beq.w	Touch_Special		; if yes, branch
 	tst.b	d1			; is touch response $80-$BF?
@@ -827,7 +827,7 @@ loc_3FC1C:
 +
 	sub.w	d1,d0
 	move.l	#$8000C,d1
-	bsr.w	loc_3FC7A
+	bsr.s	loc_3FC7A
 	move.w	(sp)+,d7
 	move.b	#0,d0
 	rts

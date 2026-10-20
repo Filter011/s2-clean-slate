@@ -172,7 +172,7 @@ Obj1F_Main:
 	tst.b	collapsing_platform_stood_on_flag(a0)
 	beq.s	+
 	tst.b	collapsing_platform_delay_counter(a0)
-	beq.w	Obj1F_CreateFragments	; time up; collapse
+	beq.s	Obj1F_CreateFragments	; time up; collapse
 	subq.b	#1,collapsing_platform_delay_counter(a0)
 +
 	move.b	status(a0),d0
@@ -188,7 +188,7 @@ sub_10AF8:
 	move.b	width_pixels(a0),d1
 	moveq	#$10,d3
 	move.w	x_pos(a0),d4
-	jsr	(PlatformObject).l
+	bsr.w	PlatformObject
 	bra.w	MarkObjGone
 ; End of function sub_10AF8
 

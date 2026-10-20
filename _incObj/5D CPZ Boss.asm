@@ -1514,11 +1514,11 @@ Obj5D_Smoke_Puff:
 	move.b	#5,anim_frame_duration(a0)
 	addq.b	#1,mapping_frame(a0)
 	cmpi.b	#4,mapping_frame(a0)
-	bne.w	BranchTo2_JmpTo34_DisplaySprite
+	bne.s	BranchTo2_JmpTo34_DisplaySprite
 	move.b	#0,mapping_frame(a0)
 	movea.l	Obj5D_parent(a0),a1 ; a1=object
 	move.b	id(a1),d0
-	beq.w	JmpTo51_DeleteObject	; branch, if parent object is gone
+	beq.s	JmpTo51_DeleteObject	; branch, if parent object is gone
 	move.w	x_pos(a1),x_pos(a0)
 	move.w	y_pos(a1),y_pos(a0)
 	addq.w	#4,y_pos(a0)

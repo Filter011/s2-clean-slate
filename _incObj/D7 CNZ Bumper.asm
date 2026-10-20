@@ -102,7 +102,7 @@ ObjD7_MainContinued:
 	lea	Ani_objD7(pc),a1
 	jsr	(AnimateSprite).l
 	tst.b	subtype(a0)
-	beq.w	JmpTo30_MarkObjGone
+	beq.s	JmpTo30_MarkObjGone
 	tst.b	objoff_34(a0)
 	beq.s	loc_2C5AE
 	move.w	x_pos(a0),d0

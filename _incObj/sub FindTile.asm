@@ -285,7 +285,7 @@ loc_1E996:
 	move.w	d2,d1
 	andi.w	#$F,d1
 	add.w	d1,d0
-	bpl.w	loc_1E922
+	bpl.s	loc_1E922
 
 loc_1E9A2:
 	sub.w	a3,d2

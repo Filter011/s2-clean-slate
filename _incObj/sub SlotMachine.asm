@@ -441,7 +441,7 @@ SlotMachine_Match13:
 ; ===========================================================================
 +
 	cmpi.b	#3,d2				; Is slot 2 a jackpot?
-	bne.w	SlotMachine_Unmatched1		; Branch if not
+	bne.s	SlotMachine_Unmatched1		; Branch if not
 	move.w	d3,d0				; Slot 3 is reward index
 	bsr.w	SlotMachine_GetReward
 	bsr.w	SlotMachine_DoubleUp
@@ -454,13 +454,13 @@ SlotMachine_Match12:
 	bne.s	+				; Branch if not
 	move.w	d3,d0				; Slot 3 is reward index
 	bsr.s	SlotMachine_GetReward
-	bsr.w	SlotMachine_QuadrupleUp
+	bsr.s	SlotMachine_QuadrupleUp
 	move.w	d0,slots_targ(a4)		; Store reward
 	rts
 ; ===========================================================================
 +
 	cmpi.b	#3,d3				; Is slot 3 a jackpot?
-	bne.w	SlotMachine_Unmatched1		; Branch if not
+	bne.s	SlotMachine_Unmatched1		; Branch if not
 	move.w	d2,d0				; Slot 2 is reward index
 	bsr.s	SlotMachine_GetReward
 	bsr.s	SlotMachine_DoubleUp
