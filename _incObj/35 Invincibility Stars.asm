@@ -33,8 +33,7 @@ loc_1D9A4:
 	move.b	#4,objoff_A(a1)		; => loc_1DA80
 	move.l	#Obj35_MapUnc_1DCBC,mappings(a1)
 	move.w	#ArtTile_ArtNem_Invincible_stars,art_tile(a1)
-	move.b	#1<<render_flags.level_fg,render_flags(a1)
-	bset	#render_flags.multi_sprite,render_flags(a1)
+	move.b	#1<<render_flags.level_fg|1<<render_flags.multi_sprite,render_flags(a1)
 	move.b	#$10,mainspr_width(a1)
 	move.b	#2,mainspr_childsprites(a1)
 	move.w	parent(a0),parent(a1)
