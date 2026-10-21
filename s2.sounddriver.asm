@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.10.20.3 (stable)
+; S2CS Driver version: 26.10.20.4 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -1134,7 +1134,33 @@ zPSGSetFreq:
 	; If you get here, we're doing a PSG rest
 	ld	(ix+zTrack.FreqLow),0FFh	; Frequency low byte = FFh
 	ld	(ix+zTrack.FreqHigh),0FFh	; Frequency high byte = FFh
-	jp	zPSGNoteOff_RestTrack		; Send PSG Note Off
+	; fall into zPSGNoteOff_RestTrack	; Send PSG Note Off
+
+zPSGNoteOff_RestTrack:
+	set	1,(ix+zTrack.PlaybackControl)	; set as resting
+
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
+
+
+; zsub_526
+zPSGNoteOff:
+	bit	2,(ix+zTrack.PlaybackControl)	; Is "SFX override" bit set?
+	ret	nz				; If so, quit!
+	ld	a,(ix+zTrack.VoiceControl)	; Get "voice control" byte (loads upper bits which specify attenuation setting)
+
+	;                 |a| |1Fh|
+	; VOL1    0x90	= 100 1xxxx	vol 4b xxxx = attenuation value
+	; VOL2    0xb0	= 101 1xxxx	vol 4b
+	; VOL3    0xd0	= 110 1xxxx	vol 4b
+
+	or	1Fh		; Attenuation Off
+	ld	(zPSG),a
+	cp	0DFh		; Are we stopping PSG3?
+	ret	nz
+	ld	a,0FFh		; If so, stop noise channel while we're at it
+	ld	(zPSG),a	; Stop noise channel
+	ret
+; End of function zPSGNoteOff
 
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
@@ -1174,18 +1200,12 @@ zPSGDoVolFX:
 	inc	(ix+zTrack.VolFlutter)	; Increment PSG flutter value
 	or	a			; test byte from before
 	jp	p,.gotflutter		; Is it a positive value?
-	if 0
+    if 0
 	cp	80h			; Check if it's 80h (terminator to the "flutter" list)
 	jr	z,zVolEnvHold		; If it is, then jump to zVolEnvHold (which just keeps at this flutter value, i.e. no more changes in volume)
-	else
+    else
 	jp	m,zVolEnvHold
-	endif
-;	cp	81h			; Check if it's 80h (terminator to the "flutter" list)
-;	jr	z,zVolEnvHold		; If it is, then jump to zVolEnvHold (which just keeps at this flutter value, i.e. no more changes in volume)
-;	cp	82h			; Check if it's 80h (terminator to the "flutter" list)
-;	jr	z,zVolEnvHold		; If it is, then jump to zVolEnvHold (which just keeps at this flutter value, i.e. no more changes in volume)
-;	cp	83h			; Check if it's 80h (terminator to the "flutter" list)
-;	jr	z,zVolEnvHold		; If it is, then jump to zVolEnvHold (which just keeps at this flutter value, i.e. no more changes in volume)
+    endif
 
 .gotflutter:
 	add	a,b			; Apply this "flutter" to channel volume -> 'a'
@@ -1230,32 +1250,6 @@ zVolEnvHold:
 	dec	(ix+zTrack.VolFlutter)	; Put index back (before final volume value)
 	jp	zPSGDoVolFX		; Loop back and update volume
 ; End of function zPSGDoVolFX
-
-zPSGNoteOff_RestTrack:
-	set	1,(ix+zTrack.PlaybackControl)	; set as resting
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
-
-; zsub_526
-zPSGNoteOff:
-	bit	2,(ix+zTrack.PlaybackControl)	; Is "SFX override" bit set?
-	ret	nz				; If so, quit!
-	ld	a,(ix+zTrack.VoiceControl)	; Get "voice control" byte (loads upper bits which specify attenuation setting)
-
-	;                 |a| |1Fh|
-	; VOL1    0x90	= 100 1xxxx	vol 4b xxxx = attenuation value
-	; VOL2    0xb0	= 101 1xxxx	vol 4b
-	; VOL3    0xd0	= 110 1xxxx	vol 4b
-
-	or	1Fh		; Attenuation Off
-	ld	(zPSG),a
-	cp	0DFh		; Are we stopping PSG3?
-	ret	nz
-	ld	a,0FFh		; If so, stop noise channel while we're at it
-	ld	(zPSG),a	; Stop noise channel
-	ret
-; End of function zPSGNoteOff
 
 ; ---------------------------------------------------------------------------
 zMakeFMFrequency function frequency,roundFloatToInteger(frequency*1024*1024*2/FM_Sample_Rate)
