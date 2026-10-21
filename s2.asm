@@ -421,7 +421,7 @@ V_Int:
 	lea	(VDP_control_port).l,a5
 	lea	VDP_data_port-VDP_control_port(a5),a6
 	tst.b	(Vint_flag).w
-	beq.s	Vint_Lag_Main
+	beq.s	Vint_Lag
 
 	; waits until vertical blanking is taking place
 -	moveq	#%1000,d0
@@ -451,9 +451,6 @@ VintRet:
 ; ===========================================================================
 ;VintSub0
 Vint_Lag:
-	addq.w	#4,sp	; do not return to caller (avoids VintRet running twice, saves 176 cycles)
-
-Vint_Lag_Main:
 	tst.b	(GameModeFlag_TitleCard).w	; pre-level?
 	bne.s	.isInLevelMode
 	tst.b	(Demo_mode_flag).w	; Demo Mode?
