@@ -423,11 +423,6 @@ V_Int:
 	tst.b	(Vint_flag).w
 	beq.s	Vint_Lag
 
-	; waits until vertical blanking is taking place
--	moveq	#%1000,d0
-	and.w	(a5),d0
-	beq.s	-
-
 	move.l	#vdpComm($0000,VSRAM,WRITE),(a5)
 	move.l	(Vscroll_Factor).w,(a6) ; send screen y-axis pos. to VSRAM
 	moveq	#%0001,d0
