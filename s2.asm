@@ -6180,9 +6180,7 @@ Off_Objects: zoneOrderedOffsetTable 4,2
 	ObjectLayoutBoundary
 Objects_EHZ_1:	BINCLUDE	"level/objects/EHZ_1.bin"
 	ObjectLayoutBoundary
-
 Objects_EHZ_2:	BINCLUDE	"level/objects/EHZ_2.bin"
-
 	ObjectLayoutBoundary
 Objects_MTZ_1:	BINCLUDE	"level/objects/MTZ_1.bin"
 	ObjectLayoutBoundary
@@ -6190,9 +6188,7 @@ Objects_MTZ_2:	BINCLUDE	"level/objects/MTZ_2.bin"
 	ObjectLayoutBoundary
 Objects_MTZ_3:	BINCLUDE	"level/objects/MTZ_3.bin"
 	ObjectLayoutBoundary
-
 Objects_WFZ_1:	BINCLUDE	"level/objects/WFZ_1.bin"
-
 	ObjectLayoutBoundary
 Objects_WFZ_2:	BINCLUDE	"level/objects/WFZ_2.bin"
 	ObjectLayoutBoundary
@@ -6212,12 +6208,9 @@ Objects_MCZ_1:	BINCLUDE	"level/objects/MCZ_1.bin"
 	ObjectLayoutBoundary
 Objects_MCZ_2:	BINCLUDE	"level/objects/MCZ_2.bin"
 	ObjectLayoutBoundary
-
 Objects_CNZ_1:	BINCLUDE	"level/objects/CNZ_1.bin"
 	ObjectLayoutBoundary
 Objects_CNZ_2:	BINCLUDE	"level/objects/CNZ_2.bin"
-
-
 	ObjectLayoutBoundary
 Objects_CPZ_1:	BINCLUDE	"level/objects/CPZ_1.bin"
 	ObjectLayoutBoundary
