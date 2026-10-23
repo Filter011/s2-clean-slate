@@ -79,7 +79,7 @@ sub_1099E:
 	move.b	width_pixels(a0),d1
 	movea.l	collapsing_platform_slope_pointer(a0),a2 ; a2=object
 	move.w	x_pos(a0),d4
-	jsr	(SlopedPlatform).l
+	bsr.w	SlopedPlatform
 	bra.w	MarkObjGone
 ; End of function sub_1099E
 

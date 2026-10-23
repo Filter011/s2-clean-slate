@@ -106,7 +106,7 @@ Obj18_TopSolid:
 	move.b	width_pixels(a0),d1
 	moveq	#8,d3
 	move.w	(sp)+,d4
-	jsr	(PlatformObject).l
+	bsr.w	PlatformObject
 	bra.s	Obj18_Despawn
 ; ===========================================================================
 ; loc_105A8:
@@ -158,7 +158,7 @@ Obj18_FullSolid:
 	move.w	d2,d3
 	addq.w	#1,d3
 	move.w	(sp)+,d4
-	jsr	(SolidObject).l
+	bsr.w	SolidObject
 	bra.s	Obj18_Despawn
 
 ; ---------------------------------------------------------------------------

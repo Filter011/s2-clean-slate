@@ -137,7 +137,7 @@ LevEvents_EHZ2_Routine3:
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
 	blo.s	++
-	jsr	(AllocateObject).l
+	bsr.w	AllocateObject
 	bne.s	+
 
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56 (EHZ boss)
@@ -245,7 +245,7 @@ LevEvents_MTZ3_Routine4:
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
 	blo.s	++
-	jsr	(AllocateObject).l
+	bsr.w	AllocateObject
 	bne.s	+
 	move.b	#ObjID_MTZBoss,id(a1) ; load obj54 (MTZ boss)
 +
@@ -934,7 +934,7 @@ LevEvents_HTZ2_Routine8:
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
 	blo.s	++	; rts
-	jsr	(AllocateObject).l
+	bsr.w	AllocateObject
 	bne.s	+
 	move.b	#ObjID_HTZBoss,id(a1) ; load obj52 (HTZ boss)
 +
@@ -1035,7 +1035,7 @@ LevEvents_OOZ2_Routine3:
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
 	blo.s	++	; rts
-	jsr	(AllocateObject).l
+	bsr.w	AllocateObject
 	bne.s	+
 	move.b	#ObjID_OOZBoss,id(a1) ; load obj55 (OOZ boss)
 +
@@ -1125,7 +1125,7 @@ LevEvents_MCZ2_Routine3:
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
 	blo.s	++	; rts
-	jsr	(AllocateObject).l
+	bsr.w	AllocateObject
 	bne.s	+
 	move.b	#ObjID_MCZBoss,id(a1) ; load obj57 (MCZ boss)
 +
@@ -1214,7 +1214,7 @@ LevEvents_CNZ2_Routine3:
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
 	blo.s	++	; rts
-	jsr	(AllocateObject).l
+	bsr.w	AllocateObject
 	bne.s	+
 	move.b	#ObjID_CNZBoss,id(a1) ; load obj51
 +
@@ -1295,7 +1295,7 @@ LevEvents_CPZ2_Routine3:
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
 	blo.s	++
-	jsr	(AllocateObject).l
+	bsr.w	AllocateObject
 	bne.s	+
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 +
@@ -1333,7 +1333,7 @@ LevEvents_DEZ_Routine1:
 	cmp.w	(Camera_X_pos).w,d0
 	bhi.s	+	; rts
 	addq.b	#2,(Dynamic_Resize_Routine).w
-	jsr	(AllocateObject).l
+	bsr.w	AllocateObject
 	bne.s	+	; rts
 	move.b	#ObjID_MechaSonic,id(a1) ; load objAF (Silver Sonic)
 	move.b	#$48,subtype(a1)
@@ -1423,7 +1423,7 @@ LevEvents_ARZ2_Routine2:
 	move.w	#MusID_FadeOut,d0
 	jsr	(PlayMusic).w
 	clr.b	(Boss_spawn_delay).w
-	jsr	(AllocateObject).l
+	bsr.w	AllocateObject
 	bne.s	+	; rts
 	move.b	#ObjID_ARZBoss,id(a1) ; load obj89
 +

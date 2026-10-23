@@ -3358,7 +3358,7 @@ StartLocations: zoneOrderedTable 2,4	; WrdArr_StartLoc
 LoadPLC_AnimalExplosion:
 	moveq	#0,d0
 	move.b	(Current_Zone).w,d0
-	lea	(Animal_PLCTable).l,a2
+	lea	Animal_PLCTable(pc),a2
 	move.b	(a2,d0.w),d0
 	jsr	(LoadPLC).w
 	moveq	#PLCID_Explosion,d0

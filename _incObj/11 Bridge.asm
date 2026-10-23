@@ -75,7 +75,7 @@ Obj11_Init:
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 ; sub_F728:
 Obj11_MakeBdgSegment:
-	jsr	(AllocateObjectAfterCurrent).l
+	bsr.w	AllocateObjectAfterCurrent
 	bne.s	+	; rts
 	move.b	id(a0),id(a1) ; load obj11
 	move.w	x_pos(a0),x_pos(a1)

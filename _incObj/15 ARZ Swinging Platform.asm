@@ -59,7 +59,7 @@ Obj15_Init:
 	andi.w	#$F,d1
 	move.w	x_pos(a0),d2
 	move.w	y_pos(a0),d3
-	jsr	(AllocateObjectAfterCurrent).l
+	bsr.w	AllocateObjectAfterCurrent
 	bne.w	+++
 	move.b	id(a0),id(a1) ; load obj15
 	move.l	mappings(a0),mappings(a1)
@@ -126,7 +126,7 @@ Obj15_State2:
 	move.b	y_radius(a0),d3
 	addq.b	#1,d3
 	move.w	(sp)+,d4
-	jsr	(PlatformObject2).l
+	bsr.w	PlatformObject2
 	bra.w	loc_1000C
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
@@ -314,7 +314,7 @@ Obj15_State4:
 	move.b	y_radius(a0),d3
 	addq.b	#1,d3
 	move.w	(sp)+,d4
-	jsr	(PlatformObject2).l
+	bsr.w	PlatformObject2
 	move.b	status(a0),d0
 	andi.b	#standing_mask,d0
 	beq.s	loc_1000C
@@ -374,8 +374,6 @@ loc_100E4:
 	move.b	#3,mapping_frame(a0)
 	addq.b	#2,routine(a0)
 	andi.b	#~standing_mask,status(a0)
-
-BranchTo_loc_1000C ; BranchTo
 	bra.w	loc_1000C
 ; ===========================================================================
 ; loc_100F8:
@@ -395,8 +393,7 @@ Obj15_State6:
 	blo.s	++
 	move.w	#$720,y_pos(a0)
 	bclr	#status.npc.y_flip,status(a0)
-	move.w	#0,x_vel(a0)
-	move.w	#0,y_vel(a0)
+	move.l	#0,x_vel(a0)	; and y_vel
 	move.w	y_pos(a0),objoff_38(a0)
 	bra.s	++
 ; ===========================================================================
@@ -413,7 +410,7 @@ Obj15_State6:
 	move.b	y_radius(a0),d3
 	addq.b	#1,d3
 	move.w	(sp)+,d4
-	jsr	(PlatformObject2).l
+	bsr.w	PlatformObject2
 	bra.w	MarkObjGone
 
 ; ===========================================================================
@@ -456,5 +453,5 @@ Obj15_State7:
 	move.b	y_radius(a0),d3
 	addq.b	#1,d3
 	move.w	(sp)+,d4
-	jsr	(PlatformObject2).l
+	bsr.w	PlatformObject2
 	bra.w	MarkObjGone

@@ -7,7 +7,7 @@ Obj41:
 	move.b	routine(a0),d0
 	move.w	Obj41_Index(pc,d0.w),d1
 	jsr	Obj41_Index(pc,d1.w)
-	jmp	(MarkObjGone).l
+	bra.w	MarkObjGone
 ; ===========================================================================
 ; off_1889C:
 Obj41_Index:	offsetTable
