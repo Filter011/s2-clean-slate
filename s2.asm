@@ -3710,22 +3710,16 @@ Obj39_MapUnc_14C6C:	include "mappings/sprite/obj39.asm"
 
 ;loc_15584: ; level title card drawing function called from Vint
 DrawLevelTitleCard:
-	lea	(VDP_data_port).l,a6
 	tst.w	(TitleCard_ZoneName+titlecard_leaveflag).w
 	bne.w	loc_15670
 	moveq	#$3F,d5
 	move.l	#make_block_tile_pair(ArtTile_ArtNem_TitleCard+$5A,0,0,0,1),d6
-
-loc_155A8:
 	lea	(TitleCard_Background+titlecard_vram_dest).w,a0
-;	moveq	#1,d7	; Once for P1, once for P2 (if in 2p mode)
-
-loc_155AE:
 	move.w	(a0)+,d0
 	beq.s	loc_155C6
 	clr.w	-2(a0)
 	bsr.w	sub_15792
-	move.l	d0,VDP_control_port-VDP_data_port(a6)
+	move.l	d0,(a5)
 	move.w	d5,d4
 
 loc_155C0:
@@ -3733,19 +3727,13 @@ loc_155C0:
 	dbf	d4,loc_155C0
 
 loc_155C6:
-;	dbf	d7,loc_155AE
 	moveq	#$26,d1
 	sub.w	(TitleCard_Bottom+titlecard_split_point).w,d1
 	lsr.w	#1,d1
 	subq.w	#1,d1
 	moveq	#7,d5
 	move.l	#make_block_tile_pair(ArtTile_ArtNem_TitleCard+$5C,0,0,1,1),d6
-
-loc_155EA:
 	lea	(TitleCard_Bottom+titlecard_vram_dest).w,a0
-;	moveq	#1,d7	; Once for P1, once for P2 (if in 2p mode)
-
-loc_155F0:
 	move.w	(a0)+,d0
 	beq.s	loc_15614
 	clr.w	-2(a0)
@@ -3753,7 +3741,7 @@ loc_155F0:
 	move.w	d5,d4
 
 loc_155FE:
-	move.l	d0,VDP_control_port-VDP_data_port(a6)
+	move.l	d0,(a5)
 	move.w	d1,d3
 
 loc_15604:
@@ -3763,18 +3751,12 @@ loc_15604:
 	dbf	d4,loc_155FE
 
 loc_15614:
-;	dbf	d7,loc_155F0
 	move.w	(TitleCard_Left+titlecard_split_point).w,d1 ; horizontal draw from left until this position
 	subq.w	#1,d1
 	moveq	#$D,d5
 	move.l	#make_block_tile_pair(ArtTile_ArtNem_TitleCard+$58,0,0,0,1),d6 ; VRAM location of graphic to fill on left side
-
-loc_15634:
 	lea	(TitleCard_Left+titlecard_vram_dest).w,a0 ; obj34 red title card left side part
-;	moveq	#1,d7	; Once for P1, once for P2 (if in 2p mode)
-	move.w	#$8F80,VDP_control_port-VDP_data_port(a6)	; VRAM pointer increment: $0080
-
-loc_15640:
+	move.w	#$8F80,(a5)	; VRAM pointer increment: $0080
 	move.w	(a0)+,d0
 	beq.s	loc_15664
 	clr.w	-2(a0)
@@ -3782,7 +3764,7 @@ loc_15640:
 	move.w	d1,d4
 
 loc_1564E:
-	move.l	d0,VDP_control_port-VDP_data_port(a6)
+	move.l	d0,(a5)
 	move.w	d5,d3
 
 loc_15654:
@@ -3792,8 +3774,7 @@ loc_15654:
 	dbf	d4,loc_1564E
 
 loc_15664:
-;	dbf	d7,loc_15640
-	move.w	#$8F02,VDP_control_port-VDP_data_port(a6)	; VRAM pointer increment: $0002
+	move.w	#$8F02,(a5)	; VRAM pointer increment: $0002
 	rts
 ; ===========================================================================
 
@@ -3804,10 +3785,7 @@ loc_15670:
 	move.l	#make_block_tile_pair(ArtTile_ArtNem_TitleCard+$5C,0,0,1,1),d6
 +
 	lea	(TitleCard_Left+titlecard_vram_dest).w,a0
-;	moveq	#1,d7	; Once for P1, once for P2 (if in 2p mode)
-	move.w	#$8F80,VDP_control_port-VDP_data_port(a6)	; VRAM pointer increment: $0080
-
-loc_156A2:
+	move.w	#$8F80,(a5)	; VRAM pointer increment: $0080
 	move.w	(a0)+,d0
 	beq.s	loc_156CE
 	clr.w	-2(a0)
@@ -3815,7 +3793,7 @@ loc_156A2:
 	moveq	#3,d2
 
 loc_156B0:
-	move.l	d0,VDP_control_port-VDP_data_port(a6)
+	move.l	d0,(a5)
 
 	move.w	d3,d1
 -	move.l	d5,(a6)
@@ -3829,36 +3807,26 @@ loc_156B0:
 	dbf	d2,loc_156B0
 
 loc_156CE:
-;	dbf	d7,loc_156A2
-	move.w	#$8F02,VDP_control_port-VDP_data_port(a6)	; VRAM pointer increment: $0002
+	move.w	#$8F02,(a5)	; VRAM pointer increment: $0002
 	moveq	#7,d5
 	move.l	#make_block_tile_pair(ArtTile_ArtNem_TitleCard+$5A,0,0,0,1),d6
 +
 	lea	(TitleCard_Bottom+titlecard_vram_dest).w,a0
-;	moveq	#1,d7	; Once for P1, once for P2 (if in 2p mode)
-
-loc_156F4:
 	move.w	(a0)+,d0
 	beq.s	loc_15714
 	clr.w	-2(a0)
 	bsr.w	sub_15792
 
 	move.w	d5,d4
--	move.l	d0,VDP_control_port-VDP_data_port(a6)
+-	move.l	d0,(a5)
 	move.l	d6,(a6)
 	move.l	d6,(a6)
 	addi.l	#vdpCommDelta(gameplay_plane_width/tile_width*2),d0
 	dbf	d4,-
 
 loc_15714:
-;	dbf	d7,loc_156F4
 	move.w	(TitleCard_Background+titlecard_vram_dest).w,d4
 	beq.s	loc_1578C
-	; Initialize plane A for both players; we have to do this here as otherwise
-	; it will appear corrupted when the title card leaves.
-	lea	VDP_control_port-VDP_data_port(a6),a5
-
-loc_15758:
 	lea	(Camera_X_pos).w,a3
 	lea	(Level_Layout).w,a4
 	move.w	#vdpComm(VRAM_Plane_A_Name_Table,VRAM,WRITE)>>16,d2
@@ -4062,19 +4030,6 @@ SpecialCNZBumpers_Act2:
 ObjectLayoutBoundary macro
 	dc.w	$FFFF, $0000, $0000
     endm
-
-	ObjectLayoutBoundary
-
-    ; a Crawl badnik was moved slightly further away from a ledge
-    ; 2 flippers were moved closer to a wall
-Objects_CNZ1_2P:	BINCLUDE	"level/objects/CNZ_1_2P.bin"
-
-
-	ObjectLayoutBoundary
-
-    ; 4 Crawl badniks were slightly moved, placing them closer/farther away from ledges
-    ; 2 flippers were moved away from a wall to keep players from getting stuck behind them
-Objects_CNZ2_2P:	BINCLUDE	"level/objects/CNZ_2_2P.bin"
 
 	ObjectLayoutBoundary
 
@@ -4725,12 +4680,6 @@ Obj58_MapUnc_2D50A:	include "mappings/sprite/obj58.asm"
 	include "_incObj/sub BossCommon.asm" ; bunch of common stuff for bosses, like damage and animation
 ; ===========================================================================
 	include "_incObj/5D CPZ Boss.asm"
-
-BranchTo2_JmpTo34_DisplaySprite ; BranchTo
-JmpTo34_DisplaySprite ; JmpTo
-	jmp	(DisplaySprite).l
-JmpTo51_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
 ; ===========================================================================
 	include "_anim/CPZ Boss 1.asm"
 ; ----------------------------------------------------------------------------
@@ -5097,14 +5046,13 @@ loc_3A6D4:
 	move.l	#vdpComm(VRAM_SegaScr_Plane_A_Name_Table + planeLoc(128,80,9),VRAM,WRITE),d0
 
 loc_3A710:
-	lea	(VDP_data_port).l,a6
 	; This is the line delta; for each line, the code below
 	; writes $30 entries, leaving $50 untouched.
 	move.l	#vdpCommDelta(planeLoc(128,0,1)),d6	; $1000000
 	moveq	#7,d1	; Inner loop: repeat 8 times
 	moveq	#9,d2	; Outer loop: repeat $A times
 -
-	move.l	d0,4(a6)	; Send command to VDP: set address to write to
+	move.l	d0,(a5)		; Send command to VDP: set address to write to
 	move.w	d1,d3		; Reset inner loop counter
 	movea.l	a1,a2		; Reset data pointer
 -

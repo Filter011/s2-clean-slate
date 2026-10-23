@@ -1510,11 +1510,11 @@ loc_2E9A8:
 ; Obj5D_1A:
 Obj5D_Smoke_Puff:
 	subq.b	#1,anim_frame_duration(a0)
-	bpl.s	BranchTo2_JmpTo34_DisplaySprite
+	bpl.s	JmpTo34_DisplaySprite
 	move.b	#5,anim_frame_duration(a0)
 	addq.b	#1,mapping_frame(a0)
 	cmpi.b	#4,mapping_frame(a0)
-	bne.s	BranchTo2_JmpTo34_DisplaySprite
+	bne.s	JmpTo34_DisplaySprite
 	move.b	#0,mapping_frame(a0)
 	movea.l	Obj5D_parent(a0),a1 ; a1=object
 	move.b	id(a1),d0
@@ -1523,3 +1523,8 @@ Obj5D_Smoke_Puff:
 	move.w	y_pos(a1),y_pos(a0)
 	addq.w	#4,y_pos(a0)
 	subi.w	#$28,x_pos(a0)
+
+JmpTo34_DisplaySprite ; JmpTo
+	jmp	(DisplaySprite).l
+JmpTo51_DeleteObject ; JmpTo
+	jmp	(DeleteObject).l
