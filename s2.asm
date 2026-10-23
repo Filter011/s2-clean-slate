@@ -446,9 +446,8 @@ VintRet:
 ; ===========================================================================
 ;VintSub0
 Vint_Lag:
-	tst.b	(GameModeFlag_TitleCard).w	; pre-level?
-	bne.s	.isInLevelMode
-	tst.b	(Demo_mode_flag).w	; Demo Mode?
+	move.b	(GameModeFlag_TitleCard).w,d0	; pre-level?
+	or.b	(Demo_mode_flag).w,d0	; Demo Mode?
 	bne.s	.isInLevelMode
 	cmpi.l	#Level,(Game_Mode).w	; Zone play mode?
 	beq.s	.isInLevelMode

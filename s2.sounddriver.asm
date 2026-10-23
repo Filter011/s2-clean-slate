@@ -783,9 +783,9 @@ zFMUpdateFreq:
 zFMDoNext:
 	ld	l,(ix+zTrack.DataPointerLow)	; Load track position low byte
 	ld	h,(ix+zTrack.DataPointerHigh)	; Load track position high byte
-	ld	a, (ix+zTrack.PlaybackControl)
+	ld	a,(ix+zTrack.PlaybackControl)
 	and	11101101b	; bitmask so 'do not attack next note' and 'track is at rest' flags are cleared
-	ld	(ix+zTrack.PlaybackControl), a
+	ld	(ix+zTrack.PlaybackControl),a
 
 .noteloop:
 	ld	a,(hl)
