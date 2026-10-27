@@ -1308,12 +1308,7 @@ Vscroll_Factor_P2_HInt:		ds.l	1
 Camera_X_pos_copy:		ds.l	1
 Camera_Y_pos_copy:		ds.l	1
 
-Camera_Boundaries_P2:
-Tails_Min_X_pos:		ds.w	1
-Tails_Max_X_pos:		ds.w	1
-Tails_Min_Y_pos:		ds.w	1 ; seems not actually implemented (only written to)
-Tails_Max_Y_pos:		ds.w	1
-Camera_Boundaries_P2_End:
+				ds.b	8	; unused
 
 Camera_RAM_End:
 

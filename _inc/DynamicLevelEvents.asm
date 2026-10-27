@@ -102,9 +102,7 @@ LevEvents_EHZ2_Routine1:
 	cmpi.w	#$2780,(Camera_X_pos).w
 	blo.s	+	; rts
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 	move.w	#$390,(Camera_Max_Y_pos_target).w
-	move.w	#$390,(Tails_Max_Y_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_EHZ2_Routine2
 +
 	rts
@@ -115,8 +113,6 @@ LevEvents_EHZ2_Routine2:
 	blo.s	+	; rts
 	move.w	#$28F0,(Camera_Min_X_pos).w
 	move.w	#$2940,(Camera_Max_X_pos).w
-	move.w	#$28F0,(Tails_Min_X_pos).w
-	move.w	#$2940,(Tails_Max_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_EHZ2_Routine3
 	move.w	#MusID_FadeOut,d0
 	jsr	(PlayMusic).w
@@ -132,7 +128,6 @@ LevEvents_EHZ2_Routine3:
 	cmpi.w	#$388,(Camera_Y_pos).w
 	blo.s	+
 	move.w	#$388,(Camera_Min_Y_pos).w
-	move.w	#$388,(Tails_Min_Y_pos).w
 +
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
@@ -156,8 +151,6 @@ LevEvents_EHZ2_Routine4:
 	tst.b	(Boss_defeated_flag).w
 	beq.s	+
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_Max_X_pos).w,(Tails_Max_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 +
 	rts
 
@@ -200,7 +193,6 @@ LevEvents_MTZ3_Routine1:
 	blo.s	+
 	move.w	#$500,(Camera_Max_Y_pos).w
 	move.w	#$450,(Camera_Max_Y_pos_target).w
-	move.w	#$450,(Tails_Max_Y_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_MTZ3_Routine2
 +
 	rts
@@ -210,9 +202,7 @@ LevEvents_MTZ3_Routine2:
 	cmpi.w	#$2980,(Camera_X_pos).w
 	blo.s	+
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 	move.w	#$400,(Camera_Max_Y_pos_target).w
-	move.w	#$400,(Tails_Max_Y_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_MTZ3_Routine3
 +
 	rts
@@ -223,8 +213,6 @@ LevEvents_MTZ3_Routine3:
 	blo.s	+
 	move.w	#$2AB0,(Camera_Min_X_pos).w
 	move.w	#$2AB0,(Camera_Max_X_pos).w
-	move.w	#$2AB0,(Tails_Min_X_pos).w
-	move.w	#$2AB0,(Tails_Max_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_MTZ3_Routine4
 	move.w	#MusID_FadeOut,d0
 	jsr	(PlayMusic).w
@@ -240,7 +228,6 @@ LevEvents_MTZ3_Routine4:
 	cmpi.w	#$400,(Camera_Y_pos).w
 	blo.s	+
 	move.w	#$400,(Camera_Min_Y_pos).w
-	move.w	#$400,(Tails_Min_Y_pos).w
 +
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
@@ -258,8 +245,6 @@ LevEvents_MTZ3_Routine4:
 ; loc_E82E:
 LevEvents_MTZ3_Routine5:
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_Max_X_pos).w,(Tails_Max_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 	rts
 
 ; ===========================================================================
@@ -896,9 +881,7 @@ LevEvents_HTZ2_Routine6:
 	cmpi.w	#$2C50,(Camera_X_pos).w
 	blo.s	+	; rts
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 	move.w	#$480,(Camera_Max_Y_pos_target).w
-	move.w	#$480,(Tails_Max_Y_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine7
 +
 	rts
@@ -909,8 +892,6 @@ LevEvents_HTZ2_Routine7:
 	blo.s	+	; rts
 	move.w	#$2EE0,(Camera_Min_X_pos).w
 	move.w	#$2F5E,(Camera_Max_X_pos).w
-	move.w	#$2EE0,(Tails_Min_X_pos).w
-	move.w	#$2F5E,(Tails_Max_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine8
 	move.w	#MusID_FadeOut,d0
 	jsr	(PlayMusic).w
@@ -927,7 +908,6 @@ LevEvents_HTZ2_Routine8:
 	cmpi.w	#$478,(Camera_Y_pos).w
 	blo.s	+
 	move.w	#$478,(Camera_Min_Y_pos).w
-	move.w	#$478,(Tails_Min_Y_pos).w
 +
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
@@ -947,8 +927,6 @@ LevEvents_HTZ2_Routine9:
 	tst.b	(Boss_defeated_flag).w
 	beq.s	++	; rts
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_Max_X_pos).w,(Tails_Max_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 	cmpi.w	#$30E0,(Camera_X_pos).w
 	blo.s	++	; rts
 	cmpi.w	#$428,(Camera_Min_Y_pos).w
@@ -995,10 +973,8 @@ LevEvents_OOZ2_Routine1:
 	cmpi.w	#$2668,(Camera_X_pos).w
 	blo.s	+	; rts
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 	move.w	#$2D8,(Oil+y_pos).w
 	move.w	#$1E0,(Camera_Max_Y_pos_target).w
-	move.w	#$1E0,(Tails_Max_Y_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
 +
 	rts
@@ -1009,8 +985,6 @@ LevEvents_OOZ2_Routine2:
 	blo.s	+	; rts
 	move.w	#$2880,(Camera_Min_X_pos).w
 	move.w	#$28C0,(Camera_Max_X_pos).w
-	move.w	#$2880,(Tails_Min_X_pos).w
-	move.w	#$28C0,(Tails_Max_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	move.w	#MusID_FadeOut,d0
 	jsr	(PlayMusic).w
@@ -1028,7 +1002,6 @@ LevEvents_OOZ2_Routine3:
 	cmpi.w	#$1D8,(Camera_Y_pos).w
 	blo.s	+
 	move.w	#$1D8,(Camera_Min_Y_pos).w
-	move.w	#$1D8,(Tails_Min_Y_pos).w
 +
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
@@ -1048,8 +1021,6 @@ LevEvents_OOZ2_Routine4:
 	tst.b	(Boss_defeated_flag).w
 	beq.s	+	; rts
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_Max_X_pos).w,(Tails_Max_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 +
 	rts
 ; ===========================================================================
@@ -1076,9 +1047,7 @@ LevEvents_MCZ2_Routine1:
 	cmpi.w	#$2080,(Camera_X_pos).w
 	blo.s	+	; rts
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 	move.w	#$5D0,(Camera_Max_Y_pos_target).w
-	move.w	#$5D0,(Tails_Max_Y_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
 +
 	rts
@@ -1089,8 +1058,6 @@ LevEvents_MCZ2_Routine2:
 	blo.s	+	; rts
 	move.w	#$20F0,(Camera_Max_X_pos).w
 	move.w	#$20F0,(Camera_Min_X_pos).w
-	move.w	#$20F0,(Tails_Max_X_pos).w
-	move.w	#$20F0,(Tails_Min_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	move.w	#MusID_FadeOut,d0
 	jsr	(PlayMusic).w
@@ -1118,7 +1085,6 @@ LevEvents_MCZ2_Routine3:
 	cmpi.w	#$5C8,(Camera_Y_pos).w
 	blo.s	+
 	move.w	#$5C8,(Camera_Min_Y_pos).w
-	move.w	#$5C8,(Tails_Min_Y_pos).w
 +
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
@@ -1144,8 +1110,6 @@ LevEvents_MCZ2_Routine4:
 	jsr	(PlaySound).w
 +
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_Max_X_pos).w,(Tails_Max_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 	rts
 
 ; ===========================================================================
@@ -1173,9 +1137,7 @@ LevEvents_CNZ2_Routine1:
 	cmpi.w	#$27C0,(Camera_X_pos).w
 	blo.s	+	; rts
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 	move.w	#$62E,(Camera_Max_Y_pos_target).w
-	move.w	#$62E,(Tails_Max_Y_pos).w
 	move.b	#$F9,(Level_Layout+$C54).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
 +
@@ -1188,8 +1150,6 @@ LevEvents_CNZ2_Routine2:
 	move.b	#$F9,(Level_Layout+$C50).w
 	move.w	#$2860,(Camera_Min_X_pos).w
 	move.w	#$28E0,(Camera_Max_X_pos).w
-	move.w	#$2860,(Tails_Min_X_pos).w
-	move.w	#$28E0,(Tails_Max_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	move.w	#MusID_FadeOut,d0
 	jsr	(PlayMusic).w
@@ -1207,7 +1167,6 @@ LevEvents_CNZ2_Routine3:
 	cmpi.w	#$4E0,(Camera_Y_pos).w
 	blo.s	+
 	move.w	#$4E0,(Camera_Min_Y_pos).w
-	move.w	#$4E0,(Tails_Min_Y_pos).w
 +
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
@@ -1227,10 +1186,7 @@ LevEvents_CNZ2_Routine4:
 	cmpi.w	#$2A00,(Camera_X_pos).w
 	blo.s	+	; rts
 	move.w	#$5D0,(Camera_Max_Y_pos_target).w
-	move.w	#$5D0,(Tails_Max_Y_pos).w
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_Max_X_pos).w,(Tails_Max_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 +
 	rts
 ; ===========================================================================
@@ -1257,9 +1213,7 @@ LevEvents_CPZ2_Routine1:
 	cmpi.w	#$2680,(Camera_X_pos).w
 	blo.s	+	; rts
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 	move.w	#$450,(Camera_Max_Y_pos_target).w
-	move.w	#$450,(Tails_Max_Y_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
 +
 	rts
@@ -1270,8 +1224,6 @@ LevEvents_CPZ2_Routine2:
 	blo.s	+	; rts
 	move.w	#$2A20,(Camera_Min_X_pos).w
 	move.w	#$2A20,(Camera_Max_X_pos).w
-	move.w	#$2A20,(Tails_Min_X_pos).w
-	move.w	#$2A20,(Tails_Max_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	move.w	#MusID_FadeOut,d0
 	jsr	(PlayMusic).w
@@ -1288,7 +1240,6 @@ LevEvents_CPZ2_Routine3:
 	cmpi.w	#$448,(Camera_Y_pos).w
 	blo.s	+
 	move.w	#$448,(Camera_Min_Y_pos).w
-	move.w	#$448,(Tails_Min_Y_pos).w
 +
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
@@ -1306,8 +1257,6 @@ LevEvents_CPZ2_Routine3:
 ; loc_F432:
 LevEvents_CPZ2_Routine4:
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_Max_X_pos).w,(Tails_Max_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 	rts
 ; ===========================================================================
 ; loc_F446:
@@ -1329,19 +1278,16 @@ LevEvents_DEZ_Index: offsetTable
 LevEvents_DEZ_Routine1:
 	move.w	#320,d0
 	cmp.w	(Camera_X_pos).w,d0
-	bhi.s	+	; rts
+	bhi.s	LevEvents_DEZ_Routine2	; rts
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	bsr.w	AllocateObject
-	bne.s	+	; rts
+	bne.s	LevEvents_DEZ_Routine2	; rts
 	move.b	#ObjID_MechaSonic,id(a1) ; load objAF (Silver Sonic)
 	move.b	#$48,subtype(a1)
 	move.w	#$348,x_pos(a1)
 	move.w	#$A0,y_pos(a1)
 	moveq	#PLCID_FieryExplosion,d0
 	jmp	(LoadPLC).w
-; ===========================================================================
-+
-	rts
 ; ===========================================================================
 ; return_F490:
 LevEvents_DEZ_Routine2:
@@ -1351,26 +1297,21 @@ LevEvents_DEZ_Routine2:
 LevEvents_DEZ_Routine3:
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
 	cmpi.w	#$300,(Camera_X_pos).w
-	blo.s	+	; rts
+	blo.s	LevEvents_DEZ_Routine5	; rts
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	moveq	#PLCID_DezBoss,d0
 	jmp	(LoadPLC).w
-; ===========================================================================
-+
-	rts
 ; ===========================================================================
 ; loc_F4AC:
 LevEvents_DEZ_Routine4:
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
 	move.w	#$680,d0
 	cmp.w	(Camera_X_pos).w,d0
-	bhi.s	+	; rts
+	bhi.s	LevEvents_DEZ_Routine5	; rts
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	move.w	d0,(Camera_Min_X_pos).w
 	addi.w	#$C0,d0
 	move.w	d0,(Camera_Max_X_pos).w
-+
-	rts
 ; ===========================================================================
 ; return_F4CE:
 LevEvents_DEZ_Routine5:
@@ -1399,9 +1340,7 @@ LevEvents_ARZ2_Routine1:
 	cmpi.w	#$2810,(Camera_X_pos).w
 	blo.s	+	; rts
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 	move.w	#$400,(Camera_Max_Y_pos_target).w
-	move.w	#$400,(Tails_Max_Y_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	move.b	#4,(Current_Boss_ID).w
 	moveq	#PLCID_ArzBoss,d0
@@ -1415,8 +1354,6 @@ LevEvents_ARZ2_Routine2:
 	blo.s	+	; rts
 	move.w	#$2A40,(Camera_Max_X_pos).w
 	move.w	#$2A40,(Camera_Min_X_pos).w
-	move.w	#$2A40,(Tails_Max_X_pos).w
-	move.w	#$2A40,(Tails_Min_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	move.w	#MusID_FadeOut,d0
 	jsr	(PlayMusic).w
@@ -1432,7 +1369,6 @@ LevEvents_ARZ2_Routine3:
 	cmpi.w	#$3F8,(Camera_Y_pos).w
 	blo.s	+
 	move.w	#$3F8,(Camera_Min_Y_pos).w
-	move.w	#$3F8,(Tails_Min_Y_pos).w
 +
 	addq.b	#1,(Boss_spawn_delay).w
 	cmpi.b	#$5A,(Boss_spawn_delay).w
@@ -1446,8 +1382,6 @@ LevEvents_ARZ2_Routine3:
 ; loc_F58A:
 LevEvents_ARZ2_Routine4:
 	move.w	(Camera_X_pos).w,(Camera_Min_X_pos).w
-	move.w	(Camera_Max_X_pos).w,(Tails_Max_X_pos).w
-	move.w	(Camera_X_pos).w,(Tails_Min_X_pos).w
 	rts
 ; ===========================================================================
 ; loc_F59E:
@@ -1463,7 +1397,7 @@ LevEvents_SCZ_Index: offsetTable
 	offsetTableEntry.w LevEvents_SCZ_Routine2	; 2
 	offsetTableEntry.w LevEvents_SCZ_Routine3	; 4
 	offsetTableEntry.w LevEvents_SCZ_Routine4	; 6
-	offsetTableEntry.w LevEvents_SCZ_RoutineNull	; 8
+	offsetTableEntry.w LevEvents_SCZ2		; 8
 ; ===========================================================================
 ; loc_F5BE:
 LevEvents_SCZ_Routine1:
@@ -1496,14 +1430,10 @@ LevEvents_SCZ_Routine3:
 ; loc_F60A:
 LevEvents_SCZ_Routine4:
 	cmpi.w	#$1400,(Camera_X_pos).w
-	blo.s	LevEvents_SCZ_RoutineNull
+	blo.s	LevEvents_SCZ2
 	move.w	#0,(Tornado_Velocity_X).w
 	move.w	#0,(Tornado_Velocity_Y).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
-
-; return_F622:
-LevEvents_SCZ_RoutineNull:
-	rts
 ; ===========================================================================
 ; return_F624:
 LevEvents_SCZ2:

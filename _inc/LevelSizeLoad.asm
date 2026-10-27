@@ -21,11 +21,9 @@ LevelSizeLoad:
 	move.l	(a0)+,d0
 	move.l	d0,(Camera_Min_X_pos).w		; Also sets Camera_Max_X_pos.
 	move.l	d0,(Camera_Min_X_pos_target).w	; Also sets Camera_Max_X_pos_target.
-	move.l	d0,(Tails_Min_X_pos).w		; Also sets Tails_Max_X_pos.
 	move.l	(a0)+,d0
 	move.l	d0,(Camera_Min_Y_pos).w		; Also sets Camera_Max_Y_pos.
 	move.l	d0,(Camera_Min_Y_pos_target).w	; Also sets Camera_Max_Y_pos_target.
-	move.l	d0,(Tails_Min_Y_pos).w		; Also sets Tails_Max_Y_pos.
 	move.w	#$1010,(Horiz_block_crossed_flag).w
 	move.w	#(screen_height/2)-16,(Camera_Y_pos_bias).w
 	tst.w	(Camera_Min_Y_pos).w

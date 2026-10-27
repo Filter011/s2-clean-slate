@@ -4,9 +4,6 @@
 ; Sprite_1B8A4: Object_Tails:
 Obj02:
 	; a0=character
-	move.w	(Camera_Min_X_pos).w,(Tails_Min_X_pos).w
-	move.w	(Camera_Max_X_pos).w,(Tails_Max_X_pos).w
-	move.w	(Camera_Max_Y_pos).w,(Tails_Max_Y_pos).w
 	moveq	#0,d0
 	move.b	routine(a0),d0
 	move.w	Obj02_Index(pc,d0.w),d1
@@ -884,11 +881,11 @@ Tails_LevelBound:
 	asl.l	#8,d0
 	add.l	d0,d1
 	swap	d1
-	move.w	(Tails_Min_X_pos).w,d0
+	move.w	(Camera_Min_X_pos).w,d0
 	addi.w	#$10,d0
 	cmp.w	d1,d0			; has Tails touched the left boundary?
 	bhi.s	Tails_Boundary_Sides	; if yes, branch
-	move.w	(Tails_Max_X_pos).w,d0
+	move.w	(Camera_Max_X_pos).w,d0
 	addi.w	#screen_width-24,d0		; screen width - Tails's width_pixels
 	tst.b	(Current_Boss_ID).w
 	bne.s	+
@@ -899,7 +896,7 @@ Tails_LevelBound:
 
 ; loc_1C58C:
 Tails_Boundary_CheckBottom:
-	move.w	(Tails_Max_Y_pos).w,d0
+	move.w	(Camera_Max_Y_pos).w,d0
 	move.w	(Camera_Max_Y_pos_target).w,d1
 	cmp.w	d0,d1
 	blo.s	.skip
@@ -1803,7 +1800,7 @@ Obj02_Hurt:
 ; loc_1CC08:
 Tails_HurtStop:
 	movea.l	a0,a2
-	move.w	(Tails_Max_Y_pos).w,d0
+	move.w	(Camera_Max_Y_pos).w,d0
 	move.w	(Camera_Max_Y_pos_target).w,d1
 	cmp.w	d0,d1
 	blo.s	.skip
