@@ -2425,8 +2425,8 @@ coordflagLookup:
 	jp	cfSetTempo		; EA
 	jp	cfSetTempoMod		; EB
 	jp	cfChangePSGVolume	; EC
-	jp	cfClearPush		; ED
-	jp	cfStopSpecialFM4	; EE
+	jp	cfReturn		; ED
+	jp	cfReturn		; EE
 	jp	cfSetVoice		; EF
 	jp	cfModulation		; F0
 	jp	cfEnableModulation	; F1
@@ -2583,8 +2583,7 @@ cfPreventAttack:
 	set	4,(ix+zTrack.PlaybackControl)	; Set bit 4 (10h) on playback control; do not attack next note
 
 ; Unused commands
-cfClearPush:
-cfStopSpecialFM4:
+cfReturn:
 	dec	hl				; Takes no argument, so just put it back
 	ret
 ; ---------------------------------------------------------------------------

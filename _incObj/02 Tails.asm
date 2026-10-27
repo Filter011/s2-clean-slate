@@ -402,9 +402,9 @@ Tails_Lookup:
 	cmpi.b	#120,look_delay_counter(a0)
 	blo.s	Obj02_ResetScr_Part2
 	move.b	#120,look_delay_counter(a0)
-	cmpi.w	#$C8,(Camera_Y_pos_bias_P2).w
+	cmpi.w	#$C8,(Camera_Y_pos_bias).w
 	beq.s	Obj02_UpdateSpeedOnGround
-	addq.w	#2,(Camera_Y_pos_bias_P2).w
+	addq.w	#2,(Camera_Y_pos_bias).w
 	bra.s	Obj02_UpdateSpeedOnGround
 ; ---------------------------------------------------------------------------
 ; loc_1C1A2:
@@ -416,9 +416,9 @@ Tails_Duck:
 	cmpi.b	#120,look_delay_counter(a0)
 	blo.s	Obj02_ResetScr_Part2
 	move.b	#120,look_delay_counter(a0)
-	cmpi.w	#8,(Camera_Y_pos_bias_P2).w
+	cmpi.w	#8,(Camera_Y_pos_bias).w
 	beq.s	Obj02_UpdateSpeedOnGround
-	subq.w	#2,(Camera_Y_pos_bias_P2).w
+	subq.w	#2,(Camera_Y_pos_bias).w
 	bra.s	Obj02_UpdateSpeedOnGround
 
 ; ===========================================================================
@@ -428,11 +428,11 @@ Obj02_ResetScr:
 	move.b	#0,look_delay_counter(a0)
 ; loc_1C1D6:
 Obj02_ResetScr_Part2:
-	cmpi.w	#(screen_height/2)-16,(Camera_Y_pos_bias_P2).w	; is screen in its default position?
+	cmpi.w	#(screen_height/2)-16,(Camera_Y_pos_bias).w	; is screen in its default position?
 	beq.s	Obj02_UpdateSpeedOnGround	; if yes, branch.
 	bhs.s	+				; depending on the sign of the difference,
-	addq.w	#4,(Camera_Y_pos_bias_P2).w	; either add 2
-+	subq.w	#2,(Camera_Y_pos_bias_P2).w	; or subtract 2
+	addq.w	#4,(Camera_Y_pos_bias).w	; either add 2
++	subq.w	#2,(Camera_Y_pos_bias).w	; or subtract 2
 
 ; ---------------------------------------------------------------------------
 ; updates Tails' speed on the ground
@@ -716,11 +716,11 @@ Tails_KeepRolling:
 ; resets the screen to normal while rolling, like Obj02_ResetScr
 ; loc_1C440:
 Obj02_Roll_ResetScr:
-	cmpi.w	#(screen_height/2)-16,(Camera_Y_pos_bias_P2).w	; is screen in its default position?
+	cmpi.w	#(screen_height/2)-16,(Camera_Y_pos_bias).w	; is screen in its default position?
 	beq.s	Tails_SetRollSpeed		; if yes, branch
 	bhs.s	+				; depending on the sign of the difference,
-	addq.w	#4,(Camera_Y_pos_bias_P2).w	; either add 2
-+	subq.w	#2,(Camera_Y_pos_bias_P2).w	; or subtract 2
+	addq.w	#4,(Camera_Y_pos_bias).w	; either add 2
++	subq.w	#2,(Camera_Y_pos_bias).w	; or subtract 2
 
 ; loc_1C452:
 Tails_SetRollSpeed:
@@ -832,11 +832,11 @@ Tails_ChgJumpDir:
 
 ; loc_1C518: Obj02_ResetScr2:
 Obj02_Jump_ResetScr:
-	cmpi.w	#(screen_height/2)-16,(Camera_Y_pos_bias_P2).w	; is screen in its default position?
+	cmpi.w	#(screen_height/2)-16,(Camera_Y_pos_bias).w	; is screen in its default position?
 	beq.s	Tails_JumpPeakDecelerate			; if yes, branch
 	bhs.s	+				; depending on the sign of the difference,
-	addq.w	#4,(Camera_Y_pos_bias_P2).w	; either add 2
-+	subq.w	#2,(Camera_Y_pos_bias_P2).w	; or subtract 2
+	addq.w	#4,(Camera_Y_pos_bias).w	; either add 2
++	subq.w	#2,(Camera_Y_pos_bias).w	; or subtract 2
 
 ; loc_1C52A:
 Tails_JumpPeakDecelerate:
@@ -1439,11 +1439,11 @@ loc_1C7F8:
 
 loc_1C828:
 	addq.l	#4,sp
-	cmpi.w	#(screen_height/2)-16,(Camera_Y_pos_bias_P2).w
+	cmpi.w	#(screen_height/2)-16,(Camera_Y_pos_bias).w
 	beq.s	loc_1C83C
 	bhs.s	+
-	addq.w	#4,(Camera_Y_pos_bias_P2).w
-+	subq.w	#2,(Camera_Y_pos_bias_P2).w
+	addq.w	#4,(Camera_Y_pos_bias).w
++	subq.w	#2,(Camera_Y_pos_bias).w
 
 loc_1C83C:
 	bsr.w	Tails_LevelBound

@@ -330,10 +330,8 @@ Touch_Enemy_Part2:
 	beq.s	.noextrabounce			; if not, branch
 	neg.w	x_vel+object_size(a0)		; negate Tails' X-velocity
 	neg.w	y_vel+object_size(a0)		; negate Tails' Y-velocity
-	neg.w	(Sidekick_X_vel_copy).w		; negate saved Tails' X-velocity
-	neg.w	(Sidekick_Y_vel_copy).w		; negate saved Tails' Y-velocity
-.noextrabounce:
 
+.noextrabounce:
 	move.b	#0,collision_flags(a1)
 	subq.b	#1,collision_property(a1)
 	bne.s	return_3F7E8

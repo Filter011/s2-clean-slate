@@ -1190,16 +1190,14 @@ Camera_BG3_X_pos:		ds.l	1	; unused (only initialised at beginning of level)?
 Camera_BG3_Y_pos:		ds.l	1	; unused (only initialised at beginning of level)?
 Camera_Positions_End:
 
-Camera_Positions_P2:
-Camera_X_pos_P2:		ds.l	1
-Camera_Y_pos_P2:		ds.l	1
-Camera_BG_X_pos_P2:		ds.l	1	; only used sometimes as the layer deformation makes it sort of redundant
-Camera_BG_Y_pos_P2:		ds.l	1
-Camera_BG2_X_pos_P2:		ds.l	1	; unused (only initialised at beginning of level)?
-Camera_BG2_Y_pos_P2:		ds.l	1	; unused (only initialised at beginning of level)?
-Camera_BG3_X_pos_P2:		ds.l	1	; unused (only initialised at beginning of level)?
-Camera_BG3_Y_pos_P2:		ds.l	1	; unused (only initialised at beginning of level)?
-Camera_Positions_P2_End:
+Scroll_Flags_All:
+Scroll_flags:			ds.w	1	; bitfield ; bit 0 = redraw top row, bit 1 = redraw bottom row, bit 2 = redraw left-most column, bit 3 = redraw right-most column
+Scroll_flags_BG:		ds.w	1	; bitfield ; bits 0-3 as above, bit 4 = redraw top row (except leftmost block), bit 5 = redraw bottom row (except leftmost block), bits 6-7 = as bits 0-1
+Scroll_flags_BG2:		ds.w	1	; bitfield ; essentially unused; bit 0 = redraw left-most column, bit 1 = redraw right-most column
+Scroll_flags_BG3:		ds.w	1	; bitfield ; for CPZ; bits 0-3 as Scroll_flags_BG but using Y-dependent BG camera; bits 4-5 = bits 2-3; bits 6-7 = bits 2-3
+Scroll_Flags_All_End:
+
+				ds.b	$20	; unused
 
 Block_Crossed_Flags:
 Horiz_block_crossed_flag:	ds.b	1	; toggles between 0 and $10 when you cross a block boundary horizontally
@@ -1216,20 +1214,7 @@ Block_Crossed_Flags_P2:
 Horiz_block_crossed_flag_P2:	ds.b	1	; toggles between 0 and $10 when you cross a block boundary horizontally
 Verti_block_crossed_flag_P2:	ds.b	1	; toggles between 0 and $10 when you cross a block boundary vertically
 
-
-Sidekick_X_vel_copy:		ds.w	1	; copy of Tails's X speed
-Sidekick_Y_vel_copy:		ds.w	1	; copy of Tails's Y speed
-
-				ds.b	2	; $FFFFF7C4-$FFFFF7C6 ; seems unusedBlock_Crossed_Flags_P2_End:
-
-Scroll_Flags_All:
-Scroll_flags:			ds.w	1	; bitfield ; bit 0 = redraw top row, bit 1 = redraw bottom row, bit 2 = redraw left-most column, bit 3 = redraw right-most column
-Scroll_flags_BG:		ds.w	1	; bitfield ; bits 0-3 as above, bit 4 = redraw top row (except leftmost block), bit 5 = redraw bottom row (except leftmost block), bits 6-7 = as bits 0-1
-Scroll_flags_BG2:		ds.w	1	; bitfield ; essentially unused; bit 0 = redraw left-most column, bit 1 = redraw right-most column
-Scroll_flags_BG3:		ds.w	1	; bitfield ; for CPZ; bits 0-3 as Scroll_flags_BG but using Y-dependent BG camera; bits 4-5 = bits 2-3; bits 6-7 = bits 2-3
-Scroll_Flags_All_End:
-
-				ds.b	8	; unused
+				ds.b	$E	; unused
 
 Camera_Positions_Copy:
 Camera_RAM_copy:		ds.l	2	; copied over every V-int
@@ -1238,8 +1223,6 @@ Camera_BG2_copy:		ds.l	2	; copied over every V-int
 Camera_BG3_copy:		ds.l	2	; copied over every V-int
 Camera_Positions_Copy_End:
 
-				ds.b	$20	; unused
-
 Scroll_Flags_Copy_All:
 Scroll_flags_copy:		ds.w	1	; copied over every V-int
 Scroll_flags_BG_copy:		ds.w	1	; copied over every V-int
@@ -1247,7 +1230,7 @@ Scroll_flags_BG2_copy:		ds.w	1	; copied over every V-int
 Scroll_flags_BG3_copy:		ds.w	1	; copied over every V-int
 Scroll_Flags_Copy_All_End:
 
-				ds.b	8	; unused
+				ds.b	$28	; unused
 
 Camera_Difference:
 Camera_X_pos_diff:		ds.w	1	; (new X pos - old X pos) * 256

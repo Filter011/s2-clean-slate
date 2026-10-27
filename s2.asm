@@ -555,14 +555,11 @@ Vint_Level:
 
 	dma68kToVDP Horiz_Scroll_Buf,VRAM_Horiz_Scroll_Table,VRAM_Horiz_Scroll_Table_Size,VRAM
 	dma68kToVDP Sprite_Table,VRAM_Sprite_Attribute_Table,VRAM_Sprite_Attribute_Table_Size,VRAM
-+
 
 	bsr.w	ProcessDMAQueue
 
-	movem.l	(Camera_RAM).w,d0-d7
-	movem.l	d0-d7,(Camera_RAM_copy).w
-	movem.l	(Scroll_flags).w,d0-d1
-	movem.l	d0-d1,(Scroll_flags_copy).w
+	movem.l	(Camera_RAM).w,d0-a1		; and Scroll_flags
+	movem.l	d0-a1,(Camera_RAM_copy).w	; and Scroll_flags_copy
 	cmpi.b	#92,(Hint_counter_reserve+1).w
 	bhs.s	Do_Updates
 	st.b	(Do_Updates_in_H_int).w
@@ -606,10 +603,8 @@ loc_BD6:
 	bsr.w	ProcessDMAQueue
 	jsr	(DrawLevelTitleCard).l
 
-	movem.l	(Camera_RAM).w,d0-d7
-	movem.l	d0-d7,(Camera_RAM_copy).w
-	movem.l	(Scroll_flags).w,d0-d1
-	movem.l	d0-d1,(Scroll_flags_copy).w
+	movem.l	(Camera_RAM).w,d0-a1		; and Scroll_flags
+	movem.l	d0-a1,(Camera_RAM_copy).w	; and Scroll_flags_copy
 	bra.w	Set_KosPlus_Bookmark
 ; ===========================================================================
 ;VintSub12
