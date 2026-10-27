@@ -1229,12 +1229,7 @@ Scroll_flags_BG2:		ds.w	1	; bitfield ; essentially unused; bit 0 = redraw left-m
 Scroll_flags_BG3:		ds.w	1	; bitfield ; for CPZ; bits 0-3 as Scroll_flags_BG but using Y-dependent BG camera; bits 4-5 = bits 2-3; bits 6-7 = bits 2-3
 Scroll_Flags_All_End:
 
-Scroll_Flags_All_P2:
-Scroll_flags_P2:		ds.w	1	; bitfield ; bit 0 = redraw top row, bit 1 = redraw bottom row, bit 2 = redraw left-most column, bit 3 = redraw right-most column
-Scroll_flags_BG_P2:		ds.w	1	; bitfield ; bits 0-3 as above, bit 4 = redraw top row (except leftmost block), bit 5 = redraw bottom row (except leftmost block), bits 6-7 = as bits 0-1
-Scroll_flags_BG2_P2:		ds.w	1	; bitfield ; essentially unused; bit 0 = redraw left-most column, bit 1 = redraw right-most column
-Scroll_flags_BG3_P2:		ds.w	1	; bitfield ; for CPZ; bits 0-3 as Scroll_flags_BG but using Y-dependent BG camera; bits 4-5 = bits 2-3; bits 6-7 = bits 2-3
-Scroll_Flags_All_P2_End:
+				ds.b	8	; unused
 
 Camera_Positions_Copy:
 Camera_RAM_copy:		ds.l	2	; copied over every V-int
@@ -1243,9 +1238,7 @@ Camera_BG2_copy:		ds.l	2	; copied over every V-int
 Camera_BG3_copy:		ds.l	2	; copied over every V-int
 Camera_Positions_Copy_End:
 
-Camera_Positions_Copy_P2:
-Camera_P2_copy:			ds.l	8	; copied over every V-int
-Camera_Positions_Copy_P2_End:
+				ds.b	$20	; unused
 
 Scroll_Flags_Copy_All:
 Scroll_flags_copy:		ds.w	1	; copied over every V-int
@@ -1254,12 +1247,7 @@ Scroll_flags_BG2_copy:		ds.w	1	; copied over every V-int
 Scroll_flags_BG3_copy:		ds.w	1	; copied over every V-int
 Scroll_Flags_Copy_All_End:
 
-Scroll_Flags_Copy_All_P2:
-Scroll_flags_copy_P2:		ds.w	1	; copied over every V-int
-Scroll_flags_BG_copy_P2:	ds.w	1	; copied over every V-int
-Scroll_flags_BG2_copy_P2:	ds.w	1	; copied over every V-int
-Scroll_flags_BG3_copy_P2:	ds.w	1	; copied over every V-int
-Scroll_Flags_Copy_All_P2_End:
+				ds.b	8	; unused
 
 Camera_Difference:
 Camera_X_pos_diff:		ds.w	1	; (new X pos - old X pos) * 256

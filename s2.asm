@@ -327,12 +327,9 @@ PSGInitLoop:
 
 ; loc_300:
 GameProgram:
-	tst.w	(VDP_control_port).l
-; loc_306:
-CheckSumCheck:
 	moveq	#%0010,d1
 	and.b	(VDP_control_port+1).l,d1
-	bne.s	CheckSumCheck	; wait until DMA is completed
+	bne.s	GameProgram	; wait until DMA is completed
 	; "MEGA DRIVE hard initial program" ends here.
 	btst	#6,(HW_Expansion_Control).l
 	beq.s	ChecksumTest
@@ -564,8 +561,8 @@ Vint_Level:
 
 	movem.l	(Camera_RAM).w,d0-d7
 	movem.l	d0-d7,(Camera_RAM_copy).w
-	movem.l	(Scroll_flags).w,d0-d3
-	movem.l	d0-d3,(Scroll_flags_copy).w
+	movem.l	(Scroll_flags).w,d0-d1
+	movem.l	d0-d1,(Scroll_flags_copy).w
 	cmpi.b	#92,(Hint_counter_reserve+1).w
 	bhs.s	Do_Updates
 	st.b	(Do_Updates_in_H_int).w
