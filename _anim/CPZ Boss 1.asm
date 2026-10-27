@@ -8,8 +8,8 @@ Ani_Obj5D_Dripper:	offsetTable
 		offsetTableEntry.w byte_2EA81	;   4
 		offsetTableEntry.w byte_2EA88	;   5
 		offsetTableEntry.w byte_2EA8B	;   6
-		offsetTableEntry.w byte_2EA8E	;   7
-		offsetTableEntry.w byte_2EA91	;   8
+		offsetTableEntry.w byte_2EAD2	;   7
+		offsetTableEntry.w byte_2EAD9	;   8
 		offsetTableEntry.w byte_2EA94	;   9
 		offsetTableEntry.w byte_2EA97	;  $A
 		offsetTableEntry.w byte_2EAA3	;  $B
@@ -35,8 +35,6 @@ byte_2EA7D:	dc.b   5,  2,  3,$FF
 byte_2EA81:	dc.b   2,  4,  5,  6,  7,  8,$FF
 byte_2EA88:	dc.b   3,  9,$FF
 byte_2EA8B:	dc.b  $F, $A,$FF
-byte_2EA8E:	dc.b  $F,$1C,$FF
-byte_2EA91:	dc.b  $F,$1E,$FF
 byte_2EA94:	dc.b  $F, $B,$FF
 byte_2EA97:	dc.b   3, $C, $C, $D, $D, $D, $D, $D, $C, $C,$FD,  9
 byte_2EAA3:	dc.b   3, $E, $E, $F, $F, $F, $F, $F, $E, $E,$FF

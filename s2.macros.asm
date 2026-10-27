@@ -34,8 +34,9 @@ dmaFillVRAM macro byte,addr,length
 	move.w	#$9780,(a5) ; VRAM fill
 	move.l	#vdpComm(addr,VRAM,DMA),(a5) ; Start at ...
 	move.w	#(byte)|((byte)<<8),VDP_data_port-VDP_control_port(a5) ; Fill with byte
-.loop:	move.w	(a5),d1
-	btst	#1,d1
+.loop:
+	moveq	#%0010,d1
+	and.w	(a5),d1
 	bne.s	.loop ; busy loop until the VDP is finished filling...
 	move.w	#$8F02,(a5) ; VRAM pointer increment: $0002
     endm
@@ -69,7 +70,11 @@ clearRAM macro startaddr,endaddr
     if ((startaddr)&1)
 	move.b	d0,(a1)+
     endif
+    if (endaddr-startaddr) - ((startaddr)&1)<$200
+	moveq	#bytesToLcnt((endaddr-startaddr) - ((startaddr)&1)),d1
+    else
 	move.w	#bytesToLcnt((endaddr-startaddr) - ((startaddr)&1)),d1
+    endif
 .loop:	move.l	d0,(a1)+
 	dbf	d1,.loop
     if (((endaddr-startaddr) - ((startaddr)&1))&2)
@@ -94,11 +99,6 @@ startZ80 macro
 
 ; function to make a little-endian 16-bit pointer for the Z80 sound driver
 z80_ptr function x,(x)<<8&$FF00|(x)>>8&$7F|$80
-
-; macro to declare a little-endian 16-bit pointer for the Z80 sound driver
-rom_ptr_z80 macro addr
-	dc.w z80_ptr(addr)
-    endm
 
 ; aligns the start of a bank, and detects when the bank's contents is too large
 ; can also print the amount of free space in a bank with DebugSoundbanks set

@@ -64,7 +64,7 @@ loc_4712:
 ; ===========================================================================
 
 loc_476E:
-	move.w	#4,d1
+	moveq	#4,d1
 	move.w	inertia(a1),d0
 	btst	#button_left,d2
 	beq.s	+
@@ -90,14 +90,14 @@ loc_476E:
 	bmi.s	++
 	sub.w	d1,d0
 	bhi.s	+
-	move.w	#0,d0
+	moveq	#0,d0
 	move.b	#AniIDSonAni_Wait,anim(a1)
 +	bra.s	++
 ; ===========================================================================
 +
 	add.w	d1,d0
 	bhi.s	+
-	move.w	#0,d0
+	moveq	#0,d0
 	move.b	#AniIDSonAni_Wait,anim(a1)
 +
 	move.w	d0,inertia(a1)

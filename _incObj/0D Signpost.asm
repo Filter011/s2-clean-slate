@@ -143,18 +143,18 @@ Obj0D_RingSparklePositions:
 ; loc_19418:
 Obj0D_Main_State3:
 	tst.w	(Debug_placement_mode).w
-	bne.w	return_194D0
+	bne.s	return_19406
 	tst.b	(MainCharacter+id).w
 	beq.s	loc_1944C
 	btst	#status.player.in_air,(MainCharacter+status).w
-	bne.w	return_194D0
+	bne.s	return_19406
 	move.b	#1,(Control_Locked).w
 	move.w	#(button_right_mask<<8)|0,(Ctrl_1_Logical).w
 	move.w	(MainCharacter+x_pos).w,d0
 	move.w	(Camera_Max_X_pos).w,d1
 	addi.w	#$128,d1
 	cmp.w	d1,d0
-	blo.w	return_194D0
+	blo.s	return_19406
 
 loc_1944C:
 	move.b	#0,routine_secondary(a0) ; => Obj0D_Main_StateNull

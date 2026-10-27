@@ -7,7 +7,7 @@ off_39DE2:	offsetTable
 		offsetTableEntry.w byte_39E14	; 4
 		offsetTableEntry.w byte_39E1A	; 5
 byte_39DEE:
-	dc.b   2,  0,  1,  2,$FF,  0
+	dc.b   2,  0,  1,  2,$FF
 byte_39DF4:
 	dc.b $45,  3,$FD,  0
 byte_39DF8:
@@ -16,7 +16,7 @@ byte_39DFE:
 	dc.b   3,  3,  3,  6,  6,  6,  7,  7,  7,  8,  8,  8,  6,  6,  7,  7
 	dc.b   8,  8,  6,  7,  8,$FC; 16
 byte_39E14:
-	dc.b   2,  6,  7,  8,$FF,  0
+	dc.b   2,  6,  7,  8,$FF
 byte_39E1A:
 	dc.b   3,  8,  7,  6,  8,  8,  7,  7,  6,  6,  8,  8,  8,  7,  7,  7
 	dc.b   6,  6,  6,  3,  3,$FC; 16

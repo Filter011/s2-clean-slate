@@ -157,91 +157,6 @@ EndOfHeader:
 ; loc_200:
 ErrorTrap:
 	bra.s	ErrorTrap	; Loop indefinitely.
-
-; ===========================================================================
-; loc_206:
-EntryPoint:
-	; Everything from here to just past CheckSumCheck is the standard
-	; "MEGA DRIVE hard initial program", distributed by Sega as a file
-	; called 'ICD_BLK4.PRG'.
-	; http://techdocs.exodusemulator.com/Console/SegaMegaDrive/Software.html#original-development-tools
-	tst.l	(HW_Port_1_Control-1).l		; test ports A and B control
-	bne.s	PortA_Ok			; If so, branch.
-	tst.w	(HW_Expansion_Control-1).l	; test port C control
-; loc_214:
-PortA_Ok:
-	bne.s	PortC_OK ; Skip the VDP and Z80 setup code if this is a soft-reset.
-	lea	SetupValues(pc),a5	; Load setup values array address.
-	movem.w	(a5)+,d5-d7
-	movem.l	(a5)+,a0-a4
-	move.b	HW_Version-Z80_Bus_Request(a1),d0	; Get hardware version
-	andi.b	#$F,d0					; Compare
-	beq.s	SkipSecurity				; If the console has no TMSS, skip the security stuff.
-	move.l	#'SEGA',Security_Addr-Z80_Bus_Request(a1) ; Satisfy the TMSS
-; loc_234:
-SkipSecurity:
-	move.w	(a4),d0	; check if VDP works
-	moveq	#0,d0	; clear d0
-	movea.l	d0,a6	; clear a6
-	move.l	a6,usp	; set usp to $0
-
-	moveq	#VDPInitValues_End-VDPInitValues-1,d1 ; run the following loop $18 times
-; loc_23E:
-VDPInitLoop:
-	move.b	(a5)+,d5	; add $8000 to value
-	move.w	d5,(a4)		; move value to VDP register
-	add.w	d7,d5		; next register
-	dbf	d1,VDPInitLoop
-
-	move.l	(a5)+,(a4)	; set VRAM write mode
-	move.w	d0,(a3)		; clear the screen
-	move.w	d7,(a1)		; stop the Z80
-	move.w	d7,(a2)		; reset the Z80
-; loc_250:
-WaitForZ80:
-	btst	d0,(a1)		; has the Z80 stopped?
-	bne.s	WaitForZ80	; if not, branch
-
-	moveq	#Z80StartupCodeEnd-Z80StartupCodeBegin-1,d2
-; loc_256:
-Z80InitLoop:
-	move.b	(a5)+,(a0)+
-	dbf	d2,Z80InitLoop
-
-	move.w	d0,(a2)
-	move.w	d0,(a1)	; start the Z80
-	move.w	d7,(a2)	; reset the Z80
-
-; loc_262:
-ClrRAMLoop:
-	move.l	d0,-(a6)	; clear 4 bytes of RAM
-	dbf	d6,ClrRAMLoop	; repeat until the entire RAM is clear
-	move.l	(a5)+,(a4)	; set VDP display mode and increment mode
-	move.l	(a5)+,(a4)	; set VDP to CRAM write
-
-	moveq	#bytesToLcnt($80),d3	; set repeat times
-; loc_26E:
-ClrCRAMLoop:
-	move.l	d0,(a3)		; clear 2 palettes
-	dbf	d3,ClrCRAMLoop	; repeat until the entire CRAM is clear
-	move.l	(a5)+,(a4)	; set VDP to VSRAM write
-
-	moveq	#bytesToLcnt($50),d4	; set repeat times
-; loc_278: ClrVDPStuff:
-ClrVSRAMLoop:
-	move.l	d0,(a3)	; clear 4 bytes of VSRAM.
-	dbf	d4,ClrVSRAMLoop	; repeat until the entire VSRAM is clear
-	moveq	#PSGInitValues_End-PSGInitValues-1,d5	; set repeat times.
-; loc_280:
-PSGInitLoop:
-	move.b	(a5)+,PSG_input-VDP_data_port(a3) ; reset the PSG
-	dbf	d5,PSGInitLoop	; repeat for other channels
-	move.w	d0,(a2)
-	movem.l	(a6),d0-a6	; clear all registers
-	move.w	#$2700,sr	; set the sr
- ; loc_292:
-PortC_OK: ;;
-	bra.s	GameProgram	; Branch to game program.
 ; ===========================================================================
 ; byte_294:
 SetupValues:
@@ -328,6 +243,88 @@ PSGInitValues_End:
 ; ===========================================================================
 
 	even
+; ===========================================================================
+; loc_206:
+EntryPoint:
+	; Everything from here to just past CheckSumCheck is the standard
+	; "MEGA DRIVE hard initial program", distributed by Sega as a file
+	; called 'ICD_BLK4.PRG'.
+	; http://techdocs.exodusemulator.com/Console/SegaMegaDrive/Software.html#original-development-tools
+	tst.l	(HW_Port_1_Control-1).l		; test ports A and B control
+	bne.s	PortA_Ok			; If so, branch.
+	tst.w	(HW_Expansion_Control-1).l	; test port C control
+; loc_214:
+PortA_Ok:
+	bne.s	GameProgram ; Skip the VDP and Z80 setup code if this is a soft-reset.
+	lea	SetupValues(pc),a5	; Load setup values array address.
+	movem.w	(a5)+,d5-d7
+	movem.l	(a5)+,a0-a4
+	move.b	HW_Version-Z80_Bus_Request(a1),d0	; Get hardware version
+	andi.b	#$F,d0					; Compare
+	beq.s	SkipSecurity				; If the console has no TMSS, skip the security stuff.
+	move.l	#'SEGA',Security_Addr-Z80_Bus_Request(a1) ; Satisfy the TMSS
+; loc_234:
+SkipSecurity:
+	move.w	(a4),d0	; check if VDP works
+	moveq	#0,d0	; clear d0
+	movea.l	d0,a6	; clear a6
+	move.l	a6,usp	; set usp to $0
+
+	moveq	#VDPInitValues_End-VDPInitValues-1,d1 ; run the following loop $18 times
+; loc_23E:
+VDPInitLoop:
+	move.b	(a5)+,d5	; add $8000 to value
+	move.w	d5,(a4)		; move value to VDP register
+	add.w	d7,d5		; next register
+	dbf	d1,VDPInitLoop
+
+	move.l	(a5)+,(a4)	; set VRAM write mode
+	move.w	d0,(a3)		; clear the screen
+	move.w	d7,(a1)		; stop the Z80
+	move.w	d7,(a2)		; reset the Z80
+; loc_250:
+WaitForZ80:
+	btst	d0,(a1)		; has the Z80 stopped?
+	bne.s	WaitForZ80	; if not, branch
+
+	moveq	#Z80StartupCodeEnd-Z80StartupCodeBegin-1,d2
+; loc_256:
+Z80InitLoop:
+	move.b	(a5)+,(a0)+
+	dbf	d2,Z80InitLoop
+
+	move.w	d0,(a2)
+	move.w	d0,(a1)	; start the Z80
+	move.w	d7,(a2)	; reset the Z80
+
+; loc_262:
+ClrRAMLoop:
+	move.l	d0,-(a6)	; clear 4 bytes of RAM
+	dbf	d6,ClrRAMLoop	; repeat until the entire RAM is clear
+	move.l	(a5)+,(a4)	; set VDP display mode and increment mode
+	move.l	(a5)+,(a4)	; set VDP to CRAM write
+
+	moveq	#bytesToLcnt($80),d3	; set repeat times
+; loc_26E:
+ClrCRAMLoop:
+	move.l	d0,(a3)		; clear 2 palettes
+	dbf	d3,ClrCRAMLoop	; repeat until the entire CRAM is clear
+	move.l	(a5)+,(a4)	; set VDP to VSRAM write
+
+	moveq	#bytesToLcnt($50),d4	; set repeat times
+; loc_278: ClrVDPStuff:
+ClrVSRAMLoop:
+	move.l	d0,(a3)	; clear 4 bytes of VSRAM.
+	dbf	d4,ClrVSRAMLoop	; repeat until the entire VSRAM is clear
+	moveq	#PSGInitValues_End-PSGInitValues-1,d5	; set repeat times.
+; loc_280:
+PSGInitLoop:
+	move.b	(a5)+,PSG_input-VDP_data_port(a3) ; reset the PSG
+	dbf	d5,PSGInitLoop	; repeat for other channels
+	move.w	d0,(a2)
+	movem.l	(a6),d0-a6	; clear all registers
+	move.w	#$2700,sr	; set the sr
+
 ; loc_300:
 GameProgram:
 	tst.w	(VDP_control_port).l

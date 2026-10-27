@@ -378,14 +378,12 @@ LevEvents_WFZ_Routine5:
 ; loc_E96C:
 LevEvents_WFZ_Routine6:
 	cmpi.w	#$500,(Camera_Y_pos).w
-	blo.s	+	; rts
+	blo.s	LevEvents_WFZ_RoutineNull	; rts
 	addq.w	#2,(WFZ_LevEvent_Subrout).w ; => LevEvents_WFZ_RoutineNull
 	st.b	(Control_Locked).w
 	clr.w	(Ctrl_1_Logical).w
 	moveq	#PLCID_Tornado,d0
 	jmp	(LoadPLC).w
-+
-	rts
 ; ===========================================================================
 ; return_E984:
 LevEvents_WFZ_RoutineNull:
@@ -411,7 +409,7 @@ LevEvents_HTZ_Routine1:
 	blo.s	LevEvents_HTZ_Routine1_Part2
 	cmpi.w	#$1800,(Camera_X_pos).w
 	blo.s	LevEvents_HTZ_Routine1_Part2
-	move.b	#1,(Screen_Shaking_Flag_HTZ).w
+	st.b	(Screen_Shaking_Flag_HTZ).w
 	move.l	(Camera_X_pos).w,(Camera_BG_X_pos).w
 	move.l	(Camera_Y_pos).w,(Camera_BG_Y_pos).w
 	moveq	#0,d0
@@ -436,7 +434,7 @@ LevEvents_HTZ_Routine1_Part2:
 	bsr.w	ScrollBG
 	or.w	d0,d1
 	bne.s	-	; rts
-	move.b	#0,(Screen_Shaking_Flag_HTZ).w
+	clr.b	(Screen_Shaking_Flag_HTZ).w
 	rts
 ; ===========================================================================
 ; loc_EA0E:
@@ -523,7 +521,7 @@ LevEvents_HTZ_Routine2_Continue:
 LevEvents_HTZ_Routine3:
 	cmpi.w	#$1F00,(Camera_X_pos).w
 	bhs.s	LevEvents_HTZ_Routine3_Part2
-	move.b	#1,(Screen_Shaking_Flag_HTZ).w
+	st.b	(Screen_Shaking_Flag_HTZ).w
 	move.l	(Camera_X_pos).w,(Camera_BG_X_pos).w
 	move.l	(Camera_Y_pos).w,(Camera_BG_Y_pos).w
 	moveq	#0,d0
@@ -548,7 +546,7 @@ LevEvents_HTZ_Routine3_Part2:
 	bsr.s	ScrollBG
 	or.w	d0,d1
 	bne.s	-	; rts
-	move.b	#0,(Screen_Shaking_Flag_HTZ).w
+	clr.b	(Screen_Shaking_Flag_HTZ).w
 	rts
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
@@ -624,7 +622,7 @@ LevEvents_HTZ2_Index: offsetTable
 LevEvents_HTZ2_Routine1:
 	cmpi.w	#$14C0,(Camera_X_pos).w
 	blo.s	LevEvents_HTZ2_Routine1_Part2
-	move.b	#1,(Screen_Shaking_Flag_HTZ).w
+	st.b	(Screen_Shaking_Flag_HTZ).w
 	move.l	(Camera_X_pos).w,(Camera_BG_X_pos).w
 	move.l	(Camera_Y_pos).w,(Camera_BG_Y_pos).w
 	moveq	#0,d0
@@ -655,7 +653,7 @@ LevEvents_HTZ2_Routine1_Part2:
 	bsr.w	ScrollBG
 	or.w	d0,d1
 	bne.s	-	; rts
-	move.b	#0,(Screen_Shaking_Flag_HTZ).w
+	clr.b	(Screen_Shaking_Flag_HTZ).w
 	rts
 
 ; ===========================================================================
@@ -742,7 +740,7 @@ LevEvents_HTZ2_Routine2_Continue:
 LevEvents_HTZ2_Routine3:
 	cmpi.w	#$1B00,(Camera_X_pos).w
 	bhs.s	LevEvents_HTZ2_Routine3_Part2
-	move.b	#1,(Screen_Shaking_Flag_HTZ).w
+	st.b	(Screen_Shaking_Flag_HTZ).w
 	move.l	(Camera_X_pos).w,(Camera_BG_X_pos).w
 	move.l	(Camera_Y_pos).w,(Camera_BG_Y_pos).w
 	moveq	#0,d0
@@ -767,7 +765,7 @@ LevEvents_HTZ2_Routine3_Part2:
 	bsr.w	ScrollBG
 	or.w	d0,d1
 	bne.s	-	; rts
-	move.b	#0,(Screen_Shaking_Flag_HTZ).w
+	clr.b	(Screen_Shaking_Flag_HTZ).w
 	rts
 ; ===========================================================================
 ; loc_EDFA:
@@ -848,7 +846,7 @@ LevEvents_HTZ2_Routine4_Continue:
 LevEvents_HTZ2_Routine5:
 	cmpi.w	#$1B00,(Camera_X_pos).w
 	bhs.s	LevEvents_HTZ2_Routine5_Part2
-	move.b	#1,(Screen_Shaking_Flag_HTZ).w
+	st.b	(Screen_Shaking_Flag_HTZ).w
 	move.l	(Camera_X_pos).w,(Camera_BG_X_pos).w
 	move.l	(Camera_Y_pos).w,(Camera_BG_Y_pos).w
 	moveq	#0,d0
@@ -874,7 +872,7 @@ LevEvents_HTZ2_Routine5_Part2:
 	bsr.w	ScrollBG
 	or.w	d0,d1
 	bne.s	-	; rts
-	move.b	#0,(Screen_Shaking_Flag_HTZ).w
+	clr.b	(Screen_Shaking_Flag_HTZ).w
 	rts
 ; ===========================================================================
 
@@ -887,7 +885,7 @@ LevEvents_HTZ2_Prepare:
 	cmpi.b	#$A,(Dynamic_Resize_Routine).w
 	bge.s	+	; rts
 	move.b	#$A,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine6
-	move.b	#0,(Screen_Shaking_Flag_HTZ).w
+	clr.b	(Screen_Shaking_Flag_HTZ).w
 +
 	rts
 ; End of function LevEvents_HTZ2_Prepare

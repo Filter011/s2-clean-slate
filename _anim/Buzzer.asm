@@ -5,8 +5,8 @@ Ani_obj4B:	offsetTable
 		offsetTableEntry.w byte_2D2D9	; 1
 		offsetTableEntry.w byte_2D2DD	; 2
 		offsetTableEntry.w byte_2D2E1	; 3
-byte_2D2D6:	dc.b	$0F, $00, $FF
-byte_2D2D9:	dc.b	$02, $03, $04, $FF
-byte_2D2DD:	dc.b	$03, $05, $06, $FF
-byte_2D2E1:	dc.b	$09, $01, $01, $01, $01, $01, $FD, $00
+byte_2D2D6:	dc.b	$F, 0, $FF
+byte_2D2D9:	dc.b	2, 3, 4, $FF
+byte_2D2DD:	dc.b	3, 5, 6, $FF
+byte_2D2E1:	dc.b	9, 1, 1, 1, 1, 1, $FD, 0
 	even
