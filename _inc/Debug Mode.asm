@@ -40,7 +40,7 @@ Debug_Init:
 	move.w	(a2)+,d6
 	cmp.b	(Debug_object).w,d6
 	bhi.s	+
-	move.b	#0,(Debug_object).w
+	clr.b	(Debug_object).w
 +
 	bsr.w	LoadDebugObjectSprite
 	move.b	#$C,(Debug_Accel_Timer).w
@@ -216,8 +216,7 @@ Debug_ResetPlayerStats:
 	move.w	d0,y_sub(a1) ; subpixel y
 	move.b	d0,obj_control(a1)
 	move.b	d0,spindash_flag(a1)
-	move.w	d0,x_vel(a1)
-	move.w	d0,y_vel(a1)
+	move.l	d0,x_vel(a1)	; and y_vel
 	move.w	d0,inertia(a1)
 	andi.b	#1<<status.player.underwater,status(a1) ; Preserve the 'is underwater' flag, and clear everything else.
 	ori.b	#1<<status.player.in_air,status(a1)    ; Set the 'in air' flag.

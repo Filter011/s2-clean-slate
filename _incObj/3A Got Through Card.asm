@@ -44,7 +44,6 @@ loc_140BC:
 ; ===========================================================================
 
 loc_140CE:
-
 	move.b	#ObjID_Results,id(a1) ; load obj3A
 	move.w	(a2)+,x_pixel(a1)
 	move.w	(a2)+,titlecard_x_target(a1)

@@ -114,7 +114,7 @@ LevEvents_EHZ2_Routine2:
 	move.w	#$28F0,(Camera_Min_X_pos).w
 	move.w	#$2940,(Camera_Max_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_EHZ2_Routine3
-	move.w	#MusID_FadeOut,d0
+	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
 	clr.b	(Boss_spawn_delay).w
 	move.b	#2,(Current_Boss_ID).w
@@ -214,7 +214,7 @@ LevEvents_MTZ3_Routine3:
 	move.w	#$2AB0,(Camera_Min_X_pos).w
 	move.w	#$2AB0,(Camera_Max_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_MTZ3_Routine4
-	move.w	#MusID_FadeOut,d0
+	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
 	clr.b	(Boss_spawn_delay).w
 	move.b	#7,(Current_Boss_ID).w
@@ -488,7 +488,7 @@ LevEvents_HTZ_Routine2_Continue:
 	move.l	d0,(Camera_BG_X_offset).w
 	move.b	d0,(HTZ_Terrain_Direction).w
 	subq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ_Routine1
-	move.w	#MusID_StopSFX,d0
+	moveq	#signextendB(MusID_StopSFX),d0
 	jmp	(PlayMusic).w
 ; ---------------------------------------------------------------------------
 .exit_right:
@@ -498,7 +498,7 @@ LevEvents_HTZ_Routine2_Continue:
 	move.l	d0,(Camera_BG_X_offset).w
 	move.b	d0,(HTZ_Terrain_Direction).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ_Routine3
-	move.w	#MusID_StopSFX,d0
+	moveq	#signextendB(MusID_StopSFX),d0
 	jmp	(PlayMusic).w
 
 ; ===========================================================================
@@ -708,7 +708,7 @@ LevEvents_HTZ2_Routine2_Continue:
 	move.l	d0,(Camera_BG_X_offset).w
 	move.b	d0,(HTZ_Terrain_Direction).w
 	subq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine1
-	move.w	#MusID_StopSFX,d0
+	moveq	#signextendB(MusID_StopSFX),d0
 	jmp	(PlayMusic).w
 ; ---------------------------------------------------------------------------
 .exit_right:
@@ -718,7 +718,7 @@ LevEvents_HTZ2_Routine2_Continue:
 	move.l	d0,(Camera_BG_X_offset).w
 	move.b	d0,(HTZ_Terrain_Direction).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine3
-	move.w	#MusID_StopSFX,d0
+	moveq	#signextendB(MusID_StopSFX),d0
 	jmp	(PlayMusic).w
 ; ===========================================================================
 ; loc_ED96:
@@ -814,7 +814,7 @@ LevEvents_HTZ2_Routine4_Continue:
 	move.l	d0,(Camera_BG_X_offset).w
 	move.b	d0,(HTZ_Terrain_Direction).w
 	subq.b	#6,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine1
-	move.w	#MusID_StopSFX,d0
+	moveq	#signextendB(MusID_StopSFX),d0
 	jmp	(PlayMusic).w
 ; ===========================================================================
 .exit_right:
@@ -824,7 +824,7 @@ LevEvents_HTZ2_Routine4_Continue:
 	move.l	d0,(Camera_BG_X_offset).w
 	move.b	d0,(HTZ_Terrain_Direction).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine5
-	move.w	#MusID_StopSFX,d0
+	moveq	#signextendB(MusID_StopSFX),d0
 	jmp	(PlayMusic).w
 ; ===========================================================================
 ; loc_EEF8:
@@ -893,7 +893,7 @@ LevEvents_HTZ2_Routine7:
 	move.w	#$2EE0,(Camera_Min_X_pos).w
 	move.w	#$2F5E,(Camera_Max_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine8
-	move.w	#MusID_FadeOut,d0
+	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
 	clr.b	(Boss_spawn_delay).w
 	move.b	#3,(Current_Boss_ID).w
@@ -986,7 +986,7 @@ LevEvents_OOZ2_Routine2:
 	move.w	#$2880,(Camera_Min_X_pos).w
 	move.w	#$28C0,(Camera_Max_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
-	move.w	#MusID_FadeOut,d0
+	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
 	clr.b	(Boss_spawn_delay).w
 	move.b	#8,(Current_Boss_ID).w
@@ -1059,7 +1059,7 @@ LevEvents_MCZ2_Routine2:
 	move.w	#$20F0,(Camera_Max_X_pos).w
 	move.w	#$20F0,(Camera_Min_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
-	move.w	#MusID_FadeOut,d0
+	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
 	clr.b	(Boss_spawn_delay).w
 
@@ -1151,7 +1151,7 @@ LevEvents_CNZ2_Routine2:
 	move.w	#$2860,(Camera_Min_X_pos).w
 	move.w	#$28E0,(Camera_Max_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
-	move.w	#MusID_FadeOut,d0
+	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
 	clr.b	(Boss_spawn_delay).w
 	move.b	#6,(Current_Boss_ID).w
@@ -1225,7 +1225,7 @@ LevEvents_CPZ2_Routine2:
 	move.w	#$2A20,(Camera_Min_X_pos).w
 	move.w	#$2A20,(Camera_Max_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
-	move.w	#MusID_FadeOut,d0
+	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
 	clr.b	(Boss_spawn_delay).w
 	move.b	#1,(Current_Boss_ID).w
@@ -1355,7 +1355,7 @@ LevEvents_ARZ2_Routine2:
 	move.w	#$2A40,(Camera_Max_X_pos).w
 	move.w	#$2A40,(Camera_Min_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
-	move.w	#MusID_FadeOut,d0
+	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
 	clr.b	(Boss_spawn_delay).w
 	bsr.w	AllocateObject

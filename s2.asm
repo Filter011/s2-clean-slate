@@ -571,7 +571,7 @@ Vint_Level:
 
 ; sub_7E6: Demo_Time:
 Do_Updates:
-	jsr	(LoadTilesAsYouMove).l
+	bsr.w	LoadTilesAsYouMove
 	jsr	(HudUpdate).l
 	tst.w	(Demo_Time_left).w	; is there time left on the demo?
 	beq.s	+			; if not, branch
@@ -599,7 +599,7 @@ loc_BD6:
 
 	dma68kToVDP Horiz_Scroll_Buf,VRAM_Horiz_Scroll_Table,VRAM_Horiz_Scroll_Table_Size,VRAM
 	dma68kToVDP Sprite_Table,VRAM_Sprite_Attribute_Table,VRAM_Sprite_Attribute_Table_Size,VRAM
-+
+
 	bsr.w	ProcessDMAQueue
 	jsr	(DrawLevelTitleCard).l
 
@@ -997,12 +997,19 @@ PlaneMapToVRAM_H80_SpecialStage:
 
 ; sub_3384: DelayProgram:
 WaitForVint:
+    if debugbuild
+	lea	(VDP_control_port).l,a1
+	move.w	#$9100,(a1)	; disable lag-o-meter
+    endif
 	lea	(Vint_flag).w,a0
 	st.b	(a0)
 	move.w	#$2300,sr
 
 -	tst.b	(a0)
 	bne.s	-
+    if debugbuild
+	move.w	#$9193,(a1)	; disable lag-o-meter
+    endif
 	rts
 ; End of function WaitForVint
 
@@ -1012,7 +1019,7 @@ WaitForVint:
 
 ; loc_37B8:
 SegaScreen:
-	move.b	#MusID_Stop,d0
+	moveq	#signextendB(MusID_Stop),d0
 	bsr.w	PlayMusic ; stop music
 	bsr.w	ClearPLC
 	ResetDMAQueue
@@ -1114,7 +1121,7 @@ Sega_GotoTitle:
 ; loc_3998:
 TitleScreen:
 	; Stop music.
-	move.b	#MusID_Stop,d0
+	moveq	#signextendB(MusID_Stop),d0
 	bsr.w	PlayMusic
 
 	; Clear the PLC queue, preventing any PLCs from before loading after this point.
@@ -1376,7 +1383,7 @@ TitleScreen_Loop:
 
 	move.l	#5000,(Next_Extra_life_score).w
 
-	move.b	#MusID_FadeOut,d0 ; prepare to stop music (fade out)
+	moveq	#signextendB(MusID_FadeOut),d0 ; prepare to stop music (fade out)
 	bsr.w	PlayMusic
 
 	moveq	#0,d0
@@ -1411,19 +1418,18 @@ TitleScreen_ChoseOptions:
 ; ===========================================================================
 ; loc_3D2E:
 TitleScreen_Demo:
-	move.b	#MusID_FadeOut,d0
+	moveq	#signextendB(MusID_FadeOut),d0
 	bsr.w	PlayMusic
 
 	moveq	#7,d0
 	and.w	(Demo_number).w,d0
 	add.w	d0,d0
-	move.w	DemoLevels(pc,d0.w),d0
-	move.w	d0,(Current_ZoneAndAct).w
+	move.w	DemoLevels(pc,d0.w),(Current_ZoneAndAct).w
 
 	addq.w	#1,(Demo_number).w
 	cmpi.w	#(DemoLevels_End-DemoLevels)/2,(Demo_number).w
 	blo.s	+
-	move.w	#0,(Demo_number).w
+	clr.w	(Demo_number).w
 +
 	st.b	(Demo_mode_flag).w
 	move.l	#Level,(Game_Mode).w ; => Level (Demo mode)
@@ -1470,7 +1476,7 @@ TailsNameCheat:
 	moveq	#SndID_Ring,d0 ; play the ring sound for a successfully entered cheat
 	bsr.w	PlaySound
 +
-	move.w	#0,(Correct_cheat_entries).w
+	clr.w	(Correct_cheat_entries).w
 +
 	rts
 ; End of function TailsNameCheat
@@ -1515,7 +1521,7 @@ CopyrightText_End:
 ; loc_3EC4:
 Level:
 	st.b	(GameModeFlag_TitleCard).w ; add $80 to screen mode (for pre level sequence)
-	move.b	#MusID_FadeOut,d0
+	moveq	#signextendB(MusID_FadeOut),d0
 	bsr.w	PlayMusic	; fade out music
 	bsr.w	ClearPLC
 	bsr.w	Pal_FadeToBlack
@@ -2224,9 +2230,10 @@ OptionScreen_Controls:
 	btst	#button_down,d0
 	beq.s	+
 	addq.b	#1,d2
-	cmpi.b	#2,d2
-	blo.s	+
-	moveq	#0,d2
+;	cmpi.b	#2,d2
+;	blo.s	+
+;	moveq	#0,d2
+	andi.b	#1,d2
 
 +
 	move.b	d2,(Options_menu_box).w
@@ -2693,7 +2700,7 @@ LevelSelect_StartZone:
 	move.l	d0,(Timer).w
 	move.l	d0,(Score).w
 	move.l	#5000,(Next_Extra_life_score).w
-	move.b	#MusID_FadeOut,d0
+	moveq	#signextendB(MusID_FadeOut),d0
 	bra.w	PlayMusic
 
 ; ===========================================================================
@@ -2914,8 +2921,7 @@ LevelSelect_DrawContinued:
 ;loc_9688:
 LevelSelect_DrawIcon:
 	move.w	(Level_select_zone).w,d0
-	lea	LevSel_IconTable(pc),a3
-	lea	(a3,d0.w),a3
+	lea	LevSel_IconTable(pc,d0.w),a3
 	lea	(Chunk_Table+planeLoc(40,0,28)).l,a1
 	moveq	#0,d0
 	move.b	(a3),d0
@@ -3869,8 +3875,7 @@ LoadTitleCard:
 	moveq	#0,d0
 	move.b	(Current_Zone).w,d0
 	move.b	Off_TitleCardLetters(pc,d0.w),d0
-	lea	TitleCardLetters(pc),a0
-	lea	(a0,d0.w),a0
+	lea	TitleCardLetters(pc,d0.w),a0
 	move.l	#vdpComm(tiles_to_bytes(ArtTile_LevelName),VRAM,WRITE),d0
 
 loc_157EC:
@@ -4163,14 +4168,14 @@ Obj0C_MapUnc_202FA:	include "mappings/sprite/obj0C.asm"
 	include "_incObj/12 HPZ Emerald.asm"
 ; ===========================================================================
 ; -------------------------------------------------------------------------------
-; sprite mappings (unused)
+; sprite mappings
 ; -------------------------------------------------------------------------------
 Obj12_MapUnc_20382:	include "mappings/sprite/obj12.asm"
 ; ===========================================================================
 	include "_incObj/13 HPZ Waterfall.asm"
 ; ===========================================================================
 ; -------------------------------------------------------------------------------
-; sprite mappings (unused)
+; sprite mappings
 ; -------------------------------------------------------------------------------
 Obj13_MapUnc_20528:	include "mappings/sprite/obj13.asm"
 ; ===========================================================================
