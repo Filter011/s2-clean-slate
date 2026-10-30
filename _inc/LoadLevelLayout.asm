@@ -31,7 +31,13 @@ loadZoneBlockMaps:
 	movea.l	d0,a0
 	lea	(Chunk_Table).l,a1
 	jsr	(KosPlusDec).w
-	bsr.s	loadLevelLayout
+	move.w	(Current_ZoneAndAct).w,d0
+	ror.b	#1,d0
+	lsr.w	#5,d0
+	lea	(Off_Level).l,a0
+	movea.l	(a0,d0.w),a0
+	lea	(Level_Layout).w,a1
+	jsr	(KosPlusDec).w
 	movea.l	(sp)+,a2	; zone specific pointer in LevelArtPointers
 	addq.w	#4,a2
 	moveq	#0,d0
@@ -45,16 +51,3 @@ loadZoneBlockMaps:
 	moveq	#0,d0
 	move.b	(a2),d0	; palette ID
 	jmp	(PalLoad_Now).w
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
-
-loadLevelLayout:
-	move.w	(Current_ZoneAndAct).w,d0
-	ror.b	#1,d0
-	lsr.w	#5,d0
-	lea	(Off_Level).l,a0
-	movea.l	(a0,d0.w),a0
-	lea	(Level_Layout).w,a1
-	jmp	(KosPlusDec).w
-; End of function loadLevelLayout
