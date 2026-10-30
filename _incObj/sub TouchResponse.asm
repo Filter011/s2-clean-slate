@@ -3,8 +3,6 @@
 ; collides Sonic with most objects (enemies, rings, monitors...) in the level
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_3F554:
 TouchResponse:
 	jsr	(Touch_Rings).l
@@ -428,8 +426,6 @@ Touch_Hurt:
 ; Hurting Sonic/Tails subroutine
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_3F878: HurtSonic:
 HurtCharacter:
 	move.w	(Ring_count).w,d0
@@ -450,12 +446,10 @@ Hurt_Shield:
 	move.b	#4,routine(a0)
 	jsr	(Sonic_ResetOnFloor_Part2).l
 	bset	#status.player.in_air,status(a0)
-	move.w	#-$400,y_vel(a0) ; make Sonic bounce away from the object
-	move.w	#-$200,x_vel(a0)
+	move.l	#(-$200<<16)|(-$400)&$FFFF,x_vel(a0) ; and y_vel / make Sonic bounce away from the object
 	btst	#status.player.underwater,status(a0)	; underwater?
 	beq.s	Hurt_Reverse	; if not, branch
-	move.w	#-$200,y_vel(a0) ; bounce slower
-	move.w	#-$100,x_vel(a0)
+	move.l	#(-$100<<16)|(-$200)&$FFFF,x_vel(a0) ; and y_vel / bounce slower
 
 ; loc_3F8EE:
 Hurt_Reverse:
