@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.10.20.4 (stable)
+; S2CS Driver version: 26.10.29 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -338,6 +338,7 @@ zVInt:    rsttarget
 	; and VBLANK is the only one Z80 is hooked up to.)
 
 	push	af			; Save 'af'
+	push	iy			; Save 'iy'
 	exx				; Effectively backs up 'bc', 'de', and 'hl'
 	xor	a			; Clear 'a'
 	ld	(zDoSFXFlag),a		; Not updating SFX (updating music)
@@ -421,6 +422,7 @@ zUpdateDAC:
 	jp	m,.dacqueued		; If one is queued (80h+), go to it!
 	exx				; Otherwise restore registers from mirror regs
 	ld	b,1			; b=1 (initial feed to the DAC "djnz" loops, i.e. UPDATE RIGHT AWAY)
+	pop	iy
 	pop	af
 	ei				; Enable interrupts
 	ret
@@ -441,6 +443,7 @@ zUpdateDAC:
 	ld	(zDACStartAddress+1),a	; Store into the instruction after zDACStartAddress (self-modifying code)
 	add	a,zDACLenTbl-zDACPtrTbl	; How to offset to length versus pointer
 	ld	(zDACStoreLength+2),a	; Store into the instruction after zDACStoreLength (self-modifying code)
+	pop	iy
 	pop	af
 	ld	hl,zWriteToDAC
 	ex	(sp),hl			; Jump to zWriteToDAC
@@ -781,11 +784,11 @@ zFMUpdateFreq:
 
 ; zsub_258
 zFMDoNext:
-	ld	l,(ix+zTrack.DataPointerLow)	; Load track position low byte
-	ld	h,(ix+zTrack.DataPointerHigh)	; Load track position high byte
 	ld	a,(ix+zTrack.PlaybackControl)
 	and	11101101b	; bitmask so 'do not attack next note' and 'track is at rest' flags are cleared
 	ld	(ix+zTrack.PlaybackControl),a
+	ld	l,(ix+zTrack.DataPointerLow)	; Load track position low byte
+	ld	h,(ix+zTrack.DataPointerHigh)	; Load track position high byte
 
 .noteloop:
 	ld	a,(hl)
@@ -1246,8 +1249,9 @@ zPSGCheckNoteFill:				; If you get here, then "do not attack next note" was set.
 ; zloc_522
 zVolEnvHold:
 	; This just decrements the flutter to keep it in place; no more volume changes in this list
-	dec	(ix+zTrack.VolFlutter)
-	dec	(ix+zTrack.VolFlutter)	; Put index back (before final volume value)
+	ld	a,(ix+zTrack.VolFlutter)
+	sub	2			; Put index back (before final volume value)
+	ld	(ix+zTrack.VolFlutter),a
 	jp	zPSGDoVolFX		; Loop back and update volume
 ; End of function zPSGDoVolFX
 
@@ -1300,8 +1304,18 @@ zPauseMusic:
 .unpause:
 	xor	a			; a = 0
 	ld	(zAbsVar.StopMusic),a	; Clear pause/unpause flag
-	ld	ix,zSongDACFMStart		; ix = pointer to track RAM
-	ld	b,MUSIC_DAC_FM_TRACK_COUNT	; 1 DAC + 6 FM
+	ld	hl,zSongDAC.PlaybackControl	; hl = pointer to track RAM
+	bit	7,(hl)			; Is track playing?
+	jr	z,.nexttrack		; If not, jump
+	bit	2,(hl)			; Is SFX overriding track?
+	jr	nz,.nexttrack		; If yes, jump
+	ld	a,0B6h			; Set Panning / AMS / FMS
+	ld	c,0C0h			; default Panning / AMS / FMS settings (only stereo L/R enabled)
+	rst	zWriteFMII		; Set it!
+
+.nexttrack:
+	ld	ix,zSongFMStart		; ix = pointer to track RAM
+	ld	b,MUSIC_FM_TRACK_COUNT	; 6 FM
 	call	zResumeTrack
 
 	bankswitchToBank MusicPoint1	; Now for SFX
@@ -1576,7 +1590,6 @@ zBGMLoad:
 	or	a				; Test it
 	jp	z,zInitBGMPSG			; If zero, then don't init any
 	ld	b,a				; 'a' -> 'b' (num FM+DAC channels this song, for loop)
-	push	iy				; Save 'iy'
 	ld	iy,zTracksSongStart			; 'iy' points to start of track memory
 	ld	c,(ix+4)			; Get tempo divider -> 'c'
 
@@ -1608,7 +1621,6 @@ zBGMLoad:
 	djnz	.bgm_fmloadloop		; loop for all tracks we're init'ing...
 	; End of FM+DAC track init loop
 
-	pop	iy			; restore 'iy'
 	ld	a,(ix+2)		; 'ix' still points to start of BGM; get number of FM+DAC -> 'a'
 	cp	7			; Does it equal 7?  (6 FM channels)
 	jr	nz,.silencefm6		; If not, skip this next part
@@ -1640,7 +1652,6 @@ zInitBGMPSG:
 	or	a			; Test it
 	jp	z,zInitSFX		; If zero, skip this part!
 	ld	b,a			; 'a' -> 'b' (num PSG tracks this song, for loop)
-	push	iy			; Save 'iy'
 	ld	iy,zSongPSG1		; 'iy' points to start of PSG track memory (7 prior tracks were DAC and 6 FM)
 	ld	c,(ix+4)		; Get tempo divider -> 'c'
 
@@ -1669,7 +1680,6 @@ zInitBGMPSG:
 	pop	bc				; restore 'bc' (number of channels and tempo divider)
 	djnz	.bgm_psgloadloop		; loop for all tracks we're init'ing...
 
-	pop	iy				; restore 'iy'
 	; End of PSG tracks init, begin SFX tracks init
 
 ; zloc_8D0
@@ -1996,8 +2006,9 @@ zStopSoundEffects:
 	push	bc				; Save 'bc'
 	bit	7,(ix+zTrack.PlaybackControl)	; Check if this track was playing
 	jp	z,.nexttrack			; If not
-	res	7,(ix+zTrack.PlaybackControl)	; You're not playing anymore!
-	res	4,(ix+zTrack.PlaybackControl)	; Not not attacking, either
+	ld	a,(ix+zTrack.PlaybackControl)
+	and	01101111b			; Not playing nor not attacking anymore
+	ld	(ix+zTrack.PlaybackControl),a
 	ld	a,(ix+zTrack.VoiceControl)	; Get "voice control" byte
 	or	a				; Test it
 	jp	m,.trackpsg			; If 80h set (PSG track) jump to .trackpsg
