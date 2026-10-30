@@ -109,10 +109,8 @@ LevelSize: zoneOrderedTable 2,8	; WrdArr_LvlSize
 	ror.b	#1,d0
 	lsr.w	#5,d0
 	lea	StartLocations(pc,d0.w),a1
-	moveq	#0,d1
 	move.w	(a1)+,d1
 	move.w	d1,(MainCharacter+x_pos).w
-	moveq	#0,d0
 	move.w	(a1),d0
 	move.w	d0,(MainCharacter+y_pos).w
 +
