@@ -18,12 +18,11 @@ Obj16_Init:
 	addq.b	#2,routine(a0)
 	move.l	#Obj16_MapUnc_21F14,mappings(a0)
 	move.w	#ArtTile_ArtNem_HtzZipline|palette_line_2,art_tile(a0)
-	ori.b	#1<<render_flags.level_fg,render_flags(a0)
+	ori.b	#1<<render_flags.level_fg|1<<render_flags.explicit_height,render_flags(a0)
 	move.b	#$20,width_pixels(a0)
 	move.b	#0,mapping_frame(a0)
 	move.w	#1*$80,priority(a0)
 	move.b	#$40,y_radius(a0)
-	bset	#render_flags.explicit_height,render_flags(a0)
 	moveq	#0,d0
 	move.b	subtype(a0),d0
 	lsl.w	#3,d0
@@ -80,8 +79,8 @@ Obj16_Slide:
 	bne.s	+	; rts
 	addq.b	#2,routine_secondary(a0)
 	move.b	#2,mapping_frame(a0)
-	move.w	#0,x_vel(a0)
-	move.w	#0,y_vel(a0)
+	moveq	#0,d0
+	move.l	d0,x_vel(a0)	; and y_vel
 	jsr	(AllocateObjectAfterCurrent).l
 	bne.s	+	; rts
 	move.b	#ObjID_Scenery,id(a1) ; load obj1C

@@ -30,8 +30,7 @@ Obj55_Index:	offsetTable
 Obj55_Init:
 	move.l	#Obj55_MapUnc_33756,mappings(a0)
 	move.w	#ArtTile_ArtNem_OOZBoss,art_tile(a0)
-	ori.b	#1<<render_flags.level_fg,render_flags(a0)
-	bset	#render_flags.multi_sprite,render_flags(a0)	; object consists of multiple sprites
+	ori.b	#1<<render_flags.level_fg|1<<render_flags.multi_sprite,render_flags(a0)	; object consists of multiple sprites
 	move.b	#0,mainspr_childsprites(a0)
 	addq.b	#2,boss_subtype(a0)	; => Obj55_Main
 	move.b	#$F,collision_flags(a0)

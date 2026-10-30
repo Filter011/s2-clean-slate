@@ -143,7 +143,7 @@ loc_37F74:
 	bne.s	+	; rts
 	move.b	#ObjID_Crawlton,id(a1) ; load obj9E
 	move.b	render_flags(a0),render_flags(a1)
-	bset	#render_flags.multi_sprite,render_flags(a1)
+	ori.b	#1<<render_flags.multi_sprite|1<<render_flags.explicit_height,render_flags(a1)
 	move.l	mappings(a0),mappings(a1)
 	move.w	art_tile(a0),art_tile(a1)
 	move.b	#$A,objoff_3B(a1)
@@ -156,7 +156,6 @@ loc_37F74:
 	move.w	y_pos(a0),d3
 	move.w	d3,y_pos(a1)
 	move.b	#$80,objoff_14(a1)
-	bset	#render_flags.explicit_height,render_flags(a1)
 	lea	subspr_data(a1),a2
 
 	moveq	#6,d6

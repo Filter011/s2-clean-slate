@@ -51,7 +51,7 @@ Obj89_Init:
 
 ; loc_304D4:
 Obj89_Init_RaisePillars:
-	move.b	#1,(Screen_Shaking_Flag).w	; make screen shake
+	st.b	(Screen_Shaking_Flag).w	; make screen shake
 	move.w	#ArtTile_ArtNem_ARZBoss,art_tile(a0)
 	move.l	#Obj89_MapUnc_30E04,mappings(a0)
 	ori.b	#1<<render_flags.level_fg,render_flags(a0)
@@ -509,7 +509,7 @@ Obj89_Pillar_Sub0:
 	cmpi.w	#$488,y_pos(a0)			; has pillar reached its target height?
 	bgt.s	BranchTo_JmpTo37_DisplaySprite	; if not, branch
 	addq.b	#2,routine_secondary(a0)	; => Obj89_Pillar_Sub2
-	move.b	#0,(Screen_Shaking_Flag).w	; stop screen shaking
+	clr.b	(Screen_Shaking_Flag).w	; stop screen shaking
 
 BranchTo_JmpTo37_DisplaySprite ; BranchTo
 	jmp	(DisplaySprite).l
@@ -644,7 +644,7 @@ Obj89_Pillar_Sub4:
 	addq.w	#4,y_pos(a0)
 	jsr	(SolidObject).l
 	move.w	(sp)+,y_pos(a0)
-	move.b	#1,(Screen_Shaking_Flag).w	; make screen shake
+	st.b	(Screen_Shaking_Flag).w	; make screen shake
 	addq.w	#1,y_pos(a0)			; lower pillar
 	cmpi.w	#$510,y_pos(a0)			; has pillar lowered into the ground?
 	blt.s	BranchTo2_JmpTo37_DisplaySprite	; if not, branch
@@ -659,7 +659,9 @@ Obj89_Pillar_Sub4:
 +
 
 Obj89_Pillar_Lower:
-	move.b	#0,(Screen_Shaking_Flag).w	; else, stop shaking the screen
+	clr.b	(Screen_Shaking_Flag).w	; else, stop shaking the screen
+
+Obj89_Pillar_Lower_Delete:
 	jmp	(DeleteObject).l
 ; ===========================================================================
 
@@ -669,7 +671,7 @@ BranchTo2_JmpTo37_DisplaySprite ; BranchTo
 ; loc_30B6C:
 Obj89_Pillar_BulgingEyes:
 	subq.w	#1,obj89_eyes_timer(a0)
-	beq.w	JmpTo55_DeleteObject
+	beq.s	Obj89_Pillar_Lower_Delete
 	jmp	(DisplaySprite).l
 ; ===========================================================================
 ; loc_30B7A:

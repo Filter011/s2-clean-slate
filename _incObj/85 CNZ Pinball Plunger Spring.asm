@@ -41,8 +41,7 @@ Obj85_Init:
 	move.l	#Obj85_MapUnc_2B0EC,mappings(a0)
 	move.w	#ArtTile_ArtNem_CNZDiagPlunger,art_tile(a0)
 +
-	move.b	#1<<render_flags.level_fg,render_flags(a0)
-	bset	#render_flags.multi_sprite,render_flags(a0)
+	move.b	#1<<render_flags.level_fg|1<<render_flags.multi_sprite,render_flags(a0)
 	move.b	#1,mainspr_mapframe(a0)
 	tst.b	subtype(a0)
 	beq.s	Obj85_Init_Up

@@ -18,11 +18,10 @@ Obj80_Index:	offsetTable
 ; loc_29990:
 Obj80_Init:
 	addq.b	#2,routine(a0)
-	move.b	#1<<render_flags.level_fg,render_flags(a0)
+	move.b	#1<<render_flags.level_fg|1<<render_flags.explicit_height,render_flags(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#4*$80,priority(a0)
 	move.b	#$80,y_radius(a0)
-	bset	#render_flags.explicit_height,render_flags(a0)
 	move.w	y_pos(a0),objoff_3C(a0)
 	cmpi.b	#wing_fortress_zone,(Current_Zone).w
 	bne.s	Obj80_MCZ_Init

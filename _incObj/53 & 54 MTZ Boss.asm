@@ -19,12 +19,11 @@ Obj54_Index:	offsetTable
 Obj54_Init:
 	move.l	#Obj54_MapUnc_32DC6,mappings(a0)
 	move.w	#ArtTile_ArtNem_MTZBoss,art_tile(a0)
-	ori.b	#1<<render_flags.level_fg,render_flags(a0)
+	ori.b	#1<<render_flags.level_fg|1<<render_flags.multi_sprite,render_flags(a0)
 	move.w	#$2B50,x_pos(a0)
 	move.w	#$380,y_pos(a0)
 	move.b	#2,mainspr_mapframe(a0)
 	addq.b	#2,boss_subtype(a0)		; => Obj54_Main
-	bset	#render_flags.multi_sprite,render_flags(a0)
 	move.b	#2,mainspr_childsprites(a0)
 	move.b	#$F,collision_flags(a0)
 	move.b	#8,boss_hitcount2(a0)

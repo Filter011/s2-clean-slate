@@ -1094,7 +1094,7 @@ Sega_WaitPalette:
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	jsr	(RunObjects).l
-	jsr	(BuildSprites).l
+	jsr	(BuildSprites).w
 	bsr.w	Process_KosPlus_Module_Queue
 	tst.b	(SegaScr_PalDone_Flag).w
 	beq.s	Sega_WaitPalette
@@ -1287,7 +1287,7 @@ TitleScreen:
 	move.l	#Vint_Title,(Vint_routine).w
 	bsr.w	WaitForVint
 	jsr	(RunObjects).l
-	jsr	(BuildSprites).l
+	jsr	(BuildSprites).w
 
 	; Load some standard sprites.
 	moveq	#PLCID_Std1,d0
@@ -1326,8 +1326,8 @@ TitleScreen_Loop:
 	bsr.w	WaitForVint
 
 	jsr	(RunObjects).l
-	jsr	(SwScrl_Title).l
-	jsr	(BuildSprites).l
+	bsr.w	SwScrl_Title
+	jsr	(BuildSprites).w
 
 	; Find the masking sprite, and move it to the proper location. The
 	; sprite is normally at X 128+128, but in order to perform masking,
@@ -1651,7 +1651,7 @@ Level_TtlCard:
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	jsr	(RunObjects).l
-	jsr	(BuildSprites).l
+	jsr	(BuildSprites).w
 	bsr.w	Process_KosPlus_Module_Queue
 	move.w	(TitleCard_ZoneName+x_pos).w,d0
 	cmp.w	(TitleCard_ZoneName+titlecard_x_target).w,d0 ; has title card sequence finished?
@@ -1678,10 +1678,11 @@ Level_TtlCard:
 	bsr.w	LoadCollisionIndexes
 	bsr.w	WaterEffects
 	bsr.w	InitPlayers
-	move.w	#0,(Ctrl_1_Logical).w
-	move.w	#0,(Ctrl_1).w
+	moveq	#0,d0
+	move.w	d0,(Ctrl_1_Logical).w
+	move.w	d0,(Ctrl_1).w
 	move.b	#1,(Control_Locked).w
-	move.b	#0,(Level_started_flag).w
+	move.b	d0,(Level_started_flag).w
 ; Level_ChkWater:
 	tst.b	(Water_flag).w	; does level have water?
 	beq.s	+	; if not, branch
@@ -1724,7 +1725,7 @@ Level_FromCheckpoint:
 	jsr	(RingsManager).l
 	jsr	(SpecialCNZBumpers).l
 	jsr	(RunObjects).l
-	jsr	(BuildSprites).l
+	jsr	(BuildSprites).w
 	jsr	(AniArt_Load).l
 	bsr.w	SetLevelEndType
 	move.w	#0,(Demo_button_index).w
@@ -1756,7 +1757,7 @@ Level_FromCheckpoint:
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 	jsr	(RunObjects).l
-	jsr	(BuildSprites).l
+	jsr	(BuildSprites).w
 	bsr.w	Process_KosPlus_Module_Queue
 	tst.b	(TitleCard_Background+id).w
 	bne.s	-	; loop while the title card background is still loaded
@@ -1803,7 +1804,7 @@ Level_MainLoop:
 	bsr.w	OscillateNumDo
 	bsr.w	ChangeRingFrame
 	bsr.w	CheckLoadSignpostArt
-	jsr	(BuildSprites).l
+	jsr	(BuildSprites).w
 	jsr	(ObjectsManager).l
 	tst.b	(Demo_mode_flag).w	; check if in demo mode
 	bne.s	+
@@ -1834,7 +1835,7 @@ Level_MainLoop:
 	bsr.w	WaitForVint
 	bsr.w	MoveSonicInDemo
 	jsr	(RunObjects).l
-	jsr	(BuildSprites).l
+	jsr	(BuildSprites).w
 	jsr	(ObjectsManager).l
 	subq.w	#1,(PalChangeSpeed).w
 	bpl.s	+
@@ -3359,6 +3360,10 @@ LoadPLC_AnimalExplosion:
 	moveq	#PLCID_Explosion,d0
 	jmp	(LoadPLC).w
 ; ===========================================================================
+	include "_inc/BuildSprites.asm" ; also DrawSprites
+; ===========================================================================
+	include "_inc/Rings Manager.asm"
+; ===========================================================================
 	include "_incObj/11 Bridge.asm"
 ; -------------------------------------------------------------------------------
 ; sprite mappings
@@ -4000,10 +4005,6 @@ Obj3C_MapUnc_15ECC:	include "mappings/sprite/obj3C.asm"
 	include "_incObj/sub DeleteObject.asm" ; also MarkObjGone
 	include "_incObj/sub DisplaySprite.asm"
 	include "_incObj/sub AnimateSprite.asm"
-
-	include "_inc/BuildSprites.asm" ; also DrawSprites and the 2P versions
-; ===========================================================================
-	include "_inc/Rings Manager.asm"
 ; ===========================================================================
 	include "_inc/CNZ Bumpers.asm"
 ; ===========================================================================
@@ -5295,7 +5296,6 @@ Obj3E_MapUnc_3F436:	include "mappings/sprite/obj3E.asm"
 ; ===========================================================================
 	include "_inc/Animate Level Graphics.asm"
 ; ===========================================================================
-
 	include "_inc/HUD Update.asm"
 ; ===========================================================================
 ; ArtUnc_4134C:

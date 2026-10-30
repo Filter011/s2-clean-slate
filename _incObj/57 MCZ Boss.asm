@@ -24,13 +24,12 @@ Obj57_Index:	offsetTable
 Obj57_Init:
 	move.l	#Obj57_MapUnc_316EC,mappings(a0)
 	move.w	#ArtTile_ArtNem_MCZBoss,art_tile(a0)
-	ori.b	#1<<render_flags.level_fg,render_flags(a0)
+	ori.b	#1<<render_flags.level_fg|1<<render_flags.multi_sprite,render_flags(a0)	; use subobjects for rendering
 	move.w	#$21A0,x_pos(a0)
 	move.w	#$560,y_pos(a0)
 	move.b	#5,mainspr_mapframe(a0)
 	addq.b	#2,boss_subtype(a0)
 	move.b	#2,boss_routine(a0)
-	bset	#render_flags.multi_sprite,render_flags(a0)	; use subobjects for rendering
 	move.b	#4,mainspr_childsprites(a0)
 	move.b	#$F,collision_flags(a0)
 	move.b	#8,boss_hitcount2(a0)
@@ -38,7 +37,7 @@ Obj57_Init:
 	move.w	y_pos(a0),(Boss_Y_pos).w
 	move.w	#$C0,(Boss_Y_vel).w	; move down
 	move.b	#0,(Boss_CollisionRoutine).w
-	move.b	#1,(Screen_Shaking_Flag).w
+	st.b	(Screen_Shaking_Flag).w
 	move.b	#$40,mainspr_width(a0)
 	move.w	x_pos(a0),sub2_x_pos(a0)
 	move.w	y_pos(a0),sub2_y_pos(a0)
@@ -122,7 +121,7 @@ Obj57_Main_Sub0_Continue:	; if countdown finished or boss below $560
 +
 	cmpi.w	#$620,(Boss_Y_pos).w	; if above, screenshaking & stones
 	bge.s	Obj57_Main_Sub0_Standard
-	move.b	#1,(Screen_Shaking_Flag).w
+	st.b	(Screen_Shaking_Flag).w
 	bsr.w	Obj57_SpawnStoneSpike
 
 Obj57_Main_Sub0_Standard:
@@ -142,7 +141,7 @@ Obj57_Main_Sub2: ; boss moving down, stuff falling down
 	cmpi.w	#$620,(Boss_Y_pos).w	; if below...
 	blt.s	Obj57_Main_Sub2_Standard
 	addq.b	#2,boss_routine(a0)	; ...next routine
-	move.b	#0,(Screen_Shaking_Flag).w	; no screen shaking
+	st.b	(Screen_Shaking_Flag).w	; no screen shaking
 
 Obj57_Main_Sub2_Standard:
 	move.w	(Boss_Y_pos).w,y_pos(a0)
@@ -411,7 +410,7 @@ Obj57_FinalDefeat:
 ;loc_314D2:
 Obj57_Main_Sub8: ; boss defeated, standing still, exploding
 	st.b	boss_defeated(a0)
-	move.b	#0,(Screen_Shaking_Flag).w
+	clr.b	(Screen_Shaking_Flag).w
 	subq.w	#1,(Boss_Countdown).w	; countdown initially $B3
 	bmi.s	+			; branch if countdown finished
 	move.b	#$13,sub4_mapframe(a0)	; burnt face

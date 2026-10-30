@@ -63,8 +63,7 @@ Obj83_Init:
 	move.b	id(a0),id(a1) ; load obj83
 	move.l	mappings(a0),mappings(a1)
 	move.w	art_tile(a0),art_tile(a1)
-	move.b	#1<<render_flags.level_fg,render_flags(a1)
-	bset	#render_flags.multi_sprite,render_flags(a1)
+	move.b	#1<<render_flags.level_fg|1<<render_flags.multi_sprite,render_flags(a1)
 	move.b	#$40,mainspr_width(a1)
 	moveq	#8,d1
 	move.b	d1,mainspr_childsprites(a1)

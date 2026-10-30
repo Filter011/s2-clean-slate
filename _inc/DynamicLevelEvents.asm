@@ -111,8 +111,7 @@ LevEvents_EHZ2_Routine1:
 LevEvents_EHZ2_Routine2:
 	cmpi.w	#$28F0,(Camera_X_pos).w
 	blo.s	+	; rts
-	move.w	#$28F0,(Camera_Min_X_pos).w
-	move.w	#$2940,(Camera_Max_X_pos).w
+	move.l	#$28F02940,(Camera_Min_X_pos).w	; and Camera_Max_X_pos
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_EHZ2_Routine3
 	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
@@ -211,8 +210,7 @@ LevEvents_MTZ3_Routine2:
 LevEvents_MTZ3_Routine3:
 	cmpi.w	#$2A80,(Camera_X_pos).w
 	blo.s	+
-	move.w	#$2AB0,(Camera_Min_X_pos).w
-	move.w	#$2AB0,(Camera_Max_X_pos).w
+	move.l	#$2AB02AB0,(Camera_Min_X_pos).w	; and Camera_Max_X_pos
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_MTZ3_Routine4
 	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
@@ -276,10 +274,8 @@ LevEvents_WFZ_Routine1:
 	move.l	(Camera_X_pos).w,(Camera_BG_X_pos).w
 	move.l	(Camera_Y_pos).w,(Camera_BG_Y_pos).w
 	moveq	#0,d0
-	move.w	d0,(Camera_BG_X_pos_diff).w
-	move.w	d0,(Camera_BG_Y_pos_diff).w
-	move.w	d0,(Camera_BG_X_offset).w
-	move.w	d0,(Camera_BG_Y_offset).w
+	move.l	d0,(Camera_BG_X_pos_diff).w	; and Camera_BG_Y_pos_diff
+	move.l	d0,(Camera_BG_X_offset).w	; and Camera_BG_Y_offset
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_WFZ_Routine2
 	rts
 ; ===========================================================================
@@ -290,10 +286,9 @@ LevEvents_WFZ_Routine2:
 	cmpi.w	#$580,(Camera_Y_pos).w
 	blo.s	+
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_WFZ_Routine3
-	move.w	#0,(WFZ_BG_Y_Speed).w
+	clr.w	(WFZ_BG_Y_Speed).w
 +
-	move.w	(Camera_X_pos_diff).w,(Camera_BG_X_pos_diff).w
-	move.w	(Camera_Y_pos_diff).w,(Camera_BG_Y_pos_diff).w
+	move.l	(Camera_X_pos_diff).w,(Camera_BG_X_pos_diff).w	; and Camera_Y_pos_diff/Camera_BG_Y_pos_diff
 	move.w	(Camera_X_pos).w,d0
 	move.w	(Camera_Y_pos).w,d1
 	bra.w	ScrollBG
@@ -317,8 +312,7 @@ LevEvents_WFZ_Routine3:
 	add.w	d0,(Camera_BG_Y_offset).w
 ; loc_E8EC:
 LevEvents_WFZ_Routine3_Part2:
-	move.w	(Camera_X_pos_diff).w,(Camera_BG_X_pos_diff).w
-	move.w	(Camera_Y_pos_diff).w,(Camera_BG_Y_pos_diff).w
+	move.l	(Camera_X_pos_diff).w,(Camera_BG_X_pos_diff).w	; and Camera_Y_pos_diff/Camera_BG_Y_pos_diff
 	move.w	(Camera_X_pos).w,d0
 	move.w	(Camera_Y_pos).w,d1
 	bra.w	ScrollBG
@@ -332,8 +326,7 @@ LevEvents_WFZ_Routine4:
 	beq.s	++
 	move.w	(WFZ_BG_Y_Speed).w,d0
 	beq.s	+
-	moveq	#4,d1
-	neg.w	d1
+	moveq	#-4,d1
 	add.w	d1,d0
 	move.w	d0,(WFZ_BG_Y_Speed).w
 	lsr.w	#8,d0
@@ -341,8 +334,7 @@ LevEvents_WFZ_Routine4:
 	addq.w	#1,d0
 	add.w	d0,(Camera_BG_Y_offset).w
 +
-	move.w	(Camera_X_pos_diff).w,(Camera_BG_X_pos_diff).w
-	move.w	(Camera_Y_pos_diff).w,(Camera_BG_Y_pos_diff).w
+	move.l	(Camera_X_pos_diff).w,(Camera_BG_X_pos_diff).w	; and Camera_Y_pos_diff/Camera_BG_Y_pos_diff
 	move.w	(Camera_X_pos).w,d0
 	move.w	(Camera_Y_pos).w,d1
 	bra.w	ScrollBG
@@ -398,8 +390,7 @@ LevEvents_HTZ_Routine1:
 	move.l	(Camera_X_pos).w,(Camera_BG_X_pos).w
 	move.l	(Camera_Y_pos).w,(Camera_BG_Y_pos).w
 	moveq	#0,d0
-	move.w	d0,(Camera_BG_X_pos_diff).w
-	move.w	d0,(Camera_BG_Y_pos_diff).w
+	move.l	d0,(Camera_BG_X_pos_diff).w	; and Camera_BG_Y_pos_diff
 	move.w	d0,(Camera_BG_X_offset).w
 	move.w	#320,(Camera_BG_Y_offset).w
 	subi.w	#$100,(Camera_BG_Y_pos).w
@@ -414,8 +405,7 @@ LevEvents_HTZ_Routine1_Part2:
 	beq.s	-	; rts
 	move.w	#$200,d0
 	moveq	#0,d1
-	move.w	d1,(Camera_BG_X_pos_diff).w
-	move.w	d1,(Camera_BG_Y_pos_diff).w
+	move.l	d1,(Camera_BG_X_pos_diff).w	; and Camera_BG_Y_pos_diff
 	bsr.w	ScrollBG
 	or.w	d0,d1
 	bne.s	-	; rts
@@ -425,10 +415,10 @@ LevEvents_HTZ_Routine1_Part2:
 ; loc_EA0E:
 LevEvents_HTZ_Routine2:
 	cmpi.w	#$1978,(Camera_X_pos).w
-	blo.w	LevEvents_HTZ_Routine2_Continue
+	blo.s	LevEvents_HTZ_Routine2_Continue
 	cmpi.w	#$1E00,(Camera_X_pos).w
 	blo.s	.keep_shaking
-	move.b	#0,(Screen_Shaking_Flag).w
+	clr.b	(Screen_Shaking_Flag).w
 	bra.s	LevEvents_HTZ_Routine2_Continue
 ; ---------------------------------------------------------------------------
 .keep_shaking:
@@ -462,12 +452,12 @@ LevEvents_HTZ_Routine2:
 	bra.s	LevEvents_HTZ_Routine2_Continue
 ; ---------------------------------------------------------------------------
 .flip_delay:
-	move.b	#0,(Screen_Shaking_Flag).w
+	clr.b	(Screen_Shaking_Flag).w
 	subq.w	#1,(HTZ_Terrain_Delay).w
 	bpl.s	LevEvents_HTZ_Routine2_Continue
 	move.w	#$78,(HTZ_Terrain_Delay).w
 	eori.b	#1,(HTZ_Terrain_Direction).w
-	move.b	#1,(Screen_Shaking_Flag).w
+	st.b	(Screen_Shaking_Flag).w
 
 ; loc_EAA0:
 LevEvents_HTZ_Routine2_Continue:
@@ -475,8 +465,7 @@ LevEvents_HTZ_Routine2_Continue:
 	blo.s	.exit_left
 	cmpi.w	#$1F00,(Camera_X_pos).w
 	bhs.s	.exit_right
-	move.w	(Camera_X_pos_diff).w,(Camera_BG_X_pos_diff).w
-	move.w	(Camera_Y_pos_diff).w,(Camera_BG_Y_pos_diff).w
+	move.l	(Camera_X_pos_diff).w,(Camera_BG_X_pos_diff).w	; and Camera_Y_pos_diff/Camera_BG_Y_pos_diff
 	move.w	(Camera_X_pos).w,d0
 	move.w	(Camera_Y_pos).w,d1
 	bra.w	ScrollBG
@@ -510,10 +499,8 @@ LevEvents_HTZ_Routine3:
 	move.l	(Camera_X_pos).w,(Camera_BG_X_pos).w
 	move.l	(Camera_Y_pos).w,(Camera_BG_Y_pos).w
 	moveq	#0,d0
-	move.w	d0,(Camera_BG_X_pos_diff).w
-	move.w	d0,(Camera_BG_Y_pos_diff).w
-	move.w	d0,(Camera_BG_X_offset).w
-	move.w	#320,(Camera_BG_Y_offset).w
+	move.l	d0,(Camera_BG_X_pos_diff).w	; and Camera_BG_Y_pos_diff
+	move.l	#320,(Camera_BG_X_offset).w	; and Camera_BG_Y_offset
 	subi.w	#$100,(Camera_BG_Y_pos).w
 	move.w	d0,(HTZ_Terrain_Delay).w
 	subq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ_Routine2
@@ -526,8 +513,7 @@ LevEvents_HTZ_Routine3_Part2:
 	beq.s	-	; rts
 	move.w	#$200,d0
 	moveq	#0,d1
-	move.w	d1,(Camera_BG_X_pos_diff).w
-	move.w	d1,(Camera_BG_Y_pos_diff).w
+	move.l	d1,(Camera_BG_X_pos_diff).w	; and Camera_BG_Y_pos_diff
 	bsr.s	ScrollBG
 	or.w	d0,d1
 	bne.s	-	; rts
@@ -611,10 +597,8 @@ LevEvents_HTZ2_Routine1:
 	move.l	(Camera_X_pos).w,(Camera_BG_X_pos).w
 	move.l	(Camera_Y_pos).w,(Camera_BG_Y_pos).w
 	moveq	#0,d0
-	move.w	d0,(Camera_BG_X_pos_diff).w
-	move.w	d0,(Camera_BG_Y_pos_diff).w
-	move.w	d0,(Camera_BG_X_offset).w
-	move.w	#$2C0,(Camera_BG_Y_offset).w
+	move.l	d0,(Camera_BG_X_pos_diff).w	; and Camera_BG_Y_pos_diff
+	move.l	#$2C0,(Camera_BG_X_offset).w	; and Camera_BG_Y_offset
 	subi.w	#$100,(Camera_BG_Y_pos).w
 	move.w	d0,(HTZ_Terrain_Delay).w
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine2
@@ -633,8 +617,7 @@ LevEvents_HTZ2_Routine1_Part2:
 	beq.s	-	; rts
 	move.w	#$200,d0
 	moveq	#0,d1
-	move.w	d1,(Camera_BG_X_pos_diff).w
-	move.w	d1,(Camera_BG_Y_pos_diff).w
+	move.l	d1,(Camera_BG_X_pos_diff).w	; and Camera_BG_Y_pos_diff
 	bsr.w	ScrollBG
 	or.w	d0,d1
 	bne.s	-	; rts
@@ -645,10 +628,10 @@ LevEvents_HTZ2_Routine1_Part2:
 ; loc_EC90:
 LevEvents_HTZ2_Routine2:
 	cmpi.w	#$1678,(Camera_X_pos).w
-	blo.w	LevEvents_HTZ2_Routine2_Continue
+	blo.s	LevEvents_HTZ2_Routine2_Continue
 	cmpi.w	#$1A00,(Camera_X_pos).w
 	blo.s	.keep_shaking
-	move.b	#0,(Screen_Shaking_Flag).w
+	clr.b	(Screen_Shaking_Flag).w
 	bra.s	LevEvents_HTZ2_Routine2_Continue
 ; ---------------------------------------------------------------------------
 .keep_shaking:
@@ -682,12 +665,12 @@ LevEvents_HTZ2_Routine2:
 	bra.s	LevEvents_HTZ2_Routine2_Continue
 ; ---------------------------------------------------------------------------
 .flip_delay:
-	move.b	#0,(Screen_Shaking_Flag).w
+	clr.b	(Screen_Shaking_Flag).w
 	subq.w	#1,(HTZ_Terrain_Delay).w
 	bpl.s	LevEvents_HTZ2_Routine2_Continue
 	move.w	#$78,(HTZ_Terrain_Delay).w
 	eori.b	#1,(HTZ_Terrain_Direction).w
-	move.b	#1,(Screen_Shaking_Flag).w
+	st.b	(Screen_Shaking_Flag).w
 
 ; loc_ED22:
 LevEvents_HTZ2_Routine2_Continue:
@@ -695,8 +678,7 @@ LevEvents_HTZ2_Routine2_Continue:
 	blo.s	.exit_left
 	cmpi.w	#$1B00,(Camera_X_pos).w
 	bhs.s	.exit_right
-	move.w	(Camera_X_pos_diff).w,(Camera_BG_X_pos_diff).w
-	move.w	(Camera_Y_pos_diff).w,(Camera_BG_Y_pos_diff).w
+	move.l	(Camera_X_pos_diff).w,(Camera_BG_X_pos_diff).w	; and Camera_Y_pos_diff/Camera_BG_Y_pos_diff
 	move.w	(Camera_X_pos).w,d0
 	move.w	(Camera_Y_pos).w,d1
 	bra.w	ScrollBG
@@ -729,10 +711,8 @@ LevEvents_HTZ2_Routine3:
 	move.l	(Camera_X_pos).w,(Camera_BG_X_pos).w
 	move.l	(Camera_Y_pos).w,(Camera_BG_Y_pos).w
 	moveq	#0,d0
-	move.w	d0,(Camera_BG_X_pos_diff).w
-	move.w	d0,(Camera_BG_Y_pos_diff).w
-	move.w	d0,(Camera_BG_X_offset).w
-	move.w	#$2C0,(Camera_BG_Y_offset).w
+	move.l	d0,(Camera_BG_X_pos_diff).w	; and Camera_BG_Y_pos_diff
+	move.l	#$2C0,(Camera_BG_X_offset).w	; and Camera_BG_Y_offset
 	subi.w	#$100,(Camera_BG_Y_pos).w
 	move.w	d0,(HTZ_Terrain_Delay).w
 	subq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine2
@@ -745,8 +725,7 @@ LevEvents_HTZ2_Routine3_Part2:
 	beq.s	-	; rts
 	move.w	#$200,d0
 	moveq	#0,d1
-	move.w	d1,(Camera_BG_X_pos_diff).w
-	move.w	d1,(Camera_BG_Y_pos_diff).w
+	move.l	d1,(Camera_BG_X_pos_diff).w	; and Camera_BG_Y_pos_diff
 	bsr.w	ScrollBG
 	or.w	d0,d1
 	bne.s	-	; rts
@@ -789,20 +768,19 @@ LevEvents_HTZ2_Routine4:
 	bra.s	LevEvents_HTZ2_Routine4_Continue
 ; ===========================================================================
 .flip_delay:
-	move.b	#0,(Screen_Shaking_Flag).w
+	clr.b	(Screen_Shaking_Flag).w
 	subq.w	#1,(HTZ_Terrain_Delay).w
 	bpl.s	LevEvents_HTZ2_Routine4_Continue
 	move.w	#$78,(HTZ_Terrain_Delay).w
 	eori.b	#1,(HTZ_Terrain_Direction).w
-	move.b	#1,(Screen_Shaking_Flag).w
+	st.b	(Screen_Shaking_Flag).w
 
 LevEvents_HTZ2_Routine4_Continue:
 	cmpi.w	#$14C0,(Camera_X_pos).w
 	blo.s	.exit_left
 	cmpi.w	#$1B00,(Camera_X_pos).w
 	bhs.s	.exit_right
-	move.w	(Camera_X_pos_diff).w,(Camera_BG_X_pos_diff).w
-	move.w	(Camera_Y_pos_diff).w,(Camera_BG_Y_pos_diff).w
+	move.l	(Camera_X_pos_diff).w,(Camera_BG_X_pos_diff).w	; and Camera_Y_pos_diff/Camera_BG_Y_pos_diff
 	move.w	(Camera_X_pos).w,d0
 	move.w	(Camera_Y_pos).w,d1
 	bra.w	ScrollBG
@@ -835,8 +813,7 @@ LevEvents_HTZ2_Routine5:
 	move.l	(Camera_X_pos).w,(Camera_BG_X_pos).w
 	move.l	(Camera_Y_pos).w,(Camera_BG_Y_pos).w
 	moveq	#0,d0
-	move.w	d0,(Camera_BG_X_pos_diff).w
-	move.w	d0,(Camera_BG_Y_pos_diff).w
+	move.l	d0,(Camera_BG_X_pos_diff).w	; and Camera_BG_Y_pos_diff
 	move.w	#-$680,(Camera_BG_X_offset).w
 	addi.w	#$480,(Camera_BG_X_pos).w
 	move.w	#$300,(Camera_BG_Y_offset).w
@@ -852,8 +829,7 @@ LevEvents_HTZ2_Routine5_Part2:
 	beq.s	-	; rts
 	move.w	#$200,d0
 	moveq	#0,d1
-	move.w	d1,(Camera_BG_X_pos_diff).w
-	move.w	d1,(Camera_BG_Y_pos_diff).w
+	move.l	d1,(Camera_BG_X_pos_diff).w	; and Camera_BG_Y_pos_diff
 	bsr.w	ScrollBG
 	or.w	d0,d1
 	bne.s	-	; rts
@@ -890,8 +866,7 @@ LevEvents_HTZ2_Routine6:
 LevEvents_HTZ2_Routine7:
 	cmpi.w	#$2EDF,(Camera_X_pos).w
 	blo.s	+	; rts
-	move.w	#$2EE0,(Camera_Min_X_pos).w
-	move.w	#$2F5E,(Camera_Max_X_pos).w
+	move.l	#$2EE02F5E,(Camera_Min_X_pos).w	; and Camera_Max_X_pos
 	addq.b	#2,(Dynamic_Resize_Routine).w ; => LevEvents_HTZ2_Routine8
 	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
@@ -983,8 +958,7 @@ LevEvents_OOZ2_Routine1:
 LevEvents_OOZ2_Routine2:
 	cmpi.w	#$2880,(Camera_X_pos).w
 	blo.s	+	; rts
-	move.w	#$2880,(Camera_Min_X_pos).w
-	move.w	#$28C0,(Camera_Max_X_pos).w
+	move.l	#$288028C0,(Camera_Min_X_pos).w	; and Camera_Max_X_pos
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
@@ -1056,8 +1030,7 @@ LevEvents_MCZ2_Routine1:
 LevEvents_MCZ2_Routine2:
 	cmpi.w	#$20F0,(Camera_X_pos).w
 	blo.s	+	; rts
-	move.w	#$20F0,(Camera_Max_X_pos).w
-	move.w	#$20F0,(Camera_Min_X_pos).w
+	move.l	#$20F020F0,(Camera_Min_X_pos).w	; and Camera_Max_X_pos
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
@@ -1103,8 +1076,8 @@ LevEvents_MCZ2_Routine3:
 LevEvents_MCZ2_Routine4:
 	tst.b	(Screen_Shaking_Flag).w
 	beq.s	+
-	move.w	(Level_frame_counter).w,d0
-	andi.w	#$1F,d0
+	moveq	#$1F,d0
+	and.w	(Level_frame_counter).w,d0
 	bne.s	+
 	moveq	#SndID_Rumbling2,d0
 	jsr	(PlaySound).w
@@ -1148,8 +1121,7 @@ LevEvents_CNZ2_Routine2:
 	cmpi.w	#$2890,(Camera_X_pos).w
 	blo.s	+	; rts
 	move.b	#$F9,(Level_Layout+$C50).w
-	move.w	#$2860,(Camera_Min_X_pos).w
-	move.w	#$28E0,(Camera_Max_X_pos).w
+	move.l	#$286028E0,(Camera_Min_X_pos).w	; and Camera_Max_X_pos
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
@@ -1222,8 +1194,7 @@ LevEvents_CPZ2_Routine1:
 LevEvents_CPZ2_Routine2:
 	cmpi.w	#$2A20,(Camera_X_pos).w
 	blo.s	+	; rts
-	move.w	#$2A20,(Camera_Min_X_pos).w
-	move.w	#$2A20,(Camera_Max_X_pos).w
+	move.l	#$2A202A20,(Camera_Min_X_pos).w	; and Camera_Max_X_pos
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
@@ -1269,7 +1240,7 @@ LevEvents_DEZ:
 ; off_F454:
 LevEvents_DEZ_Index: offsetTable
 	offsetTableEntry.w LevEvents_DEZ_Routine1	; 0
-	offsetTableEntry.w LevEvents_DEZ_Routine2	; 2
+	offsetTableEntry.w LevEvents_DEZ_Routine5	; 2
 	offsetTableEntry.w LevEvents_DEZ_Routine3	; 4
 	offsetTableEntry.w LevEvents_DEZ_Routine4	; 6
 	offsetTableEntry.w LevEvents_DEZ_Routine5	; 8
@@ -1278,20 +1249,16 @@ LevEvents_DEZ_Index: offsetTable
 LevEvents_DEZ_Routine1:
 	move.w	#320,d0
 	cmp.w	(Camera_X_pos).w,d0
-	bhi.s	LevEvents_DEZ_Routine2	; rts
+	bhi.s	LevEvents_DEZ_Routine5	; rts
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	bsr.w	AllocateObject
-	bne.s	LevEvents_DEZ_Routine2	; rts
+	bne.s	LevEvents_DEZ_Routine5	; rts
 	move.b	#ObjID_MechaSonic,id(a1) ; load objAF (Silver Sonic)
 	move.b	#$48,subtype(a1)
 	move.w	#$348,x_pos(a1)
 	move.w	#$A0,y_pos(a1)
 	moveq	#PLCID_FieryExplosion,d0
 	jmp	(LoadPLC).w
-; ===========================================================================
-; return_F490:
-LevEvents_DEZ_Routine2:
-	rts
 ; ===========================================================================
 ; loc_F492:
 LevEvents_DEZ_Routine3:
@@ -1352,8 +1319,7 @@ LevEvents_ARZ2_Routine1:
 LevEvents_ARZ2_Routine2:
 	cmpi.w	#$2A40,(Camera_X_pos).w
 	blo.s	+	; rts
-	move.w	#$2A40,(Camera_Max_X_pos).w
-	move.w	#$2A40,(Camera_Min_X_pos).w
+	move.l	#$2A402A40,(Camera_Min_X_pos).w	; and Camera_Max_X_pos
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
@@ -1401,8 +1367,7 @@ LevEvents_SCZ_Index: offsetTable
 ; ===========================================================================
 ; loc_F5BE:
 LevEvents_SCZ_Routine1:
-	move.w	#1,(Tornado_Velocity_X).w
-	move.w	#0,(Tornado_Velocity_Y).w
+	move.l	#$10000,(Tornado_Velocity_X).w	; and Tornado_Velocity_Y
 	addq.b	#2,(Dynamic_Resize_Routine).w
 	rts
 ; ===========================================================================
@@ -1410,8 +1375,7 @@ LevEvents_SCZ_Routine1:
 LevEvents_SCZ_Routine2:
 	cmpi.w	#$1180,(Camera_X_pos).w
 	blo.s	+
-	move.w	#-1,(Tornado_Velocity_X).w
-	move.w	#1,(Tornado_Velocity_Y).w
+	move.l	#$FFFF0001,(Tornado_Velocity_X).w	; and Tornado_Velocity_Y
 	move.w	#$500,(Camera_Max_Y_pos_target).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
 +
@@ -1421,8 +1385,7 @@ LevEvents_SCZ_Routine2:
 LevEvents_SCZ_Routine3:
 	cmpi.w	#$500,(Camera_Y_pos).w
 	blo.s	+
-	move.w	#1,(Tornado_Velocity_X).w
-	move.w	#0,(Tornado_Velocity_Y).w
+	move.l	#$10000,(Tornado_Velocity_X).w	; and Tornado_Velocity_Y
 	addq.b	#2,(Dynamic_Resize_Routine).w
 +
 	rts
@@ -1431,8 +1394,8 @@ LevEvents_SCZ_Routine3:
 LevEvents_SCZ_Routine4:
 	cmpi.w	#$1400,(Camera_X_pos).w
 	blo.s	LevEvents_SCZ2
-	move.w	#0,(Tornado_Velocity_X).w
-	move.w	#0,(Tornado_Velocity_Y).w
+	moveq	#0,d0
+	move.l	d0,(Tornado_Velocity_X).w	; and Tornado_Velocity_Y
 	addq.b	#2,(Dynamic_Resize_Routine).w
 ; ===========================================================================
 ; return_F624:

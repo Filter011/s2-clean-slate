@@ -319,7 +319,7 @@ loc_3D7B8:
 +
 	addq.b	#2,prev_anim(a0)
 	clr.w	y_vel(a0)
-	move.b	#1,(Screen_Shaking_Flag).w
+	st.b	(Screen_Shaking_Flag).w
 	move.w	#$40,(DEZ_Shake_Timer).w
 	movea.w	objoff_38(a0),a1 ; a1=object
 	move.b	#6,routine_secondary(a1)
@@ -486,7 +486,7 @@ loc_3D93C:
 	move.b	#$20,routine(a0)
 	clr.b	routine_secondary(a0)
 	move.w	#$20,objoff_2A(a0)
-	move.b	#1,(Screen_Shaking_Flag).w
+	st.b	(Screen_Shaking_Flag).w
 	move.w	#$1000,(DEZ_Shake_Timer).w
 	movea.w	objoff_36(a0),a1 ; a1=object
 	jmp	(DeleteObject2).l
