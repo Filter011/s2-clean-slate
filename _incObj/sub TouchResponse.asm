@@ -479,8 +479,6 @@ Hurt_Sound:
 ; Subroutine to kill Sonic or Tails
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_3F926: KillSonic:
 KillCharacter:
 	tst.w	(Debug_placement_mode).w
@@ -489,8 +487,7 @@ KillCharacter:
 	move.b	#6,routine(a0)
 	jsr	(Sonic_ResetOnFloor_Part2).l
 	bset	#status.player.in_air,status(a0)
-	move.w	#-$700,y_vel(a0)
-	move.w	#0,x_vel(a0)
+	move.l	#0|(-$700)&$FFFF,x_vel(a0) ; and y_vel
 	move.w	#0,inertia(a0)
 	move.b	#AniIDSonAni_Death,anim(a0)
 	bset	#high_priority_bit,art_tile(a0)
