@@ -29,8 +29,7 @@ WindTunnel:
 	bhs.s	WindTunnel_LeaveHurt	; if yes, branch
 	move.b	#1,(WindTunnel_flag).w	; affects character animation and bubble movement
 	subq.w	#4,x_pos(a1)	; move main character to the left
-	move.w	#-$400,x_vel(a1)
-	move.w	#0,y_vel(a1)
+	move.l	#(-$400)<<16,x_vel(a1)	; and y_vel
 	move.b	#AniIDSonAni_Float2,anim(a1)
 	bset	#status.player.in_air,status(a1)	; set "in-air" bit
 	clr.b	flying(a1)	; clear flying flag
