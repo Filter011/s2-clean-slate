@@ -3,8 +3,6 @@
 ; (the closest match I could find to this subroutine in Sonic 1 is Obj1B_Action)
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_44E4:
 UpdateWaterSurface:
 	tst.b	(Water_flag).w
@@ -26,8 +24,6 @@ UpdateWaterSurface:
 	rts
 ; End of function UpdateWaterSurface
 
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; ---------------------------------------------------------------------------
 ; Subroutine to do special water effects
@@ -106,9 +102,9 @@ WaterHeight: zoneOrderedTable 2,2
 DynamicWater:
 	move.w	(Current_ZoneAndAct).w,d0
 	ror.b	#1,d0
-	lsr.w	#6,d0
-	move.w	Dynamic_water_routine_table(pc,d0.w),d0
-	jsr	Dynamic_water_routine_table(pc,d0.w)
+	lsr.w	#5,d0
+	movea.l	Dynamic_water_routine_table(pc,d0.w),a0
+	jsr	(a0)
 	moveq	#0,d1
 	move.b	(Water_on).w,d1
 	move.w	(Water_Level_3).w,d0
@@ -123,58 +119,58 @@ DynamicWater:
 ; End of function DynamicWater
 
 ; ===========================================================================
-Dynamic_water_routine_table: zoneOrderedOffsetTable 2,2
+Dynamic_water_routine_table: zoneOrderedOffsetTable 4,2
 	; EHZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; Zone 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; WZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; Zone 3
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; MTZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; MTZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 3
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 4
+	zoneTableEntry.l DynamicWaterNull ; Act 3
+	zoneTableEntry.l DynamicWaterNull ; Act 4
 	; WFZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; HTZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; HPZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; Zone 9
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; OOZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; MCZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; CNZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; CPZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterCPZ2 ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterCPZ2 ; Act 2
 	; DEZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; ARZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
 	; SCZ
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 1
-	zoneOffsetTableEntry.w DynamicWaterNull ; Act 2
+	zoneTableEntry.l DynamicWaterNull ; Act 1
+	zoneTableEntry.l DynamicWaterNull ; Act 2
     zoneTableEnd
 ; ===========================================================================
 ; return_45F8:
