@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.10.29 (stable)
+; S2CS Driver version: 26.10.30 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -347,10 +347,7 @@ zVInt:    rsttarget
 	ld	ix,zAbsVar		; ix points to zComRange
 	ld	a,(zAbsVar.StopMusic)	; Get pause/unpause flag
 	or	a			; Test 'a'
-	jr	z,zUpdateEverything	; If zero, go to zUpdateEverything
-	call	zPauseMusic
-	jp	zUpdateDAC		; Now update the DAC
-; ---------------------------------------------------------------------------
+	jp	nz,zPauseMusic		; If zero, go to zUpdateEverything
 
 ; zloc_51
 zUpdateEverything:
@@ -1299,7 +1296,8 @@ zPSGSilenceAll:
 zPauseMusic:
 	jp	m,.unpause	; If we are to unpause music, jump
 	call	zFMSilenceAll
-	jp	zPSGSilenceAll
+	call	zPSGSilenceAll
+	jp	zUpdateDAC		; Now update the DAC
 
 .unpause:
 	xor	a			; a = 0
@@ -1324,7 +1322,8 @@ zPauseMusic:
 	ld	(zDoSFXFlag),a		; Set flag to say we are updating SFX
 	ld	ix,zSFX_FMStart		; ix = pointer to SFX track RAM
 	ld	b,SFX_FM_TRACK_COUNT	; 3 FM
-	; Fall-through to zResumeTrack...
+	call	zResumeTrack
+	jp	zUpdateDAC		; Now update the DAC
 ; End of function zPauseMusic
 
 
