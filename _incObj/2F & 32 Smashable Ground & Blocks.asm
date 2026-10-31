@@ -134,7 +134,6 @@ loc_234A4:
 	lea	(a4,d0.w),a4
 	neg.w	d1
 	addi.w	#9,d1
-	moveq	#$18,d2
 	jsr	(BreakObjectToPieces).l
 	bsr.w	SmashableObject_LoadPoints
 ; loc_234DC:
