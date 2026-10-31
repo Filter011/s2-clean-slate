@@ -52,15 +52,14 @@ ObjB0_Init:
 	add.w	d0,d0
 	adda.w	(a2,d0.w),a2
 	move.w	(a2)+,d6 ; get the number of pieces in this mapping frame
-	subq.w	#1,d6
 -	move.w	(a2)+,d0
 	move.w	d0,d1
-	andi.l	#$FFF,d0
-	lsl.l	#5,d0
+	andi.w	#$F,d1
+	addq.w	#1,d1
+	lsl.w	#6,d1
+	andi.l	#$FFF0,d0
+	add.l	d0,d0
 	lea	(a3,d0.l),a4 ; source ROM address of tiles to copy
-	andi.w	#$F000,d1 ; abcd000000000000
-	rol.w	#7,d1
-	addq.w	#7,d1	  ; 000000000abcd111 ; number of dwords to copy minus 1
 -	move.l	(a4)+,(a5)+
 	dbf	d1,- ; copy all of the pixels in this piece into the temp buffer
 	dbf	d6,-- ; loop per piece in the frame
