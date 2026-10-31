@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.10.31 (stable)
+; S2CS Driver version: 26.10.31.1 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -394,19 +394,29 @@ zUpdateEverything:
 	bankswitchToBank MusicPoint1		; Bank switch to sound effects
 
 	; SFX channels
-    rept SFX_FM_TRACK_COUNT			; Only 3 FM channels for SFX (FM3, FM4, FM5)
-	ld	de,zTrack.len			; Spacing between tracks
-	add	ix,de				; Next track
+	ld	ix,zSFX_FM3			; Current track
 	bit	7,(ix+zTrack.PlaybackControl)	; Is it playing?
 	call	nz,zFMUpdateTrack		; If it is, go update it
-    endr
 
-   rept SFX_PSG_TRACK_COUNT			; Only 3 PSG channels for SFX (PSG1, PSG2, PSG3)
-	ld	de,zTrack.len			; Spacing between tracks
-	add	ix,de				; Next track
+	ld	ix,zSFX_FM4			; Current track
+	bit	7,(ix+zTrack.PlaybackControl)	; Is it playing?
+	call	nz,zFMUpdateTrack		; If it is, go update it
+
+	ld	ix,zSFX_FM5			; Current track
+	bit	7,(ix+zTrack.PlaybackControl)	; Is it playing?
+	call	nz,zFMUpdateTrack		; If it is, go update it
+
+	ld	ix,zSFX_PSG1			; Current track
 	bit	7,(ix+zTrack.PlaybackControl)	; Is it playing?
 	call	nz,zPSGUpdateTrack		; If it is, go update it
-    endr
+
+	ld	ix,zSFX_PSG2			; Current track
+	bit	7,(ix+zTrack.PlaybackControl)	; Is it playing?
+	call	nz,zPSGUpdateTrack		; If it is, go update it
+
+	ld	ix,zSFX_PSG3			; Current track
+	bit	7,(ix+zTrack.PlaybackControl)	; Is it playing?
+	call	nz,zPSGUpdateTrack		; If it is, go update it
 
 	; Now we update the DAC... this only does anything if there's a new DAC
 	; sound to be played.  This is called after updating the DAC track.
@@ -474,19 +484,42 @@ zUpdateMusic:
 	ld	ix,zTracksSongStart			; Point "ix" to zTracksSongStart
 	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
 	call	nz,zDACUpdateTrack		; If so, zDACUpdateTrack
-    rept MUSIC_FM_TRACK_COUNT			; Loop 6 times (FM)...
-	ld	de,zTrack.len			; Space between tracks
-	add	ix,de				; Go to next track
+
+	ld	ix,zSongFM1			; Current track
 	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
 	call	nz,zFMUpdateTrack		; If so...
-    endr
 
-    rept MUSIC_PSG_TRACK_COUNT			; Loop 3 times (PSG)...
-	ld	de,zTrack.len			; Space between tracks
-	add	ix,de				; Go to next track
+	ld	ix,zSongFM2			; Current track
+	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
+	call	nz,zFMUpdateTrack		; If so...
+
+	ld	ix,zSongFM3			; Current track
+	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
+	call	nz,zFMUpdateTrack		; If so...
+
+	ld	ix,zSongFM4			; Current track
+	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
+	call	nz,zFMUpdateTrack		; If so...
+
+	ld	ix,zSongFM5			; Current track
+	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
+	call	nz,zFMUpdateTrack		; If so...
+
+	ld	ix,zSongFM6			; Current track
+	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
+	call	nz,zFMUpdateTrack		; If so...
+
+	ld	ix,zSongPSG1			; Current track
 	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
 	call	nz,zPSGUpdateTrack		; If so...
-    endr
+
+	ld	ix,zSongPSG2			; Current track
+	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
+	call	nz,zPSGUpdateTrack		; If so...
+
+	ld	ix,zSongPSG3			; Current track
+	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
+	call	nz,zPSGUpdateTrack		; If so...
 ; End of function zUpdateMusic
 
 
