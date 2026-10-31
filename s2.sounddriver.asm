@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.10.30 (stable)
+; S2CS Driver version: 26.10.31 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -394,16 +394,19 @@ zUpdateEverything:
 	bankswitchToBank MusicPoint1		; Bank switch to sound effects
 
 	; SFX channels
-	ld	b,SFX_TRACK_COUNT		; Only 3 FM and 3 PSG channels for SFX (FM3, FM4, FM5, PSG1, PSG2, PSG3)
-
-.fmpsgloop:
+    rept SFX_FM_TRACK_COUNT			; Only 3 FM channels for SFX (FM3, FM4, FM5)
 	ld	de,zTrack.len			; Spacing between tracks
 	add	ix,de				; Next track
-	push	bc
 	bit	7,(ix+zTrack.PlaybackControl)	; Is it playing?
-	call	nz,zUpdateTrack		; If it is, go update it
-	pop	bc
-	djnz	.fmpsgloop
+	call	nz,zFMUpdateTrack		; If it is, go update it
+    endr
+
+   rept SFX_PSG_TRACK_COUNT			; Only 3 PSG channels for SFX (PSG1, PSG2, PSG3)
+	ld	de,zTrack.len			; Spacing between tracks
+	add	ix,de				; Next track
+	bit	7,(ix+zTrack.PlaybackControl)	; Is it playing?
+	call	nz,zPSGUpdateTrack		; If it is, go update it
+    endr
 
 	; Now we update the DAC... this only does anything if there's a new DAC
 	; sound to be played.  This is called after updating the DAC track.
@@ -471,16 +474,19 @@ zUpdateMusic:
 	ld	ix,zTracksSongStart			; Point "ix" to zTracksSongStart
 	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
 	call	nz,zDACUpdateTrack		; If so, zDACUpdateTrack
-	ld	b,MUSIC_FM_TRACK_COUNT+MUSIC_PSG_TRACK_COUNT		; Loop 6+3 times (FM+PSG)...
-
-.fmpsgloop:
+    rept MUSIC_FM_TRACK_COUNT			; Loop 6 times (FM)...
 	ld	de,zTrack.len			; Space between tracks
 	add	ix,de				; Go to next track
-	push	bc
 	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
-	call	nz,zUpdateTrack		; If so...
-	pop	bc
-	djnz	.fmpsgloop
+	call	nz,zFMUpdateTrack		; If so...
+    endr
+
+    rept MUSIC_PSG_TRACK_COUNT			; Loop 3 times (PSG)...
+	ld	de,zTrack.len			; Space between tracks
+	add	ix,de				; Go to next track
+	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
+	call	nz,zPSGUpdateTrack		; If so...
+    endr
 ; End of function zUpdateMusic
 
 
@@ -503,12 +509,11 @@ TempoWait:
 	; So if adding tempo value did overflow, then we add 1 to all durations
 	ld	hl,zTracksSongStart+zTrack.DurationTimeout	; Start at first track's delay counter (counting up to delay)
 	ld	de,zTrack.len				; Offset between tracks
-	ld	b,MUSIC_TRACK_COUNT			; Loop for all tracks
 
-.tempoloop:
+    rept MUSIC_TRACK_COUNT				; Loop for all tracks
 	inc	(hl)	; Increasing delay tick counter to target
 	add	hl,de	; Next track...
-	djnz	.tempoloop
+    endr
 
 	ret
 ; End of function TempoWait
@@ -717,10 +722,7 @@ zDACDataStore:
 
 
 ; zsub_237
-zUpdateTrack:
-	bit	7,(ix+zTrack.VoiceControl)	; Is this a PSG track?
-	jp	nz,zPSGUpdateTrack		; If so, branch
-	; otherwise, update FM
+zFMUpdateTrack:
 	dec	(ix+zTrack.DurationTimeout)	; Decrement duration
 	jr	nz,.notegoing			; If not time-out yet, go do updates only
 	call	zFMDoNext			; Handle coordination flags, get next note and duration
@@ -742,7 +744,7 @@ zUpdateTrack:
 .modulation:
 	call	zDoModulation			; Update modulation (if modulation doesn't change, we do not return here)
 	; fall into zFMUpdateFreq
-; End of function zUpdateTrack
+; End of function zFMUpdateTrack
 
 ; ---------------------------------------------------------------------------
 
