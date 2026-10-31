@@ -2,8 +2,6 @@
 ; Tails' Tails pattern loading subroutine
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1D184:
 LoadTailsTailsDynPLC:
 	moveq	#0,d0
@@ -15,7 +13,6 @@ LoadTailsTailsDynPLC:
 	add.w	d0,d0
 	adda.w	(a2,d0.w),a2
 	move.w	(a2)+,d5
-	subq.w	#1,d5
 	bmi.s	return_1D1FE
 	move.w	#tiles_to_bytes(ArtTile_ArtUnc_Tails_Tails),d4
     if AssumeSourceAddressInBytes
@@ -28,8 +25,6 @@ LoadTailsTailsDynPLC:
 ; ---------------------------------------------------------------------------
 ; Tails pattern loading subroutine
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1D1AC:
 LoadTailsDynPLC:
@@ -44,7 +39,6 @@ LoadTailsDynPLC_Part2:
 	add.w	d0,d0
 	adda.w	(a2,d0.w),a2
 	move.w	(a2)+,d5
-	subq.w	#1,d5
 	bmi.s	return_1D1FE
 	move.w	#tiles_to_bytes(ArtTile_ArtUnc_Tails),d4
     if AssumeSourceAddressInBytes
@@ -56,15 +50,13 @@ LoadTailsDynPLC_Part2:
 TPLC_ReadEntry:
 	moveq	#0,d1
 	move.w	(a2)+,d1
-	move.w	d1,-(sp)
-	move.b	(sp)+,d3
-	andi.w	#$F0,d3
-	addi.w	#$10,d3
-	andi.w	#$FFF,d1
+	move.w	d1,d3
+	andi.w	#$F,d3
+	addq.w	#1,d3
+	lsl.w	#4,d3
+	andi.w	#$FFF0,d1
     if AssumeSourceAddressInBytes
-	lsl.l	#5,d1
-    else
-	lsl.l	#4,d1
+	add.l	d1,d1
     endif
 	add.l	d6,d1
 	move.w	d4,d2

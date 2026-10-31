@@ -425,7 +425,7 @@ Tails_Duck:
 ; moves the screen back to its normal position after looking up or down
 ; loc_1C1D0:
 Obj02_ResetScr:
-	move.b	#0,look_delay_counter(a0)
+	clr.b	look_delay_counter(a0)
 ; loc_1C1D6:
 Obj02_ResetScr_Part2:
 	cmpi.w	#(screen_height/2)-16,(Camera_Y_pos_bias).w	; is screen in its default position?
@@ -1200,7 +1200,7 @@ Tails_FlyingAnimation:
 ; ---------------------------------------------------------------------------
     if flightCarrySonic
 
-Tails_CarrySonic:ss
+Tails_CarrySonic:
 	tst.w	(Player_mode).w				; is this a Sonic & Tails game?
 	bne.w	Tails_CarryNoGrab			; if not, branch
 	lea	(MainCharacter).w,a1			; load Sonic's RAM address to a1

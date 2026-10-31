@@ -149,7 +149,6 @@ Obj08_LoadDustOrSplashArt:
 	add.w	d0,d0
 	adda.w	(a2,d0.w),a2
 	move.w	(a2)+,d5
-	subq.w	#1,d5
 	bmi.s	return_1DF36
 	move.w	#tiles_to_bytes(ArtTile_ArtNem_SonicDust),d4
     if AssumeSourceAddressInBytes
@@ -160,15 +159,13 @@ Obj08_LoadDustOrSplashArt:
 
 -	moveq	#0,d1
 	move.w	(a2)+,d1
-	move.w	d1,-(sp)
-	move.b	(sp)+,d3
-	andi.w	#$F0,d3
-	addi.w	#$10,d3
-	andi.w	#$FFF,d1
+	move.w	d1,d3
+	andi.w	#$F,d3
+	addq.w	#1,d3
+	lsl.w	#4,d3
+	andi.w	#$FFF0,d1
     if AssumeSourceAddressInBytes
-	lsl.l	#5,d1
-    else
-	lsl.l	#4,d1
+	add.l	d1,d1
     endif
 	add.l	d6,d1
 	move.w	d4,d2
