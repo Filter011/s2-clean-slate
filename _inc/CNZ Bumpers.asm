@@ -3,8 +3,6 @@
 ; These are the bumpers that are part of the level layout but have object-like collision.
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_173BC:
 SpecialCNZBumpers:
 	moveq	#0,d0

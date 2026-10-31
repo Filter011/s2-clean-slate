@@ -5,8 +5,6 @@
 hud_letter_num_tiles = 2
 hud_letter_vdp_delta = vdpCommDelta(tiles_to_bytes(hud_letter_num_tiles))
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_40804:
 BuildHUD:
 	tst.w	(Ring_count).w

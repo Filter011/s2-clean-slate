@@ -2,8 +2,6 @@
 ; Subroutine to set horizontal scroll flags
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ;sub_D6E2:
 SetHorizScrollFlags:
 	moveq	#$10,d0
@@ -27,8 +25,6 @@ SetHorizScrollFlags:
 ; ---------------------------------------------------------------------------
 ; Subroutine to scroll the camera horizontally
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ;sub_D704:
 ScrollHoriz:
@@ -102,8 +98,6 @@ ScrollHoriz:
 ; ---------------------------------------------------------------------------
 ; Subroutine to scroll the camera vertically
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; The upper 16 bits of Camera_Y_pos is the actual Y-pos, the lower ones seem
 ; unused, yet this code goes to a strange extent to manage them.
@@ -252,8 +246,6 @@ ScrollVerti:
 ; ---------------------------------------------------------------------------
 ; Subroutine to set vertical scroll flags
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 
 SetVertiScrollFlags:
