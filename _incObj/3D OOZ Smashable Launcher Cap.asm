@@ -111,7 +111,6 @@ loc_24F28:
 	lea	word_2507A(pc),a4
 	addq.b	#1,mapping_frame(a0)
 	moveq	#$F,d1
-	moveq	#$18,d2
 	jsr	(BreakObjectToPieces).l
 ; loc_24F3C:
 Obj3D_Fragment:
