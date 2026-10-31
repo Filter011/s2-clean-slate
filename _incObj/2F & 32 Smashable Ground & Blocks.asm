@@ -38,7 +38,6 @@ Obj2F_Init:
 	lea	Obj2F_Properties(pc,d0.w),a2
 	move.b	(a2)+,y_radius(a0)
 	move.b	(a2)+,mapping_frame(a0)
-	move.b	#$20,y_radius(a0)	; ?
 ; loc_23368:
 Obj2F_Main:
 	move.w	(Chain_Bonus_counter).w,objoff_38(a0)
