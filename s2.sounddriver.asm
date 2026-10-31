@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.10.31.1 (stable)
+; S2CS Driver version: 26.10.31.2 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -541,12 +541,34 @@ TempoWait:
 
 	; So if adding tempo value did overflow, then we add 1 to all durations
 	ld	hl,zTracksSongStart+zTrack.DurationTimeout	; Start at first track's delay counter (counting up to delay)
-	ld	de,zTrack.len				; Offset between tracks
-
-    rept MUSIC_TRACK_COUNT				; Loop for all tracks
 	inc	(hl)	; Increasing delay tick counter to target
-	add	hl,de	; Next track...
-    endr
+
+	ld	hl,zSongFM1+zTrack.DurationTimeout	; Current track
+	inc	(hl)	; Increasing delay tick counter to target
+
+	ld	hl,zSongFM2+zTrack.DurationTimeout	; Current track
+	inc	(hl)	; Increasing delay tick counter to target
+
+	ld	hl,zSongFM3+zTrack.DurationTimeout	; Current track
+	inc	(hl)	; Increasing delay tick counter to target
+
+	ld	hl,zSongFM4+zTrack.DurationTimeout	; Current track
+	inc	(hl)	; Increasing delay tick counter to target
+
+	ld	hl,zSongFM5+zTrack.DurationTimeout	; Current track
+	inc	(hl)	; Increasing delay tick counter to target
+
+	ld	hl,zSongFM6+zTrack.DurationTimeout	; Current track
+	inc	(hl)	; Increasing delay tick counter to target
+
+	ld	hl,zSongPSG1+zTrack.DurationTimeout	; Current track
+	inc	(hl)	; Increasing delay tick counter to target
+
+	ld	hl,zSongPSG2+zTrack.DurationTimeout	; Current track
+	inc	(hl)	; Increasing delay tick counter to target
+
+	ld	hl,zSongPSG3+zTrack.DurationTimeout	; Current track
+	inc	(hl)	; Increasing delay tick counter to target
 
 	ret
 ; End of function TempoWait
