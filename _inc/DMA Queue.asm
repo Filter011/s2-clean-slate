@@ -87,7 +87,7 @@
 ; This option makes the function work as a drop-in replacement of the original
 ; functions. If you modify all callers to supply a position in words instead of
 ; bytes (i.e., divide source address by 2) you can set this to 0 to gain 10(1/0)
-AssumeSourceAddressInBytes = 1
+AssumeSourceAddressInBytes = 0
 ; ===========================================================================
 ; option: AssumeSourceAddressIsRAMSafe
 ;
