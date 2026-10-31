@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.10.31.3 (stable)
+; S2CS Driver version: 26.10.31.4 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -540,34 +540,34 @@ TempoWait:
 	ret	nc				; If addition did not overflowed (answer less than FFh), return
 
 	; So if adding tempo value did overflow, then we add 1 to all durations
-	ld	hl,zSongDAC+zTrack.DurationTimeout	; Start at first track's delay counter (counting up to delay)
+	ld	hl,zSongDAC.DurationTimeout	; Start at first track's delay counter (counting up to delay)
 	inc	(hl)	; Increasing delay tick counter to target
 
-	ld	hl,zSongFM1+zTrack.DurationTimeout	; Current track
+	ld	hl,zSongFM1.DurationTimeout	; Current track
 	inc	(hl)	; Increasing delay tick counter to target
 
-	ld	hl,zSongFM2+zTrack.DurationTimeout	; Current track
+	ld	hl,zSongFM2.DurationTimeout	; Current track
 	inc	(hl)	; Increasing delay tick counter to target
 
-	ld	hl,zSongFM3+zTrack.DurationTimeout	; Current track
+	ld	hl,zSongFM3.DurationTimeout	; Current track
 	inc	(hl)	; Increasing delay tick counter to target
 
-	ld	hl,zSongFM4+zTrack.DurationTimeout	; Current track
+	ld	hl,zSongFM4.DurationTimeout	; Current track
 	inc	(hl)	; Increasing delay tick counter to target
 
-	ld	hl,zSongFM5+zTrack.DurationTimeout	; Current track
+	ld	hl,zSongFM5.DurationTimeout	; Current track
 	inc	(hl)	; Increasing delay tick counter to target
 
-	ld	hl,zSongFM6+zTrack.DurationTimeout	; Current track
+	ld	hl,zSongFM6.DurationTimeout	; Current track
 	inc	(hl)	; Increasing delay tick counter to target
 
-	ld	hl,zSongPSG1+zTrack.DurationTimeout	; Current track
+	ld	hl,zSongPSG1.DurationTimeout	; Current track
 	inc	(hl)	; Increasing delay tick counter to target
 
-	ld	hl,zSongPSG2+zTrack.DurationTimeout	; Current track
+	ld	hl,zSongPSG2.DurationTimeout	; Current track
 	inc	(hl)	; Increasing delay tick counter to target
 
-	ld	hl,zSongPSG3+zTrack.DurationTimeout	; Current track
+	ld	hl,zSongPSG3.DurationTimeout	; Current track
 	inc	(hl)	; Increasing delay tick counter to target
 
 	ret
