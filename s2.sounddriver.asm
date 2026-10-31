@@ -3,7 +3,7 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.10.31.2 (stable)
+; S2CS Driver version: 26.10.31.3 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -481,7 +481,7 @@ zDACStoreDelay:
 ; zsub_110
 zUpdateMusic:
 	; DAC updates
-	ld	ix,zTracksSongStart			; Point "ix" to zTracksSongStart
+	ld	ix,zSongDAC			; Point "ix" to zSongDAC
 	bit	7,(ix+zTrack.PlaybackControl)	; Is bit 7 (80h) set on playback control byte? (means "is playing")
 	call	nz,zDACUpdateTrack		; If so, zDACUpdateTrack
 
@@ -540,7 +540,7 @@ TempoWait:
 	ret	nc				; If addition did not overflowed (answer less than FFh), return
 
 	; So if adding tempo value did overflow, then we add 1 to all durations
-	ld	hl,zTracksSongStart+zTrack.DurationTimeout	; Start at first track's delay counter (counting up to delay)
+	ld	hl,zSongDAC+zTrack.DurationTimeout	; Start at first track's delay counter (counting up to delay)
 	inc	(hl)	; Increasing delay tick counter to target
 
 	ld	hl,zSongFM1+zTrack.DurationTimeout	; Current track
