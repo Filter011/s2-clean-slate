@@ -55,7 +55,7 @@ ObjB0_Init:
 -	move.w	(a2)+,d0
 	move.w	d0,d1
 	andi.w	#$F,d1
-	addq.w	#1,d1
+	subq.w	#1,d1
 	lsl.w	#6,d1
 	andi.l	#$FFF0,d0
 	add.l	d0,d0
@@ -125,7 +125,7 @@ loc_3A312:
 	addq.b	#2,routine(a0)
 	move.w	#$C,objoff_2A(a0)
 	move.b	#1,objoff_2C(a0)
-	move.b	#-1,objoff_2D(a0)
+	st.b	objoff_2D(a0)
 	jmp	(DisplaySprite).l
 ; ===========================================================================
 
@@ -182,7 +182,7 @@ loc_3A3B4:
 	addq.b	#2,routine(a0)
 	move.w	#$C,objoff_2A(a0)
 	move.b	#1,objoff_2C(a0)
-	move.b	#-1,objoff_2D(a0)
+	st.b	objoff_2D(a0)
 	rts
 ; ===========================================================================
 
@@ -202,7 +202,7 @@ loc_3A3DA:
 loc_3A3E6:
 	addq.b	#2,routine(a0)
 	st.b	(SegaScr_PalDone_Flag).w
-	move.b	#SndID_SegaSound,d0
+	moveq	#signextendB(SndID_SegaSound),d0
 	jmp	(PlaySound).w
 
 return_3A3F6:

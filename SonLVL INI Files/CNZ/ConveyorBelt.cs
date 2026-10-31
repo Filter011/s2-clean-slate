@@ -11,9 +11,9 @@ namespace S2ObjectDefinitions.CNZ
 
 		public override void Init(ObjectData data)
 		{
-			byte[] artfile = ObjectHelper.OpenArtFile("../art/nemesis/Monitor and contents.nem", CompressionType.Nemesis);
-			byte[] mapfile = System.IO.File.ReadAllBytes("../mappings/sprite/obj74.bin");
-			img = ObjectHelper.MapToBmp(artfile, mapfile, 0, 0);
+			byte[] artfile = ObjectHelper.OpenArtFile("../art/kosinskiplusm/Monitor and contents.kospm", CompressionType.KosinskiPlusM);
+			string mapfile = "../mappings/sprite/obj74.asm";
+			img = ObjectHelper.MapASMToBmp(artfile, mapfile, 0, 0);
 		}
 
 		public override ReadOnlyCollection<byte> Subtypes

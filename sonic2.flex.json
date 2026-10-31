@@ -395,7 +395,7 @@
                 }
             ],
             "isDirectory": true,
-            "expanded": true,
+            "expanded": false,
             "config": {}
         },
         {

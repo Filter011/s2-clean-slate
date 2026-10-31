@@ -11,7 +11,7 @@ namespace S2ObjectDefinitions.Common
 
 		public override void Init(ObjectData data)
 		{
-			byte[] artfile = ObjectHelper.OpenArtFile("../art/nemesis/Monitor and contents.nem", CompressionType.Nemesis);
+			byte[] artfile = ObjectHelper.OpenArtFile("../art/kosinskiplusm/Monitor and contents.kospm", CompressionType.KosinskiPlusM);
 			string mapfile = "../mappings/sprite/obj74.asm";
 			img = ObjectHelper.MapASMToBmp(artfile, mapfile, 0, 0);
 		}

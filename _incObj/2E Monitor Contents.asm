@@ -148,7 +148,7 @@ super_shoes_Tails:
 	move.w	#$18,(Tails_acceleration).w
 	move.w	#$80,(Tails_deceleration).w
 +
-	move.w	#MusID_SpeedUp,d0
+	moveq	#signextendB(MusID_SpeedUp),d0
 	jmp	(PlayMusic).w	; Speed up tempo
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
