@@ -30,7 +30,7 @@ SpecialCNZBumpers_Init:
 	bra.s	+
 ; ===========================================================================
 -
-	addq.w	#next_bumper,a1
+	addq.l	#next_bumper,a1
 +
 	cmp.w	bumper_x(a1),d4
 	bhi.s	-
@@ -39,7 +39,7 @@ SpecialCNZBumpers_Init:
 	bra.s	+
 ; ===========================================================================
 -
-	addq.w	#next_bumper,a1
+	addq.l	#next_bumper,a1
 +
 	cmp.w	bumper_x(a1),d4
 	bhi.s	-
@@ -56,14 +56,14 @@ SpecialCNZBumpers_Main:
 	bra.s	+
 ; ===========================================================================
 -
-	addq.w	#next_bumper,a1
+	addq.l	#next_bumper,a1
 +
 	cmp.w	bumper_x(a1),d4
 	bhi.s	-
 	bra.s	+
 ; ===========================================================================
 -
-	subq.w	#next_bumper,a1
+	subq.l	#next_bumper,a1
 +
 	cmp.w	prev_bumper_x(a1),d4
 	bls.s	-
@@ -73,14 +73,14 @@ SpecialCNZBumpers_Main:
 	bra.s	+
 ; ===========================================================================
 -
-	addq.w	#next_bumper,a2
+	addq.l	#next_bumper,a2
 +
 	cmp.w	bumper_x(a2),d4
 	bhi.s	-
 	bra.s	+
 ; ===========================================================================
 -
-	subq.w	#next_bumper,a2
+	subq.l	#next_bumper,a2
 +
 	cmp.w	prev_bumper_x(a2),d4
 	bls.s	-

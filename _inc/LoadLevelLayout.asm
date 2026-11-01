@@ -11,12 +11,12 @@ loadZoneBlockMaps:
 	move.w	d0,d1
 	add.w	d0,d0
 	add.w	d1,d0
-	lea	(LevelArtPointers).l,a2
-	lea	(a2,d0.w),a2
-	move.l	a2,-(sp)
-	addq.w	#4,a2
+	lea	(LevelArtPointers).l,a3
+	lea	(a3,d0.w),a3
+	move.l	a3,-(sp)
+	addq.w	#4,a3
 	move.l	#$FFFFFF,d0	; pointer to block mappings
-	and.l	(a2)+,d0
+	and.l	(a3)+,d0
 	movea.l	d0,a0
 	lea	(Block_Table).w,a1
 	jsr	(KosPlusDec).w	; load block maps
@@ -27,7 +27,7 @@ loadZoneBlockMaps:
 	jsr	(KosPlusDec).w	; patch for Hill Top Zone block map
 +
 	move.l	#$FFFFFF,d0	; pointer to chunk mappings
-	and.l	(a2)+,d0
+	and.l	(a3)+,d0
 	movea.l	d0,a0
 	lea	(Chunk_Table).l,a1
 	jsr	(KosPlusDec).w
@@ -38,16 +38,14 @@ loadZoneBlockMaps:
 	movea.l	(a0,d0.w),a0
 	lea	(Level_Layout).w,a1
 	jsr	(KosPlusDec).w
-	movea.l	(sp)+,a2	; zone specific pointer in LevelArtPointers
-	addq.w	#4,a2
+	movea.l	(sp)+,a3	; zone specific pointer in LevelArtPointers
+	addq.w	#4,a3
 	moveq	#0,d0
-	move.b	(a2),d0	; PLC2 ID
+	move.b	(a3),d0	; PLC2 ID
 	beq.s	+
-	move.l	a2,-(sp)
 	jsr	(LoadPLC).w
-	movea.l	(sp)+,a2
 +
-	addq.w	#4,a2
+	addq.w	#4,a3
 	moveq	#0,d0
-	move.b	(a2),d0	; palette ID
+	move.b	(a3),d0	; palette ID
 	jmp	(PalLoad_Now).w

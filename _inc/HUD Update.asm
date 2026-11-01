@@ -162,7 +162,7 @@ loc_40E84:
 	lea	(MainCharacter).w,a0 ; a0=character
 	movea.l	a0,a2
 	bsr.w	KillCharacter
-	move.b	#1,(Time_Over_flag).w
+	st.b	(Time_Over_flag).w
 	rts
 ; ===========================================================================
 
