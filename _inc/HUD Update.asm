@@ -327,7 +327,7 @@ HudDb_XY:
 ; loc_41104:
 HudDb_XY2:
 	moveq	#8-1,d6
-	lea	(Art_Text).l,a1
+	lea	Art_Text(pc),a1
 ; loc_4110C:
 HudDb_XYLoop:
 	rol.w	#4,d1
