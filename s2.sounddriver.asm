@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD
-; Version: 26.11.1.1 (stable)
+; Version: 26.11.1 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -208,7 +208,7 @@ bankswitch macro
 	rept 7
 		rra
 		ld	(hl),a
-	endr
+	endm
 	ld	(hl),h
     endm
 
@@ -219,7 +219,7 @@ bankswitchToBank macro bank
 		; this is either ld (hl),h or ld (hl),l
 		db 74h|(((bank)&(1<<(15+.cnt)))<>0)
 .cnt	:= .cnt+1
-	endr
+	endm
     endm
 
 ; small bankswitch macro
@@ -914,6 +914,7 @@ zFinishTrackUpdate:
 	ldi				; *(de)++ = *(hl)++		(Modulation Speed)
 	ldi				; *(de)++ = *(hl)++		(Modulation change per Mod. Step)
 	ld	a,(hl)				; Get Number of steps in modulation
+	inc	hl				; Next byte...
 	srl	a				; divide number of steps by 2
 	ld	(ix+zTrack.ModulationSteps),a	; Store this step count into trackPtr+16h
 	bit	4,(ix+zTrack.PlaybackControl)	; Is bit 4 "do not attack next note" (10h) set?
