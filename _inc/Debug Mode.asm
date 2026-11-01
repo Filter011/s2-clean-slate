@@ -31,8 +31,6 @@ Debug_Init:
 	move.b	#AniIDSonAni_Walk,anim(a0)
 	bclr	#status.player.in_air,(MainCharacter+status).w
 	move.w	(Current_ZoneAndAct).w,d0
-
-.selectlist:
 	lea	DebugObjectLists(pc),a2
 	ror.b	#1,d0
 	lsr.w	#5,d0
