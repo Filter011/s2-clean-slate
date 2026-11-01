@@ -2,25 +2,25 @@
 <ObjDef xmlns="http://www.sonicretro.org" Name="Ball Launcher" Image="up">
   <Images>
     <ImageFromMappings id="up">
-      <ArtFile filename="../art/kosinskiplusm/Transporter ball from OOZ.kospm" compression="KosinskiPlusM" />
-      <MapFile type="ASM" filename="../mappings/sprite/obj48.asm" frame="0" startpal="3" />
+      <ArtFile filename="../art/kosinskiplusm/Transporter ball from OOZ.kospm" compression="KosinskiPlusM"/>
+      <MapFile type="ASM" filename="../mappings/sprite/obj48.asm" frame="0" startpal="3"/>
     </ImageFromMappings>
     <ImageFromMappings id="side">
-      <ArtFile filename="../art/kosinskiplusm/Transporter ball from OOZ.kospm" compression="KosinskiPlusM" />
-      <MapFile type="ASM" filename="../mappings/sprite/obj48.asm" frame="7" startpal="3" />
+      <ArtFile filename="../art/kosinskiplusm/Transporter ball from OOZ.kospm" compression="KosinskiPlusM"/>
+      <MapFile type="ASM" filename="../mappings/sprite/obj48.asm" frame="7" startpal="3"/>
     </ImageFromMappings>
   </Images>
   <Subtypes>
-    <Subtype id="00" name="In Top" image="up" />
-    <Subtype id="01" name="In Right" image="side" />
+    <Subtype id="00" name="In Top" image="up"/>
+    <Subtype id="01" name="In Right" image="side"/>
     <Subtype id="02" name="In Bottom">
 	  <ImageRef image="up" yflip="AlwaysFlip"/>
 	</Subtype>
     <Subtype id="03" name="In Left">
 	  <ImageRef image="side" xflip="AlwaysFlip"/>
 	</Subtype>
-    <Subtype id="80" name="Last Cannon - In Top" image="up" />
-    <Subtype id="81" name="Last Cannon - In Right" image="side" />
+    <Subtype id="80" name="Last Cannon - In Top" image="up"/>
+    <Subtype id="81" name="Last Cannon - In Right" image="side"/>
     <Subtype id="82" name="Last Cannon - In Bottom">
 	  <ImageRef image="up" yflip="AlwaysFlip"/>
 	</Subtype>
@@ -29,15 +29,15 @@
 	</Subtype>
   </Subtypes>
   <Properties>
-    <BitsProperty name="LastCannon" displayname="Last Cannon" type="bool" startbit="7" length="1" />
-    <BitsProperty name="Behaviour" type="CannonBehaviour" startbit="0" length="2" />
+    <BitsProperty name="LastCannon" displayname="Last Cannon" type="bool" startbit="7" length="1"/>
+    <BitsProperty name="Behaviour" type="CannonBehaviour" startbit="0" length="2"/>
   </Properties>
   <Enums>
     <Enum name="CannonBehaviour">
-      <EnumMember name="In Top" />
-      <EnumMember name="In Right" />
-      <EnumMember name="In Bottom" />
-      <EnumMember name="In Left" />
+      <EnumMember name="In Top"/>
+      <EnumMember name="In Right"/>
+      <EnumMember name="In Bottom"/>
+      <EnumMember name="In Left"/>
     </Enum>
   </Enums>
   <Display>

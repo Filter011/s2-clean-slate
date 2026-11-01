@@ -2,16 +2,16 @@
 <ObjDef xmlns="http://www.sonicretro.org" Name="Balkrie" DefaultSubtype="40" Image="img">
   <Images>
     <ImageFromMappings id="img">
-      <ArtFile filename="../art/kosinskiplusm/Balkrie (jet badnik) from SCZ.kospm" compression="KosinskiPlusM" />
-      <MapFile type="ASM" filename="../mappings/sprite/objAC.asm" frame="1" startpal="0" />
+      <ArtFile filename="../art/kosinskiplusm/Balkrie (jet badnik) from SCZ.kospm" compression="KosinskiPlusM"/>
+      <MapFile type="ASM" filename="../mappings/sprite/objAC.asm" frame="1" startpal="0"/>
     </ImageFromMappings>
   </Images>
   <Subtypes>
-    <Subtype id="40" name="Default" image="img" />
+    <Subtype id="40" name="Default" image="img"/>
   </Subtypes>
   <Display>
     <DisplayOption>
-      <ImageRef image="img" yflip="NeverFlip" />
+      <ImageRef image="img" yflip="NeverFlip"/>
     </DisplayOption>
   </Display>
 </ObjDef>

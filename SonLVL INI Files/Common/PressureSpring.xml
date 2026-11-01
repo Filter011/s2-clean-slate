@@ -2,16 +2,16 @@
 <ObjDef xmlns="http://www.sonicretro.org" Name="Pressure Spring" Image="spring">
   <Images>
     <ImageFromMappings id="spring">
-      <ArtFile filename="../art/kosinskiplusm/Lever spring.kospm" compression="KosinskiPlusM" />
-      <MapFile type="ASM" filename="../mappings/sprite/obj40.asm" frame="0" startpal="0" />
+      <ArtFile filename="../art/kosinskiplusm/Lever spring.kospm" compression="KosinskiPlusM"/>
+      <MapFile type="ASM" filename="../mappings/sprite/obj40.asm" frame="0" startpal="0"/>
     </ImageFromMappings>
   </Images>
   <Properties>
-    <BitsProperty name="Twirl" type="bool" startbit="0" length="1" />
+    <BitsProperty name="Twirl" type="bool" startbit="0" length="1"/>
   </Properties>
   <Display>
     <DisplayOption>
-      <ImageRef image="spring" />
+      <ImageRef image="spring"/>
     </DisplayOption>
   </Display>
 </ObjDef>

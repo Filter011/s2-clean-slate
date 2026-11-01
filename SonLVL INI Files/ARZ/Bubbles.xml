@@ -3,7 +3,7 @@
   <Images>
     <ImageFromMappings id="bubblegenerator">
       <ArtFile filename="../art/kosinskiplusm/Bubble generator.kospm" compression="KosinskiPlusM"/>
-      <MapFile type="ASM" filename="../s2.asm" label="word_1FCA2" startpal="0" />
+      <MapFile type="ASM" filename="../s2.asm" label="word_1FCA2" startpal="0"/>
     </ImageFromMappings>
   </Images>
   <Properties>
@@ -14,7 +14,7 @@
   </Properties>
   <Display>
     <DisplayOption>
-      <ImageRef image="bubblegenerator" />
+      <ImageRef image="bubblegenerator"/>
     </DisplayOption>
   </Display>
 </ObjDef>

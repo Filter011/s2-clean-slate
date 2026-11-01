@@ -2,44 +2,44 @@
 <ObjDef xmlns="http://www.sonicretro.org" Name="Sol" RememberState="true">
   <Images>
     <ImageFromMappings id="fireball">
-      <ArtFile filename="../art/kosinskiplusm/Fireball 1.kospm" compression="KosinskiPlusM" offset="29632" />
-      <MapFile type="ASM" filename="../mappings/sprite/obj95.asm" frame="3" startpal="0" />
+      <ArtFile filename="../art/kosinskiplusm/Fireball 1.kospm" compression="KosinskiPlusM" offset="29632"/>
+      <MapFile type="ASM" filename="../mappings/sprite/obj95.asm" frame="3" startpal="0"/>
     </ImageFromMappings>
     <ImageFromMappings id="body">
-      <ArtFile filename="../art/kosinskiplusm/Sol badnik from HTZ.kospm" compression="KosinskiPlusM" offset="31680" />
-      <MapFile type="ASM" filename="../mappings/sprite/obj95.asm" frame="0" startpal="0" />
+      <ArtFile filename="../art/kosinskiplusm/Sol badnik from HTZ.kospm" compression="KosinskiPlusM" offset="31680"/>
+      <MapFile type="ASM" filename="../mappings/sprite/obj95.asm" frame="0" startpal="0"/>
     </ImageFromMappings>
   </Images>
   <DefaultImage>
     <ImageRef image="fireball">
-      <Offset X="-7" Y="-15" />
+      <Offset X="-7" Y="-15"/>
     </ImageRef>
     <ImageRef image="fireball">
-      <Offset X="6" Y="14" />
+      <Offset X="6" Y="14"/>
     </ImageRef>
     <ImageRef image="fireball">
-      <Offset X="-15" Y="6" />
+      <Offset X="-15" Y="6"/>
     </ImageRef>
     <ImageRef image="fireball">
-      <Offset X="14" Y="-7" />
+      <Offset X="14" Y="-7"/>
     </ImageRef>
-    <ImageRef image="body" />
+    <ImageRef image="body"/>
   </DefaultImage>
   <Display>
     <DisplayOption>
     <ImageRef image="fireball">
-      <Offset X="-7" Y="-15" />
+      <Offset X="-7" Y="-15"/>
     </ImageRef>
     <ImageRef image="fireball">
-      <Offset X="6" Y="14" />
+      <Offset X="6" Y="14"/>
     </ImageRef>
     <ImageRef image="fireball">
-      <Offset X="-15" Y="6" />
+      <Offset X="-15" Y="6"/>
     </ImageRef>
     <ImageRef image="fireball">
-      <Offset X="14" Y="-7" />
+      <Offset X="14" Y="-7"/>
     </ImageRef>
-      <ImageRef image="body" />
+      <ImageRef image="body"/>
     </DisplayOption>
   </Display>
 </ObjDef>
