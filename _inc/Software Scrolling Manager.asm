@@ -52,11 +52,11 @@ DeformBgLayerAfterScrollVert:
 	move.w	(Camera_BG_Y_pos).w,(Vscroll_Factor_BG).w
 	move.l	(Camera_X_pos).w,(Camera_X_pos_copy).w
 	move.l	(Camera_Y_pos).w,(Camera_Y_pos_copy).w
-	moveq	#0,d0
-	move.b	(Current_Zone).w,d0
-	add.w	d0,d0
-	move.w	SwScrl_Index(pc,d0.w),d0
-	jmp	SwScrl_Index(pc,d0.w)
+	move.w	(Current_Zone).w,d0
+	ror.b	#1,d0
+	lsr.w	#5,d0
+	movea.l	SwScrl_Index(pc,d0.w),a0
+	jmp	(a0)
 ; End of function DeformBgLayer
 
 ; ===========================================================================
@@ -72,24 +72,41 @@ DeformBgLayerAfterScrollVert:
 ; They are also used for things like controlling the parallax scrolling and
 ; water ripple effects in EHZ, and moving the clouds in HTZ and the stars in DEZ.
 ; ---------------------------------------------------------------------------
-SwScrl_Index: zoneOrderedOffsetTable 2,1	; JmpTbl_SwScrlMgr
-	zoneOffsetTableEntry.w SwScrl_EHZ	; EHZ
-	zoneOffsetTableEntry.w SwScrl_Minimal	; Zone 1
-	zoneOffsetTableEntry.w SwScrl_Minimal	; WZ
-	zoneOffsetTableEntry.w SwScrl_Minimal	; Zone 3
-	zoneOffsetTableEntry.w SwScrl_Minimal	; MTZ1,2
-	zoneOffsetTableEntry.w SwScrl_Minimal	; MTZ3
-	zoneOffsetTableEntry.w SwScrl_WFZ	; WFZ
-	zoneOffsetTableEntry.w SwScrl_HTZ	; HTZ
-	zoneOffsetTableEntry.w SwScrl_HPZ	; HPZ
-	zoneOffsetTableEntry.w SwScrl_Minimal	; Zone 9
-	zoneOffsetTableEntry.w SwScrl_OOZ	; OOZ
-	zoneOffsetTableEntry.w SwScrl_MCZ	; MCZ
-	zoneOffsetTableEntry.w SwScrl_CNZ	; CNZ
-	zoneOffsetTableEntry.w SwScrl_CPZ	; CPZ
-	zoneOffsetTableEntry.w SwScrl_DEZ	; DEZ
-	zoneOffsetTableEntry.w SwScrl_ARZ	; ARZ
-	zoneOffsetTableEntry.w SwScrl_SCZ	; SCZ
+SwScrl_Index: zoneOrderedOffsetTable 4,2	; JmpTbl_SwScrlMgr
+	zoneTableEntry.l SwScrl_EHZ	; EHZ1
+	zoneTableEntry.l SwScrl_EHZ	; EHZ2
+	zoneTableEntry.l SwScrl_Minimal	; Zone 1 Act 1
+	zoneTableEntry.l SwScrl_Minimal	; Zone 1 Act 2
+	zoneTableEntry.l SwScrl_Minimal	; WZ1
+	zoneTableEntry.l SwScrl_Minimal	; WZ2
+	zoneTableEntry.l SwScrl_Minimal	; Zone 3 Act 1
+	zoneTableEntry.l SwScrl_Minimal	; Zone 3 Act 2
+	zoneTableEntry.l SwScrl_Minimal	; MTZ1
+	zoneTableEntry.l SwScrl_Minimal	; MTZ2
+	zoneTableEntry.l SwScrl_Minimal	; MTZ3
+	zoneTableEntry.l SwScrl_Minimal	; MTZ4
+	zoneTableEntry.l SwScrl_WFZ	; WFZ1
+	zoneTableEntry.l SwScrl_WFZ	; WFZ2
+	zoneTableEntry.l SwScrl_HTZ	; HTZ1
+	zoneTableEntry.l SwScrl_HTZ	; HTZ2
+	zoneTableEntry.l SwScrl_HPZ	; HPZ1
+	zoneTableEntry.l SwScrl_HPZ	; HPZ2
+	zoneTableEntry.l SwScrl_Minimal	; Zone 9 Act 1
+	zoneTableEntry.l SwScrl_Minimal	; Zone 9 Act 2
+	zoneTableEntry.l SwScrl_OOZ	; OOZ1
+	zoneTableEntry.l SwScrl_OOZ	; OOZ2
+	zoneTableEntry.l SwScrl_MCZ	; MCZ1
+	zoneTableEntry.l SwScrl_MCZ	; MCZ2
+	zoneTableEntry.l SwScrl_CNZ	; CNZ1
+	zoneTableEntry.l SwScrl_CNZ	; CNZ2
+	zoneTableEntry.l SwScrl_CPZ	; CPZ1
+	zoneTableEntry.l SwScrl_CPZ	; CPZ2
+	zoneTableEntry.l SwScrl_DEZ	; DEZ1
+	zoneTableEntry.l SwScrl_DEZ	; DEZ2
+	zoneTableEntry.l SwScrl_ARZ	; ARZ1
+	zoneTableEntry.l SwScrl_ARZ	; ARZ2
+	zoneTableEntry.l SwScrl_SCZ	; SCZ1
+	zoneTableEntry.l SwScrl_SCZ	; SCZ2
     zoneTableEnd
 ; ===========================================================================
 ; loc_C51E:
