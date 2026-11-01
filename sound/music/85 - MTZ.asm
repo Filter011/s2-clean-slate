@@ -10,13 +10,9 @@ MTZ_Header:
 	smpsHeaderFM        MTZ_FM3,	$0C, $14
 	smpsHeaderFM        MTZ_FM4,	$0C, $16
 	smpsHeaderFM        MTZ_FM5,	$0C, $16
-	smpsHeaderPSG       MTZ_PSG1,	$E8, $06, $00, $00
+	smpsHeaderPSG       MTZ_Jump02,	$E8, $06, $00, $00
 	smpsHeaderPSG       MTZ_PSG2,	$DC, $08, $00, $00
 	smpsHeaderPSG       MTZ_PSG3,	$00, $02, $00, fTone_03
-
-; PSG1 Data
-MTZ_PSG1:
-	smpsJump            MTZ_Jump02
 
 ; PSG2 Data
 MTZ_PSG2:
@@ -25,11 +21,10 @@ MTZ_PSG2:
 
 ; FM1 Data
 MTZ_FM1:
-	dc.b	nRst, $30, nRst
-	smpsLoop            $00, $04, MTZ_FM1
+	dc.b	nRst, $60, nRst, nRst, nRst
 
 MTZ_Loop09:
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsLoop            $00, $04, MTZ_Loop09
 	smpsAlterPitch      $0C
 	smpsSetvoice        $03
@@ -50,7 +45,7 @@ MTZ_Loop09:
 	smpsSetvoice        $03
 
 MTZ_Loop0A:
-	dc.b	nRst, $30, nRst, $0C
+	dc.b	nRst, $3C
 	smpsModSet          $01, $01, $0C, $0C
 	dc.b	nEb3, $0C
 	smpsModOff
@@ -123,11 +118,11 @@ MTZ_Jump02:
 	smpsModSet          $06, $01, $02, $04
 
 MTZ_Loop0B:
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsLoop            $00, $04, MTZ_Loop0B
 
 MTZ_Loop0C:
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsLoop            $00, $07, MTZ_Loop0C
 
 MTZ_Loop0D:
@@ -137,29 +132,27 @@ MTZ_Loop0D:
 	smpsLoop            $00, $02, MTZ_Loop0D
 
 MTZ_Loop0E:
-	dc.b	nRst, $30, nRst
+	dc.b	nRst, $60
 	smpsLoop            $00, $09, MTZ_Loop0E
 	smpsJump            MTZ_Loop0C
 
 ; FM3 Data
 MTZ_FM3:
 	smpsSetvoice        $01
-	smpsAlterPitch      $F4
-	dc.b	nRst, $30, nRst, nRst, nRst, nF3, $0C, smpsNoAttack
+	dc.b	nRst, $60, nRst, nF2, $0C, smpsNoAttack
 
 MTZ_Loop05:
 	smpsModSet          $01, $01, $06, $08
-	dc.b	nFs3, $04
+	dc.b	nFs2, $04
 	smpsModOff
-	dc.b	smpsNoAttack, nG3, $08, smpsNoAttack
+	dc.b	smpsNoAttack, nG2, $08, smpsNoAttack
 	smpsModSet          $01, $01, $FA, $08
-	dc.b	nFs3, $04
+	dc.b	nFs2, $04
 	smpsModOff
-	dc.b	smpsNoAttack, nF3, $08
+	dc.b	smpsNoAttack, nF2, $08
 	smpsLoop            $00, $06, MTZ_Loop05
 	dc.b	nRst, $24
 	smpsSetvoice        $00
-	smpsAlterPitch      $0C
 
 MTZ_Loop06:
 	dc.b	nRst, $18, nG4, $0B, nRst, $0D, nA4, $0C, $0B, nRst, $19, nC5
@@ -185,7 +178,7 @@ MTZ_Loop08:
 MTZ_FM4:
 	smpsSetvoice        $01
 	smpsAlterPitch      $F4
-	dc.b	nRst, $30, nRst, nRst, nRst, nBb3, $0C, smpsNoAttack
+	dc.b	nRst, $60, nRst, nBb3, $0C, smpsNoAttack
 
 MTZ_Loop03:
 	smpsModSet          $01, $01, $06, $08
@@ -261,9 +254,9 @@ MTZ_Loop02:
 ; FM2 Data
 MTZ_FM2:
 	smpsSetvoice        $04
-	dc.b	nRst, $30, nRst, nRst, nRst, nRst, nRst
+	dc.b	nRst, $60, nRst, nRst
 	smpsAlterVol        $FC
-	dc.b	nRst, nRst, $0C, nA0, nBb0, nB0
+	dc.b	nRst, $30, nRst, $0C, nA0, nBb0, nB0
 	smpsAlterVol        $04
 
 MTZ_Jump00:
@@ -336,7 +329,7 @@ MTZ_Loop00:
 	smpsCall            MTZ_Call00
 	smpsLoop            $00, $0B, MTZ_Loop00
 	dc.b	dKick, $0C, dLowTom, dSnare, dKick, dKick, dFloorTom, dSnare, dScratch, $04, $06, $02
-	dc.b	dKick, $0C, nRst, nRst, nRst, nRst, nRst, nRst, dClap
+	dc.b	dKick, $0C, nRst, $48, dClap, $0C
 	smpsJump            MTZ_Loop00
 
 ; PSG3 Data
@@ -344,7 +337,7 @@ MTZ_PSG3:
 	smpsPSGform         $E7
 
 MTZ_Jump01:
-	dc.b	nRst, $30, nRst, nRst, nRst, $24, nAb5, $0C
+	dc.b	nRst, $5A, nRst, nAb5, $0C
 	smpsJump            MTZ_Jump01
 
 MTZ_Voices:
