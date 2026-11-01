@@ -3,7 +3,8 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; S2CS Driver version: 26.10.31.4 (stable)
+; Version Format: YY.MM.DD
+; Version: 26.11.1 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -175,7 +176,7 @@ zTracksSaveEnd:
 ; See the very end for another set of variables
 
 	if MOMPASS=1
-		message	"Z80 Sound Driver RAM is \{*-zStack}h bytes."
+		message	"Z80 Sound Driver RAM is \{*-zStack}h bytes. \{$2000-*}h bytes are free."
 	endif
 
 	if *>$2000
@@ -205,7 +206,7 @@ bankswitch macro
 	ld	hl,zBankRegister
 	ld	(hl),a
 	rept 7
-		rrca
+		rra
 		ld	(hl),a
 	endm
 	ld	(hl),h
@@ -2910,9 +2911,6 @@ cfModulation:
 	dec	hl				; Move 'hl' back one...
 	ld	(ix+zTrack.ModulationPtrLow),l	; Back up modulation setting address into (ix+11h), (ix+12h)
 	ld	(ix+zTrack.ModulationPtrHigh),h
-
-; zloc_EBB
-zSetModulation:
 	; Sets up modulation for this track; expects 'hl' to point to modulation
 	; configuration info...
 	ld	a,ixl			; Get lower byte of current track address (ew :P)
@@ -3472,7 +3470,7 @@ SndPtr_OilSlide:	sfx_metadata	Sound70
 SndPtr__End:
 
 ; ---------------------------------------------------------------------------
-	; space for a few global variables
+; space for a few global variables
 
 zPALUpdTick:	db 0 ; zbyte_12FE ; This counts from 0 to 5 to periodically "double update" for PAL systems (basically every 6 frames you need to update twice to keep up)
 zCurDAC:	db 0 ; zbyte_12FF ; seems to indicate DAC sample playing status
@@ -3485,7 +3483,7 @@ zSpindashExtraFrequencyIndex:	db 0 ; zbyte_1305
 zSpindashActiveFlag:		db 0 ; zbyte_1306 ; -1 if spindash charge was the last sound that played
 
 	if MOMPASS=1
-		message	"Z80 Program RAM is \{$}h bytes."
+		message	"Z80 Program RAM is \{$}h bytes. \{zStack-$}h bytes are free."
 	endif
 
 	if $>zStack
