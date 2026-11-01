@@ -2,8 +2,6 @@
 ; Subroutine to display a sprite/object, when a0 is the object RAM
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_164F4:
 DisplaySprite:
 	lea	(Object_Display_Lists).w,a1
@@ -21,8 +19,6 @@ DisplaySprite:
 ; ---------------------------------------------------------------------------
 ; Subroutine to display a sprite/object, when a1 is the object RAM
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_16512:
 DisplaySprite2:

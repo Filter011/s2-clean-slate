@@ -16,10 +16,9 @@ MarkObjGone:
 +	lea	(Object_Respawn_Table).w,a2
 	moveq	#0,d0
 	move.b	respawn_index(a0),d0
-	beq.s	+
+	beq.s	DeleteObject
 	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
-+
-	bra.w	DeleteObject
+	bra.s	DeleteObject
 ; ===========================================================================
 ; input: d0 = the object's x position
 ; loc_1640A:
@@ -63,7 +62,7 @@ MarkObjGone_P1:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$80+roundToNextMultiple(screen_width,$80)+$80,d0	; This gives an object $80 pixels of room offscreen before being unloaded
 	bhi.s	+
-	bra.w	DisplaySprite
+	bra.s	DisplaySprite
 +
 	lea	(Object_Respawn_Table).w,a2
 	moveq	#0,d0
@@ -74,8 +73,6 @@ MarkObjGone_P1:
 ; ---------------------------------------------------------------------------
 ; Subroutine to delete an object
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; freeObject:
 DeleteObject:
