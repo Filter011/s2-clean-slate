@@ -2,8 +2,6 @@
 ; Subroutine to fade in from black
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_23C6: Pal_FadeTo:
 Pal_FadeFromBlack:
 	move.w	#$3F,(Palette_fade_range).w
@@ -113,8 +111,6 @@ Pal_FadeFromBlack:
 ; Subroutine to fade out to black
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_246A: Pal_FadeFrom:
 Pal_FadeToBlack:
 	move.w	#$3F,(Palette_fade_range).w
@@ -205,8 +201,6 @@ Pal_FadeToBlack:
 ; ---------------------------------------------------------------------------
 ; Subroutine to fade in from white
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_24E8: Pal_MakeWhite:
 Pal_FadeFromWhite:
@@ -318,8 +312,6 @@ Pal_FadeFromWhite:
 ; ---------------------------------------------------------------------------
 ; Subroutine to fade out to white (used when you enter a special stage)
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_2592: Pal_MakeFlash:
 Pal_FadeToWhite:
