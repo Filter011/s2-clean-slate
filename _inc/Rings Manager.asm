@@ -18,7 +18,6 @@ RingsManager_States:	offsetTable
 ; loc_16F9A:
 RingsManager_Init:
 	addq.b	#2,(Rings_manager_routine).w ; => RingsManager_Main
-;	bsr.w	RingsManager_Setup	; perform initial setup
 
 	clearRAM Ring_Positions,Ring_Positions_End
 	; d0 = 0
@@ -137,8 +136,6 @@ Touch_Rings.return:
 ; Subroutine to handle ring collision
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_170BA:
 Touch_Rings:
 	movea.l	(Ring_start_addr_ROM).w,a1	; load start and end addresses
@@ -217,8 +214,6 @@ Touch_ConsumeRing:
 ; ---------------------------------------------------------------------------
 ; Subroutine to draw on-screen rings
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_17178:
 BuildRings:
