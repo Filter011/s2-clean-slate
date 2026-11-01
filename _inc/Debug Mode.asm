@@ -56,7 +56,7 @@ Debug_Main:
 	adda.w	(a2,d0.w),a2
 	move.w	(a2)+,d6
 	bsr.s	Debug_Control
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
