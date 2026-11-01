@@ -410,7 +410,7 @@ Pal_FadeToWhite:
 
 ; sub_2712: PalLoad1:
 PalLoad_ForFade:
-	lea	(PalPointers).l,a1
+	lea	PalPointers(pc),a1
 	lsl.w	#3,d0
 	adda.w	d0,a1
 	movea.l	(a1)+,a2
@@ -429,7 +429,7 @@ PalLoad_ForFade:
 
 ; sub_272E: PalLoad2:
 PalLoad_Now:
-	lea	(PalPointers).l,a1
+	lea	PalPointers(pc),a1
 	lsl.w	#3,d0
 	adda.w	d0,a1
 	movea.l	(a1)+,a2
@@ -447,7 +447,7 @@ PalLoad_Now:
 
 ; sub_2746: PalLoad3_Water:
 PalLoad_Water_Now:
-	lea	(PalPointers).l,a1
+	lea	PalPointers(pc),a1
 	lsl.w	#3,d0
 	adda.w	d0,a1
 	movea.l	(a1)+,a2
@@ -466,7 +466,7 @@ PalLoad_Water_Now:
 
 ; sub_2764: PalLoad4_Water:
 PalLoad_Water_ForFade:
-	lea	(PalPointers).l,a1
+	lea	PalPointers(pc),a1
 	lsl.w	#3,d0
 	adda.w	d0,a1
 	movea.l	(a1)+,a2
