@@ -16,8 +16,6 @@ MoveDemo_On:
 	lea	DemoScriptPointers(pc),a1 ; load pointer to input data
 	moveq	#0,d0
 	move.b	(Current_Zone).w,d0
-; loc_48DA:
-MoveDemo_On_P1:
 	add.w	d0,d0
 	add.w	d0,d0
 	movea.l	(a1,d0.w),a1
