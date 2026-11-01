@@ -5,41 +5,41 @@
 ; account for its third act. Hidden Palace Zone uses Oil Ocean Zone's list.
 ; ---------------------------------------------------------------------------
 ; JmpTbl_DbgObjLists:
-DebugObjectLists: zoneOrderedOffsetTable 2,2
-	zoneOffsetTableEntry.w DbgObjList_EHZ	; EHZ1
-	zoneOffsetTableEntry.w DbgObjList_EHZ	; EHZ2
-	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 1 Act 1
-	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 1 Act 2
-	zoneOffsetTableEntry.w DbgObjList_Def	; WZ1
-	zoneOffsetTableEntry.w DbgObjList_Def	; WZ2
-	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 3 Act 1
-	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 3 Act 2
-	zoneOffsetTableEntry.w DbgObjList_MTZ	; MTZ1
-	zoneOffsetTableEntry.w DbgObjList_MTZ	; MTZ2
-	zoneOffsetTableEntry.w DbgObjList_MTZ	; MTZ3
-	zoneOffsetTableEntry.w DbgObjList_MTZ	; MTZ4
-	zoneOffsetTableEntry.w DbgObjList_WFZ	; WFZ1
-	zoneOffsetTableEntry.w DbgObjList_WFZ	; WFZ2
-	zoneOffsetTableEntry.w DbgObjList_HTZ	; HTZ1
-	zoneOffsetTableEntry.w DbgObjList_HTZ	; HTZ2
-	zoneOffsetTableEntry.w DbgObjList_HPZ	; HPZ1
-	zoneOffsetTableEntry.w DbgObjList_HPZ	; HPZ2
-	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 9 Act 1
-	zoneOffsetTableEntry.w DbgObjList_Def	; Zone 9 Act 2
-	zoneOffsetTableEntry.w DbgObjList_OOZ	; OOZ1
-	zoneOffsetTableEntry.w DbgObjList_OOZ	; OOZ2
-	zoneOffsetTableEntry.w DbgObjList_MCZ	; MCZ1
-	zoneOffsetTableEntry.w DbgObjList_MCZ	; MCZ2
-	zoneOffsetTableEntry.w DbgObjList_CNZ	; CNZ1
-	zoneOffsetTableEntry.w DbgObjList_CNZ	; CNZ2
-	zoneOffsetTableEntry.w DbgObjList_CPZ	; CPZ1
-	zoneOffsetTableEntry.w DbgObjList_CPZ	; CPZ2
-	zoneOffsetTableEntry.w DbgObjList_Def	; DEZ1
-	zoneOffsetTableEntry.w DbgObjList_Def	; DEZ2
-	zoneOffsetTableEntry.w DbgObjList_ARZ	; ARZ1
-	zoneOffsetTableEntry.w DbgObjList_ARZ	; ARZ2
-	zoneOffsetTableEntry.w DbgObjList_SCZ	; SCZ1
-	zoneOffsetTableEntry.w DbgObjList_SCZ	; SCZ2
+DebugObjectLists: zoneOrderedOffsetTable 4,2
+	zoneTableEntry.l DbgObjList_EHZ	; EHZ1
+	zoneTableEntry.l DbgObjList_EHZ	; EHZ2
+	zoneTableEntry.l DbgObjList_Def	; Zone 1 Act 1
+	zoneTableEntry.l DbgObjList_Def	; Zone 1 Act 2
+	zoneTableEntry.l DbgObjList_Def	; WZ1
+	zoneTableEntry.l DbgObjList_Def	; WZ2
+	zoneTableEntry.l DbgObjList_Def	; Zone 3 Act 1
+	zoneTableEntry.l DbgObjList_Def	; Zone 3 Act 2
+	zoneTableEntry.l DbgObjList_MTZ	; MTZ1
+	zoneTableEntry.l DbgObjList_MTZ	; MTZ2
+	zoneTableEntry.l DbgObjList_MTZ	; MTZ3
+	zoneTableEntry.l DbgObjList_MTZ	; MTZ4
+	zoneTableEntry.l DbgObjList_WFZ	; WFZ1
+	zoneTableEntry.l DbgObjList_WFZ	; WFZ2
+	zoneTableEntry.l DbgObjList_HTZ	; HTZ1
+	zoneTableEntry.l DbgObjList_HTZ	; HTZ2
+	zoneTableEntry.l DbgObjList_HPZ	; HPZ1
+	zoneTableEntry.l DbgObjList_HPZ	; HPZ2
+	zoneTableEntry.l DbgObjList_Def	; Zone 9 Act 1
+	zoneTableEntry.l DbgObjList_Def	; Zone 9 Act 2
+	zoneTableEntry.l DbgObjList_OOZ	; OOZ1
+	zoneTableEntry.l DbgObjList_OOZ	; OOZ2
+	zoneTableEntry.l DbgObjList_MCZ	; MCZ1
+	zoneTableEntry.l DbgObjList_MCZ	; MCZ2
+	zoneTableEntry.l DbgObjList_CNZ	; CNZ1
+	zoneTableEntry.l DbgObjList_CNZ	; CNZ2
+	zoneTableEntry.l DbgObjList_CPZ	; CPZ1
+	zoneTableEntry.l DbgObjList_CPZ	; CPZ2
+	zoneTableEntry.l DbgObjList_Def	; DEZ1
+	zoneTableEntry.l DbgObjList_Def	; DEZ2
+	zoneTableEntry.l DbgObjList_ARZ	; ARZ1
+	zoneTableEntry.l DbgObjList_ARZ	; ARZ2
+	zoneTableEntry.l DbgObjList_SCZ	; SCZ1
+	zoneTableEntry.l DbgObjList_SCZ	; SCZ2
     zoneTableEnd
 
 ; macro for a debug object list header

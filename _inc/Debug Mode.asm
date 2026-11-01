@@ -35,8 +35,8 @@ Debug_Init:
 .selectlist:
 	lea	DebugObjectLists(pc),a2
 	ror.b	#1,d0
-	lsr.w	#6,d0
-	adda.w	(a2,d0.w),a2
+	lsr.w	#5,d0
+	movea.l	(a2,d0.w),a2
 	move.w	(a2)+,d6
 	cmp.b	(Debug_object).w,d6
 	bhi.s	+
@@ -47,13 +47,11 @@ Debug_Init:
 	move.b	#1,(Debug_Speed).w
 ; loc_41B0C:
 Debug_Main:
-	moveq	#0,d0
-	move.b	(Current_Zone).w,d0
-
-.isntlevel:
 	lea	DebugObjectLists(pc),a2
-	add.w	d0,d0
-	adda.w	(a2,d0.w),a2
+	move.w	(Current_Zone).w,d0
+	ror.b	#1,d0
+	lsr.w	#5,d0
+	movea.l	(a2,d0.w),a2
 	move.w	(a2)+,d6
 	bsr.s	Debug_Control
 	jmp	(DisplaySprite).w
