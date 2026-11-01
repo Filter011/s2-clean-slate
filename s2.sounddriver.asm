@@ -4,15 +4,15 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD
-; Version: 26.11.1.1 (stable)
+; Version: 26.11.1.2 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
 ; ---------------------------------------------------------------------------
 
 ; Optimise FM Frequencies
-; This is enabled by default to give the sound driver more headspace for code.
-; Disable this option if you want to improve sound driver processing.
+; This is disabled by default to improve sound driver performance.
+; Enable this option if you want to give the sound driver more headspace for code.
 OptimiseFMFreq = 0
 
 ; Frequency Alignment
@@ -933,40 +933,39 @@ zFMSetFreq:
 	add	a,(ix+zTrack.Transpose)	; Add current channel transpose (coord flag E9)
 	add	a,a			; Offset into Frequency table...
     if OptimiseFMFreq
-	ld	d,12*2			; 12 notes per octave
-	ld	c,0			; Clear c (will hold octave bits)
+	ld	de,12*2<<8+0		; 12 notes per octave and clear e (will hold octave bits)
 
 .loop:
 	sub	d			; Subtract 1 octave from the note
 	jr	c,.getoctave		; If this is less than zero, we are done
-	inc	c			; One octave up
+	inc	e			; One octave up
 	jp	.loop
 
 .getoctave:
 	add	a,d			; Add 1 octave back (so note index is positive)
-	sla	c
-	sla	c
-	sla	c			; Multiply octave value by 8, to get final octave bits
+	sla	e
+	sla	e
+	sla	e			; Multiply octave value by 8, to get final octave bits
     endif
 	add	a,zFrequencies&0FFh
 	ld	(.storefreq+2),a		; Store into the instruction after .storefreq (self-modifying code)
     if FreqAlign=0
-	ld	d,a
+	ld	b,a
 	adc	a,(zFrequencies&0FF00h)>>8
-	sub	d
+	sub	b
 	ld	(.storefreq+3),a		; Store the high byte of the pointer (unnecessary if it's in the right range)
     endif
 
 ; zloc_292
 .storefreq:
-	ld	de,(zFrequencies)	; Stores frequency into "de"
-	ld	(ix+zTrack.FreqLow),e	; Frequency low byte   -> trackPtr + 0Dh
+	ld	bc,(zFrequencies)	; Stores frequency into "bc"
+	ld	(ix+zTrack.FreqLow),c	; Frequency low byte   -> trackPtr + 0Dh
     if OptimiseFMFreq
-	ld	a,d
-	or	c
+	ld	a,b
+	or	e
 	ld	(ix+zTrack.FreqHigh),a	; Frequency high byte  -> trackPtr + 0Eh
     else
-	ld	(ix+zTrack.FreqHigh),d	; Frequency high byte  -> trackPtr + 0Eh
+	ld	(ix+zTrack.FreqHigh),b	; Frequency high byte  -> trackPtr + 0Eh
     endif
 	ret
 ; ---------------------------------------------------------------------------
