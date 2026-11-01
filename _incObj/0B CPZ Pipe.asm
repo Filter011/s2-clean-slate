@@ -60,7 +60,7 @@ loc_20112:
 
 loc_20130:
 	lea	Ani_obj0B(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 
 loc_2013C:
 	tst.b	mapping_frame(a0)
@@ -70,7 +70,7 @@ loc_2013C:
 	moveq	#$11,d3
 	move.w	x_pos(a0),d4
 	bsr.w	PlatformObject
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ---------------------------------------------------------------------------
 +
 	move.b	status(a0),d0
@@ -82,4 +82,4 @@ loc_2013C:
 	bset	#status.player.in_air,(MainCharacter+status).w
 
 BranchTo_JmpTo3_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w

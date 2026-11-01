@@ -69,7 +69,7 @@ Obj76_Main:
 
 loc_28EC2:
 	move.w	objoff_34(a0),d0
-	jmp	(MarkObjGone2).l
+	jmp	(MarkObjGone2).w
 ; ===========================================================================
 ; off_28ECA:
 Obj76_Modes:	offsetTable

@@ -10,10 +10,10 @@ Obj48:
 	move.b	objoff_2C(a0),d0
 	add.b	objoff_36(a0),d0
 	beq.s	JmpTo14_MarkObjGone
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 JmpTo14_MarkObjGone ; JmpTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_25262:
 Obj48_Index:	offsetTable

@@ -30,12 +30,12 @@ loc_389B6:
 	blo.s	loc_389D2
 
 BranchTo6_JmpTo39_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_389D2:
 	addq.b	#2,routine(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_389DA:
@@ -58,7 +58,7 @@ loc_389FA:
 	bsr.s	loc_38A1E
 
 BranchTo7_JmpTo39_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 word_38A1A:
 	dc.w  -$40	; 0
@@ -74,17 +74,17 @@ loc_38A1E:
 loc_38A2C:
 	subq.b	#1,objoff_2A(a0)
 	bmi.s	loc_38A44
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_objA4(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38A44:
 	move.b	#ObjID_Explosion,id(a0) ; load 0bj27
 	move.b	#2,routine(a0)
 	bsr.s	loc_38A58
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38A58:

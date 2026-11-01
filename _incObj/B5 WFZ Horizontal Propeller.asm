@@ -30,8 +30,8 @@ ObjB5_Main:
 	move.w	off_3B442(pc,d0.w),d1
 	jsr	off_3B442(pc,d1.w)
 	lea	Ani_objB5(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 off_3B442:	offsetTable
 		offsetTableEntry.w +	; 0
@@ -41,8 +41,8 @@ off_3B442:	offsetTable
 ; loc_3B448:
 ObjB5_Animate:
 	lea	Ani_objB5(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_3B456:
 ObjB5_CheckPlayers:

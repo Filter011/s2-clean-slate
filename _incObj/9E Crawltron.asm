@@ -36,7 +36,7 @@ loc_37E42:
 	cmpi.w	#$100,d3
 	blo.s	loc_37E62
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_37E62:
@@ -55,37 +55,37 @@ loc_37E62:
 	lsl.w	#3,d5
 	andi.w	#$FF00,d5
 	move.w	d5,y_vel(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_37E98:
 	subq.b	#1,objoff_3A(a0)
 	bmi.s	+
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ---------------------------------------------------------------------------
 +
 	addq.b	#2,objoff_3B(a0)
 	move.b	#8,objoff_39(a0)
 	move.b	#$1C,objoff_3A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_37EB6:
 	subq.b	#1,objoff_3A(a0)
 	beq.s	+
-	jsr	(ObjectMove).l
-	jmp	(MarkObjGone).l
+	jsr	(ObjectMove).w
+	jmp	(MarkObjGone).w
 ; ---------------------------------------------------------------------------
 +
 	move.b	objoff_39(a0),objoff_3B(a0)
 	move.b	#$20,objoff_3A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_37ED4:
 	subq.b	#1,objoff_3A(a0)
 	beq.s	+
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ---------------------------------------------------------------------------
 +
 	move.b	#6,objoff_3B(a0)
@@ -93,7 +93,7 @@ loc_37ED4:
 	move.b	#$1C,objoff_3A(a0)
 	neg.w	x_vel(a0)
 	neg.w	y_vel(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_37EFC:
@@ -135,7 +135,7 @@ loc_37EFC:
 
 loc_37F6C:
 	move.w	#object_display_list_size*5,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 
 loc_37F74:

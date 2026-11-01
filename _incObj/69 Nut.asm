@@ -43,7 +43,7 @@ loc_278F4:
 	moveq	#$D,d3
 	move.w	x_pos(a0),d4
 	jsr	(SolidObject).l
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_27912:
 Obj69_Action:
@@ -146,8 +146,7 @@ loc_279D4:
 ; ===========================================================================
 
 loc_279FC:
-	jsr	(ObjectMove).l
-	addi.w	#$38,y_vel(a0)
+	jsr	(ObjectMoveAndFall).w
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
 	bpl.s	+

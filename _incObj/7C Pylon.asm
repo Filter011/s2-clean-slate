@@ -40,6 +40,6 @@ Obj7C_Main:
 	neg.w	d1
 	addi.w	#$100,d1
 	move.w	d1,y_pixel(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 +	rts

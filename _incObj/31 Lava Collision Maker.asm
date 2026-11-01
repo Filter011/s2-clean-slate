@@ -42,9 +42,9 @@ Obj31_Main:
 	bhi.s	JmpTo18_DeleteObject
 	tst.w	(Debug_placement_mode).w
 	beq.s	+	; rts
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 +
 	rts
 
 JmpTo18_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

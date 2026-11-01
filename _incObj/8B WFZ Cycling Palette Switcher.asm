@@ -7,7 +7,7 @@ Obj8B:
 	move.b	routine(a0),d0
 	move.w	Obj8B_Index(pc,d0.w),d1
 	jsr	Obj8B_Index(pc,d1.w)
-	jmp	(MarkObjGone3).l
+	jmp	(MarkObjGone3).w
 ; ===========================================================================
 ; off_213A6:
 Obj8B_Index:	offsetTable

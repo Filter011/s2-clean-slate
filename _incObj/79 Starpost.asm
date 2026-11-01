@@ -115,8 +115,8 @@ return_1F22E:
 ; loc_1F230:
 Obj79_Animate:
 	lea	Ani_obj79(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_1F240:
 Obj79_Dongle:
@@ -128,7 +128,7 @@ Obj79_Dongle:
 	move.b	#2,anim(a1)
 	move.b	#0,mapping_frame(a1)
 +
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_1F262:
 Obj79_MoveDonglyThing:
@@ -144,7 +144,7 @@ Obj79_MoveDonglyThing:
 	swap	d0
 	add.w	objoff_32(a0),d0
 	move.w	d0,y_pos(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; hit a starpost / save checkpoint
 ; loc_1F298:

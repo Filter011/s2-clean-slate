@@ -154,12 +154,12 @@ Obj5D_Main:
 	move.w	Obj5D_Main_Index(pc,d0.w),d1
 	jsr	Obj5D_Main_Index(pc,d1.w)
 	lea	Ani_obj5D_b(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	moveq	#1<<status.npc.x_flip|1<<status.npc.y_flip,d0
 	and.b	status(a0),d0
 	andi.b	#~(1<<render_flags.x_flip|1<<render_flags.y_flip),render_flags(a0)
 	or.b	d0,render_flags(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 Obj5D_Main_Index:	offsetTable
 		offsetTableEntry.w Obj5D_Main_Descend		;  0
@@ -229,7 +229,7 @@ Obj5D_Main_StopExploding:
 	; Stop rising
 	clr.w	y_vel(a0)
 	jsr	(PlayLevelMusic).w
-	jsr	(LoadPLC_AnimalExplosion).l
+	jsr	(LoadPLC_AnimalExplosion).w
 
 Obj5D_Main_A_End:
 	bsr.w	Obj5D_Main_Move
@@ -257,8 +257,8 @@ Obj5D_Main_C_End:
 Obj5D_Main_Delete:
 	addq.l	#4,sp
 	movea.l	Obj5D_parent(a0),a1 ; a1=object
-	jsr	(DeleteObject2).l
-	jmp	(DeleteObject).l
+	jsr	(DeleteObject2).w
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ;Obj5D_Main_0:
 Obj5D_Main_Descend:
@@ -332,9 +332,9 @@ Obj5D_Defeated:
 
 Obj5D_Main_Move:
 	movem.w	x_vel(a0),d0/d2
-	lsl.l	#8,d0
+	asl.l	#8,d0
 	add.l	d0,Obj5D_x_pos_next(a0)
-	lsl.l	#8,d2
+	asl.l	#8,d2
 	add.l	d2,Obj5D_y_pos_next(a0)
 	rts
 ; ===========================================================================
@@ -487,7 +487,7 @@ Obj5D_FallingParts:
 	move.l	d3,y_pos(a0)
 	cmpi.l	#$5800000,d3
 	bhs.w	JmpTo51_DeleteObject
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 Obj5D_Pump:
@@ -500,8 +500,8 @@ Obj5D_Pump:
 	move.b	render_flags(a1),render_flags(a0)
 	move.b	status(a1),status(a0)
 	movea.l	#Ani_Obj5D_Dripper,a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 .bossDefeated:
@@ -549,7 +549,7 @@ Obj5D_Pump:
 	move.b	d0,Obj5D_timer(a1)
 	addq.w	#1,d3	; Next sprite
 	dbf	d2,-
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; Object to control the pipe's actions before pumping starts.
 
@@ -710,8 +710,8 @@ Obj5D_Pipe_Pump_2_End:
 	move.b	Obj5D_y_offset(a0),d0
 	add.w	d0,y_pos(a0)
 	lea	Ani_Obj5D_Dripper(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 Obj5D_Pipe_Pump_4:
@@ -731,7 +731,7 @@ Obj5D_Pipe_Pump_4:
 	movea.l	Obj5D_parent(a0),a1	; parent = pipe segment (control object) ; a1=object
 	move.b	#8,routine(a1)		; => Obj5D_Pipe_Retract
 	move.b	#$B*8,Obj5D_y_offset(a1)
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; Object to control the pipe's actions after pumping is finished.
 
@@ -793,12 +793,12 @@ Obj5D_PipeSegment:
 	move.w	Obj5D_y_pos_next(a0),d0
 	add.w	d0,y_pos(a0)
 	lea	Ani_Obj5D_Dripper(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 BranchTo_JmpTo51_DeleteObject ; BranchTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 Obj5D_PipeSegment_End:
@@ -813,8 +813,8 @@ Obj5D_PipeSegment_End:
 	andi.w	#$7F,d0
 	move.b	d0,Obj5D_timer(a0)
 	lea	Ani_Obj5D_Dripper(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 Obj5D_Dripper:
@@ -862,8 +862,8 @@ Obj5D_Dripper_2:
 	move.b	status(a1),status(a0)
 	move.b	render_flags(a1),render_flags(a0)
 	lea	Ani_Obj5D_Dripper(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 Obj5D_Dripper_4:
@@ -888,8 +888,8 @@ Obj5D_Dripper_4:
 	addq.w	#4,x_pos(a0)
 +
 	lea	Ani_Obj5D_Dripper(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 Obj5D_Container:
@@ -976,8 +976,8 @@ loc_2E2AC:
 +
 	add.w	d0,x_pos(a0)
 	lea	Ani_Obj5D_Dripper(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_2E2E0:
@@ -1060,7 +1060,7 @@ loc_2E35C:
 
 loc_2E3E6:
 	move.l	(sp)+,d7
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 word_2E3EC:
 	dc.w   $18
@@ -1247,8 +1247,8 @@ Obj5D_Container_Floor_End:
 	move.b	render_flags(a1),render_flags(a0)
 	move.b	status(a1),status(a0)
 	lea	Ani_Obj5D_Dripper(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 Obj5D_Container_Floor2:
@@ -1287,15 +1287,15 @@ Obj5D_Gunk_Init:
 	move.w	#9,Obj5D_timer2(a0)
 
 Obj5D_Gunk_Main:
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
 	bmi.s	+	; branch, if hit the floor
 	cmpi.w	#$518,y_pos(a0)
 	bge.s	Obj5D_Gunk_OffScreen	; branch, if fallen off screen
 	lea	Ani_Obj5D_Dripper(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 +
 	add.w	d1,y_pos(a0)
@@ -1308,7 +1308,7 @@ Obj5D_Gunk_Main:
 	move.b	#0,subtype(a0)
 	moveq	#SndID_MegaMackDrop,d0
 	jsr	(PlaySound).w
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 Obj5D_Gunk_OffScreen:
@@ -1317,7 +1317,7 @@ Obj5D_Gunk_OffScreen:
 	bset	#2,Obj5D_status2(a1)
 	bset	#4,Obj5D_status2(a1)
 	move.b	#2,routine_secondary(a1)
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 Obj5D_Gunk_6:
@@ -1334,10 +1334,10 @@ Obj5D_Gunk_6:
 	bra.s	Obj5D_Gunk_8
 ; ===========================================================================
 +
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_Obj5D_Dripper(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 Obj5D_Gunk_8:
@@ -1354,7 +1354,7 @@ Obj5D_Gunk_8:
 	movea.l	Obj5D_parent(a1),a1 ; a1=object
 	move.w	x_pos(a1),x_pos(a0)
 	move.w	y_pos(a1),y_pos(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 Obj5D_Gunk_Droplets:
@@ -1418,18 +1418,18 @@ Obj5D_Gunk_Droplets_Loop:
 	dbf	d3,Obj5D_Gunk_Droplets_Loop
 
 BranchTo_JmpTo34_DisplaySprite ; BranchTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 Obj5D_Gunk_Droplets_Move:
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
 	bmi.s	+
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ---------------------------------------------------------------------------
 +
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 Obj5D_Robotnik:
@@ -1450,8 +1450,8 @@ Obj5D_Robotnik:
 
 Obj5D_Robotnik_End:
 	lea	Ani_obj5D_b(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ;byte_2E94A:
 Obj5D_Flame_Frames:
@@ -1525,6 +1525,6 @@ Obj5D_Smoke_Puff:
 	subi.w	#$28,x_pos(a0)
 
 JmpTo34_DisplaySprite ; JmpTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 JmpTo51_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

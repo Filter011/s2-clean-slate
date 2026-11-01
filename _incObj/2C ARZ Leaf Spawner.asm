@@ -42,7 +42,7 @@ Obj2C_Main:
 	bhi.w	JmpTo29_DeleteObject
 	tst.w	(Debug_placement_mode).w
 	beq.s	+
-	jsr	(DisplaySprite).l
+	jsr	(DisplaySprite).w
 +
 	move.b	collision_property(a0),d0
 	beq.s	loc_261C2
@@ -175,7 +175,7 @@ Obj2C_Leaf:
 +
 	_btst	#render_flags.on_screen,render_flags(a0)
 	_beq.s	JmpTo29_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 JmpTo29_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

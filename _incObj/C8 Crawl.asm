@@ -33,23 +33,23 @@ ObjC8_Init:
 loc_3D27C:
 	subq.w	#1,objoff_2A(a0)
 	beq.s	+
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bsr.w	loc_3D416
 	lea	Ani_objC8(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 +
 	addq.b	#2,routine(a0)
 	move.w	#$3B,objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3D2A6:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	+
 	bsr.w	loc_3D416
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 +
 	move.b	#2,routine(a0)
@@ -57,7 +57,7 @@ loc_3D2A6:
 	neg.w	x_vel(a0)
 	bchg	#render_flags.x_flip,render_flags(a0)
 	bchg	#status.npc.x_flip,status(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3D2D4:
@@ -93,7 +93,7 @@ loc_3D2D4:
 	clr.b	collision_property(a0)
 
 BranchTo18_JmpTo39_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3D36C:
@@ -106,17 +106,17 @@ loc_3D36C:
 
 loc_3D386:
 	move.b	#1,mapping_frame(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3D390:
 	move.b	#$17,collision_flags(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3D39A:
 	move.b	objoff_2C(a0),routine(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3D3A4:

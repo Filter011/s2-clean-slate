@@ -104,25 +104,25 @@ loc_371FA:
 	move.b	#1,anim(a0)
 
 loc_3720C:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_obj95_a(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	andi.b	#3,mapping_frame(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_37224:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_obj95_b(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	andi.b	#3,mapping_frame(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 ; loc_3723C:
 Obj95_FireballUpdate:
 	lea	Ani_obj95_b(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	movea.l	objoff_3C(a0),a1 ; a1=object
 	cmpi.b	#ObjID_Sol,id(a1) ; check if parent object is still alive
 	bne.w	JmpTo64_DeleteObject
@@ -142,7 +142,7 @@ loc_37278:
 	beq.s	+
 	neg.w	x_vel(a0)
 +
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ; loc_3728E:
@@ -157,13 +157,13 @@ Obj95_FireballOrbit:
 	move.w	d0,y_pos(a0)
 	move.b	objoff_36(a1),d0
 	add.b	d0,angle(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_372B8:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	_btst	#render_flags.on_screen,render_flags(a0)
 	_beq.w	JmpTo64_DeleteObject
 	lea	Ani_obj95_b(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w

@@ -44,13 +44,13 @@ Obj9D_Idle:
 +
 	subq.b	#1,Obj9D_timer(a0)	; wait for a bit...
 	bmi.s	Obj9D_StartClimbing	; branch, when done waiting
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ---------------------------------------------------------------------------
 
 Obj9D_StartClimbing:
 	addq.b	#2,routine(a0)	; => Obj9D_Climbing
 	bsr.s	Obj9D_SetClimbingDirection
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ---------------------------------------------------------------------------
 ; loc_37C66:
 Obj9D_StartThrowing:
@@ -58,7 +58,7 @@ Obj9D_StartThrowing:
 	move.b	#1,mapping_frame(a0)	; display first throwing frame
 	move.b	#8,Obj9D_timer(a0)	; set time to display frame
 	move.b	#$20,Obj9D_attack_timer(a0)	; reset timer
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ---------------------------------------------------------------------------
 ; loc_37C82:
 Obj9D_SetClimbingDirection:
@@ -87,16 +87,16 @@ Obj9D_ClimbData:
 Obj9D_Climbing:
 	subq.b	#1,Obj9D_timer(a0)
 	beq.s	Obj9D_StopClimbing	; branch, if done moving
-	jsr	(ObjectMove).l	; else, keep moving
+	jsr	(ObjectMove).w	; else, keep moving
 	lea	Ani_obj09(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_37CC6:
 Obj9D_StopClimbing:
 	subq.b	#2,routine(a0)	; => Obj9D_Idle
 	move.b	#$10,Obj9D_timer(a0)	; time to remain idle
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_37CD4: Obj09_Throwing:
 Obj9D_Throwing:
@@ -104,7 +104,7 @@ Obj9D_Throwing:
 	move.b	routine_secondary(a0),d0
 	move.w	Obj9D_ThrowingStates(pc,d0.w),d1
 	jsr	Obj9D_ThrowingStates(pc,d1.w)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_37CE6:
 Obj9D_ThrowingStates:	offsetTable

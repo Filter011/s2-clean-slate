@@ -46,14 +46,14 @@ ObjD4_Main:
 	move.b	subtype(a0),d0
 	move.w	ObjD4_Types(pc,d0.w),d1
 	jsr	ObjD4_Types(pc,d1.w)
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	moveq	#$2B,d1
 	moveq	#$20,d2
 	moveq	#$21,d3
 	move.w	(sp)+,d4
 	jsr	(SolidObject).l
 	move.w	objoff_30(a0),d0
-	jmp	(MarkObjGone2).l
+	jmp	(MarkObjGone2).w
 ; ===========================================================================
 ; off_2B99E:
 ObjD4_Types:	offsetTable

@@ -115,7 +115,7 @@ loc_27C28:
 	bra.s	loc_27C3E
 ; ===========================================================================
 loc_27C2E:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	subq.w	#1,objoff_34(a0)
 	bne.s	loc_27C3E
 	bsr.w	loc_27CA2
@@ -135,12 +135,12 @@ loc_27C3E:
 
 loc_27C5E:
 	move.w	objoff_32(a0),d0
-	jmp	(MarkObjGone2).l
+	jmp	(MarkObjGone2).w
 ; ===========================================================================
 
 loc_27C66:
 	move.w	x_pos(a0),-(sp)
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	subq.w	#1,objoff_34(a0)
 	bne.s	loc_27C7A
 	bsr.s	loc_27CA2
@@ -160,7 +160,7 @@ loc_27C7A:
 
 loc_27C9A:
 	move.w	objoff_32(a0),d0
-	jmp	(MarkObjGone2).l
+	jmp	(MarkObjGone2).w
 ; ===========================================================================
 
 loc_27CA2:

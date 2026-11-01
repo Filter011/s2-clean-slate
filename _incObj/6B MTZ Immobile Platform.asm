@@ -79,7 +79,7 @@ Obj6B_Main:
 	jsr	(SolidObject).l
 +
 	move.w	objoff_34(a0),d0
-	jmp	(MarkObjGone2).l
+	jmp	(MarkObjGone2).w
 ; ===========================================================================
 ; off_27E4E:
 Obj6B_Types:	offsetTable
@@ -166,7 +166,7 @@ return_27EE0:
 loc_27EE2:
 	move.w	y_vel(a0),d0
 	ext.l	d0
-	lsl.l	#8,d0
+	asl.l	#8,d0
 	add.l	d0,y_pos(a0)
 	addq.w	#8,y_vel(a0)
 	move.w	(Camera_Max_Y_pos).w,d0

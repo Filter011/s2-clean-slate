@@ -31,7 +31,7 @@ word_3B30C:
 ; ===========================================================================
 ; loc_3B312:
 ObjB3_Main:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	move.w	(Tornado_Velocity_X).w,d0
 	add.w	d0,x_pos(a0)
 	bra.w	Obj_DeleteBehindScreen

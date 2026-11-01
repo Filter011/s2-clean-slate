@@ -77,7 +77,7 @@ Obj82_Main:
 	bsr.w	loc_2A432
 +
 	move.w	objoff_34(a0),d0
-	jmp	(MarkObjGone2).l
+	jmp	(MarkObjGone2).w
 ; ===========================================================================
 ; off_2A358:
 Obj82_Types:	offsetTable
@@ -116,7 +116,7 @@ loc_2A382:
 ; ===========================================================================
 
 loc_2A392:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	addq.w	#8,y_vel(a0)
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
@@ -131,7 +131,7 @@ return_2A3B4:
 ; ===========================================================================
 
 loc_2A3B6:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	subq.w	#8,y_vel(a0)
 	jsr	(ObjCheckCeilingDist).l
 	tst.w	d1

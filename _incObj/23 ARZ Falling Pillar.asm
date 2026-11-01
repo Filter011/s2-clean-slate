@@ -51,7 +51,7 @@ Obj23_Main:
 	addq.w	#1,d3
 	move.w	(sp)+,d4
 	jsr	(SolidObject).l
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_25948:
@@ -117,8 +117,7 @@ byte_259B0:
 ; ===========================================================================
 
 loc_259B8:
-	jsr	(ObjectMove).l
-	addi.w	#$38,y_vel(a0)
+	jsr	(ObjectMoveAndFall).w
 	bsr.w	ObjCheckFloorDist
 	tst.w	d1
 	bpl.s	+

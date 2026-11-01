@@ -44,8 +44,8 @@ Obj20_Init:
 
 loc_23076:
 	lea	Ani_obj20(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_23084:
@@ -67,8 +67,8 @@ loc_230A6:
 
 loc_230B4:
 	lea	Ani_obj20(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_230C2:
@@ -98,8 +98,8 @@ loc_2311E:
 
 loc_23136:
 	lea	Ani_obj20(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_23144:
@@ -110,13 +110,13 @@ loc_23144:
 	andi.b	#1,mapping_frame(a0)
 
 loc_2315A:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	addi.w	#$18,y_vel(a0)
 	move.w	(Camera_Max_Y_pos).w,d0
 	addi.w	#screen_height,d0
 	cmp.w	y_pos(a0),d0
 	bhs.s	loc_23176
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_23176:
@@ -139,7 +139,7 @@ loc_23176:
 	move.b	#3,objoff_36(a0)
 
 BranchTo_JmpTo8_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_231D2:
@@ -178,9 +178,9 @@ loc_23214:
 
 loc_23224:
 	lea	Ani_obj20(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 BranchTo_JmpTo21_DeleteObject ; BranchTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

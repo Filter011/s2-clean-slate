@@ -38,7 +38,7 @@ Obj40_Init:
 ; loc_263C8:
 Obj40_Main:
 	lea	Ani_obj40(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	moveq	#$27,d1
 	moveq	#8,d2
 	move.w	x_pos(a0),d4

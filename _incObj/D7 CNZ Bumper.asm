@@ -100,7 +100,7 @@ ObjD7_BounceEnd:
 ; loc_2C57E:
 ObjD7_MainContinued:
 	lea	Ani_objD7(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	tst.b	subtype(a0)
 	beq.s	JmpTo30_MarkObjGone
 	tst.b	objoff_34(a0)
@@ -136,7 +136,7 @@ loc_2C5C4:
 	cmpi.w	#$280,d0
 	bhi.s	loc_2C5F8
 +
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_2C5F8:
@@ -146,7 +146,7 @@ loc_2C5F8:
 	beq.s	+
 	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 +
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 
 JmpTo30_MarkObjGone ; JmpTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w

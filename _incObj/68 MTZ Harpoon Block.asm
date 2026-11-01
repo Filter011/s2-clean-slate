@@ -61,7 +61,7 @@ Obj68_Block:
 	moveq	#$11,d3
 	move.w	x_pos(a0),d4
 	jsr	(SolidObject).l
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_27662:
 Obj68_Spike:
@@ -72,7 +72,7 @@ Obj68_Spike:
 	move.w	Obj68_Spike_Directions(pc,d0.w),d1
 	jsr	Obj68_Spike_Directions(pc,d1.w)
 	move.w	spikearoundblock_initial_x_pos(a0),d0
-	jmp	(MarkObjGone2).l
+	jmp	(MarkObjGone2).w
 ; ===========================================================================
 ; off_2767E:
 Obj68_Spike_Directions: offsetTable

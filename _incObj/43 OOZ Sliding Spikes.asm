@@ -90,14 +90,14 @@ loc_23F0A:
 	bhi.s	loc_23F36
 
 JmpTo13_DisplaySprite ; JmpTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_23F36:
 	movea.l	objoff_3C(a0),a1 ; a1=object
 	cmpa.l	a0,a1
 	beq.s	loc_23F44
-	jsr	(DeleteObject2).l
+	jsr	(DeleteObject2).w
 
 loc_23F44:
 	lea	(Object_Respawn_Table).w,a2
@@ -107,13 +107,13 @@ loc_23F44:
 	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 
 JmpTo24_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_23F5C:
 	bsr.s	loc_23F66
 	bsr.s	loc_23FB0
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_23F66:

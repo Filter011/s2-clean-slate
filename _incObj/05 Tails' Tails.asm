@@ -56,7 +56,7 @@ Obj05_Main:
 	lea	Obj05AniData(pc),a1
 	bsr.w	Tails_Animate_Part2
 	bsr.w	LoadTailsTailsDynPLC
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; animation master script table for the tails
 ; chooses which animation script to run depending on what Tails is doing

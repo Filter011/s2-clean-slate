@@ -75,10 +75,10 @@ Obj19_Main:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo20_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 JmpTo20_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ---------------------------------------------------------------------------
 ; loc_220E8:
 Obj19_Move:
@@ -158,7 +158,7 @@ Obj19_MoveRoutine4:
 ; ===========================================================================
 ; loc_22176:
 Obj19_MoveRoutine5:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	moveq	#8,d1
 	move.w	objoff_32(a0),d0
 	subi.w	#$60,d0
@@ -177,7 +177,7 @@ Obj19_MoveRoutineNull:
 ; ===========================================================================
 ; loc_22198:
 Obj19_MoveRoutine6:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	moveq	#8,d1
 	move.w	objoff_32(a0),d0
 	subi.w	#$60,d0

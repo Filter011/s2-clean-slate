@@ -33,7 +33,7 @@ loc_3B602:
 	move.b	routine_secondary(a0),d0
 	move.w	off_3B614(pc,d0.w),d1
 	jsr	off_3B614(pc,d1.w)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 off_3B614:	offsetTable
 		offsetTableEntry.w loc_3B61C	; 0
@@ -64,7 +64,7 @@ loc_3B638:
 
 loc_3B644:
 	lea	Ani_objB6(pc),a1
-	jmp	(AnimateSprite).l
+	jmp	(AnimateSprite).w
 ; ===========================================================================
 
 loc_3B64E:
@@ -78,7 +78,7 @@ loc_3B65C:
 	move.b	routine_secondary(a0),d0
 	move.w	off_3B66E(pc,d0.w),d1
 	jsr	off_3B66E(pc,d1.w)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 off_3B66E:	offsetTable
 		offsetTableEntry.w loc_3B61C
@@ -108,7 +108,7 @@ loc_3B6A6:
 	subq.b	#1,objoff_2A(a0)
 	bmi.s	+
 	lea	Ani_objB6(pc),a1
-	jmp	(AnimateSprite).l
+	jmp	(AnimateSprite).w
 ; ===========================================================================
 +
 	move.b	#2,routine_secondary(a0)
@@ -122,7 +122,7 @@ loc_3B6C8:
 	move.b	routine_secondary(a0),d0
 	move.w	off_3B6DA(pc,d0.w),d1
 	jsr	off_3B6DA(pc,d1.w)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 off_3B6DA:	offsetTable
 		offsetTableEntry.w loc_3B6E2	; 0
@@ -164,7 +164,7 @@ loc_3B6FE:
 
 loc_3B72C:
 	lea	Ani_objB6(pc),a1
-	jmp	(AnimateSprite).l
+	jmp	(AnimateSprite).w
 ; ===========================================================================
 
 loc_3B736:
@@ -177,7 +177,7 @@ loc_3B73C:
 	move.b	routine_secondary(a0),d0
 	move.w	off_3B74E(pc,d0.w),d1
 	jsr	off_3B74E(pc,d1.w)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 off_3B74E:	offsetTable
 		offsetTableEntry.w loc_3B756	; 0

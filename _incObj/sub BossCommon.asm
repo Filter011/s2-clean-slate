@@ -40,9 +40,9 @@ Boss_Defeat:
 ;loc_2D5DE:
 Boss_MoveObject:
 	movem.w	(Boss_X_vel).w,d0/d2
-	lsl.l	#8,d0
+	asl.l	#8,d0
 	add.l	d0,(Boss_X_pos).w
-	lsl.l	#8,d2
+	asl.l	#8,d2
 	add.l	d2,(Boss_Y_pos).w
 	rts
 ; ===========================================================================

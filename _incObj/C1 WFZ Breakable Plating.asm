@@ -92,7 +92,7 @@ ObjC1_Grab:
 	move.b	#1,plating_grabbed(a0)		; begin break timer
 
 BranchTo16_JmpTo39_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_3C19A:
 ObjC1_BeginBreakup:
@@ -107,14 +107,14 @@ ObjC1_FallOff:
 	bra.s	++
 ; ===========================================================================
 +
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	addq.w	#8,y_vel(a0)
 	lea	Ani_objC1(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 +
 	_btst	#render_flags.on_screen,render_flags(a0)
 	_beq.w	JmpTo64_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; animation script
 ; off_3C1D6:

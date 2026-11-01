@@ -51,7 +51,7 @@ loc_1E176:
 	move.w	(MainCharacter+y_pos).w,y_pos(a0)
 
 JmpTo6_DisplaySprite ; JmpTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_1E188:
@@ -72,4 +72,4 @@ loc_1E1AA:
 ; ===========================================================================
 
 JmpTo8_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

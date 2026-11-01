@@ -99,7 +99,7 @@ loc_204D8:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo17_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_204F0:
@@ -114,7 +114,7 @@ loc_204F0:
 	rts
 
 JmpTo17_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_20510:
 Obj13_ChkDel:
@@ -123,4 +123,4 @@ Obj13_ChkDel:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo17_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w

@@ -46,7 +46,7 @@ ObjC6_State2_State1: ; a1=object (set in loc_3D94C)
 	move.w	#$3F8,x_pos(a1)
 	move.w	#$160,y_pos(a1)
 	move.w	a0,(DEZ_Eggman).w
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_3CF32:
 ObjC6_State2_State2:
@@ -54,26 +54,26 @@ ObjC6_State2_State2:
 	addi.w	#$5C,d2
 	cmpi.w	#$B8,d2
 	blo.s	loc_3CF44
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 loc_3CF44:
 	addq.b	#2,routine_secondary(a0) ; => ObjC6_State2_State3
 	move.w	#$18,objoff_2A(a0)
 	move.b	#1,mapping_frame(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_3CF58:
 ObjC6_State2_State3:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	loc_3CF62
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 loc_3CF62:
 	addq.b	#2,routine_secondary(a0) ; => ObjC6_State2_State4
 	bset	#status.npc.misc,status(a0)
 	move.w	#$200,x_vel(a0)
 	move.w	#$10,objoff_2A(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_3CF7C:
 ObjC6_State2_State4:
@@ -92,10 +92,10 @@ ObjC6_State2_State4:
 	move.w	#$20,objoff_2A(a0)
 	bsr.s	loc_3D00C
 +
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_objC5_objC6(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3CFC0:
@@ -110,15 +110,15 @@ loc_3CFC0:
 	move.w	#$50,objoff_2A(a0)
 	bset	#status.npc.p1_standing,status(a0)
 +
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_3CFF6:
 ObjC6_State2_State5:
 	subq.w	#1,objoff_2A(a0)
 	bmi.w	JmpTo64_DeleteObject
 	addi.w	#$10,y_vel(a0)
-	jsr	(ObjectMove).l
-	jmp	(DisplaySprite).l
+	jsr	(ObjectMove).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3D00C:
@@ -150,11 +150,11 @@ ObjC6_State3_State1:
 	btst	#status.npc.misc,status(a1)
 	bne.s	loc_3D05E
 	bsr.s	loc_3D086
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 loc_3D05E:
 	addq.b	#2,routine_secondary(a0) ; => ObjC6_State3_State2
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_3D066:
 ObjC6_State3_State2:
@@ -162,14 +162,14 @@ ObjC6_State3_State2:
 	cmpi.w	#$160+$40,y_pos(a0)	; check if barrier is high enough
 	bls.s	ObjC6_State3_State3	; if so, branch
 	subq.w	#8,y_pos(a0)		; if not, send up
-	jsr	(ObjectMove).l
-	jmp	(DisplaySprite).l
+	jsr	(ObjectMove).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_3D078:
 ObjC6_State3_State3:
 	lea	(MainCharacter).w,a1 ; a1=character
 	bclr	#status.npc.p1_pushing,status(a1)
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_3D086:
@@ -185,8 +185,8 @@ ObjC6_State4:
 	subq.w	#1,objoff_2A(a0)
 	bmi.w	JmpTo64_DeleteObject
 	addi.w	#$10,y_vel(a0)
-	jsr	(ObjectMove).l
-	jmp	(MarkObjGone).l
+	jsr	(ObjectMove).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_3D0B2:
 ObjC6_SubObjData3:

@@ -49,10 +49,10 @@ loc_1D9A4:
 
 loc_1DA0C:
 	tst.b	(Super_Sonic_flag).w
-	bne.w	DeleteObject
+	bne.w	loc_1DA74.delete
 	movea.w	parent(a0),a1 ; a1=character
 	btst	#status_secondary.invincible,status_secondary(a1)
-	beq.w	DeleteObject
+	beq.w	loc_1DA74.delete
 	move.w	x_pos(a1),d0
 	move.w	d0,x_pos(a0)
 	move.w	y_pos(a1),d1
@@ -90,15 +90,18 @@ loc_1DA44:
 loc_1DA74:
 	add.b	d0,objoff_34(a0)
 	move.w	#object_display_list_size*1,d0
-	bra.w	DisplaySprite3
+	jmp	(DisplaySprite3).w
+
+.delete:
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_1DA80:
 	tst.b	(Super_Sonic_flag).w
-	bne.w	DeleteObject
+	bne.s	loc_1DA74.delete
 	movea.w	parent(a0),a1 ; a1=character
 	btst	#status_secondary.invincible,status_secondary(a1)
-	beq.w	DeleteObject
+	beq.s	loc_1DA74.delete
 	cmpi.w	#2,(Player_mode).w
 	beq.s	loc_1DAA4
 	lea	(Sonic_Pos_Record_Index).w,a5
@@ -160,7 +163,7 @@ loc_1DAE4:
 loc_1DB20:
 	add.b	d0,objoff_34(a0)
 	move.w	#object_display_list_size*1,d0
-	bra.w	DisplaySprite3
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 
 loc_1DB2C:

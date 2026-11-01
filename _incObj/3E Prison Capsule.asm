@@ -78,8 +78,8 @@ loc_3F278:
 	move.w	x_pos(a0),d4
 	jsr	(SolidObject).l
 	lea	Ani_obj3E(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 off_3F2AE:	offsetTable
 		offsetTableEntry.w loc_3F2B4	; 0
@@ -151,7 +151,7 @@ loc_3F354:
 	clr.b	(Update_HUD_timer).w
 	move.w	#1,objoff_32(a0)
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3F38E:
@@ -159,12 +159,12 @@ loc_3F38E:
 	beq.s	+
 	_btst	#render_flags.on_screen,render_flags(a0)
 	_beq.s	JmpTo66_DeleteObject
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 
 JmpTo66_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_3F3A8:
@@ -210,6 +210,6 @@ loc_3F406:
 	dbf	d0,-
 
 	jsr	(Load_EndOfAct).l
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 +	rts

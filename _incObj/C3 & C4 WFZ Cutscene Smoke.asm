@@ -28,7 +28,7 @@ ObjC3_Init:
 ; ===========================================================================
 ; loc_3C416:
 ObjC3_Main:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	subq.b	#1,anim_frame_duration(a0)
 	bpl.s	+
 	move.b	#7,anim_frame_duration(a0)
@@ -36,7 +36,7 @@ ObjC3_Main:
 	cmpi.b	#5,mapping_frame(a0)
 	beq.w	JmpTo64_DeleteObject
 +
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; off_3C438:
 ObjC3_SubObjData:

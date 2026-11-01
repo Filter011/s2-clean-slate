@@ -30,38 +30,38 @@ loc_3BDA2:
 	andi.b	#$F0,d0
 	cmp.b	subtype(a0),d0
 	beq.s	+
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ---------------------------------------------------------------------------
 +
 	addq.b	#2,routine(a0)
 	clr.b	anim(a0)
 	move.w	#$A0,objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3BDC6:
 	lea	Ani_objBE(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3BDD4:
 	subq.w	#1,objoff_2A(a0)
 	beq.s	+
 	bsr.s	loc_3BE04
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ---------------------------------------------------------------------------
 +
 	addq.b	#2,routine(a0)
 	move.b	#1,anim(a0)
 	bsr.w	loc_3B7BC
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3BDF4:
 	move.b	#2,routine(a0)
 	move.w	#$40,objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3BE04:

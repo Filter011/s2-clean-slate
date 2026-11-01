@@ -45,4 +45,4 @@ Obj49_ChkDel:
 
 loc_20C36:
 	add.b	d4,mapping_frame(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w

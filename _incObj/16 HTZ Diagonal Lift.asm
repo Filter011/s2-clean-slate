@@ -36,7 +36,7 @@ Obj16_Main:
 	moveq	#-$28,d3
 	move.w	(sp)+,d4
 	jsr	(PlatformObject).l
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_21E2C:
 Obj16_RunSecondaryRoutine:
@@ -74,7 +74,7 @@ Obj16_Slide:
 	moveq	#SndID_HTZLiftClick,d0
 	jsr	(PlaySound).w
 +
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	subq.w	#1,objoff_34(a0)
 	bne.s	+	; rts
 	addq.b	#2,routine_secondary(a0)
@@ -92,8 +92,7 @@ Obj16_Slide:
 ; ===========================================================================
 ; loc_21EC2:
 Obj16_Fall:
-	jsr	(ObjectMove).l
-	addi.w	#$38,y_vel(a0)
+	jsr	(ObjectMoveAndFall).w
 	move.w	(Camera_Max_Y_pos).w,d0
 	addi.w	#screen_height,d0
 	cmp.w	y_pos(a0),d0

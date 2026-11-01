@@ -2,8 +2,6 @@
 ; Subroutine to collide Sonic/Tails with the top of a platform
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-;
 ; input variables:
 ; d1 = object width
 ; d3 = object height / 2
@@ -49,8 +47,6 @@ loc_19C80:
 ; Subroutine to collide Sonic/Tails with the top of a sloped platform like a seesaw
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-;
 ; input variables:
 ; d1 = object width
 ; d3 = object height

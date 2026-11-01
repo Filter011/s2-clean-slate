@@ -74,13 +74,13 @@ Obj50_Init:
 ; loc_2CDA2:
 Obj50_Main:
 	lea	Ani_obj50(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	moveq	#0,d0
 	move.b	routine_secondary(a0),d0
 	move.w	Obj50_Main_Index(pc,d0.w),d1
 	jsr	Obj50_Main_Index(pc,d1.w)
 	bsr.w	Obj50_ControlWing
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_2CDC2:
 Obj50_Main_Index: offsetTable
@@ -97,18 +97,18 @@ Obj50_Wing:
 	btst	#status.npc.no_balancing,status(a1)	; is parent object marked as destroyed?
 	bne.s	JmpTo48_DeleteObject		; if yes, branch
 	lea	Ani_obj50(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 
 JmpTo48_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_2CDF4:
 Obj50_Bullet:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_obj50(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; wait and do nothing until on screen
 ; loc_2CE06:
@@ -189,7 +189,7 @@ Obj50_FollowPlayer:
 	move.w	#$100,d0	; $100 is object's max x...
 	move.w	d0,d1		; ...and y velocity
 	jsr	(Obj_CapSpeed).l
-	jmp	(ObjectMove).l
+	jmp	(ObjectMove).w
 ; ===========================================================================
 ; word_2CEE6:
 Obj50_Speeds:
@@ -227,7 +227,7 @@ Obj50_GoAway:
 ; ===========================================================================
 
 BranchTo_JmpTo20_ObjectMove ; BranchTo
-	jmp	(ObjectMove).l
+	jmp	(ObjectMove).w
 ; ===========================================================================
 ; loc_2CF32:
 Obj50_ControlWing:

@@ -50,7 +50,7 @@ loc_38404:
 	blo.s	loc_38452
 
 loc_3841C:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	jsr	(ObjCheckFloorDist).l
 	cmpi.w	#-8,d1
 	blt.s	loc_38444
@@ -58,40 +58,40 @@ loc_3841C:
 	bge.s	loc_38444
 	add.w	d1,y_pos(a0)
 	lea	Ani_objA1(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38444:
 	addq.b	#2,routine(a0)
 	move.b	#$3B,objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38452:
 	addq.b	#4,routine(a0)
 	move.b	#3,mapping_frame(a0)
 	move.b	#8,objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38466:
 	subq.b	#1,objoff_2A(a0)
 	bmi.s	loc_38470
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38470:
 	subq.b	#2,routine(a0)
 	neg.w	x_vel(a0)
 	bchg	#status.npc.x_flip,status(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38482:
 	subq.b	#1,objoff_2A(a0)
 	bmi.s	loc_3848C
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3848C:
@@ -100,7 +100,7 @@ loc_3848C:
 	bsr.w	ObjA1_LoadPincers
 
 BranchTo5_JmpTo39_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; ----------------------------------------------------------------------------
 ; Object A2 - Slicer's pincers from MTZ
@@ -121,7 +121,7 @@ ObjA2_Index:	offsetTable
 ; loc_384B6:
 ObjA2_Init:
 	bsr.w	LoadSubObject
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 ObjA2_Main:
@@ -136,10 +136,10 @@ ObjA2_Main:
 	move.b	routine_secondary(a0),d0
 	move.w	off_384F6(pc,d0.w),d1
 	jsr	off_384F6(pc,d1.w)
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_objA2(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 off_384F6:	offsetTable
 		offsetTableEntry.w +
@@ -164,10 +164,10 @@ loc_3851A:
 ObjA2_Main2:
 	subq.w	#1,objoff_2A(a0)
 	bmi.w	JmpTo64_DeleteObject
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	lea	Ani_objA2(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 ObjA1_LoadPincers:

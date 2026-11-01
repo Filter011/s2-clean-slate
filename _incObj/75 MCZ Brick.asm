@@ -12,7 +12,7 @@ Obj75:
 ; ===========================================================================
 +
 	move.w	#object_display_list_size*5,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ; off_28BE8:
 Obj75_Index:	offsetTable
@@ -128,12 +128,12 @@ loc_28D3E:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	+
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 +
 	movea.l	objoff_3C(a0),a1 ; a1=object
-	jsr	(DeleteObject2).l
-	jmp	(DeleteObject).l
+	jsr	(DeleteObject2).w
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_28D6C:
@@ -144,4 +144,4 @@ loc_28D6C:
 	moveq	#$11,d3
 	move.w	x_pos(a0),d4
 	jsr	(SolidObject).l
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w

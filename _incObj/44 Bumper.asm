@@ -82,5 +82,5 @@ return_1F83C:
 
 loc_1F83E:
 	lea	Ani_obj44(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w

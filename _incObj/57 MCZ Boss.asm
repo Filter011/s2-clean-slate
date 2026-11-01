@@ -132,7 +132,7 @@ Obj57_Main_Sub0_Standard:
 	bsr.w	AnimateBoss
 	bsr.w	Obj57_TransferPositions
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ;loc_3116E:
 Obj57_Main_Sub2: ; boss moving down, stuff falling down
@@ -151,7 +151,7 @@ Obj57_Main_Sub2_Standard:
 	bsr.w	AnimateBoss
 	bsr.w	Obj57_TransferPositions
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ;loc_311AA:
 Obj57_Main_Sub4: ; moving down, stop stuff falling down
@@ -190,7 +190,7 @@ Obj57_Main_Sub4_Standard:
 	bsr.w	AnimateBoss
 	bsr.w	Obj57_TransferPositions
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ;loc_3124A:
 Obj57_Main_Sub6: ; digger transition (rotation), moving back and forth
@@ -245,7 +245,7 @@ Obj57_Main_Sub6_Standard:
 	bsr.w	AnimateBoss
 	bsr.s	Obj57_TransferPositions
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ;loc_3130A:
 Obj57_TransferPositions:
@@ -431,7 +431,7 @@ Obj57_Main_Sub8_Standard:
 	move.w	(Boss_X_pos).w,x_pos(a0)
 	bsr.w	Obj57_TransferPositions
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ;loc_31526:
 Obj57_Main_SubA: ; slowly hovering down, no explosions
@@ -469,7 +469,7 @@ Obj57_Main_SubA: ; slowly hovering down, no explosions
 +
 	clr.w	(Boss_Y_vel).w
 	jsr	(PlayLevelMusic).w
-	jsr	(LoadPLC_AnimalExplosion).l
+	jsr	(LoadPLC_AnimalExplosion).w
 ;loc_3158A:
 Obj57_Main_SubA_Standard:
 	bsr.w	Boss_MoveObject
@@ -478,7 +478,7 @@ Obj57_Main_SubA_Standard:
 	move.w	(Boss_X_pos).w,x_pos(a0)
 	bsr.w	Obj57_TransferPositions
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ;loc_315A6:
 Obj57_Main_SubC: ; moving away fast
@@ -502,16 +502,16 @@ Obj57_Main_SubC_Standard:
 	bsr.w	AnimateBoss
 	bsr.w	Obj57_TransferPositions
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 
 JmpTo56_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ;loc_315F2:
 Obj57_FallingStuff:	; Spikes & Stones
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	subi.w	#$28,sub2_y_pos(a0)	; decrease gravity
 	cmpi.w	#$6F0,y_pos(a0)	; if below boundary, delete
 	bgt.s	JmpTo56_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w

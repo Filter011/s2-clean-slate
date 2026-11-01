@@ -42,7 +42,7 @@ loc_3805E:
 	blo.s	loc_380AE
 
 loc_38068:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	jsr	(ObjCheckFloorDist).l
 	cmpi.w	#-8,d1
 	blt.s	loc_38096
@@ -52,8 +52,8 @@ loc_38068:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	loc_3809A
 	lea	Ani_obj9F(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38096:
@@ -63,14 +63,14 @@ loc_3809A:
 	addq.b	#2,routine(a0)
 	move.b	#0,mapping_frame(a0)
 	move.w	#$3B,objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_380AE:
 	move.b	#6,routine(a0)
 	move.b	#0,mapping_frame(a0)
 	move.w	#8,objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_380C4:
@@ -90,13 +90,13 @@ loc_380DA:
 loc_380E4:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	loc_380EE
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_380EE:
 	subq.b	#2,routine(a0)
 	move.w	#$140,objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_380FC:
@@ -104,7 +104,7 @@ loc_380FC:
 	move.b	routine_secondary(a0),d0
 	move.w	off_3810E(pc,d0.w),d1
 	jsr	off_3810E(pc,d1.w)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 off_3810E:	offsetTable
 		offsetTableEntry.w loc_38114	; 0
@@ -181,7 +181,7 @@ ObjA0_Init:
 loc_38198:
 	lsr.w	#1,d0
 	move.b	byte_381A4(pc,d0.w),objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 byte_381A4:
 	dc.b   0	; 0
@@ -203,7 +203,7 @@ loc_381AC:
 	move.b	routine_secondary(a0),d0
 	move.w	off_381C8(pc,d0.w),d1
 	jsr	off_381C8(pc,d1.w)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 off_381C8:	offsetTable
 		offsetTableEntry.w loc_381E0	; 0
@@ -215,7 +215,7 @@ off_381C8:	offsetTable
 loc_381D0:
 	move.b	#4,routine(a0)
 	move.w	#$40,objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_381E0:
@@ -260,7 +260,7 @@ byte_38222:
 ; ===========================================================================
 
 loc_3822A:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	subq.b	#1,objoff_2A(a0)
 	ble.s	loc_38238
 	rts
@@ -285,7 +285,7 @@ loc_3824E:
 ; ===========================================================================
 
 loc_38258:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	subq.b	#1,objoff_2B(a0)
 	ble.s	loc_38266
 	rts
@@ -300,14 +300,14 @@ loc_38266:
 
 loc_3827A:
 	addq.w	#4,sp
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_38280:
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	subq.w	#1,objoff_2A(a0)
 	bmi.w	JmpTo64_DeleteObject
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38292:

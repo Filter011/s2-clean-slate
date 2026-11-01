@@ -27,7 +27,7 @@ loc_3BC3C:
 	move.w	#$40,objoff_2A(a0)
 	bsr.w	loc_3BCF8
 +
-	jmp	(MarkObjGone3).l
+	jmp	(MarkObjGone3).w
 ; ===========================================================================
 
 loc_3BC50:
@@ -35,7 +35,7 @@ loc_3BC50:
 	move.b	routine_secondary(a0),d0
 	move.w	off_3BC62(pc,d0.w),d1
 	jsr	off_3BC62(pc,d1.w)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 off_3BC62:	offsetTable
 		offsetTableEntry.w loc_3BC6C	; 0
@@ -70,7 +70,7 @@ word_3BCA8:
 
 loc_3BCAC:
 	lea	Ani_objBD(pc),a1
-	jmp	(AnimateSprite).l
+	jmp	(AnimateSprite).w
 ; ===========================================================================
 
 loc_3BCB6:
@@ -87,18 +87,18 @@ loc_3BCC0:
 
 loc_3BCCC:
 	lea	Ani_objBD(pc),a1
-	jmp	(AnimateSprite).l
+	jmp	(AnimateSprite).w
 ; ===========================================================================
 
 loc_3BCD6:
 	bsr.w	loc_3B7BC
 	addq.w	#4,sp
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_3BCDE:
 	move.w	x_pos(a0),-(sp)
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	moveq	#$23,d1
 	moveq	#4,d2
 	moveq	#5,d3

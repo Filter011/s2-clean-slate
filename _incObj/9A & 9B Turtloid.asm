@@ -40,7 +40,7 @@ off_3797A:	offsetTable
 
 loc_37982:
 	move.w	x_pos(a0),-(sp)
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bsr.w	loc_36776
 	moveq	#$18,d1
 	moveq	#8,d2

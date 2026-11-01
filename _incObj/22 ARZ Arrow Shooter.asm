@@ -43,8 +43,8 @@ Obj22_Main:
 ; loc_25706:
 Obj22_Animate:
 	lea	Ani_obj22(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_25714:
 Obj22_DetectPlayer:
@@ -76,8 +76,8 @@ Obj22_ShootArrow:
 +
 	subq.b	#2,routine(a0)
 	lea	Ani_obj22(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_2577A:
 Obj22_Arrow_Init:
@@ -97,18 +97,18 @@ Obj22_Arrow_Init:
 	jsr	(PlaySound).w
 ; loc_257BE:
 Obj22_Arrow:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	btst	#status.npc.x_flip,status(a0)
 	bne.s	loc_257DE
 	moveq	#-8,d3
 	bsr.w	ObjCheckLeftWallDist
 	tst.w	d1
 	bmi.s	BranchTo_JmpTo27_DeleteObject
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 BranchTo_JmpTo27_DeleteObject ; BranchTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_257DE:
@@ -116,4 +116,4 @@ loc_257DE:
 	bsr.w	ObjCheckRightWallDist
 	tst.w	d1
 	bmi.s	BranchTo_JmpTo27_DeleteObject
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w

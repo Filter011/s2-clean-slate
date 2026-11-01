@@ -9,8 +9,7 @@ Obj5C:
 	moveq	#0,d0
 	move.b	routine(a0),d0
 	move.w	Obj5C_Index(pc,d0.w),d1
-	jsr	Obj5C_Index(pc,d1.w)
-	jmp	(MarkObjGone).l
+	jmp	Obj5C_Index(pc,d1.w)
 ; ===========================================================================
 ; off_2D3A6:
 Obj5C_Index:	offsetTable
@@ -31,8 +30,8 @@ Obj5C_Init:
 ; loc_2D3E4:
 Obj5C_Main:
 	lea	Ani_obj5C(pc),a1
-	jsr	(AnimateSprite).l
-	jsr	(ObjectMove).l
+	jsr	(AnimateSprite).w
+	jsr	(ObjectMove).w
 	addi.w	#$18,y_vel(a0)	; apply gravity
 	move.w	Obj5C_initial_y_pos(a0),d0
 	cmp.w	y_pos(a0),d0	; has object reached its initial y position?
@@ -49,4 +48,4 @@ Obj5C_Main:
 	bmi.s	+	; rts	; if not, branch
 	move.b	#2,anim(a0)	; use closed mouth animation
 +
-	rts
+	jmp	(MarkObjGone).w

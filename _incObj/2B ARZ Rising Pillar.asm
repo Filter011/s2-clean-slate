@@ -37,7 +37,7 @@ Obj2B_Main:
 	move.b	status(a0),d0
 	andi.b	#standing_mask,d0
 	bne.s	loc_25ACE
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_25ACE:
@@ -121,16 +121,16 @@ loc_25B8E:
 ; ===========================================================================
 
 loc_25B9A:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	addi.w	#$18,y_vel(a0)
 
 loc_25BA4:
 	_btst	#render_flags.on_screen,render_flags(a0)
 	_beq.s	JmpTo28_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 JmpTo28_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 byte_25BB0:
 	dc.b   0

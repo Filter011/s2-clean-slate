@@ -29,12 +29,12 @@ loc_3B980:
 	cmpi.w	#$C0,d2
 	blo.s	++
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 +
 	addq.b	#2,routine(a0)
 	move.w	#2,objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3B9AA:
@@ -54,7 +54,7 @@ loc_3B9C0:
 	move.w	#$60,objoff_2A(a0)
 	bsr.s	loc_3B9D8
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3B9D8:

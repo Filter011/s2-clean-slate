@@ -7,7 +7,7 @@ Obj86:
 	move.b	routine(a0),d0
 	move.w	Obj86_Index(pc,d0.w),d1
 	jsr	Obj86_Index(pc,d1.w)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_2B152:
 Obj86_Index:	offsetTable
@@ -61,7 +61,7 @@ loc_2B1B6:
 
 loc_2B1FE:
 	lea	Ani_obj86(pc),a1
-	jmp	(AnimateSprite).l
+	jmp	(AnimateSprite).w
 ; ===========================================================================
 
 return_2B208:
@@ -178,7 +178,7 @@ Obj86_HorizontalType:
 
 loc_2B33A:
 	lea	Ani_obj86(pc),a1
-	jmp	(AnimateSprite).l
+	jmp	(AnimateSprite).w
 ; ===========================================================================
 
 loc_2B35C:

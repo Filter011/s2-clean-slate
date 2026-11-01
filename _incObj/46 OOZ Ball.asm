@@ -79,12 +79,12 @@ Obj46_Inactive:
 	neg.w	objoff_14(a0)
 +
 	bsr.w	loc_24BF0
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_24B38:
 Obj46_Moving:
 	move.w	x_pos(a0),-(sp)
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	btst	#status.npc.y_flip,status(a0)
 	beq.s	loc_24B8C
 	addi.w	#$18,y_vel(a0)
@@ -127,7 +127,7 @@ loc_24BA4:
 	move.w	(sp)+,d4
 	jsr	(SolidObject).l
 	bsr.w	loc_24BF0
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_24BC4:
@@ -135,12 +135,11 @@ loc_24BC4:
 	lea	(Object_Respawn_Table).w,a2
 	moveq	#0,d0
 	move.b	respawn_index(a0),d0
-	beq.s	BranchTo_JmpTo25_DeleteObject
+	beq.s	JmpTo25_DeleteObject
 	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 
 JmpTo25_DeleteObject ; JmpTo
-BranchTo_JmpTo25_DeleteObject ; BranchTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_24BDC:
 Obj46_PressureSpring:
@@ -150,7 +149,7 @@ Obj46_PressureSpring:
 	bne.s	+
 	clr.b	objoff_30(a0)
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_24BF0:

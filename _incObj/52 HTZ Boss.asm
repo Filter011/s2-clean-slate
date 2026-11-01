@@ -87,7 +87,7 @@ loc_2FD3A:
 loc_2FD50:
 	move.w	(Boss_Y_pos).w,y_pos(a0)
 	bsr.w	loc_300A4
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ; loc_2FD5E:
@@ -113,7 +113,7 @@ loc_2FDAA:
 	lea	Ani_obj52(pc),a1
 	bsr.w	AnimateBoss
 	bsr.w	loc_300A4
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ; loc_2FDC0:
@@ -138,7 +138,7 @@ Obj52_Mobile_BeginLower:
 	move.w	#$E0,(Boss_Y_vel).w
 	addq.b	#2,boss_routine(a0)
 	bsr.w	loc_2FEDE
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ; loc_2FE0E:
@@ -215,7 +215,7 @@ loc_2FECA:
 loc_2FED0:
 	move.w	(Boss_Y_pos).w,y_pos(a0)
 	bsr.w	loc_300A4
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_2FEDE:
@@ -264,8 +264,8 @@ loc_2FF50:
 	move.w	x_vel(a0),d1
 	add.w	d1,x_pos(a0)
 	lea	Ani_obj52(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 ; loc_2FF66:
@@ -350,8 +350,8 @@ loc_30008:
 
 loc_30064:
 	lea	Ani_obj52(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 ; loc_30072:
@@ -426,13 +426,13 @@ Obj52_Mobile_Defeated:
 	and.b	(Vint_runcount+3).w,d0
 	bne.w	JmpTo36_DisplaySprite
 	bsr.w	Obj52_CreateSmoke
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ; loc_3013A:
 Obj52_Mobile_UpdateExplosion:
 	bsr.w	Boss_LoadExplosion
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_30142:
@@ -466,7 +466,7 @@ loc_30182:
 	bne.s	loc_3019C
 	cmpi.w	#$578,y_pos(a0)
 	bgt.s	loc_301AA
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3019C:
@@ -474,12 +474,12 @@ loc_3019C:
 	bgt.s	loc_301AA
 
 BranchTo_JmpTo36_DisplaySprite ; BranchTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_301AA:
 	move.w	#$3160,(Camera_Max_X_pos).w
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 ; loc_301B4:
@@ -529,6 +529,6 @@ loc_3022A:
 	move.l	d3,y_pos(a0)
 
 JmpTo36_DisplaySprite ; JmpTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 JmpTo53_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

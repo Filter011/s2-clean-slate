@@ -4,8 +4,6 @@
 ; and also applies gravity to its speed
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_16380: ObjectFall:
 ObjectMoveAndFall:
 	addi.w	#$38,y_vel(a0)	; increase vertical speed (apply gravity)
@@ -16,8 +14,6 @@ ObjectMoveAndFall:
 ; This moves the object horizontally and vertically
 ; but does not apply gravity to it
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_163AC: SpeedToPos:
 ObjectMove:

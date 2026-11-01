@@ -89,7 +89,7 @@ loc_2673C:
 	move.w	d0,y_pos(a0)
 
 BranchTo_JmpTo18_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_2674C:
@@ -171,7 +171,7 @@ loc_2683A:
 	cmpi.b	#7,mapping_frame(a0)
 	beq.s	JmpTo30_DeleteObject
 +
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 JmpTo30_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

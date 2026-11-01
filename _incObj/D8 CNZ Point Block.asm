@@ -53,8 +53,8 @@ loc_2C724:
 
 loc_2C740:
 	lea	Ani_objD8(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_2C74E:
@@ -168,10 +168,10 @@ loc_2C87E:
 
 loc_2C884:
 	lea	Ani_objD8(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	cmpi.b	#3,anim(a0)
 	blo.s	JmpTo46_DeleteObject
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 
 JmpTo46_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

@@ -76,7 +76,7 @@ loc_2A888:
 	move.b	d0,mapping_frame(a0)
 
 BranchTo_JmpTo26_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_2A894:
@@ -170,7 +170,7 @@ loc_2A966:
 	move.b	d0,mapping_frame(a0)
 
 BranchTo2_JmpTo26_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_2A990:

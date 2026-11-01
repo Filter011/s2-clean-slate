@@ -52,7 +52,7 @@ Obj30_Init:
 	beq.s	+
 	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 +
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_23944:
 Obj30_Main:
@@ -68,7 +68,7 @@ Obj30_Main:
 	rts
 
 JmpTo2_MarkObjGone3 ; JmpTo
-	jmp	(MarkObjGone3).l
+	jmp	(MarkObjGone3).w
 ; ===========================================================================
 ; off_23968:
 Obj30_Modes:	offsetTable

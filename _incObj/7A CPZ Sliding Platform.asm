@@ -99,14 +99,14 @@ Obj7A_Main:
 	cmpi.w	#$280,d0
 	bhi.s	loc_294C4
 +
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_294C4:
 	movea.l	objoff_3C(a0),a1 ; a1=object
 	cmpa.l	a0,a1
 	beq.s	+
-	jsr	(DeleteObject2).l
+	jsr	(DeleteObject2).w
 +
 	lea	(Object_Respawn_Table).w,a2
 	moveq	#0,d0
@@ -115,13 +115,13 @@ loc_294C4:
 	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 
 JmpTo39_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_294EA:
 Obj7A_SubObject:
 	bsr.s	loc_294F4
 	bsr.s	loc_2953E
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_294F4:

@@ -84,7 +84,7 @@ loc_28432:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	+
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 +
 	lea	(Object_Respawn_Table).w,a2
@@ -93,7 +93,7 @@ loc_28432:
 	beq.s	+
 	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 +
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_284BC:
@@ -124,7 +124,7 @@ loc_284BC:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	+
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 +
 	lea	(Object_Respawn_Table).w,a2
@@ -133,4 +133,4 @@ loc_284BC:
 	beq.s	+
 	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 +
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

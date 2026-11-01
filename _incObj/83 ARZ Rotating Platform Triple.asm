@@ -22,7 +22,7 @@ Obj83:
 ; ===========================================================================
 .isMultispriteObject:
 	move.w	#object_display_list_size*5,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ; off_2A51C:
 Obj83_Index:	offsetTable
@@ -200,12 +200,12 @@ Obj83_Main:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	.objectOffscreen
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 .objectOffscreen:
 	movea.l	Obj83_childobjptr_chains(a0),a1 ; a1=object
-	jsr	(DeleteObject2).l
-	jmp	(DeleteObject).l
+	jsr	(DeleteObject2).w
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_2A72E:
 Obj83_UpdateChainSpritePosition:
@@ -235,4 +235,4 @@ Obj83_PlatformSubObject:
 	jsr	(PlatformObject).l
 	move.w	x_pos(a0),Obj83_last_x_pos(a0)
 	move.w	Obj83_initial_x_pos(a0),d0
-	jmp	(MarkObjGone2).l
+	jmp	(MarkObjGone2).w

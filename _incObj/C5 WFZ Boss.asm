@@ -67,7 +67,7 @@ ObjC5_CaseBoundary:
 	move.w	d0,objoff_34(a0)
 	addi.w	#$C0,d0			; Max Right Position
 	move.w	d0,objoff_36(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseWaitStart:
@@ -75,7 +75,7 @@ ObjC5_CaseWaitStart:
 	addi.w	#$20,d2
 	cmpi.w	#$40,d2			; How far away Sonic is to start the boss
 	blo.s	ObjC5_CaseStart
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseStart:
@@ -98,13 +98,13 @@ ObjC5_CaseStart:
 	move.w	#$5A,objoff_2A(a0)	; How long for the boss music to start playing and the boss to start
 	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseWaitDown:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	ObjC5_CaseSpeedDown
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseSpeedDown:
@@ -112,20 +112,20 @@ ObjC5_CaseSpeedDown:
 	move.w	#$60,objoff_2A(a0)	; How long the laser carrier goes down
 	moveq	#MusID_Boss,d0
 	jsr	(PlayMusic).w
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseDown:
 	subq.w	#1,objoff_2A(a0)
 	beq.s	ObjC5_CaseStopDown
-	jsr	(ObjectMove).l
-	jmp	(DisplaySprite).l
+	jsr	(ObjectMove).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseStopDown:
 	addq.b	#2,routine_secondary(a0)
 	clr.w	y_vel(a0)		; stop the laser carrier from going down
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseXSpeed:
@@ -140,7 +140,7 @@ ObjC5_CasePMLoader:
 	move.w	d1,x_vel(a0)
 	bset	#status.npc.misc,status(a0)		; makes the platform maker load
 	move.w	#$70,objoff_2A(a0)	; how long to go back and forth before letting out laser
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseBoundaryChk:			; waits and makes sure the carrier does not go beyond the limit
@@ -162,20 +162,20 @@ ObjC5_CaseNegSpeed:
 	neg.w	x_vel(a0)
 
 ObjC5_CaseMoveDisplay:
-	jsr	(ObjectMove).l
-	jmp	(DisplaySprite).l
+	jsr	(ObjectMove).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseOpeningAnim:
 	addq.b	#2,routine_secondary(a0)
 	clr.b	anim(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseAnimate:
 	lea	Ani_objC5(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseLSLoad:		; loads up the laser shooter (LS)
@@ -183,7 +183,7 @@ ObjC5_CaseLSLoad:		; loads up the laser shooter (LS)
 	move.w	#$E,objoff_2A(a0)	; Time the laser shooter moves down
 	movea.w	objoff_3C(a0),a1 ; a1=object (laser shooter)
 	move.b	#4,routine_secondary(a1)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseLSDown:
@@ -191,7 +191,7 @@ ObjC5_CaseLSDown:
 	beq.s	ObjC5_CaseAddCollision
 	movea.w	objoff_3C(a0),a1 ; a1=object (laser shooter)
 	addq.w	#1,y_pos(a1)	; laser shooter down speed
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseAddCollision:
@@ -200,27 +200,27 @@ ObjC5_CaseAddCollision:
 	bset	#status.npc.p2_standing,status(a0)		; makes the hit sound and flashes happen only once when you hit it
 	bset	#status.npc.p2_pushing,status(a0)		; makes sure collision gets restored
 	move.b	#6,collision_flags(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseWaitLoadLaser:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	ObjC5_CaseLoadLaser
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseLoadLaser:
 	addq.b	#2,routine_secondary(a0)
 	lea	ChildObject_ObjC5Laser(pc),a2
 	bsr.w	LoadChildObject		; loads laser
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseWaitMove:
 	movea.w	parent(a0),a1 ; a1=object
 	btst	#status.npc.misc,status(a1)		; waits to check if laser fired
 	bne.s	ObjC5_CaseLaserSpeed
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseLaserSpeed:
@@ -234,7 +234,7 @@ ObjC5_CaseLaserSpeed:
 
 ObjC5_CaseLaserSpeedSet:
 	move.w	d1,x_vel(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseBoundaryLaserChk:		; make sure you stay in range when firing laser
@@ -256,8 +256,8 @@ ObjC5_CaseLaserStopMove:
 	clr.w	x_vel(a0)	; stop moving
 
 ObjC5_CaseLaserMoveDisplay:
-	jsr	(ObjectMove).l
-	jmp	(DisplaySprite).l
+	jsr	(ObjectMove).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseStopLaserDelete:		; stops collision and deletes laser
@@ -268,8 +268,8 @@ ObjC5_CaseStopLaserDelete:		; stops collision and deletes laser
 	bclr	#status.npc.p2_pushing,status(a0)
 	clr.b	collision_flags(a0)	; no more collision
 	movea.w	parent(a0),a1 		; a1=object (laser)
-	jsr	(DeleteObject2).l	; delete the laser
-	jmp	(DisplaySprite).l
+	jsr	(DeleteObject2).w	; delete the laser
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseLSUp:
@@ -277,19 +277,19 @@ ObjC5_CaseLSUp:
 	beq.s	ObjC5_CaseClosingAnim
 	movea.w	objoff_3C(a0),a1 ; a1=object (laser shooter)
 	subq.w	#1,y_pos(a1)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseClosingAnim: ;sets which animation to do
 	addq.b	#2,routine_secondary(a0)
 	move.b	#1,anim(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseStartOver:
 	move.b	#8,routine_secondary(a0)
 	bsr.w	ObjC5_CaseXSpeed
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_CaseDefeated:
@@ -299,7 +299,7 @@ ObjC5_CaseDefeated:
 	subq.w	#1,objoff_30(a0)	; timer
 	bmi.s	ObjC5_End
 	jsr	(Boss_LoadExplosion).l
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_End:	; play music and change camera speed
@@ -308,7 +308,7 @@ ObjC5_End:	; play music and change camera speed
 	move.w	#$720,d0
 	move.w	d0,(Camera_Max_Y_pos).w
 	move.w	d0,(Camera_Max_Y_pos_target).w
-	jsr	(DeleteObject).l
+	jsr	(DeleteObject).w
 	addq.w	#4,sp
 	rts
 ; ===========================================================================
@@ -336,7 +336,7 @@ ObjC5_LaserWallIndex: offsetTable
 ObjC5_LaserWallMappings:
 	addq.b	#2,routine_secondary(a0)
 	move.b	#$C,mapping_frame(a0)	; loads the laser wall from the WFZ boss art
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_LaserWallWaitDelete:
@@ -345,13 +345,13 @@ ObjC5_LaserWallWaitDelete:
 	bne.s	ObjC5_LaserWallTimerSet
 	bchg	#0,objoff_2F(a0)	; makes it "flash" if set it won't flash
 	bne.w	return_37A48
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_LaserWallTimerSet:	; sets a small timer
 	addq.b	#2,routine_secondary(a0)
 	move.b	#4,objoff_30(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_LaserWallDelete:
@@ -373,7 +373,7 @@ ObjC5_LaserWallDelete:
 
 ObjC5_LaserWallDisplay:
 	bclr	#0,objoff_2F(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_PlatformReleaser:
@@ -394,35 +394,35 @@ ObjC5_PlatformReleaserInit:
 	addq.b	#2,routine_secondary(a0)
 	move.b	#5,mapping_frame(a0)
 	addq.w	#8,y_pos(a0)		; Move down a little
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_PlatformReleaserWaitDown:
 	movea.w	objoff_2C(a0),a1 ; a1=object laser case
 	btst	#status.npc.misc,status(a1)		; checks if laser case is done moving down (so it starts loading the platforms)
 	bne.s	ObjC5_PlatformReleaserSetDown
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_PlatformReleaserSetDown:
 	addq.b	#2,routine_secondary(a0)
 	move.w	#$40,objoff_2A(a0)	; time to go down
 	move.w	#$40,y_vel(a0)		; speed to go down
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_PlatformReleaserDown:
 	subq.w	#1,objoff_2A(a0)
 	beq.s	ObjC5_PlatformReleaserStop
-	jsr	(ObjectMove).l
-	jmp	(DisplaySprite).l
+	jsr	(ObjectMove).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_PlatformReleaserStop:
 	addq.b	#2,routine_secondary(a0)
 	clr.w	y_vel(a0)
 	move.w	#$10,objoff_2A(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_PlatformReleaserLoadWait:
@@ -449,13 +449,13 @@ ObjC5_PlatformReleaserLoadP:	; P=Platforms
 	move.b	objoff_2E(a0),objoff_2E(a1)
 
 BranchTo8_JmpTo45_DisplaySprite ; BranchTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_PlatformReleaserDestroyP: 	; P=Platforms
 	addq.b	#2,routine_secondary(a0)
 	bset	#status.npc.p1_pushing,status(a0)		; destroy platforms
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_PlatformReleaserDelete:
@@ -463,7 +463,7 @@ ObjC5_PlatformReleaserDelete:
 	cmpi.b	#ObjID_WFZBoss,id(a1)
 	bne.w	JmpTo64_DeleteObject
 	jsr	(Boss_LoadExplosion).l
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_Platform:
@@ -472,10 +472,10 @@ ObjC5_Platform:
 	move.w	ObjC5_PlatformIndex(pc,d0.w),d1
 	jsr	ObjC5_PlatformIndex(pc,d1.w)
 	lea	Ani_objC5(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	tst.b	(a0)
 	beq.w	return_37A48
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ObjC5_PlatformIndex: offsetTable
 	offsetTableEntry.w ObjC5_PlatformInit			; 0 - Selects mappings, anim ation, y speed and loads the object that hurts Sonic (by spiky area)
@@ -527,7 +527,7 @@ ObjC5_PlatformChangeY:	; give it that curving feel
 
 ObjC5_PlatformMakeSolid:	; makes into a platform and moves
 	move.w	x_pos(a0),-(sp)
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	moveq	#$10,d1
 	moveq	#8,d2
 	moveq	#8,d3
@@ -547,7 +547,7 @@ ObjC5_PlatformExplode:
 	move.b	#ObjID_BossExplosion,id(a0) ; load 0bj58 (explosion)
 	clr.b	routine(a0)
 	movea.w	objoff_3C(a0),a1 ; a1=object (invisible hurting thing)
-	jsr	(DeleteObject2).l
+	jsr	(DeleteObject2).w
 	addq.w	#4,sp
 	rts
 ; ===========================================================================
@@ -598,20 +598,20 @@ ObjC5_LaserShooterIndex: offsetTable
 ObjC5_LaserShooterInit:
 	addq.b	#2,routine_secondary(a0)
 	move.b	#4,mapping_frame(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_LaserShooterFollow:
 	movea.w	objoff_2C(a0),a1 ; a1=object (laser case)
 	move.w	x_pos(a1),x_pos(a0)
 	move.w	y_pos(a1),y_pos(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_LaserShooterDown:
 	movea.w	objoff_2C(a0),a1 ; a1=object (laser case)
 	move.w	x_pos(a1),x_pos(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_Laser:
@@ -624,7 +624,7 @@ ObjC5_Laser:
 	jsr	ObjC5_LaserIndex(pc,d1.w)
 	bchg	#0,objoff_2F(a0)
 	bne.w	return_37A48
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ObjC5_LaserIndex: offsetTable
 	offsetTableEntry.w ObjC5_LaserInit	; 0 - Loads mappings and collision and such
@@ -747,7 +747,7 @@ ObjC5_RobotnikInit:
 	move.w	#$4E6,y_pos(a0)
 	lea	ChildObject_ObjC5RobotnikPlatform(pc),a2
 	bsr.w	LoadChildObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_RobotnikAnimate:
@@ -755,27 +755,27 @@ ObjC5_RobotnikAnimate:
 	btst	#status.npc.p1_pushing,status(a1)
 	bne.s	ObjC5_RobotnikTimer
 	lea	Ani_objC5_objC6(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_RobotnikTimer:		; Increase routine and set timer
 	addq.b	#2,routine_secondary(a0)
 	move.w	#$C0,objoff_2A(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_RobotnikDown:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	ObjC5_RobotnikDelete
 	addq.w	#1,y_pos(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_RobotnikDelete:		; Deletes Robotnik and the platform he's on
 	movea.w	parent(a0),a1 ; a1=object (Robotnik Platform)
-	jsr	(DeleteObject2).l
-	jmp	(DeleteObject).l
+	jsr	(DeleteObject2).w
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 ObjC5_RobotnikPlatform:	; Just displays the platform and move accordingly to the Robotnik object
@@ -783,7 +783,7 @@ ObjC5_RobotnikPlatform:	; Just displays the platform and move accordingly to the
 	move.w	y_pos(a1),d0
 	addi.w	#$26,d0
 	move.w	d0,y_pos(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjC5_HandleHits:

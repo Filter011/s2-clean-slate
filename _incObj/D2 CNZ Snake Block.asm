@@ -33,7 +33,7 @@ ObjD2_Main:
 	tst.w	objoff_38(a0)
 	beq.s	+
 	subq.w	#1,objoff_38(a0)
-	jmp	(MarkObjGone3).l
+	jmp	(MarkObjGone3).w
 ; ===========================================================================
 +
 	subq.w	#1,objoff_3A(a0)
@@ -71,7 +71,7 @@ loc_2B5EC:
 	move.w	x_pos(a0),d4
 	jsr	(SolidObject).l
 	move.w	objoff_30(a0),d0
-	jmp	(MarkObjGone2).l
+	jmp	(MarkObjGone2).w
 ; ===========================================================================
 
 loc_2B60C:

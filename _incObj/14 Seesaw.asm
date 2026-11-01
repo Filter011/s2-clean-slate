@@ -8,7 +8,7 @@ Obj14:
 	move.w	Obj14_Index(pc,d0.w),d1
 	jsr	Obj14_Index(pc,d1.w)
 	move.w	objoff_30(a0),d0
-	jmp	(MarkObjGone2).l
+	jmp	(MarkObjGone2).w
 ; ===========================================================================
 ; off_2193E:
 Obj14_Index:	offsetTable
@@ -185,19 +185,19 @@ Obj14_Ball_Fly:
 	bsr.w	Obj14_Animate
 	tst.w	y_vel(a0)
 	bpl.s	loc_21BB6
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	move.w	objoff_34(a0),d0 ; d0 = bottom of seesaw y position
 	subi.w	#$2F,d0
 	cmp.w	y_pos(a0),d0
 	bgt.s	return_21BB4
-	jmp	(ObjectMoveAndFall).l
+	jmp	(ObjectMoveAndFall).w
 
 return_21BB4:
 	rts
 ; ===========================================================================
 
 loc_21BB6:
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	movea.l	objoff_3C(a0),a1 ; a1=parent object (seesaw)
 	lea	Obj14_YOffsets(pc),a2
 	moveq	#0,d0

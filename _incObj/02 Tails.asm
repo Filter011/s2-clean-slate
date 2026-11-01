@@ -126,7 +126,7 @@ Tails_Display:
 	bcc.s	Obj02_ChkInvinc
 ; loc_1BA64:
 Obj02_Display:
-	jsr	(DisplaySprite).l
+	jsr	(DisplaySprite).w
 ; loc_1BA6A:
 Obj02_ChkInvinc:	; Checks if invincibility has expired and disables it if it has.
 	btst	#status_secondary.invincible,status_secondary(a0)
@@ -156,7 +156,7 @@ Obj02_ChkShoes:		; Checks if Speed Shoes have expired and disables them if they 
 	move.w	#$80,(Tails_deceleration).w
 ; Obj02_RmvSpeed:
 	bclr	#status_secondary.speed_shoes,status_secondary(a0)
-	move.w	#MusID_SlowDown,d0	; Slow down tempo
+	moveq	#signextendB(MusID_SlowDown),d0	; Slow down tempo
 	jmp	(PlayMusic).w
 ; ===========================================================================
 ; return_1BAD2:
@@ -258,7 +258,7 @@ Obj02_MdNormal:
 	bsr.w	Tails_Move
 	bsr.w	Tails_Roll
 	bsr.w	Tails_LevelBound
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bsr.w	AnglePos
 	bra.w	Player_SlopeRepel
 ; End of subroutine Obj02_MdNormal
@@ -272,7 +272,7 @@ Obj02_MdAir:
 	bsr.w	Tails_JumpHeight
 	bsr.w	Tails_ChgJumpDir
 	bsr.w	Tails_LevelBound
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	btst	#status.player.underwater,status(a0)	; is Tails underwater?
 	beq.s	+					; if not, branch
 	subi.w	#$28,y_vel(a0)	; reduce gravity by $28 ($38-$28=$10)
@@ -286,7 +286,7 @@ Obj02_MdFly:
 	bsr.w	Tails_Flying
 	bsr.w	Tails_ChgJumpDir
 	bsr.w	Tails_LevelBound
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bsr.w	Tails_JumpAngle
     if flightCarrySonic
 	bsr.w	Tails_DoLevelCollision
@@ -306,7 +306,7 @@ Obj02_MdRoll:
 	bsr.w	Player_RollRepel
 	bsr.w	Tails_RollSpeed
 	bsr.w	Tails_LevelBound
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bsr.w	AnglePos
 	bra.w	Player_SlopeRepel
 ; End of subroutine Obj02_MdRoll
@@ -1779,7 +1779,7 @@ return_1CBC4:
 ; ---------------------------------------------------------------------------
 ; loc_1CBC6:
 Obj02_Hurt:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	addi.w	#$30,y_vel(a0)
 	btst	#status.player.underwater,status(a0)
 	beq.s	+
@@ -1795,7 +1795,7 @@ Obj02_Hurt:
 	bsr.w	Tails_RecordPos
 	bsr.w	Tails_Animate
 	bsr.w	LoadTailsDynPLC
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_1CC08:
 Tails_HurtStop:
@@ -1813,8 +1813,7 @@ Tails_HurtStop:
 	btst	#status.player.in_air,status(a0)
 	bne.s	return_1CC4E
 	moveq	#0,d0
-	move.w	d0,y_vel(a0)
-	move.w	d0,x_vel(a0)
+	move.l	d0,x_vel(a0)	; and y_vel
 	move.w	d0,inertia(a0)
 	move.b	d0,obj_control(a0)
 	move.b	#AniIDSonAni_Walk,anim(a0)
@@ -1837,11 +1836,11 @@ JmpTo2_KillCharacter ; JmpTo
 ; loc_1CC50:
 Obj02_Dead:
 	bsr.w	CheckGameOver
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	bsr.w	Tails_RecordPos
 	bsr.w	Tails_Animate
 	bsr.w	LoadTailsDynPLC
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
@@ -1870,7 +1869,7 @@ Obj02_Respawning:
 +
 	bsr.s	Tails_Animate
 	bsr.w	LoadTailsDynPLC
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ; ---------------------------------------------------------------------------

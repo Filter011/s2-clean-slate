@@ -28,7 +28,7 @@ loc_3875A:
 loc_38766:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	loc_38770
-	jmp	(MarkObjGone_P1).l
+	jmp	(MarkObjGone_P1).w
 ; ===========================================================================
 
 loc_38770:
@@ -38,7 +38,7 @@ loc_38770:
 	move.w	#2,objoff_2E(a0)
 	clr.w	objoff_2A(a0)
 	move.w	#$80,objoff_30(a0)
-	jmp	(MarkObjGone_P1).l
+	jmp	(MarkObjGone_P1).w
 ; ===========================================================================
 
 loc_38794:
@@ -75,15 +75,15 @@ loc_387E4:
 loc_387EC:
 	move.w	objoff_2E(a0),d0
 	add.w	d0,x_vel(a0)
-	jsr	(ObjectMove).l
-	jmp	(MarkObjGone_P1).l
+	jsr	(ObjectMove).w
+	jmp	(MarkObjGone_P1).w
 ; ===========================================================================
 
 loc_387FC:
 	addq.b	#2,routine(a0)
 	move.w	#$80,objoff_30(a0)
 	ori.b	#$80,collision_flags(a0)
-	jmp	(MarkObjGone_P1).l
+	jmp	(MarkObjGone_P1).w
 ; ===========================================================================
 word_38810:
 	dc.w  $100
@@ -119,38 +119,38 @@ byte_38820:
 loc_38832:
 	move.b	routine(a0),d2
 	lea	Ani_objA3_a(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	cmp.b	routine(a0),d2
 	bne.s	loc_3884A
-	jmp	(MarkObjGone_P1).l
+	jmp	(MarkObjGone_P1).w
 ; ===========================================================================
 
 loc_3884A:
 	clr.l	mapping_frame(a0) ; Clear mapping_frame, anim_frame, anim, and prev_anim.
 	clr.w	anim_frame_duration(a0)
 	move.b	#3,mapping_frame(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3885C:
 	subq.w	#1,objoff_30(a0)
 	bmi.s	loc_38870
 	lea	Ani_objA3_b(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone_P1).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone_P1).w
 ; ===========================================================================
 
 loc_38870:
 	addq.b	#2,routine(a0)
 	clr.l	mapping_frame(a0) ; Clear mapping_frame, anim_frame, anim, and prev_anim.
 	clr.w	anim_frame_duration(a0)
-	jmp	(MarkObjGone_P1).l
+	jmp	(MarkObjGone_P1).w
 ; ===========================================================================
 
 loc_38880:
 	lea	Ani_objA3_c(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone_P1).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone_P1).w
 ; ===========================================================================
 
 loc_3888E:
@@ -159,7 +159,7 @@ loc_3888E:
 	andi.b	#$7F,collision_flags(a0)
 	clr.l	mapping_frame(a0) ; Clear mapping_frame, anim_frame, anim, and prev_anim.
 	clr.w	anim_frame_duration(a0)
-	jmp	(MarkObjGone_P1).l
+	jmp	(MarkObjGone_P1).w
 ; ===========================================================================
 ; off_388AC:
 ObjA3_SubObjData:

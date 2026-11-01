@@ -11,7 +11,7 @@ Obj45:
 	move.b	routine(a0),d0
 	move.w	Obj45_Index(pc,d0.w),d1
 	jsr	Obj45_Index(pc,d1.w)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_2410A:
 Obj45_Index:	offsetTable

@@ -47,4 +47,4 @@ Obj27_Main:
 	cmpi.b	#5,mapping_frame(a0)
 	beq.w	JmpTo18_DeleteObject
 +
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w

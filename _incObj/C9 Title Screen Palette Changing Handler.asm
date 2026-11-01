@@ -87,7 +87,6 @@ Pal_1342C:	BINCLUDE "art/palettes/Title Emblem.bin"
 ; ===========================================================================
 
 loc_1344C:
-
 	move.b	(a1)+,d2
 	andi.b	#$E,d2
 	move.b	(a0),d3

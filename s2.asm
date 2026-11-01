@@ -1092,7 +1092,7 @@ Sega_WaitPalette:
 	move.l	#Vint_SEGA,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
-	jsr	(RunObjects).l
+	jsr	(RunObjects).w
 	jsr	(BuildSprites).w
 	bsr.w	Process_KosPlus_Module_Queue
 	tst.b	(SegaScr_PalDone_Flag).w
@@ -1285,7 +1285,7 @@ TitleScreen:
 	; Run it for a frame, so that it initialises.
 	move.l	#Vint_Title,(Vint_routine).w
 	bsr.w	WaitForVint
-	jsr	(RunObjects).l
+	jsr	(RunObjects).w
 	jsr	(BuildSprites).w
 
 	; Load some standard sprites.
@@ -1324,7 +1324,7 @@ TitleScreen_Loop:
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
 
-	jsr	(RunObjects).l
+	jsr	(RunObjects).w
 	bsr.w	SwScrl_Title
 	jsr	(BuildSprites).w
 
@@ -1649,7 +1649,7 @@ Level_TtlCard:
 	move.l	#Vint_TitleCard,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
-	jsr	(RunObjects).l
+	jsr	(RunObjects).w
 	jsr	(BuildSprites).w
 	bsr.w	Process_KosPlus_Module_Queue
 	move.w	(TitleCard_ZoneName+x_pos).w,d0
@@ -1723,7 +1723,7 @@ Level_FromCheckpoint:
 	jsr	(ObjectsManager).l
 	jsr	(RingsManager).l
 	jsr	(SpecialCNZBumpers).l
-	jsr	(RunObjects).l
+	jsr	(RunObjects).w
 	jsr	(BuildSprites).w
 	jsr	(AniArt_Load).l
 	bsr.w	SetLevelEndType
@@ -1787,7 +1787,7 @@ Level_MainLoop:
 	addq.w	#1,(Level_frame_counter).w ; add 1 to level timer
 	bsr.w	MoveSonicInDemo
 	bsr.w	WaterEffects
-	jsr	(RunObjects).l
+	jsr	(RunObjects).w
 	tst.w	(Level_Inactive_flag).w
 	bne.w	Level
 	bsr.w	DeformBgLayer
@@ -1833,7 +1833,7 @@ Level_MainLoop:
 	move.l	#Vint_Level,(Vint_routine).w
 	bsr.w	WaitForVint
 	bsr.w	MoveSonicInDemo
-	jsr	(RunObjects).l
+	jsr	(RunObjects).w
 	jsr	(BuildSprites).w
 	jsr	(ObjectsManager).l
 	subq.w	#1,(PalChangeSpeed).w
@@ -2516,7 +2516,7 @@ MenuScreen_LevelSelect:
 	;ori.w	#$000,d0
 	move.w	d0,(a2)+	; Send it to plane map
 	dbf	d2,.writeletter	; Loop for entire string
-	cmpi.W	#$4,d1
+	cmpi.w	#$4,d1
 	ble.s	.righthandside
 	move.w	#$D,d2		; Maximum length of string
 	bra.S	.calculatespaces
@@ -3348,6 +3348,15 @@ StartLocations: zoneOrderedTable 2,4	; WrdArr_StartLoc
 
 	include "_inc/DynamicLevelEvents.asm" ; Another big one
 ; ===========================================================================
+	include "_incObj/sub RunObjects.asm"
+; ===========================================================================
+	include "_inc/Object Pointers.asm" ; also includes the null object
+
+	include "_incObj/sub ObjectMove.asm" ; also ObjectMoveAndFall
+	include "_incObj/sub DeleteObject.asm" ; also MarkObjGone
+	include "_incObj/sub DisplaySprite.asm"
+	include "_incObj/sub AnimateSprite.asm"
+; ===========================================================================
 
 ; loc_F62E:
 LoadPLC_AnimalExplosion:
@@ -3994,16 +4003,6 @@ Obj3B_MapUnc_15D2E:	include "mappings/sprite/obj3B.asm"
 ; Unused sprite mappings
 ; -------------------------------------------------------------------------------
 Obj3C_MapUnc_15ECC:	include "mappings/sprite/obj3C.asm"
-; ===========================================================================
-
-	include "_incObj/sub RunObjects.asm"
-; ===========================================================================
-	include "_inc/Object Pointers.asm" ; also includes the null object
-
-	include "_incObj/sub ObjectMove.asm" ; also ObjectMoveAndFall
-	include "_incObj/sub DeleteObject.asm" ; also MarkObjGone
-	include "_incObj/sub DisplaySprite.asm"
-	include "_incObj/sub AnimateSprite.asm"
 ; ===========================================================================
 	include "_inc/CNZ Bumpers.asm"
 ; ===========================================================================

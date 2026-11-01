@@ -44,20 +44,20 @@ Obj91_Main:
 	bchg	#render_flags.x_flip,render_flags(a0)
 	neg.w	x_vel(a0)		; ...and reverse movement
 +
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bsr.w	Obj_GetOrientationToPlayer
 	move.w	d2,d4
 	move.w	d3,d5
 	bsr.w	Obj91_TestCharacterPos	; are Sonic or Tails close enough to attack?
 	bne.s	Obj91_PrepareCharge	; if yes, prepare to charge at them
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_36E20
 Obj91_PrepareCharge:
 	addq.b	#2,routine(a0)	; => Obj91_Waiting
 	move.b	#$10,Obj91_move_timer(a0)	; time to wait before charging at the player
 	clr.w	x_vel(a0)		; stop movement
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_36E32:
 Obj91_Waiting:
@@ -89,12 +89,12 @@ Obj91_VerticalSpeeds:
 ; ===========================================================================
 ; loc_36E66:
 Obj91_Charge:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 ; loc_36E6A:
 Obj91_Animate:
 	lea	Ani_obj91(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_36E78:
 Obj91_MakeBubble:

@@ -38,12 +38,12 @@ Obj38_Shield:
 ; loc_1D964:
 Obj38_Display:
 	lea	Ani_obj38(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 return_1D976:
 	rts
 
 JmpTo7_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

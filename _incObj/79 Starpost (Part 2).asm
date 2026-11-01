@@ -114,8 +114,8 @@ loc_1F5D6:
 	moveq	#1,d0
 +
 	move.b	d0,mapping_frame(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 JmpTo10_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

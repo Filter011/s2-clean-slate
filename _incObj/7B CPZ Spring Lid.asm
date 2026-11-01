@@ -12,10 +12,10 @@ Obj7B:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo40_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 JmpTo40_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; off_295C0:
 Obj7B_Index:	offsetTable
@@ -78,7 +78,7 @@ loc_29648:
 
 loc_29686:
 	lea	Ani_obj7B(pc),a1
-	jmp	(AnimateSprite).l
+	jmp	(AnimateSprite).w
 ; ===========================================================================
 
 loc_296C2:

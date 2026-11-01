@@ -37,7 +37,7 @@ ObjA7_Main:
 	move.b	routine_secondary(a0),d0
 	move.w	off_38E46(pc,d0.w),d1
 	jsr	off_38E46(pc,d1.w)
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	moveq	#0,d0
 	moveq	#$10,d1
 	movea.w	objoff_3C(a0),a1 ; a1=object
@@ -110,7 +110,7 @@ loc_38EB4:
 
 loc_38ECC:
 	lea	Ani_objA7(pc),a1
-	jmp	(AnimateSprite).l
+	jmp	(AnimateSprite).w
 ; ===========================================================================
 
 loc_38ED6:
@@ -126,8 +126,7 @@ ObjA7_GrabCharacter:
 	addq.b	#2,routine_secondary(a0)
 	movea.w	objoff_32(a0),a1
 	move.b	#$81,obj_control(a1)
-	clr.w	x_vel(a1)
-	clr.w	y_vel(a1)
+	clr.l	x_vel(a1)	; and y_vel
 	move.b	#AniIDSonAni_Float,anim(a1)
 	clr.b	spindash_flag(a1)
 	move.b	#1,mapping_frame(a0)
@@ -217,7 +216,7 @@ loc_38F88:
 	move.w	word_38FE0(pc,d0.w),objoff_34(a1)
 
 BranchTo2_JmpTo45_DisplaySprite ; BranchTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 		dc.w MainCharacter	; -2
 		dc.w MainCharacter	; -1
@@ -236,25 +235,25 @@ loc_38FE8:
 	bne.s	loc_3900A
 	move.w	x_pos(a0),x_pos(a2)
 	move.w	y_pos(a0),y_pos(a2)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3900A:
 	move.b	#0,obj_control(a2)
 	bset	#status.player.in_air,status(a2)
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_3901A:
 	addq.b	#2,routine(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_39022:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	cmpi.b	#ObjID_Grabber,id(a1) ; compare to objA7
 	bne.w	JmpTo64_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; ----------------------------------------------------------------------------
 ; Object A9 - The little hanger box thing a Grabber's string comes out of
@@ -283,7 +282,7 @@ ObjA9_Main:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	cmpi.b	#ObjID_Grabber,id(a1) ; compare to objA7 (grabber badnik)
 	bne.w	JmpTo64_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; ----------------------------------------------------------------------------
 ; Object AA - The thin white string a Grabber hangs from
@@ -317,7 +316,7 @@ ObjAA_Main:
 	lsr.w	#4,d0
 	move.b	d0,mapping_frame(a0)
 +
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 ; ===========================================================================
 ; ----------------------------------------------------------------------------
@@ -341,7 +340,7 @@ ObjAB_Init:
 ; ===========================================================================
 ; BranchTo10_JmpTo39_MarkObjGone
 ObjAB_Main:
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; END OF OBJECT AB
 
@@ -431,15 +430,13 @@ ObjA7_Poof:
 ; Yet another subroutine for the Grabber badnik
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 loc_39182:
 	moveq	#-$80,d0
 	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	+
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 +	lea	(Object_Respawn_Table).w,a3
 	moveq	#0,d0
@@ -457,10 +454,10 @@ loc_39182:
 	move.b	objoff_2D(a0),d6
 
 -	movea.w	(a2)+,a1
-	jsr	(DeleteObject2).l
+	jsr	(DeleteObject2).w
 	dbf	d6,-
 
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; End of subroutine loc_39182
 
 ; ===========================================================================

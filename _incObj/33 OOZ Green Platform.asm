@@ -56,7 +56,7 @@ Obj33_Main:
 	moveq	#8,d2
 	moveq	#9,d3
 	jsr	(SolidObject).l
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_23BBC:
 Obj33_Modes:	offsetTable
@@ -201,8 +201,8 @@ Obj33_Flame:
 	blt.s	Obj33_FlameOff
 	move.b	#$9B,collision_flags(a0)
 	lea	Ani_obj33(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_23DC2:
 Obj33_FlameOff:

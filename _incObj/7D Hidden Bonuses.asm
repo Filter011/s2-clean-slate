@@ -59,7 +59,7 @@ Obj7D_NoAdd:
 ; ===========================================================================
 
 JmpTo11_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 word_1F6D2:
 	dc.w	 0
@@ -70,14 +70,10 @@ word_1F6D2:
 ; loc_1F6DA:
 Obj7D_Main:
 	subq.w	#1,objoff_30(a0)
-	bmi.s	JmpTo12_DeleteObject
+	bmi.s	JmpTo11_DeleteObject
 	moveq	#-$80,d0
 	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
-	bhi.s	JmpTo12_DeleteObject
-	jmp	(DisplaySprite).l
-; ===========================================================================
-
-JmpTo12_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	bhi.s	JmpTo11_DeleteObject
+	jmp	(DisplaySprite).w

@@ -8,7 +8,7 @@ Obj78:
 	move.w	Obj78_Index(pc,d0.w),d1
 	jsr	Obj78_Index(pc,d1.w)
 	move.w	objoff_30(a0),d0
-	jmp	(MarkObjGone2).l
+	jmp	(MarkObjGone2).w
 ; ===========================================================================
 ; off_291E2:
 Obj78_Index:	offsetTable

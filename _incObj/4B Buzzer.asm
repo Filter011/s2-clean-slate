@@ -24,10 +24,10 @@ Obj4B_Index:	offsetTable
 ; ===========================================================================
 ; loc_2D07E:
 Obj4B_Projectile:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_obj4B(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone_P1).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone_P1).w
 ; ===========================================================================
 ; loc_2D090:
 Obj4B_Flame:
@@ -44,11 +44,11 @@ Obj4B_Flame:
 	move.b	status(a1),status(a0)
 	move.b	render_flags(a1),render_flags(a0)
 	lea	Ani_obj4B(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone_P1).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone_P1).w
 
 JmpTo49_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_2D0C8:
 Obj4B_Init:
@@ -93,8 +93,8 @@ Obj4B_Main:
 	move.w	Obj4B_Buzzer_States(pc,d0.w),d1
 	jsr	Obj4B_Buzzer_States(pc,d1.w)
 	lea	Ani_obj4B(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone_P1).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone_P1).w
 ; ===========================================================================
 ; off_2D190:
 Obj4B_Buzzer_States:	offsetTable
@@ -128,7 +128,7 @@ Obj4B_TurnAround:
 
 ; loc_2D38C:
 JmpTo21_ObjectMove ; JmpTo
-	jmp	(ObjectMove).l
+	jmp	(ObjectMove).w
 ; ===========================================================================
 ; Start of subroutine Obj4B_ChkPlayers
 ; sub_2D1D6:

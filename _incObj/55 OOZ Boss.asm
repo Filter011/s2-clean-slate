@@ -157,7 +157,7 @@ Obj55_Main_End:
 	bsr.w	AnimateBoss
 	bsr.w	Obj55_AlignSprites
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ; loc_33174:
 Obj55_HandleHits:
@@ -193,20 +193,20 @@ Obj55_Main_Defeated:
 	bhs.s	Obj55_Explode			; if not, branch
 	move.b	#$B,mainspr_mapframe(a0)	; use defeated animation
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ; loc_331C2:
 Obj55_Explode:
 	bsr.w	Boss_LoadExplosion
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ; loc_331CA:
 Obj55_Main_Defeated_Part2:
 	tst.b	(Boss_defeated_flag).w	; has boss been defeated?
 	bne.s	Obj55_ReleaseCamera	; if yes, branch
 	jsr	(PlayLevelMusic).w
-	jsr	(LoadPLC_AnimalExplosion).l
+	jsr	(LoadPLC_AnimalExplosion).w
 	move.b	#1,(Boss_defeated_flag).w
 
 ; loc_331DE:
@@ -227,11 +227,11 @@ Obj55_Defeated_Sink:
 	addq.w	#1,y_pos(a0)
 	bsr.s	Obj55_AlignSprites
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 
 BranchTo_JmpTo62_DeleteObject ; BranchTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_3320A:
 Obj55_LaserShooter:
@@ -383,7 +383,7 @@ Obj55_LaserShooter_End:
 	bsr.s	Obj55_LaserShooter_FacePlayer
 	bsr.w	Obj55_LaserShooter_Wind
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ; sets the laser shooter's y velocity so that it moves toward its target
 ; loc_333C6:
@@ -505,7 +505,7 @@ Obj55_SpikeChain_Main:
 Obj55_SpikeChain_End:
 	bsr.w	Obj55_SpikeChain_SetAnimFrame
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ; loc_334EE:
 Obj55_SpikeChain_Move:
@@ -599,15 +599,15 @@ Obj55_Laser_Init:
 ; loc_335DE:
 Obj55_Laser_Main:
 	bsr.s	Obj55_Laser_ChkGround
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	cmpi.w	#$2870,x_pos(a0)	; has laser moved off screen going left?
 	blo.s	JmpTo62_DeleteObject	; if yes, branch
 	cmpi.w	#$2A10,x_pos(a0)	; has laser moved off screen going right?
 	bhs.s	JmpTo62_DeleteObject	; if yes, branch
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 JmpTo62_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; checks if laser hit the ground
 ; loc_335FE:
@@ -701,9 +701,9 @@ Obj55_Wave:
 
 Obj55_Wave_End:
 	lea	Ani_obj55(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 BranchTo2_JmpTo62_DeleteObject ; BranchTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

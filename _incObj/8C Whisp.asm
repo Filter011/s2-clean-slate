@@ -40,8 +40,8 @@ Obj8C_WaitUntilTimerExpires:
 ; loc_3695E:
 Obj8C_Animate:
 	lea	Ani_obj8C(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_36970:
@@ -77,10 +77,10 @@ loc_369C2:
 	move.w	#$200,d0
 	move.w	d0,d1
 	bsr.w	Obj_CapSpeed
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_obj8C(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; word_369F4:
 Obj8C_MovementDeltas:
@@ -96,15 +96,15 @@ loc_369F8:
 	move.b	d0,obj8C_timer(a0)
 	bsr.w	Obj_MoveStop
 	lea	Ani_obj8C(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_36A26:
 Obj8C_FlyAway:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_obj8C(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_36A3E:
 Obj8C_SubObjData:

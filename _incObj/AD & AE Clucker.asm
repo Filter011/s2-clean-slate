@@ -26,7 +26,7 @@ ObjAD_Main:
 	moveq	#8,d3
 	move.w	x_pos(a0),d4
 	jsr	(SolidObject).l
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; ----------------------------------------------------------------------------
 ; Object AE - Clucker (chicken badnik) from WFZ
@@ -64,20 +64,20 @@ loc_39488:
 	addi.w	#$80,d2
 	cmpi.w	#$100,d2
 	blo.s	+
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 +
 	addq.b	#2,routine(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_394A2:
 	move.b	routine(a0),d2
 	lea	Ani_objAE_a(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	cmp.b	routine(a0),d2
 	bne.s	+
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 +
 	lea	mapping_frame(a0),a1
@@ -85,20 +85,20 @@ loc_394A2:
 	clr.w	anim_frame_duration-mapping_frame(a1)
 	move.b	#8,(a1)
 	move.b	#6,collision_flags(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_394D2:
 	lea	Ani_objAE_b(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_394E0:
 	tst.b	objoff_2A(a0)
 	beq.s	+
 	subq.b	#1,objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 +
 	addq.b	#2,routine(a0)
@@ -107,19 +107,19 @@ loc_394E0:
 	clr.w	anim_frame_duration-mapping_frame(a1)
 	move.b	#$B,(a1)
 	bsr.s	loc_39526
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_39508:
 	lea	Ani_objAE_c(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_39516:
 	move.b	#8,routine(a0)
 	move.b	#$40,objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_39526:

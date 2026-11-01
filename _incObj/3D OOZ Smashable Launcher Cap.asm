@@ -43,7 +43,7 @@ Obj3D_Main:
 	bne.s	loc_24E60
 
 BranchTo_JmpTo13_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_24E60:
@@ -114,16 +114,16 @@ loc_24F28:
 	jsr	(BreakObjectToPieces).l
 ; loc_24F3C:
 Obj3D_Fragment:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	addi.w	#$18,y_vel(a0)
 	_btst	#render_flags.on_screen,render_flags(a0)
 	_beq.s	JmpTo26_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 JmpTo26_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 JmpTo3_MarkObjGone3 ; JmpTo
-	jmp	(MarkObjGone3).l
+	jmp	(MarkObjGone3).w
 ; ===========================================================================
 ; loc_24F52:
 Obj3D_InvisibleLauncher:

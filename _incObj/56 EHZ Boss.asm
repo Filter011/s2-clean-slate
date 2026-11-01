@@ -212,13 +212,13 @@ loc_2F27C:	; Obj56_VehicleMain_Sub0:
 	ble.s	loc_2F29A
 	subq.w	#1,x_pos(a0)
 	addq.w	#1,y_pos(a0)	; move diagonally down
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F29A:
 	move.w	#$29D0,x_pos(a0)
 	addq.b	#2,routine_secondary(a0)	; next routine
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_2F2A8:	; Obj56_VehicleMain_Sub2:
@@ -236,14 +236,14 @@ loc_2F2BA:	; Obj56_VehicleMain_Sub2_0:
 	cmpi.w	#$41E,y_pos(a0)
 	bge.s	loc_2F2CC
 	addq.w	#1,y_pos(a0)	; move vertically (down)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F2CC:
 	addq.b	#2,objoff_2C(a0)	; tertiary routine
 	bset	#0,objoff_2D(a0)	; Robotnik on ground (relevant for propeller)
 	move.w	#60,objoff_2A(a0)	; timer for standing still
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F2E0:	; Obj56_VehicleMain_Sub2_2:
@@ -253,7 +253,7 @@ loc_2F2E0:	; Obj56_VehicleMain_Sub2_2:
 	addq.b	#2,routine_secondary(a0)
 	move.b	#$F,collision_flags(a0)
 	bset	#1,objoff_2D(a0)	; boss now active and moving
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_2F304:	; Obj56_VehicleMain_Sub4:
@@ -270,20 +270,20 @@ loc_2F304:	; Obj56_VehicleMain_Sub4:
 	asl.l	#8,d0
 	add.l	d0,d2
 	move.l	d2,x_pos(a0)	; set x_pos depening on velocity
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_2F336:	; Obj56_VehicleMain_Sub6:
 	subq.w	#1,objoff_3C(a0)	; timer set after defeat
 	bmi.s	loc_2F35C	; if countdown finished
 	bsr.w	Boss_LoadExplosion
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
 	bpl.w	JmpTo35_DisplaySprite
 	add.w	d1,y_pos(a0)
 	move.w	#0,y_vel(a0)	; set to ground and stand still
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F35C:
@@ -291,7 +291,7 @@ loc_2F35C:
 	addq.b	#2,routine_secondary(a0)
 	move.w	#-$26,objoff_3C(a0)
 	move.w	#$C,objoff_2A(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_2F374:	; Obj56_VehicleMain_Sub8:
@@ -299,7 +299,7 @@ loc_2F374:	; Obj56_VehicleMain_Sub8:
 	bpl.w	JmpTo35_DisplaySprite
 	addq.b	#2,routine_secondary(a0)
 	move.b	#0,objoff_2C(a0)	; tertiary routine
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_2F38A:	; Obj56_VehicleMain_SubA:
@@ -307,7 +307,7 @@ loc_2F38A:	; Obj56_VehicleMain_SubA:
 	move.b	objoff_2C(a0),d0	; tertiary routine
 	move.w	off_2F39C(pc,d0.w),d1
 	jsr	off_2F39C(pc,d1.w)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 off_2F39C:	offsetTable
 		offsetTableEntry.w loc_2F3A2	; 0 - initialize propellor
@@ -349,7 +349,7 @@ loc_2F424:	; Obj56_VehicleMain_SubA_2:
 	bset	#2,objoff_2D(a0)	; Robotnik flying off
 	move.w	#$60,objoff_2A(a0)	; timer
 	addq.b	#2,objoff_2C(a0)	; tertiary routine
-	jmp	(LoadPLC_AnimalExplosion).l ; PLC_Explosion
+	jmp	(LoadPLC_AnimalExplosion).w ; PLC_Explosion
 +
 	rts
 ; ===========================================================================
@@ -378,8 +378,8 @@ loc_2F46E:
 	_bne.s	return_2F482
 	addq.w	#4,sp
 	movea.l	objoff_34(a0),a1 ; parent address (vehicle)
-	jsr	(DeleteObject2).l
-	jmp	(DeleteObject).l
+	jsr	(DeleteObject2).w
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 return_2F482:
@@ -453,8 +453,8 @@ loc_2F52A:	; Obj56_PropellerReloaded:	; Propeller after defeat
 	bpl.w	JmpTo35_DisplaySprite
 	move.b	#4,routine(a0)	; Propeller normal
 	lea	Ani_obj56_a(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_2F54E:	; Obj56_Propeller:	; Propeller normal
@@ -477,7 +477,7 @@ loc_2F560:	; Obj56_Propeller_Sub0
 	move.b	#1,anim(a0)
 	move.w	#$18,objoff_2A(a0)	; timer until deletion
 	addq.b	#2,routine_secondary(a0)
-	move.b	#MusID_StopSFX,d0
+	moveq	#signextendB(MusID_StopSFX),d0
 	jsr	(PlayMusic).w
 	bra.s	loc_2F5A0
 ; ---------------------------------------------------------------------------
@@ -495,8 +495,8 @@ loc_2F5A0:
 	move.b	status(a1),status(a0)
 	move.b	render_flags(a1),render_flags(a0)
 	lea	Ani_obj56_a(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F5C6:	; Obj56_Propeller_Sub2
@@ -506,13 +506,13 @@ loc_2F5C6:	; Obj56_Propeller_Sub2
 	ble.w	JmpTo52_DeleteObject
 	move.w	#4*$80,priority(a0)
 	addq.w	#1,y_pos(a0)	; move down
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F5E8:
 	lea	Ani_obj56_a(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_2F5F6:	; Obj56_GroundVehicle:
@@ -524,13 +524,13 @@ loc_2F5F6:	; Obj56_GroundVehicle:
 	cmpi.w	#$29D0,x_pos(a0)
 	ble.s	loc_2F618
 	subq.w	#1,x_pos(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F618:
 	move.w	#$29D0,x_pos(a0)
 	addq.b	#2,routine_secondary(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F626:	; Obj56_GroundVehicle_Sub2:
@@ -545,7 +545,7 @@ loc_2F626:	; Obj56_GroundVehicle_Sub2:
 	move.b	status(a1),status(a0)
 	bmi.w	JmpTo35_DisplaySprite
 	move.b	render_flags(a1),render_flags(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_2F664:	; Obj56_Wheel:
@@ -604,7 +604,7 @@ loc_2F6DE:	; background wheel
 ; ---------------------------------------------------------------------------
 
 loc_2F6E8:	; routine for all wheels
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
 	bpl.s	loc_2F6FA
@@ -617,8 +617,8 @@ loc_2F6FA:
 
 loc_2F706:
 	lea	Ani_obj56_b(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F714:	; Obj56_Wheel_Sub2:
@@ -635,7 +635,7 @@ loc_2F714:	; Obj56_Wheel_Sub2:
 	add.w	d0,objoff_2E(a1)
 
 BranchTo_JmpTo35_DisplaySprite ; BranchTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F746:	; Obj56_Wheel_Sub4:
@@ -650,7 +650,7 @@ loc_2F746:	; Obj56_Wheel_Sub4:
 
 loc_2F768:
 	bsr.w	loc_2F484	; position check, sets direction
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
 	bpl.s	loc_2F77E
@@ -666,8 +666,8 @@ loc_2F77E:
 
 loc_2F798:
 	lea	Ani_obj56_b(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F7A6:	; Obj56_Wheel_Sub6:
@@ -679,13 +679,13 @@ loc_2F7A6:	; Obj56_Wheel_Sub6:
 	cmpi.w	#2*$80,priority(a0)
 	beq.w	JmpTo35_DisplaySprite
 	neg.w	x_vel(a0)	; into other direction
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F7D2:	; Obj56_Wheel_Sub8:
 	subq.w	#1,objoff_2A(a0)	; timer, initially set to $A (second delay until wheels rolling off)
 	bpl.w	JmpTo35_DisplaySprite
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
 	bpl.s	BranchTo_JmpTo36_MarkObjGone
@@ -693,7 +693,7 @@ loc_2F7D2:	; Obj56_Wheel_Sub8:
 	add.w	d1,y_pos(a0)	; reset on floor
 
 BranchTo_JmpTo36_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_2F7F4:	; Obj56_Spike:
@@ -705,13 +705,13 @@ loc_2F7F4:	; Obj56_Spike:
 	cmpi.w	#$299A,x_pos(a0)
 	ble.s	loc_2F816
 	subq.w	#1,x_pos(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F816:
 	move.w	#$299A,x_pos(a0)
 	addq.b	#2,routine_secondary(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F824:	; Obj56_Spike_Sub2:
@@ -737,8 +737,8 @@ loc_2F824:	; Obj56_Spike_Sub2:
 loc_2F878:
 	add.w	d0,x_pos(a0)	; horizontal offset
 	lea	Ani_obj56_b(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F88A:	; spike separated from vehicle
@@ -750,8 +750,8 @@ loc_2F88A:	; spike separated from vehicle
 loc_2F898:
 	add.w	d0,x_pos(a0)
 	lea	Ani_obj56_b(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 
 loc_2F8AA:
@@ -802,9 +802,9 @@ loc_2F916:
 
 loc_2F924:
 	lea	Ani_obj56_c(pc),a1	; animation script
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 
 JmpTo35_DisplaySprite ; JmpTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 JmpTo52_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

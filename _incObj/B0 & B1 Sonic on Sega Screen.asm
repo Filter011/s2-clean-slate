@@ -117,8 +117,8 @@ ObjB0_RunLeft:
 	bmi.s	loc_3A312
 	bsr.w	ObjB0_Move_Streaks_Left
 	lea	Ani_objB0(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3A312:
@@ -126,7 +126,7 @@ loc_3A312:
 	move.w	#$C,objoff_2A(a0)
 	move.b	#1,objoff_2C(a0)
 	st.b	objoff_2D(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjB0_MidWipe:
@@ -174,8 +174,8 @@ ObjB0_RunRight:
 	addi.w	#$20,x_pos(a0)
 	bsr.w	ObjB0_Move_Streaks_Right
 	lea	Ani_objB0(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3A3B4:
@@ -233,7 +233,7 @@ ObjB1_Init:
 ; ===========================================================================
 ; BranchTo4_JmpTo45_DisplaySprite
 ObjB1_Main:
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ObjB0_Move_Streaks_Left:

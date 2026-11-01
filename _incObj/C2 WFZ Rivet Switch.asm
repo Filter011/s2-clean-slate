@@ -28,7 +28,7 @@ ObjC2_Main:
 	jsr	(SolidObject).l
 	btst	#p1_standing_bit,status(a0)
 	bne.s	ObjC2_Bust
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_3C366:
 ObjC2_Bust:
@@ -48,7 +48,7 @@ ObjC2_Bust:
 	move.w	#$787A,(a1)+
 	move.b	#1,(Screen_redraw_flag).w
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_3C3B8:
 ObjC2_SubObjData:

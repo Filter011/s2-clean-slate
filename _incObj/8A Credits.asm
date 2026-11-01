@@ -33,8 +33,8 @@ Obj8A_Init:
 	bne.s	Obj8A_Display
 	move.w	#$EEE,(Target_palette_line3).w
 	move.w	#$880,(Target_palette_line3+2).w
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; JmpTo46_DisplaySprite
 Obj8A_Display:
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w

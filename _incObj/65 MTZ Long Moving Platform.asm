@@ -123,7 +123,7 @@ loc_26C1C:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	loc_26C66
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_26C66:
@@ -133,7 +133,7 @@ loc_26C66:
 	beq.s	+
 	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 +
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 off_26C7E:	offsetTable
 		offsetTableEntry.w return_26C8E	; 0
@@ -363,7 +363,7 @@ loc_26EA4:
 loc_26EAC:
 	andi.w	#7,d0
 	move.b	byte_26EBA(pc,d0.w),mapping_frame(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 byte_26EBA:
 	dc.b   0

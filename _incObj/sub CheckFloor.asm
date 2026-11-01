@@ -2,8 +2,6 @@
 ; Subroutine to check if Sonic/Tails is near the floor
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1EC4E: Sonic_HitFloor:
 Sonic_CheckFloor:
 	move.l	(Primary_Collision).w,(Collision_addr).w
@@ -146,8 +144,6 @@ return_1EDF8:
 ; (objects such as a monitor Sonic bumps from underneath)
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1EDFA: ObjHitFloor:
 ObjCheckFloorDist:
 	move.w	x_pos(a0),d3
@@ -173,8 +169,6 @@ ObjCheckFloorDist:
 ; Collision check used to let the HTZ boss fire attack to hit the ground
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1EE30:
 FireCheckFloorDist:
 	move.w	x_pos(a1),d3
@@ -193,8 +187,6 @@ FireCheckFloorDist:
 ; ---------------------------------------------------------------------------
 ; Collision check used to let scattered rings bounce on the ground
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1EE56:
 RingCheckFloorDist:
@@ -215,8 +207,6 @@ RingCheckFloorDist:
 ; Stores a distance to the nearest wall above Sonic/Tails,
 ; where "above" = right, into d1
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1EE7C:
 CheckRightCeilingDist:
@@ -255,8 +245,6 @@ CheckRightCeilingDist:
 ; ---------------------------------------------------------------------------
 ; Stores a distance to the nearest wall on the right of Sonic/Tails into d1
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; Checks a 16x16 block to find solid walls. May check an additional
 ; 16x16 block up for walls.
@@ -303,8 +291,6 @@ ObjCheckRightWallDist:
 ; Stores a distance from Sonic/Tails to the nearest ceiling into d1
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1EF2E: Sonic_DontRunOnWalls: CheckCeilingDist:
 Sonic_CheckCeiling:
 	move.w	y_pos(a0),d2
@@ -345,8 +331,6 @@ Sonic_CheckCeiling:
 
 ; ===========================================================================
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; Checks a 16x16 block to find solid ceiling. May check an additional
 ; 16x16 block up for ceilings.
 ; d2 = y_pos
@@ -370,8 +354,6 @@ CheckCeilingDist_Part2:
 ; ---------------------------------------------------------------------------
 ; Stores a distance to the nearest wall above the object into d1
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1EFBE: ObjHitCeiling:
 ObjCheckCeilingDist:
@@ -399,8 +381,6 @@ ObjCheckCeilingDist:
 ; Stores a distance to the nearest wall above Sonic/Tails,
 ; where "above" = left, into d1
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_1EFF6:
 CheckLeftCeilingDist:
@@ -442,8 +422,6 @@ CheckLeftCeilingDist:
 ; ---------------------------------------------------------------------------
 ; Stores a distance to the nearest wall on the left of Sonic/Tails into d1
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; Checks a 16x16 block to find solid walls. May check an additional
 ; 16x16 block up for walls.

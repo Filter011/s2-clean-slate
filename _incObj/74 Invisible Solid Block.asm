@@ -48,6 +48,6 @@ Obj74_Main:
 	bhi.w	JmpTo18_DeleteObject
 	tst.w	(Debug_placement_mode).w
 	beq.s	+	; rts
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 +
 	rts

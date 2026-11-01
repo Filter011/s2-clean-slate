@@ -62,7 +62,7 @@ Obj1B_Main:
 	bsr.s	Obj1B_GiveBoost
 	move.w	(sp)+,d0
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 
 ; ===========================================================================
 ; sub_22388:

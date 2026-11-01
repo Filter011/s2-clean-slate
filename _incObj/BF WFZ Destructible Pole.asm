@@ -21,8 +21,8 @@ ObjBF_Init:
 ; loc_3BEC0:
 ObjBF_Animate:
 	lea	Ani_objBF(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_3BECE:
 ObjBE_SubObjData2:

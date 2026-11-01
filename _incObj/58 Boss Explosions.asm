@@ -36,7 +36,7 @@ Obj58_Main:
 	cmpi.b	#7,mapping_frame(a0)
 	beq.s	JmpTo50_DeleteObject
 +
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 JmpTo50_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

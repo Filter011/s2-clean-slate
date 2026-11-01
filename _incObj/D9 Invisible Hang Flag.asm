@@ -25,7 +25,7 @@ ObjD9_Main:
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.w	(Ctrl_1).w,d0
 	bsr.s	ObjD9_CheckCharacter
-	jmp	(MarkObjGone3).l
+	jmp	(MarkObjGone3).w
 ; ===========================================================================
 ; loc_2C972:
 ObjD9_CheckCharacter:
@@ -65,8 +65,7 @@ loc_2C9A0:
 	bhs.s	ObjD9_CheckCharacter_End
 	tst.w	(Debug_placement_mode).w
 	bne.s	ObjD9_CheckCharacter_End
-	clr.w	x_vel(a1)
-	clr.w	y_vel(a1)
+	clr.l	x_vel(a1)	; and y_vel
 	clr.w	inertia(a1)
 	move.w	y_pos(a0),y_pos(a1)
 	move.b	#AniIDSonAni_Hang2,anim(a1)

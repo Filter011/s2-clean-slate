@@ -33,7 +33,7 @@ ObjB2_Init:
 	move.b	#4,mapping_frame(a0)
 	move.b	#1,anim(a0)
 + ; BranchTo5_JmpTo45_DisplaySprite
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_3A7DE:
 ObjB2_Main_SCZ:
@@ -90,8 +90,8 @@ loc_3A87C:
 ; loc_3A880:
 ObjB2_animate:
 	lea	Ani_objB2_a(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_3A88E:
 ObjB2_SCZ_Finished:
@@ -107,7 +107,7 @@ ObjB2_Main_WFZ_Start:
 	move.w	off_3A8BA(pc,d0.w),d1
 	jsr	off_3A8BA(pc,d1.w)
 	lea	Ani_objB2_a(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	bra.w	Obj_DeleteOffScreen
 ; ===========================================================================
 off_3A8BA:	offsetTable
@@ -128,7 +128,7 @@ ObjB2_Main_WFZ_Start_main:
 	subq.w	#1,objoff_32(a0)
 	bmi.s	+
 	move.w	x_pos(a0),-(sp)
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bsr.w	loc_36776
 	moveq	#$1B,d1
 	moveq	#8,d2
@@ -168,7 +168,7 @@ ObjB2_Main_WFZ_Start_shot_down:
 ; ===========================================================================
 ; loc_3A94E:
 ObjB2_Main_WFZ_Start_fall_down:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bra.s	-
 ; ===========================================================================
 ; loc_3A954:
@@ -179,7 +179,7 @@ ObjB2_Main_WFZ_End:
 	move.w	ObjB2_Main_WFZ_states(pc,d0.w),d1
 	jsr	ObjB2_Main_WFZ_states(pc,d1.w)
 	lea	Ani_objB2_a(pc),a1
-	jmp	(AnimateSprite).l
+	jmp	(AnimateSprite).w
 ; ===========================================================================
 ; off_3A970:
 ObjB2_Main_WFZ_states:	offsetTable
@@ -240,8 +240,7 @@ ObjB2_Move_Leader_edge:
 + ; loc_3AA22:
 	addq.b	#2,routine_secondary(a0)
 	clr.w	(Ctrl_1_Logical).w
-	clr.w	x_vel(a1)
-	clr.w	y_vel(a1)
+	clr.l	x_vel(a1)	; and y_vel
 	clr.w	inertia(a1)
 	move.w	#$600,(Sonic_top_speed).w
 	move.w	#$C,(Sonic_acceleration).w
@@ -276,7 +275,7 @@ ObjB2_Prepare_to_jump:
 	move.w	#$28,objoff_2E(a0)
 + ; loc_3AAA0:
 	bsr.w	ObjB2_Align_plane
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_3AAA8:
 ObjB2_Jump_to_plane:
@@ -300,7 +299,7 @@ ObjB2_Jump_to_plane:
 	lea	(Level_Layout+$CD6).w,a1
 	move.l	#$25001F50,(a1)+
 + ; BranchTo6_JmpTo45_DisplaySprite:
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_3AAFE:
 ObjB2_Landed_on_plane:
@@ -315,20 +314,19 @@ loc_3AB18:
 	clr.w	(Ctrl_1_Logical).w
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.w	x_pos(a0),x_pos(a1)
-	clr.w	x_vel(a1)
-	clr.w	y_vel(a1)
+	clr.l	x_vel(a1)	; and y_vel
 	clr.w	inertia(a1)
 	bclr	#status.player.in_air,status(a1)
 	bclr	#status.player.rolling,status(a1)
 	move.l	#(1<<24)|(0<<16)|(AniIDSonAni_Wait<<8)|(AniIDSonAni_Wait<<0),mapping_frame(a1)
 	move.w	#$100,anim_frame_duration(a1)
 	move.b	#$13,y_radius(a1)
-	cmpi.w	#2,(Player_mode).w
+	cmpi.w	#1,(Player_mode).w
 	bne.s	+
 	move.b	#$F,y_radius(a1)
 + ; loc_3AB60:
 	bsr.w	ObjB2_Align_plane
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_3AB68:
 ObjB2_Approaching_ship:
@@ -379,7 +377,7 @@ ObjB2_Dock_on_DEZ:
 
 loc_3AC0E:
 	bsr.w	ObjB2_Align_plane
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 word_3AC16:
 	dc.w  $1E0
@@ -458,8 +456,7 @@ loc_3AC84:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	bset	#status.npc.p2_pushing,status(a1)
 	lea	(MainCharacter).w,a1 ; a1=character
-	clr.w	x_vel(a1)
-	clr.w	y_vel(a1)
+	clr.l	x_vel(a1)	; and y_vel
 	move.w	x_pos(a0),d0
 	subi.w	#$10,d0
 	move.w	d0,x_pos(a1)
@@ -482,8 +479,7 @@ return_3ACF0:
 
 loc_3ACF2:
 	lea	(MainCharacter).w,a1 ; a1=character
-	clr.w	x_vel(a1)
-	clr.w	y_vel(a1)
+	clr.l	x_vel(a1)	; and y_vel
 	move.w	x_pos(a0),d0
 	subi.w	#$10,d0
 	move.w	d0,x_pos(a1)
@@ -502,7 +498,7 @@ off_3AD1A:	offsetTable
 + ; loc_3AD1C:
 	bchg	#status.npc.misc,status(a0)
 	bne.s	return_3ACF0
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3AD2A:
@@ -515,8 +511,8 @@ off_3AD38:	offsetTable
 		offsetTableEntry.w +	; 0
 ; ===========================================================================
 + ; loc_3AD3A:
-	jsr	(ObjectMove).l
-	jmp	(MarkObjGone).l
+	jsr	(ObjectMove).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3AD42:
@@ -532,14 +528,14 @@ off_3AD50:	offsetTable
 
 loc_3AD54:
 	bsr.s	loc_3AD6E
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3AD5C:
 	bsr.s	loc_3AD6E
 	lea	Ani_objB2_b(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3AD6E:
@@ -555,7 +551,7 @@ loc_3AD6E:
 ; loc_3AD8C:
 ObjB2_Align_plane:
 	move.w	x_pos(a0),-(sp)
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bsr.w	loc_36776
 	moveq	#$1B,d1
 	moveq	#8,d2
@@ -570,7 +566,7 @@ ObjB2_Move_with_player:
 	beq.s	ObjB2_Move_below_player
 	bsr.s	ObjB2_Move_vert
 	bsr.w	ObjB2_Vertical_limit
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bra.w	loc_36776
 ; ===========================================================================
 ; loc_3ADC6:
@@ -647,7 +643,7 @@ ObjB2_Move_obbey_player:
 loc_3AE66:
 	move.w	d3,y_vel(a0)
 	bsr.w	ObjB2_Vertical_limit
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 
 loc_3AE72:
 	bsr.w	Obj_GetOrientationToPlayer
@@ -698,7 +694,7 @@ loc_3AED0:
 loc_3AEDE:
 	move.w	d0,y_vel(a0)
 	bsr.s	ObjB2_Vertical_limit
-	jmp	(ObjectMove).l
+	jmp	(ObjectMove).w
 ; ===========================================================================
 ; loc_3AEEC:
 ObjB2_Horizontal_limit:
@@ -766,7 +762,7 @@ ObjB2_Animate_Pilot:
 	moveq	#0,d0
 	move.b	objoff_36(a0),d0
 	moveq	#Tails_pilot_frames_end-Tails_pilot_frames,d1
-	cmpi.w	#2,(Player_mode).w
+	cmpi.w	#1,(Player_mode).w
 	bne.s	+
 	moveq	#Sonic_pilot_frames_end-Sonic_pilot_frames,d1
 + ; loc_3AF78:

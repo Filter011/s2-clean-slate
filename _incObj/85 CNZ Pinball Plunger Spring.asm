@@ -13,7 +13,7 @@ Obj85:
 	sub.w	(Camera_X_pos_coarse).w,d1
 	cmpi.w	#$280,d1
 	bhi.s	+
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 +
 	lea	(Object_Respawn_Table).w,a2
@@ -23,7 +23,7 @@ Obj85:
 	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 
 BranchTo_JmpTo43_DeleteObject ; BranchTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; off_2ABCE:
 Obj85_Index:	offsetTable

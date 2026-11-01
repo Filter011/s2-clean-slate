@@ -19,7 +19,7 @@ ObjBB_Init:
 ; ===========================================================================
 ; BranchTo15_JmpTo39_MarkObjGone
 ObjBB_Main:
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_3BB96:
 ObjBB_SubObjData:

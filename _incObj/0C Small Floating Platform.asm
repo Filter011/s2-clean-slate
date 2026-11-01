@@ -86,4 +86,4 @@ loc_202E6:
 	moveq	#9,d3
 	move.w	x_pos(a0),d4
 	bsr.w	PlatformObject
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w

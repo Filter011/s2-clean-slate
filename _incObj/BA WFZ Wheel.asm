@@ -19,7 +19,7 @@ ObjBA_Init:
 ; ===========================================================================
 ; BranchTo14_JmpTo39_MarkObjGone
 ObjBA_Main:
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_3BB66:
 ObjBA_SubObjData:

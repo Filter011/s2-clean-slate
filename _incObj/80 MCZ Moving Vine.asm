@@ -111,7 +111,7 @@ loc_29AAE:
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.w	(Ctrl_1).w,d0
 	bsr.s	Obj80_Action
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_29ACC:
 Obj80_Action:
@@ -186,8 +186,7 @@ loc_29B5E:
 	bhs.s	return_29BF8
 	tst.w	(Debug_placement_mode).w
 	bne.s	return_29BF8
-	clr.w	x_vel(a1)
-	clr.w	y_vel(a1)
+	clr.l	x_vel(a1)	; and y_vel
 	clr.w	inertia(a1)
 	move.w	x_pos(a0),x_pos(a1)
 	move.w	y_pos(a0),y_pos(a1)
@@ -250,4 +249,4 @@ loc_29C42:
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.w	(Ctrl_1).w,d0
 	bsr.w	Obj80_Action
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w

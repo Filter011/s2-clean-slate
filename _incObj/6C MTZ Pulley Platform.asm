@@ -12,9 +12,9 @@ Obj6C:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	+
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
-+	jmp	(DeleteObject).l
++	jmp	(DeleteObject).w
 ; ===========================================================================
 ; off_2805C:
 Obj6C_Index:	offsetTable
@@ -151,7 +151,7 @@ loc_281B0:
 	bsr.s	loc_281DA
 
 loc_281D4:
-	jmp	(ObjectMove).l
+	jmp	(ObjectMove).w
 ; ===========================================================================
 
 loc_281DA:

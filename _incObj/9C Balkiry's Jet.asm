@@ -26,7 +26,7 @@ Obj9C_Main:
 	move.l	x_pos(a1),x_pos(a0)
 	move.l	y_pos(a1),y_pos(a0)
 	movea.l	objoff_2E(a0),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	bra.w	Obj_DeleteBehindScreen
 ; ===========================================================================
 

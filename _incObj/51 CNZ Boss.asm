@@ -226,7 +226,7 @@ loc_31C08:
 	lea	Ani_obj51(pc),a1
 	bsr.w	AnimateBoss
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 
 loc_31C22:
@@ -361,7 +361,7 @@ loc_31DB8:
 	move.w	(Boss_X_pos).w,x_pos(a0)
 	bsr.w	loc_31E76
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 
 loc_31DCC:
@@ -395,7 +395,7 @@ loc_31DFA:
 loc_31E02:
 	clr.w	(Boss_Y_vel).w
 	jsr	(PlayLevelMusic).w
-	jsr	(LoadPLC_AnimalExplosion).l
+	jsr	(LoadPLC_AnimalExplosion).w
 
 loc_31E0E:
 	bsr.w	Boss_MoveObject
@@ -404,7 +404,7 @@ loc_31E0E:
 	move.w	(Boss_X_pos).w,x_pos(a0)
 	bsr.w	loc_31E76
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 
 loc_31E2A:
@@ -429,11 +429,11 @@ loc_31E4A:
 	lea	Ani_obj51(pc),a1
 	bsr.w	AnimateBoss
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 
 JmpTo58_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_31E76:
@@ -550,9 +550,8 @@ loc_31F96:
 	tst.w	(Boss_Countdown).w
 	bne.w	JmpTo39_DisplaySprite
 	addq.b	#2,routine_secondary(a0)
-	move.w	#0,x_vel(a0)
-	move.w	#0,y_vel(a0)
-	jmp	(DisplaySprite).l
+	move.l	#0,x_vel(a0)	; and y_vel
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_31FDC:
@@ -561,8 +560,8 @@ loc_31FDC:
 	tst.w	d1
 	bpl.w	JmpTo39_DisplaySprite
 	add.w	d1,y_pos(a0)
-	bsr.w	loc_32030
-	jmp	(DisplaySprite).l
+	bsr.s	loc_32030
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_31FF8:
@@ -621,12 +620,12 @@ return_3207E:
 loc_32080:
 	bsr.w	loc_31FF8
 	lea	Ani_obj51(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	cmpi.w	#$705,y_pos(a0)
 	blo.s	JmpTo39_DisplaySprite
 
 JmpTo59_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 
 JmpTo39_DisplaySprite ; JmpTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w

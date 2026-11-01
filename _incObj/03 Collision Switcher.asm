@@ -57,9 +57,8 @@ Obj03_Init_CheckX:
 	move.w	x_pos(a0),d1
 	lea	(MainCharacter).w,a1 ; a1=character
 	cmp.w	x_pos(a1),d1
-	bhs.s	+
+	bhs.s	Obj03_MainX
 	move.b	#1,objoff_34(a0)
-+
 
 ; loc_1FDA4:
 Obj03_MainX:

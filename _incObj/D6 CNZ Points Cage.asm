@@ -34,8 +34,8 @@ ObjD6_Main:
 	bsr.s	loc_2BBE8
 	movem.l	(sp)+,d1-d4
 	lea	Ani_objD6(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_2BBE8:
@@ -63,8 +63,7 @@ loc_2BC0C:
 	bpl.s	return_2BC84
 	move.w	x_pos(a0),x_pos(a1)
 	move.w	y_pos(a0),y_pos(a1)
-	move.w	#0,x_vel(a1)
-	move.w	#0,y_vel(a1)
+	move.l	#0,x_vel(a1)	; and y_vel
 	move.w	#0,inertia(a1)
 	move.b	#$81,obj_control(a1)
 	bset	#status.player.rolling,status(a1)

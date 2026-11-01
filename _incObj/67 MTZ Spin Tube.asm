@@ -11,11 +11,11 @@ Obj67:
 	add.b	objoff_36(a0),d0
 	beq.s	JmpTo4_MarkObjGone3
 	lea	Ani_obj67(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 
 JmpTo4_MarkObjGone3 ; JmpTo
-	jmp	(MarkObjGone3).l
+	jmp	(MarkObjGone3).w
 ; ===========================================================================
 ; off_27184:
 Obj67_Index:	offsetTable

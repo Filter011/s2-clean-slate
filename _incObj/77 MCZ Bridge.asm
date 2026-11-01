@@ -37,7 +37,7 @@ Obj77_Main:
 	jsr	(PlaySound).w
 +
 	lea	Ani_obj77(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	tst.b	mapping_frame(a0)
 	bne.s	Obj77_DropCharacters
 	moveq	#$4B,d1
@@ -45,7 +45,7 @@ Obj77_Main:
 	moveq	#9,d3
 	move.w	x_pos(a0),d4
 	jsr	(SolidObject).l
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 ; Check if the characters are standing on it. If a character is standing on the
@@ -64,4 +64,4 @@ Obj77_DropCharacters:
 +
 	andi.b	#~standing_mask,status(a0)
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w

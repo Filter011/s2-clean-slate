@@ -165,7 +165,7 @@ Obj89_Main_Sub0_Standard:
 	lea	Ani_obj89_b(pc),a1
 	bsr.w	AnimateBoss
 	move.w	#object_display_list_size*2,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ; loc_3067A:
 Obj89_Main_Sub2:
@@ -193,7 +193,7 @@ Obj89_Main_Sub2_Standard:
 	lea	Ani_obj89_b(pc),a1
 	bsr.w	AnimateBoss
 	move.w	#object_display_list_size*2,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ; loc_306B8:
 Obj89_Main_Sub4:
@@ -217,7 +217,7 @@ Obj89_Main_Sub4_Standard:
 	lea	Ani_obj89_b(pc),a1
 	bsr.w	AnimateBoss
 	move.w	#object_display_list_size*2,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ; loc_30706:
 Obj89_Main_Sub6:
@@ -247,7 +247,7 @@ Obj89_Main_Sub6_Standard:
 	lea	Ani_obj89_b(pc),a1
 	bsr.w	AnimateBoss
 	move.w	#object_display_list_size*2,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ; loc_3075C:
 Obj89_Main_HandleFace:
@@ -398,7 +398,7 @@ Obj89_Main_Sub8_Standard:
 	bsr.w	AnimateBoss
 	bsr.w	Obj89_Main_AlignParts
 	move.w	#object_display_list_size*2,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ; loc_308F4:
 Obj89_Main_SubA:
@@ -432,7 +432,7 @@ Obj89_Main_SubA_Ascend:
 Obj89_Main_SubA_StopAscent:
 	clr.w	(Boss_Y_vel).w			; stop ascent
 	jsr	(PlayLevelMusic).w
-	jsr	(LoadPLC_AnimalExplosion).l
+	jsr	(LoadPLC_AnimalExplosion).w
 
 ; loc_30936:
 Obj89_Main_SubA_Standard:
@@ -444,7 +444,7 @@ Obj89_Main_SubA_Standard:
 	bsr.w	AnimateBoss
 	bsr.w	Obj89_Main_AlignParts
 	move.w	#object_display_list_size*2,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ; loc_3095C:
 Obj89_Main_SubC:
@@ -470,11 +470,11 @@ Obj89_Main_SubC_Standard:
 	bsr.w	AnimateBoss
 	bsr.w	Obj89_Main_AlignParts
 	move.w	#object_display_list_size*2,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 
 JmpTo54_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_309A8:
 Obj89_Pillar:
@@ -512,7 +512,7 @@ Obj89_Pillar_Sub0:
 	clr.b	(Screen_Shaking_Flag).w	; stop screen shaking
 
 BranchTo_JmpTo37_DisplaySprite ; BranchTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_30A04:
 Obj89_Pillar_Sub2:
@@ -541,7 +541,7 @@ loc_30A2C:
 ; loc_30A3A:
 Obj89_Pillar_Sub2_Standard:
 	bsr.s	Obj89_Pillar_ChkShake
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_30A42:
 Obj89_Pillar_ChkShake:
@@ -662,17 +662,17 @@ Obj89_Pillar_Lower:
 	clr.b	(Screen_Shaking_Flag).w	; else, stop shaking the screen
 
 Obj89_Pillar_Lower_Delete:
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 BranchTo2_JmpTo37_DisplaySprite ; BranchTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_30B6C:
 Obj89_Pillar_BulgingEyes:
 	subq.w	#1,obj89_eyes_timer(a0)
 	beq.s	Obj89_Pillar_Lower_Delete
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_30B7A:
 Obj89_Pillar_SolidObject:
@@ -764,12 +764,12 @@ Obj89_Arrow_Sub2_Stop:
 	move.w	d0,x_pos(a0)			; update position
 	moveq	#SndID_ArrowStick,d0
 	jsr	(PlaySound).w
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_30C7E:
 Obj89_Arrow_Sub2_Move:
 	move.w	d0,x_pos(a0)			; update position
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_30C86:
 Obj89_Arrow_Sub4:
@@ -780,8 +780,8 @@ Obj89_Arrow_Sub4:
 +
 	bsr.w	Obj89_Arrow_Platform
 	lea	Ani_obj89_a(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_30CAC:
 Obj89_Arrow_Sub6:
@@ -791,11 +791,11 @@ Obj89_Arrow_Sub6:
 	cmpi.w	#$4F0,d0			; has arrow dropped to the ground?
 	bgt.s	JmpTo55_DeleteObject		; if yes, branch
 	move.w	d0,y_pos(a0)			; update y position
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 JmpTo55_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_30CCC:
 Obj89_Arrow_Platform:

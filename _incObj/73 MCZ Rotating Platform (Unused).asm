@@ -150,7 +150,7 @@ loc_28B46:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	+
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 +
 	moveq	#0,d2
@@ -166,7 +166,7 @@ loc_28B46:
     endif
 	addi.l	#Object_RAM,d0
 	movea.l	d0,a1	; a1=object
-	jsr	(DeleteObject2).l
+	jsr	(DeleteObject2).w
 	dbf	d2,-
 	rts
 ; ===========================================================================
@@ -178,4 +178,4 @@ Obj73_SubObject:
 	move.w	objoff_36(a0),d4
 	jsr	(SolidObject).l
 	move.w	x_pos(a0),objoff_36(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w

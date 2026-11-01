@@ -38,7 +38,7 @@ Obj04_Action:
 	beq.s	loc_20962		; if not, branch
 	addq.b	#3,mapping_frame(a0)	; use different frames
 	st.b	objoff_32(a0)	; stop animation
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_20952:
 Obj04_Animate:
@@ -56,7 +56,7 @@ loc_20962:
 	andi.b	#$3F,anim_frame(a0)
 
 Obj04_Display:
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; water sprite animation 'script' (custom format for this object)
 ; byte_20982:
@@ -77,7 +77,7 @@ Obj04_Action2:
 	beq.s	loc_209F4		; if not, branch
 	addq.b	#2,mapping_frame(a0)    ; use different frames
 	st.b	objoff_32(a0)		; stop animation
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_209E4:
 Obj04_Animate2:
@@ -94,4 +94,4 @@ loc_209F4:
 	andi.b	#1,mapping_frame(a0)
 
 BranchTo_JmpTo10_DisplaySprite ; BranchTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w

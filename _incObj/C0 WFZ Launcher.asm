@@ -38,7 +38,7 @@ ObjC0_Main:
 	moveq	#$11,d3
 	move.w	x_pos(a0),d4
 	jsr	(PlatformObject).l
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 off_3BF60:	offsetTable
 		offsetTableEntry.w loc_3BF66
@@ -58,7 +58,7 @@ loc_3BF66:
 	neg.w	x_vel(a0)
 	neg.w	objoff_30(a0)
 +
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	move.b	status(a0),d0
 	move.b	d0,d1
 	andi.b	#p1_standing,d1
@@ -84,7 +84,7 @@ loc_3BFB4:
 loc_3BFD8:
 	move.w	objoff_30(a0),d0
 	add.w	d0,x_vel(a0)
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	move.w	objoff_32(a0),d0
 	sub.w	x_pos(a0),d0
 	btst	#status.npc.x_flip,status(a0)

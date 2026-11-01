@@ -39,7 +39,7 @@ Obj6D_Main:
 	add.w	floorspike_initial_y_pos(a0),d0
 	move.w	d0,y_pos(a0)
 	move.w	floorspike_initial_x_pos(a0),d0
-	jmp	(MarkObjGone2).l
+	jmp	(MarkObjGone2).w
 ; ===========================================================================
 ; loc_277FC:
 Obj6D_Action:

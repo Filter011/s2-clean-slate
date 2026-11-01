@@ -31,7 +31,7 @@ ObjBC_Main:
 	move.w	d0,x_pos(a0)
 	bchg	#0,objoff_2A(a0)
 	beq.s	ObjBC_Init.return
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; off_3BBFE:
 ObjBC_SubObjData2:

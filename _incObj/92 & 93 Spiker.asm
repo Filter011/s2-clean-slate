@@ -31,16 +31,16 @@ loc_36F3C:
 	bmi.s	loc_36F5A
 
 loc_36F48:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_obj92(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_36F5A:
 	addq.b	#2,routine(a0)
 	move.b	#$10,objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_36F68:
@@ -49,7 +49,7 @@ loc_36F68:
 	subq.b	#1,objoff_2A(a0)
 	bmi.s	loc_36F78
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_36F78:
@@ -57,7 +57,7 @@ loc_36F78:
 	move.b	#$40,objoff_2A(a0)
 	neg.w	x_vel(a0)
 	bchg	#status.npc.x_flip,status(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_36F90:
@@ -66,7 +66,7 @@ loc_36F90:
 	beq.s	loc_36FA4
 	subq.b	#1,d0
 	move.b	d0,objoff_2E(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_36FA4:
@@ -84,7 +84,7 @@ loc_36FA4:
 
 loc_36FDC:
 	move.b	objoff_2F(a0),routine(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; ----------------------------------------------------------------------------
 ; Object 93 - Drill thrown by Spiker from HTZ
@@ -123,8 +123,8 @@ loc_37028:
 	_btst	#render_flags.on_screen,render_flags(a0)
 	_beq.w	JmpTo64_DeleteObject
 	bchg	#render_flags.x_flip,render_flags(a0)
-	jsr	(ObjectMove).l
-	jmp	(MarkObjGone).l
+	jsr	(ObjectMove).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_3703E:

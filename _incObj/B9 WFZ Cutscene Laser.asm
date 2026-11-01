@@ -33,7 +33,7 @@ loc_3BAD2:
 ; ===========================================================================
 
 loc_3BAF0:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 
 loc_3BAF8:
 	move.w	x_pos(a0),d0
@@ -41,7 +41,7 @@ loc_3BAF8:
 	sub.w	(Camera_X_pos).w,d1
 	cmp.w	d1,d0
 	blt.w	JmpTo64_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; off_3BB0E:
 ObjB9_SubObjData:

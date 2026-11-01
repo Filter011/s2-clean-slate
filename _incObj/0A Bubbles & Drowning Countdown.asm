@@ -64,7 +64,7 @@ loc_1D388:
 ; loc_1D398:
 Obj0A_Animate:
 	lea	Ani_obj0A(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 
 ; loc_1D3A4:
 Obj0A_ChkWater:
@@ -97,10 +97,10 @@ Obj0A_Wobble:
 	move.w	d0,x_pos(a0)
 
 	bsr.s	Obj0A_BecomeNumberMaybe
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	_btst	#render_flags.on_screen,render_flags(a0)
 	_beq.s	JmpTo5_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_1D40E:
 Obj0A_DisplayNumber:
@@ -112,13 +112,13 @@ Obj0A_DisplayNumber:
 Obj0A_Display:
 	bsr.s	Obj0A_BecomeNumberMaybe
 	lea	Ani_obj0A(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	bsr.w	Obj0A_LoadCountdownArt
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 JmpTo5_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_1D434:
 Obj0A_AirLeft:
@@ -134,11 +134,11 @@ Obj0A_AirLeft:
 ; loc_1D452:
 Obj0A_Display2:
 	lea	Ani_obj0A(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	bsr.w	Obj0A_LoadCountdownArt
 	_btst	#render_flags.on_screen,render_flags(a0)
 	_beq.s	JmpTo5_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_1D474: Obj0A_ShowNumber:
 Obj0A_BecomeNumberMaybe:
@@ -292,8 +292,7 @@ Obj0A_ReduceAir:
 	move.b	#AniIDSonAni_Drown,anim(a0)	; use Sonic's drowning animation
 	bset	#status.player.in_air,status(a0)
 	bset	#high_priority_bit,art_tile(a0)
-	move.w	#0,y_vel(a0)
-	move.w	#0,x_vel(a0)
+	move.l	#0,x_vel(a0)	; and y_vel
 	move.w	#0,inertia(a0)
 	move.b	#2,routine(a0)
 	clr.b	(Update_HUD_timer).w
@@ -312,7 +311,7 @@ Obj0A_PlayerHasDrowned:
 +	; Move the player downwards as they drown.
 	move.l	a0,-(sp)
 	movea.l	a2,a0
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	addi.w	#$10,y_vel(a0)
 	movea.l	(sp)+,a0 ; load 0bj address
 ; ===========================================================================

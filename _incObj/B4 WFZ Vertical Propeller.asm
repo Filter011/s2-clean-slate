@@ -25,14 +25,14 @@ ObjB4_Init:
 ; loc_3B38E:
 ObjB4_Main:
 	lea	Ani_objB4(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	moveq	#$1F,d0
 	and.b	(Vint_runcount+3).w,d0
 	bne.s	+
 	moveq	#SndID_Helicopter,d0
 	jsr	(PlaySoundLocal).w
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_3B3AC:
 ObjB4_SubObjData:

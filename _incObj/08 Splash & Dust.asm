@@ -87,9 +87,9 @@ Obj08_MdSkidDust:
 ; loc_1DE28:
 Obj08_Display:
 	lea	Ani_obj08(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	bsr.w	Obj08_LoadDustOrSplashArt
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_1DE3E:
 Obj08_ResetDisplayMode:
@@ -98,7 +98,7 @@ Obj08_ResetDisplayMode:
 ; ===========================================================================
 
 BranchTo16_DeleteObject ; BranchTo
-	bra.w	DeleteObject
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_1DE4A:
 Obj08_CheckSkid:

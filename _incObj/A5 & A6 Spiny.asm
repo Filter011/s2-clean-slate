@@ -42,17 +42,17 @@ loc_38B2C:
 	neg.w	x_vel(a0)
 
 loc_38B3C:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_objA5(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38B4E:
 	addq.b	#2,routine(a0)
 	move.b	#$28,objoff_2B(a0)
 	move.b	#2,mapping_frame(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38B62:
@@ -62,13 +62,13 @@ loc_38B62:
 	bne.s	+
 	bsr.w	loc_38C22
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38B78:
 	subq.b	#2,routine(a0)
 	move.b	#$40,objoff_2B(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; ----------------------------------------------------------------------------
 ; Object A6 - Spiny (on wall) from CPZ
@@ -113,17 +113,17 @@ loc_38BC8:
 	move.w	#$80,objoff_2A(a0)
 	neg.w	y_vel(a0)
 +
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_objA6(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38BEA:
 	addq.b	#2,routine(a0)
 	move.b	#$28,objoff_2B(a0)
 	move.b	#5,mapping_frame(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38BFE:
@@ -133,13 +133,13 @@ loc_38BFE:
 	bne.s	+
 	bsr.w	loc_38C6E
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38C14:
 	subq.b	#2,routine(a0)
 	move.b	#$40,objoff_2B(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_38C22:

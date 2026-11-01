@@ -141,7 +141,7 @@ Sonic_Display:
 	bcc.s	Obj01_ChkInvin
 ; loc_1A0D4:
 Obj01_Display:
-	jsr	(DisplaySprite).l
+	jsr	(DisplaySprite).w
 ; loc_1A0DA:
 Obj01_ChkInvin:		; Checks if invincibility has expired and disables it if it has.
 	btst	#status_secondary.invincible,status_secondary(a0)
@@ -177,7 +177,7 @@ Obj01_ChkShoes:		; Checks if Speed Shoes have expired and disables them if they 
 ; loc_1A14A:
 Obj01_RmvSpeed:
 	bclr	#status_secondary.speed_shoes,status_secondary(a0)
-	move.w	#MusID_SlowDown,d0	; Slow down tempo
+	moveq	#signextendB(MusID_SlowDown),d0	; Slow down tempo
 	jmp	(PlayMusic).w
 ; ---------------------------------------------------------------------------
 ; return_1A15A:
@@ -331,7 +331,7 @@ Obj01_MdNormal:
 
 Obj01_MdNormal_Skip:
 	bsr.w	Sonic_LevelBound
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bsr.w	AnglePos
 	bra.w	Player_SlopeRepel
 ; End of subroutine Obj01_MdNormal
@@ -343,7 +343,7 @@ Obj01_MdAir:
 	bsr.w	Sonic_JumpHeight
 	bsr.w	Sonic_ChgJumpDir
 	bsr.w	Sonic_LevelBound
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	btst	#status.player.underwater,status(a0)	; is Sonic underwater?
 	beq.s	+		; if not, branch
 	subi.w	#$28,y_vel(a0)	; reduce gravity by $28 ($38-$28=$10)
@@ -363,7 +363,7 @@ Obj01_MdRoll:
 	bsr.w	Player_RollRepel
 	bsr.w	Sonic_RollSpeed
 	bsr.w	Sonic_LevelBound
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bsr.w	AnglePos
 	bra.w	Player_SlopeRepel
 ; End of subroutine Obj01_MdRoll
@@ -377,7 +377,7 @@ Obj01_MdJump:
 	bsr.w	Sonic_JumpHeight
 	bsr.w	Sonic_ChgJumpDir
 	bsr.w	Sonic_LevelBound
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	btst	#status.player.underwater,status(a0)	; is Sonic underwater?
 	beq.s	+		; if not, branch
 	subi.w	#$28,y_vel(a0)	; reduce gravity by $28 ($38-$28=$10)
@@ -600,7 +600,7 @@ Sonic_Duck:
 ; moves the screen back to its normal position after looking up or down
 ; loc_1A5E0:
 Obj01_ResetScr:
-	move.b	#0,look_delay_counter(a0)
+	clr.b	look_delay_counter(a0)
 ; loc_1A5E6:
 Obj01_ResetScr_Part2:
 	cmpi.w	#(screen_height/2)-16,(Camera_Y_pos_bias).w	; is screen in its default position?
@@ -1900,7 +1900,7 @@ Obj01_Hurt:
 ; ---------------------------------------------------------------------------
 ; loc_1B13A:
 Obj01_Hurt_Normal:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	addi.w	#$30,y_vel(a0)
 	btst	#status.player.underwater,status(a0)
 	beq.s	+
@@ -1916,7 +1916,7 @@ Obj01_Hurt_Normal:
 	bsr.w	Sonic_RecordPos
 	bsr.w	Sonic_Animate
 	bsr.w	LoadSonicDynPLC
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; loc_1B184:
 Sonic_HurtStop:
@@ -1934,8 +1934,7 @@ Sonic_HurtStop:
 	btst	#status.player.in_air,status(a0)
 	bne.s	return_1B1C8
 	moveq	#0,d0
-	move.w	d0,y_vel(a0)
-	move.w	d0,x_vel(a0)
+	move.l	d0,x_vel(a0)	; and y_vel
 	move.w	d0,inertia(a0)
 	move.b	d0,obj_control(a0)
 	move.b	#AniIDSonAni_Walk,anim(a0)
@@ -1966,11 +1965,11 @@ Obj01_Dead:
 	rts
 +
 	bsr.s	CheckGameOver
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	bsr.w	Sonic_RecordPos
 	bsr.w	Sonic_Animate
 	bsr.w	LoadSonicDynPLC
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
@@ -2048,7 +2047,7 @@ Obj01_Respawning:
 +
 	bsr.s	Sonic_Animate
 	bsr.w	LoadSonicDynPLC
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ; ---------------------------------------------------------------------------

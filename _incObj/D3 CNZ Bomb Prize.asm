@@ -37,7 +37,7 @@ ObjD3:
 	ori.b	#$81,(Update_HUD_rings).w
 
 BranchTo_JmpTo44_DeleteObject ; BranchTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 
 JmpTo28_DisplaySprite ; JmpTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w

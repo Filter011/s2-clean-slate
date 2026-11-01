@@ -23,19 +23,19 @@ Obj4A_Bullet:
 	rts
 ; ---------------------------------------------------------------------------
 +
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_obj4A(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_2CA46:
 Obj4A_Angry:	; Used by removed sub-object
 	subq.w	#1,objoff_2C(a0)
 	beq.s	JmpTo47_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 JmpTo47_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; loc_2CA52:
 Obj4A_Init:
@@ -47,7 +47,7 @@ Obj4A_Init:
 	move.b	#$10,width_pixels(a0)
 	move.b	#$B,y_radius(a0)
 	move.b	#8,x_radius(a0)
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
 	bpl.s	+
@@ -69,8 +69,8 @@ Obj4A_Main:
 	move.w	Obj4A_Main_Index(pc,d0.w),d1
 	jsr	Obj4A_Main_Index(pc,d1.w)
 	lea	Ani_obj4A(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_2CAD4:
 Obj4A_Main_Index: offsetTable
@@ -104,13 +104,13 @@ Obj4A_DelayBeforeMoveUp:
 	addq.b	#2,routine_secondary(a0)
 	move.b	#4,anim(a0)
 	move.w	#-$200,y_vel(a0)
-	jmp	(ObjectMove).l
+	jmp	(ObjectMove).w
 ; ===========================================================================
 ; loc_2CB20:
 Obj4A_MoveUp:
 	addi.w	#$10,y_vel(a0)
 	bpl.s	+
-	jmp	(ObjectMove).l
+	jmp	(ObjectMove).w
 ; ===========================================================================
 +
 	addq.b	#2,routine_secondary(a0)
@@ -133,7 +133,7 @@ Obj4A_MoveDown:
 	move.w	y_pos(a0),d0
 	cmp.w	octus_start_position(a0),d0
 	bhs.s	+
-	jmp	(ObjectMove).l
+	jmp	(ObjectMove).w
 ; ===========================================================================
 +
 	clr.b	routine_secondary(a0)

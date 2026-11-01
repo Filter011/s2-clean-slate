@@ -27,7 +27,7 @@ ObjB7_Main:
 	beq.w	JmpTo64_DeleteObject
 	bchg	#0,objoff_2B(a0)
 	beq.s	ObjB7_Init.return
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; off_3B8DA:
 ObjB7_SubObjData:

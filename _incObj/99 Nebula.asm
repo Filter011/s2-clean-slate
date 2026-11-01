@@ -30,10 +30,10 @@ loc_377E8:
 	bsr.s	loc_37810
 
 loc_377FA:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bsr.w	loc_36776
 	lea	Ani_obj99(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	bra.w	Obj_DeleteBehindScreen
 ; ===========================================================================
 
@@ -54,10 +54,10 @@ loc_3781C:
 
 loc_37834:
 	addq.w	#1,y_vel(a0)
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	bsr.w	loc_36776
 	lea	Ani_obj99(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	bra.w	Obj_DeleteBehindScreen
 ; ===========================================================================
 

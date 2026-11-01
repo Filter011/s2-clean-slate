@@ -41,7 +41,7 @@ ObjC7_Body:
 	move.b	routine_secondary(a0),d0
 	move.w	off_3D51A(pc,d0.w),d1
 	jsr	off_3D51A(pc,d1.w)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 off_3D51A:	offsetTable
 		offsetTableEntry.w loc_3D52A	;  0
@@ -114,7 +114,7 @@ loc_3D5EA:
 	beq.s	+
 	moveq	#SndID_Rumbling,d0
 	jsr	(PlaySound).w
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	ObjC7_ChildDeltas(pc),a1
 	bra.w	ObjC7_PositionChildren
 ; ---------------------------------------------------------------------------
@@ -276,7 +276,7 @@ loc_3D744:
 	moveq	#SndID_Fire,d0
 	jsr	(PlaySoundLocal).w
 +
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	ObjC7_ChildDeltas(pc),a1
 	bra.w	ObjC7_PositionChildren
 ; ---------------------------------------------------------------------------
@@ -312,7 +312,7 @@ loc_3D784:
 loc_3D7B8:
 	subq.b	#1,anim_frame_duration(a0)
 	bmi.s	+
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	ObjC7_ChildDeltas(pc),a1
 	bra.w	ObjC7_PositionChildren
 ; ---------------------------------------------------------------------------
@@ -441,7 +441,7 @@ off_3D8E0:	offsetTable
 
 loc_3D8E6:
 	jsr	(Boss_LoadExplosion).l
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	move.w	y_pos(a0),d0
 	cmpi.w	#$15C,d0
 	bhs.s	+
@@ -489,7 +489,7 @@ loc_3D93C:
 	st.b	(Screen_Shaking_Flag).w
 	move.w	#$1000,(DEZ_Shake_Timer).w
 	movea.w	objoff_36(a0),a1 ; a1=object
-	jmp	(DeleteObject2).l
+	jmp	(DeleteObject2).w
 ; ===========================================================================
 ;loc_3D970
 ObjC7_SetupEnding:
@@ -556,7 +556,7 @@ loc_3D9D6:
 	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
 	move.l	#SegaScreen,(Game_Mode).w ; => EndingSequence
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 ObjC7_Shoulder:
@@ -568,7 +568,7 @@ ObjC7_Shoulder:
 	bsr.w	loc_3E282
 	tst.b	id(a0)
 	beq.s	return_3DA48
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 off_3DA34:	offsetTable
 		offsetTableEntry.w loc_3DA3C	; 0
@@ -594,7 +594,7 @@ ObjC7_FrontLowerLeg:
 	jsr	off_3DA62(pc,d1.w)
 	tst.b	id(a0)
 	beq.s	return_3DA72
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 off_3DA62:	offsetTable
 		offsetTableEntry.w loc_3DA66	; 0
@@ -618,7 +618,7 @@ ObjC7_FrontForearm:
 	beq.s	return_3DA72
 	btst	#status.npc.p2_pushing,status(a0)
 	bne.s	return_3DA72
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 off_3DA96:	offsetTable
 		offsetTableEntry.w loc_3DAA0	; 0
@@ -651,7 +651,7 @@ loc_3DACC:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	+
 	addi.w	#$20,y_vel(a0)
-	jmp	(ObjectMove).l
+	jmp	(ObjectMove).w
 ; ---------------------------------------------------------------------------
 +
 	addq.b	#2,routine_secondary(a0)
@@ -690,7 +690,7 @@ word_3DB2A:
 loc_3DB32:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	+
-	jmp	(ObjectMove).l
+	jmp	(ObjectMove).w
 ; ---------------------------------------------------------------------------
 +
 	addq.b	#2,routine_secondary(a0)
@@ -706,7 +706,7 @@ loc_3DB32:
 loc_3DB5A:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	+
-	jmp	(ObjectMove).l
+	jmp	(ObjectMove).w
 ; ---------------------------------------------------------------------------
 +
 	move.b	#2,routine_secondary(a0)
@@ -721,7 +721,7 @@ ObjC7_Arm:
 	jsr	off_3DB8C(pc,d1.w)
 	tst.b	id(a0)
 	beq.s	return_3DB9C
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 off_3DB8C:	offsetTable
 		offsetTableEntry.w loc_3DB90	; 0
@@ -743,7 +743,7 @@ ObjC7_FrontThigh:
 	jsr	off_3DBB6(pc,d1.w)
 	tst.b	id(a0)
 	beq.s	return_3DBC6
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 off_3DBB6:	offsetTable
 		offsetTableEntry.w loc_3DBBA	; 0
@@ -767,7 +767,7 @@ ObjC7_Head:
 	bsr.w	loc_3E282
 	tst.b	id(a0)
 	beq.s	return_3DBC6
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 off_3DBE8:	offsetTable
 		offsetTableEntry.w loc_3DBF6	; 0
@@ -801,25 +801,25 @@ loc_3DC02:
 
 loc_3DC1C:
 	lea	Ani_objC7_a(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3DC2A:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	+
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ---------------------------------------------------------------------------
 +
 	addq.b	#2,routine_secondary(a0)
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	bset	#status.npc.misc,status(a1)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3DC46:
 	move.b	#-1,collision_property(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ;loc_3DC50
 ObjC7_Jet:
@@ -853,8 +853,8 @@ loc_3DC80:
 
 loc_3DC86:
 	lea	Ani_objC7_b(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3DC94:
@@ -869,7 +869,7 @@ ObjC7_BackLowerLeg:
 	jsr	off_3DCB4(pc,d1.w)
 	tst.b	id(a0)
 	beq.s	return_3DCCA
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 off_3DCB4:	offsetTable
 		offsetTableEntry.w loc_3DCB8	; 0
@@ -892,7 +892,7 @@ ObjC7_BackForearm:
 	jsr	off_3DCE4(pc,d1.w)
 	tst.b	id(a0)
 	beq.s	return_3DCCA
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 off_3DCE4:	offsetTable
 		offsetTableEntry.w loc_3DCEE	; 0
@@ -929,7 +929,7 @@ ObjC7_BackThigh:
 	jsr	off_3DD38(pc,d1.w)
 	tst.b	id(a0)
 	beq.s	return_3DD4E
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 off_3DD38:	offsetTable
 		offsetTableEntry.w loc_3DD3C	; 0
@@ -968,7 +968,7 @@ loc_3DD64:
 	move.w	y_pos(a1),y_pos(a0)
 	move.l	x_vel(a1),objoff_30(a0)	; and y_vel/objoff_32
 	move.w	#$18,angle(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3DDA6:
@@ -994,9 +994,9 @@ loc_3DDA6:
 	move.w	y_pos(a2),y_pos(a0)
 +
 	move.w	d0,(a1)+
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	lea	Ani_objC7_c(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	subq.b	#1,angle(a0)
 	bpl.s	+
 	subq.b	#1,objoff_27(a0)
@@ -1004,7 +1004,7 @@ loc_3DDA6:
 	moveq	#SndID_Beep,d0
 	jsr	(PlaySound).w
 +
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3DE0A:
@@ -1017,27 +1017,27 @@ loc_3DE0A:
 	lea	ChildObjC7_TargettingLock(pc),a2
 	bsr.w	LoadChildObject
 	clr.w	x_vel(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3DE3C:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	loc_3DE62
 	lea	Ani_objC7_c(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	subq.b	#1,angle(a0)
 	bpl.s	+
 	move.b	#4,angle(a0)
 	moveq	#SndID_Beep,d0
 	jsr	(PlaySound).w
 +
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3DE62:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	move.w	x_pos(a0),objoff_28(a1)
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ;loc_3DE70
 ObjC7_TargettingLock:
@@ -1057,7 +1057,7 @@ loc_3DE82:
 	move.w	#1*$80,priority(a0)
 	ori.w	#high_priority,art_tile(a0)
 	move.w	#4,objoff_2A(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3DEA2:
@@ -1069,7 +1069,7 @@ loc_3DEA2:
 	move.w	#4,objoff_2A(a0)
 	bchg	#palette_bit_0,art_tile(a0)
 +
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ;loc_3DEC2
 ObjC7_EggmanBomb:
@@ -1093,7 +1093,7 @@ loc_3DED8:
 	move.b	#$C,width_pixels(a0)
 	lea	byte_3DF00(pc),a1
 	bsr.w	loc_3E282
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 byte_3DF00:
 	dc.w  $38
@@ -1104,17 +1104,17 @@ loc_3DF04:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	btst	#status.npc.no_balancing,status(a1)
 	bne.s	loc_3DF4C
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	move.w	y_pos(a0),d0
 	cmpi.w	#$170,d0
 	bhs.s	+
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 +
 	addq.b	#2,routine_secondary(a0)
 	move.w	#$170,y_pos(a0)
 	move.w	#$40,objoff_2A(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3DF36:
@@ -1123,7 +1123,7 @@ loc_3DF36:
 	bne.s	loc_3DF4C
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	loc_3DF4C
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3DF4C:
@@ -1135,7 +1135,7 @@ loc_3DF4C:
 	move.b	#0,mapping_frame(a0)
 	moveq	#SndID_BossExplosion,d0
 	jsr	(PlaySound).w
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3DF80:
@@ -1149,14 +1149,14 @@ loc_3DF80:
 	cmpi.b	#7,mapping_frame(a0)
 	beq.w	JmpTo64_DeleteObject
 +
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ;loc_3DFAA
 ObjC7_FallingPieces:
 	subq.w	#1,objoff_2A(a0)
 	bmi.w	JmpTo64_DeleteObject
-	jsr	(ObjectMoveAndFall).l
-	jmp	(DisplaySprite).l
+	jsr	(ObjectMoveAndFall).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_3DFBA:
@@ -1232,7 +1232,7 @@ ObjC7_Beaten:
 	bsr.w	ObjC7_RemoveCollision
 	bsr.w	ObjC7_Break
 	movea.w	objoff_38(a0),a1 ; a1=object
-	jsr	(DeleteObject2).l
+	jsr	(DeleteObject2).w
 	addq.w	#4,sp
 	rts
 ; ===========================================================================

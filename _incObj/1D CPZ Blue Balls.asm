@@ -76,11 +76,11 @@ Obj1D_Wait:
 	jsr	(PlaySoundLocal).w
 
 BranchTo_JmpTo7_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_224F4:
 Obj1D_MoveArc:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	move.w	objoff_36(a0),d0
 	add.w	d0,x_vel(a0)
 	addi.w	#$18,y_vel(a0)
@@ -89,17 +89,15 @@ Obj1D_MoveArc:
 +
 	move.w	objoff_30(a0),d0
 	cmp.w	y_pos(a0),d0
-	bhi.s	BranchTo2_JmpTo7_MarkObjGone
+	bhi.s	BranchTo_JmpTo7_MarkObjGone
 	move.w	objoff_34(a0),y_vel(a0)
 	clr.w	x_vel(a0)
 	subq.b	#2,routine(a0) ; => Obj1D_Wait
-
-BranchTo2_JmpTo7_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_22528:
 Obj1D_MoveStraight:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	addi.w	#$18,y_vel(a0)
 	bne.s	+
 	move.w	objoff_3A(a0),d0
@@ -113,11 +111,9 @@ Obj1D_MoveStraight:
 +
 	move.w	objoff_30(a0),d0
 	cmp.w	y_pos(a0),d0
-	bhi.s	BranchTo3_JmpTo7_MarkObjGone
+	bhi.s	BranchTo_JmpTo7_MarkObjGone
 	move.w	objoff_34(a0),y_vel(a0)
 	move.w	objoff_38(a0),x_pos(a0)
 	moveq	#SndID_Gloop,d0
 	jsr	(PlaySoundLocal).w
-
-BranchTo3_JmpTo7_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w

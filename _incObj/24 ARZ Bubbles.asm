@@ -44,7 +44,7 @@ loc_1F90A:
 
 loc_1F924:
 	lea	Ani_obj24(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	cmpi.b	#6,mapping_frame(a0)
 	bne.s	loc_1F93E
 	move.b	#1,objoff_2E(a0)
@@ -74,22 +74,22 @@ loc_1F956:
 	beq.s	loc_1F99E
 
 loc_1F988:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	_btst	#render_flags.on_screen,render_flags(a0)
 	_beq.s	BranchTo_JmpTo15_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_1F99E:
 	lea	Ani_obj24(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 	_btst	#render_flags.on_screen,render_flags(a0)
 	_beq.s	BranchTo_JmpTo15_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 BranchTo_JmpTo15_DeleteObject ; BranchTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_1F9C0:
@@ -170,7 +170,7 @@ loc_1FAA6:
 
 loc_1FAC2:
 	lea	Ani_obj24(pc),a1
-	jsr	(AnimateSprite).l
+	jsr	(AnimateSprite).w
 
 loc_1FACE:
 	moveq	#-$80,d0
@@ -184,9 +184,9 @@ loc_1FACE:
 	rts
 
 JmpTo15_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 JmpTo7_DisplaySprite ; JmpTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 byte_1FAF0:
 	dc.b   0
@@ -234,8 +234,7 @@ loc_1FB0C:
 	bsr.w	ResumeMusic
 	moveq	#SndID_InhalingBubble,d0
 	jsr	(PlaySound).w
-	clr.w	x_vel(a1)
-	clr.w	y_vel(a1)
+	clr.l	x_vel(a1)	; and y_vel
 	clr.w	inertia(a1)
 	move.b	#AniIDSonAni_Bubble,anim(a1)
 	move.w	#$23,move_lock(a1)

@@ -8,7 +8,7 @@ Obj84:
 	move.b	routine(a0),d0
 	move.w	Obj84_Index(pc,d0.w),d1
 	jsr	Obj84_Index(pc,d1.w)
-	jmp	(MarkObjGone3).l
+	jmp	(MarkObjGone3).w
 ; ===========================================================================
 ; off_21170: Obj84_States:
 Obj84_Index:	offsetTable

@@ -13,7 +13,7 @@ Obj1E:
 	rts
 
 JmpTo_MarkObjGone3 ; JmpTo
-	jmp	(MarkObjGone3).l
+	jmp	(MarkObjGone3).w
 ; ===========================================================================
 ; JmpTbl_225B8: Obj1E_States:
 Obj1E_Index:	offsetTable

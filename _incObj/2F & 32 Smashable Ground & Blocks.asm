@@ -54,7 +54,7 @@ Obj2F_Main:
 	move.b	status(a0),d0
 	andi.b	#standing_mask,d0
 	bne.s	+
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 +
 	cmpi.b	#standing_mask,d0
@@ -69,7 +69,7 @@ Obj2F_Main:
 loc_233C0:
 	move.b	#$C,(MainCharacter+top_solid_bit).w
 	move.b	#$D,(MainCharacter+lrb_solid_bit).w
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_233F0:
@@ -95,7 +95,7 @@ loc_23426:
 	move.b	#$D,(MainCharacter+lrb_solid_bit).w
 
 loc_23470:
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_23436:
@@ -138,11 +138,11 @@ loc_234A4:
 	bsr.w	SmashableObject_LoadPoints
 ; loc_234DC:
 Obj2F_Fragment:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	addi.w	#$18,y_vel(a0)
 	_btst	#render_flags.on_screen,render_flags(a0)
 	_beq.w	JmpTo22_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ; byte_234F2:
 Obj2F_FragmentVelocities:
@@ -208,7 +208,7 @@ Obj32_Main:
 	bne.s	Obj32_SupportingSomeone
 
 BranchTo2_JmpTo9_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_235BC:
 Obj32_SupportingSomeone:
@@ -259,14 +259,14 @@ Obj32_Destroy:
 	bsr.w	SmashableObject_LoadPoints
 ; loc_2366A:
 Obj32_Fragment:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	addi.w	#$18,y_vel(a0)
 	_btst	#render_flags.on_screen,render_flags(a0)
 	_beq.s	JmpTo22_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 
 JmpTo22_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ; velocity array for smashed bits, two words for each fragment
 ; byte_23680:

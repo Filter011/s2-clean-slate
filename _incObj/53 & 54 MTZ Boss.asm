@@ -113,7 +113,7 @@ Obj54_MainSub0:
 	bsr.w	AnimateBoss
 	bsr.w	Obj54_AlignSprites
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ;loc_3243C
 Obj54_Float:
@@ -162,7 +162,7 @@ Obj54_Display:
 	bsr.w	AnimateBoss
 	bsr.w	Obj54_AlignSprites
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ;loc_324DC
 Obj54_MainSub4:
@@ -466,7 +466,7 @@ Obj54_MainSub10:
 	bsr.w	AnimateBoss
 	bsr.w	Obj54_AlignSprites
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 ;loc_32864
 Obj54_MainSub12:
@@ -484,7 +484,7 @@ Obj54_MainSub12:
 	tst.b	(Boss_defeated_flag).w
 	bne.s	+
 	move.b	#1,(Boss_defeated_flag).w
-	jsr	(LoadPLC_AnimalExplosion).l
+	jsr	(LoadPLC_AnimalExplosion).w
 +
 	bsr.w	Boss_MoveObject
 	bsr.w	loc_328C0
@@ -494,11 +494,11 @@ Obj54_MainSub12:
 	bsr.w	AnimateBoss
 	bsr.w	Obj54_AlignSprites
 	move.w	#object_display_list_size*3,d0
-	jmp	(DisplaySprite3).l
+	jmp	(DisplaySprite3).w
 ; ===========================================================================
 
 JmpTo60_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_328C0:
@@ -657,7 +657,7 @@ Obj53_ClearBossCollision:
 +
 	bsr.s	Obj53_OrbitBoss
 	bsr.w	Obj53_SetAnimPriority
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ;loc_32A70
 Obj53_OrbitBoss:
@@ -757,7 +757,7 @@ Obj53_BreakAway:
 	bpl.s	+
 	move.b	#$DA,collision_flags(a0)
 +
-	jsr	(ObjectMoveAndFall).l
+	jsr	(ObjectMoveAndFall).w
 	subi.w	#$20,y_vel(a0)
 	cmpi.w	#$180,y_vel(a0)
 	blt.s	+
@@ -775,8 +775,8 @@ Obj53_Animate:
 	bsr.s	+
 Obj53_Animate_Part2:
 	lea	Ani_obj53(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 +
 	cmpi.b	#-1,collision_property(a0)
@@ -815,13 +815,13 @@ Obj53_BounceAround:
 	neg.w	d0
 +
 	add.w	d0,x_pos(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 +
 	move.w	#$4AC,y_pos(a0)
 	bsr.s	Obj53_FaceLeader
 	move.b	#1,objoff_2C(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ;loc_32C4C
 Obj53_FaceLeader:
@@ -856,7 +856,7 @@ Obj53_Burst:
 	jsr	(PlaySound).w
 	movea.l	objoff_34(a0),a1 ; a1=object
 	subq.b	#1,objoff_2C(a1)
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 ;loc_32CAE
 Obj54_Laser:
@@ -895,12 +895,12 @@ Obj54_Laser_Init:
 	jsr	(PlaySound).w
 ;loc_32D2C
 Obj54_Laser_Main:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	cmpi.w	#$2AB0,x_pos(a0)
 	blo.s	JmpTo61_DeleteObject
 	cmpi.w	#$2BF0,x_pos(a0)
 	bhs.s	JmpTo61_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 ;loc_32D48
 Obj54_LaserShooter:
@@ -915,6 +915,6 @@ Obj54_LaserShooter:
 	bset	#render_flags.x_flip,render_flags(a0)
 
 JmpTo40_DisplaySprite ; JmpTo
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 JmpTo61_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

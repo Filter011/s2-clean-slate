@@ -27,7 +27,7 @@ Obj7F_Main:
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.w	(Ctrl_1).w,d0
 	bsr.s	Obj7F_Action
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_2983C:
 Obj7F_Action:
@@ -78,8 +78,7 @@ loc_29890:
 	bhs.s	return_29936
 	tst.w	(Debug_placement_mode).w
 	bne.s	return_29936
-	clr.w	x_vel(a1)
-	clr.w	y_vel(a1)
+	clr.l	x_vel(a1)	; and y_vel
 	clr.w	inertia(a1)
 	move.w	x_pos(a0),x_pos(a1)
 	move.w	y_pos(a0),y_pos(a1)

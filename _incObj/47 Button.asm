@@ -57,4 +57,4 @@ Obj47_Main:
 	move.b	#1,mapping_frame(a0)
 
 BranchTo_JmpTo12_MarkObjGone ; BranchTo
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w

@@ -61,12 +61,12 @@ loc_26FF6:
 	bhi.s	JmpTo33_DeleteObject
 	tst.w	(Debug_placement_mode).w
 	beq.s	+	; rts
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 +
 	rts
 
 JmpTo33_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w
 ; ===========================================================================
 loc_27042:
 	move.w	objoff_30(a0),x_vel(a1)

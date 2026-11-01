@@ -34,7 +34,7 @@ ObjD5_Init:
 	add.w	d0,y_pos(a0)
 ; loc_2BA68:
 ObjD5_Main:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	move.w	objoff_34(a0),d0
 	move.w	off_2BA94(pc,d0.w),d1
 	jsr	off_2BA94(pc,d1.w)
@@ -45,7 +45,7 @@ ObjD5_Main:
 	move.w	x_pos(a0),d4
 	jsr	(PlatformObjectD5).l
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 off_2BA94:	offsetTable
 		offsetTableEntry.w loc_2BA9C	; 0

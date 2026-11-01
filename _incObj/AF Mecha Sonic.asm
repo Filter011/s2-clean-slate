@@ -53,7 +53,7 @@ loc_397AC:
 	move.w	(Camera_X_pos).w,d0
 	cmpi.w	#$224,d0
 	bhs.s	loc_397BA
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_397BA:
@@ -66,20 +66,20 @@ loc_397BA:
 	move.b	#9,(Current_Boss_ID).w
 	moveq	#signextendB(MusID_FadeOut),d0
 	jsr	(PlayMusic).w
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_397E6:
 	subq.w	#1,objoff_2A(a0)
 	bmi.s	loc_397F0
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_397F0:
 	addq.b	#2,routine(a0)
 	moveq	#MusID_Boss,d0
 	jsr	(PlayMusic).w
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_397FE:
@@ -93,13 +93,13 @@ loc_3980E:
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
 	bmi.s	loc_39830
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	moveq	#0,d0
 	moveq	#0,d1
 	movea.w	parent(a0),a1 ; a1=object
 	bsr.w	Obj_AlignChildXY
 	bsr.w	loc_39D4A
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_39830:
@@ -119,7 +119,7 @@ loc_3984A:
 	bne.s	loc_3986A
 	moveq	#SndID_MechaSonicBuzz,d0
 	jsr	(PlaySound).w
-;	jsr	(DisplaySprite).l	; ?
+;	jsr	(DisplaySprite).w	; ?
 
 loc_3986A:
 	jsr	(ObjCheckFloorDist).l
@@ -127,7 +127,7 @@ loc_3986A:
 	lea	off_39DE2(pc),a1
 	bsr.w	AnimateSprite_Checked
 	bsr.w	loc_39D4A
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_39886:
@@ -140,7 +140,7 @@ loc_39886:
 	clr.b	objoff_2E(a0)
 	movea.w	objoff_3C(a0),a1 ; a1=object
 	move.b	#$16,routine(a1)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 byte_398B0:
 	dc.b   6
@@ -175,8 +175,8 @@ loc_398C0:
 	bsr.w	Obj_AlignChildXY
 	bsr.w	loc_39D4A
 	bsr.w	Obj_AlignChildXY
-	jsr	(ObjectMove).l
-	jmp	(DisplaySprite).l
+	jsr	(ObjectMove).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 off_398F2:	offsetTable
 		offsetTableEntry.w loc_3991E	;   0
@@ -278,7 +278,7 @@ loc_399D6:
 	move.b	#$18,routine(a1)
 	moveq	#SndID_MechaSonicBuzz,d0
 	jsr	(PlaySound).w
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_39A0A:
@@ -301,7 +301,7 @@ loc_39A2A:
 	move.b	#4,anim(a0)
 	moveq	#SndID_LaserBeam,d0
 	jsr	(PlaySound).w
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_39A44:
@@ -330,8 +330,7 @@ loc_39A7C:
 	addq.b	#2,routine_secondary(a0)
 	move.b	#5,anim(a0)
 	bchg	#render_flags.x_flip,render_flags(a0)
-	clr.w	x_vel(a0)
-	clr.w	y_vel(a0)
+	clr.l	x_vel(a0)	; and y_vel
 	rts
 ; ===========================================================================
 
@@ -439,15 +438,14 @@ loc_39B92:
 	subq.w	#1,objoff_32(a0)
 	bmi.s	loc_39BA4
 	jsr	(Boss_LoadExplosion).l
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_39BA4:
 	move.w	#$1000,(Camera_Max_X_pos).w
 	addq.b	#2,(Dynamic_Resize_Routine).w
-	move.w	(Level_Music).w,d0
-	jsr	(PlayMusic).w
-	jmp	(DeleteObject).l
+	jsr	(PlayLevelMusic).w
+	jmp	(DeleteObject).w
 ; ===========================================================================
 
 loc_39BBA:
@@ -462,7 +460,7 @@ loc_39BCC:
 	bsr.w	InheritParentXYFlip
 	lea	off_39E30(pc),a1
 	bsr.w	AnimateSprite_Checked
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_39BE2:
@@ -500,18 +498,18 @@ loc_39C2A:
 	movea.w	objoff_2C(a0),a1 ; a1=object
 	bclr	#status.npc.y_flip,status(a1)
 	bne.s	loc_39C3A
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_39C3A:
 	addq.b	#2,routine(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_39C42:
 	lea	Ani_objAF_c(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_39C50:
@@ -533,20 +531,20 @@ loc_39C78:
 
 loc_39C84:
 	lea	Ani_objAF_c(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(DisplaySprite).l
+	jsr	(AnimateSprite).w
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_39C92:
 	addq.b	#2,routine(a0)
 	move.b	#1,anim(a0)
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 loc_39CA0:
 	lea	Ani_objAF_c(pc),a1
-	jsr	(AnimateSprite).l
-	jmp	(MarkObjGone).l
+	jsr	(AnimateSprite).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_39CAE:
@@ -586,9 +584,9 @@ loc_39CF0:
 	clr.b	collision_flags(a0)
 	bset	#status.npc.misc,status(a0)
 	movea.w	objoff_3C(a0),a1 ; a1=object
-	jsr	(DeleteObject2).l
+	jsr	(DeleteObject2).w
 	movea.w	parent(a0),a1 ; a1=object
-	jmp	(DeleteObject2).l
+	jmp	(DeleteObject2).w
 ; ===========================================================================
 
 loc_39D1C:

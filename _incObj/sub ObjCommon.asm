@@ -148,7 +148,7 @@ Obj_DeleteBehindScreen:
 	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	bmi.w	JmpTo64_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 ; loc_367AA:
@@ -211,7 +211,7 @@ Obj_CreateProjectiles:
 	move.b	d2,subtype(a1)	; used for object initialization
 	move.w	x_pos(a0),x_pos(a1)	; align objects
 	move.w	y_pos(a0),y_pos(a1)
-	lea	(ObjectMove).l,a3	; set movement type
+	lea	(ObjectMove).w,a3	; set movement type
 	move.l	a3,objoff_2A(a1)
 	lea	(a2,d1.w),a3	; get address in list
 	move.b	(a3)+,d0	; get x offset
@@ -240,8 +240,6 @@ return_3686E:
 ; * it is only used by Mecha Sonic;
 ; * some of the end-of-animation flags work differently.
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; loc_36870:
 AnimateSprite_Checked:
@@ -327,8 +325,8 @@ Obj_DeleteOffScreen:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
 	bhi.s	JmpTo64_DeleteObject
-	jmp	(DisplaySprite).l
+	jmp	(DisplaySprite).w
 ; ===========================================================================
 
 JmpTo64_DeleteObject ; JmpTo
-	jmp	(DeleteObject).l
+	jmp	(DeleteObject).w

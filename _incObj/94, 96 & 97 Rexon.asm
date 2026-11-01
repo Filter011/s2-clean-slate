@@ -40,7 +40,7 @@ loc_37362:
 	moveq	#$11,d3
 	move.w	(sp)+,d4
 	jsr	(SolidObject).l
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 ; loc_37380:
@@ -52,7 +52,7 @@ Obj94_CheckTurnAround:
 	bchg	#render_flags.x_flip,render_flags(a0)
 
 loc_37396:
-	jmp	(ObjectMove).l
+	jmp	(ObjectMove).w
 ; ===========================================================================
 
 ; loc_3739C:
@@ -65,7 +65,7 @@ Obj94_ReadyToCreateHead:
 
 loc_373AE:
 	bsr.s	Obj94_SolidCollision
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 ; loc_373B6:
@@ -80,7 +80,7 @@ Obj94_SolidCollision:
 ; loc_373CA:
 Obj94_PostCreateHead:
 	bsr.s	Obj94_SolidCollision
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
@@ -145,7 +145,7 @@ Obj97_InitialWait:
 	subq.b	#1,objoff_2A(a0)
 	bmi.s	Obj97_StartRaise
 	bsr.w	Obj97_CheckHeadIsAlive
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 ; loc_37462:
@@ -158,7 +158,7 @@ Obj97_StartRaise:
 	neg.w	d0
 	lsr.w	#1,d0
 	move.b	byte_3744E(pc,d0.w),objoff_2A(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 ; loc_37488:
@@ -168,8 +168,8 @@ Obj97_RaiseHead:
 	subq.b	#1,objoff_2A(a0)
 	bmi.s	Obj97_StartNormalState
 	bsr.w	Obj97_CheckHeadIsAlive
-	jsr	(ObjectMove).l
-	jmp	(MarkObjGone).l
+	jsr	(ObjectMove).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 ; loc_374A0:
@@ -180,7 +180,7 @@ Obj97_StartNormalState:
 	move.w	objoff_2E(a0),d0
 	lsr.w	#1,d0
 	move.b	byte_374BE(pc,d0.w),objoff_2B(a0)
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 byte_374BE:
 	dc.b $24
@@ -208,7 +208,7 @@ loc_374D8:
 	bsr.w	loc_3758A
 	bsr.w	Obj97_Oscillate
 +
-	jmp	(MarkObjGone).l
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 ; loc_374F4:
@@ -217,8 +217,8 @@ Obj97_DeathDrop:
 	addi.w	#screen_height,d0
 	cmp.w	y_pos(a0),d0
 	blo.w	JmpTo64_DeleteObject
-	jsr	(ObjectMoveAndFall).l
-	jmp	(MarkObjGone).l
+	jsr	(ObjectMoveAndFall).w
+	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 ; loc_3750C:
@@ -250,7 +250,7 @@ Obj97_FireProjectile:
 	move.b	#$10,subtype(a1) ; <== Obj94_SubObjData2
 	move.w	x_pos(a0),x_pos(a1)
 	move.w	y_pos(a0),y_pos(a1)
-	lea	(ObjectMove).l,a2
+	lea	(ObjectMove).w,a2
 	move.l	a2,objoff_2A(a1)
 	moveq	#1,d0
 	moveq	#$10,d1
