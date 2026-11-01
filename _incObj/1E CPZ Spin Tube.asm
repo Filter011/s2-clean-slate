@@ -65,8 +65,8 @@ loc_225FC:
 	bne.s	.nottails			; if not, branch
 	cmpi.w	#4,(Tails_CPU_routine).w	; is Tails respawning?
 	beq.w	return_22718			; if yes, branch
-.nottails:
 
+.nottails:
 	moveq	#0,d3
 	cmpi.w	#$A0,d2
 	beq.s	+

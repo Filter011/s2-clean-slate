@@ -61,7 +61,7 @@ Obj22_DetectPlayer:
 ; ===========================================================================
 ; loc_2572A:
 Obj22_ShootArrow:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+
 	move.b	id(a0),id(a1) ; load obj22
 	addq.b	#6,routine(a1)

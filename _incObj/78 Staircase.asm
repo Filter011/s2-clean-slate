@@ -33,7 +33,7 @@ Obj78_Init:
 ; ===========================================================================
 ; loc_29206:
 Obj78_SubObjectLoop:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	Obj78_Main
 	move.b	#4,routine(a1)
 ; loc_29214:

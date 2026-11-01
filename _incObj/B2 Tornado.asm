@@ -741,7 +741,7 @@ return_3AF32:
 ; ===========================================================================
 ; loc_3AF34:
 ObjB2_Main_WFZ_Start_load_smoke:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+
 	move.b	#ObjID_TornadoSmoke2,id(a1) ; load objC3
 	move.b	#$90,subtype(a1) ; <== ObjC3_SubObjData

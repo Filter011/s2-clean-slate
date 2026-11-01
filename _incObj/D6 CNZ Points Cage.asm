@@ -100,7 +100,7 @@ loc_2BC86:
 	beq.w	loc_2BD48
 	cmpi.w	#$10,objoff_2C(a0)
 	bhs.w	loc_2BD48
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.w	loc_2BD48
 	move.b	#ObjID_BombPrize,id(a1) ; load objD3
 	move.l	#ObjD3_MapUnc_2B8D4,mappings(a1)
@@ -143,7 +143,7 @@ loc_2BD4E:
 	beq.w	return_2BDF6
 	cmpi.w	#$10,objoff_2C(a0)
 	bhs.w	return_2BDF6
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.w	return_2BDF6
 	move.b	#ObjID_RingPrize,id(a1) ; load objDC
 	move.l	#Obj25_MapUnc_12382,mappings(a1)
@@ -222,7 +222,7 @@ loc_2BE5E:
 	moveq	#10,d0
 	movea.w	a1,a3
 	jsr	(AddPoints).l
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+	; rts
 	move.b	#ObjID_Points,id(a1) ; load obj29
 	move.w	x_pos(a0),x_pos(a1)

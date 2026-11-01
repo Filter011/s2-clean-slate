@@ -188,7 +188,7 @@ loc_27F10:
 	move.b	#8,objoff_38(a0)
 
 loc_27F26:
-	jsr	(ObjectMove).l
+	jsr	(ObjectMove).w
 	andi.w	#$7FF,y_pos(a0)
 	cmpi.w	#$2A8,y_vel(a0)
 	bne.s	loc_27F3C

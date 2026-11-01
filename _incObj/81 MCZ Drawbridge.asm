@@ -46,7 +46,7 @@ Obj81_Init:
 	neg.w	d1
 +
 	move.w	d1,objoff_34(a0)
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	Obj81_BridgeUp
 	move.b	id(a0),id(a1) ; load obj81
 	move.l	mappings(a0),mappings(a1)

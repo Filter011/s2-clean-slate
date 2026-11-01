@@ -154,7 +154,7 @@ loc_2C806:
 
 loc_2C85C:
 	jsr	(AddPoints).l
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	loc_2C87E
 	move.b	#ObjID_Points,id(a1) ; load obj29
 	move.w	x_pos(a0),x_pos(a1)

@@ -243,7 +243,7 @@ word_37528:
 ; loc_37532:
 Obj97_FireProjectile:
 	move.b	#$7F,objoff_2A(a0)
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	++	; rts
 	move.b	#ObjID_Projectile,id(a1) ; load obj98
 	move.b	#3,mapping_frame(a1)
@@ -296,7 +296,7 @@ Obj94_CreateHead:
 	moveq	#4,d6
 
 loc_375CE:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+	; rts
 	move.b	#ObjID_RexonHead,id(a1) ; load obj97
 	move.b	render_flags(a0),render_flags(a1)

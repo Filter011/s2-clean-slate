@@ -63,7 +63,7 @@ Obj4B_Init:
 	addq.b	#2,routine(a0)	; => Obj4B_Main
 
 	; load exhaust flame object
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+	; rts
 
 	move.b	#ObjID_Buzzer,id(a1) ; load obj4B
@@ -187,7 +187,7 @@ Obj4B_DoneShooting:
 ; ---------------------------------------------------------------------------
 ; loc_2D24E
 Obj4B_ShootProjectile:
-	jsr	(AllocateObjectAfterCurrent).l	; Find next open object space
+	jsr	(AllocateObjectAfterCurrent).w	; Find next open object space
 	bne.s	+
 
 	move.b	#ObjID_Buzzer,id(a1) ; load obj4B

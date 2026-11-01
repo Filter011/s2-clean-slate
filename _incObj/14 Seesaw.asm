@@ -30,7 +30,7 @@ Obj14_Init:
 	move.w	x_pos(a0),objoff_30(a0)
 	tst.b	subtype(a0)
 	bne.s	loc_219A4
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	loc_219A4
 	move.b	#ObjID_Seesaw,id(a1) ; load obj14
 	addq.b	#6,routine(a1)
@@ -230,8 +230,7 @@ loc_21BB6:
 	bsr.s	Obj14_LaunchCharacter
 
 loc_21C1E:
-	clr.w	x_vel(a0)      ; clear ball velocity
-	clr.w	y_vel(a0)
+	clr.l	x_vel(a0)      ; and y_vel / clear ball velocity
 	subq.b	#2,routine(a0) ; set ball to main state
 
 return_21C2A:

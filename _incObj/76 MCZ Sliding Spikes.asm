@@ -79,8 +79,6 @@ Obj76_Modes:	offsetTable
 ; loc_28ECE:
 Obj76_CheckPlayers:
 	lea	(MainCharacter).w,a1 ; a1=character
-; loc_28ED8:
-Obj76_CheckPlayer:
 	btst	#status.player.in_air,status(a1)
 	bne.s	++	; rts
 	move.w	x_pos(a1),d0

@@ -29,7 +29,7 @@ Obj33_Init:
 	beq.s	+
 	move.b	#4,routine_secondary(a0)
 +
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	Obj33_Main
 	move.b	id(a0),id(a1) ; load obj33
 	move.b	#4,routine(a1)
@@ -122,8 +122,7 @@ loc_23C26:
 
 	move.b	#1,obj_control(a1)
 	move.w	#0,inertia(a1)
-	move.w	#0,x_vel(a1)
-	move.w	#0,y_vel(a1)
+	move.l	#0,x_vel(a1)	; and y_vel
 	bclr	#status.player.pushing,status(a1)
 	bclr	#high_priority_bit,art_tile(a1)
 	move.l	#-$96800,objoff_32(a0)
@@ -150,8 +149,7 @@ loc_23CA0:
 	bclr	#high_priority_bit,art_tile(a1)
 	move.b	#1,obj_control(a2)
 	move.w	#0,inertia(a2)
-	move.w	#0,x_vel(a2)
-	move.w	#0,y_vel(a2)
+	move.l	#0,x_vel(a2)	; and y_vel
 	bclr	#status.player.pushing,status(a2)
 	bclr	#high_priority_bit,art_tile(a2)
 	move.l	#-$96800,objoff_32(a0)
@@ -176,8 +174,6 @@ loc_23D20:
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.b	status(a0),d0
 	andi.b	#p1_standing,d0
-
-loc_23D60:
 	beq.s	return_23D98	; rts
 	move.w	x_pos(a0),x_pos(a1)
 	move.b	#AniIDSonAni_Roll,anim(a1)

@@ -5,7 +5,7 @@
 
 ; loc_3F554:
 TouchResponse:
-	jsr	(Touch_Rings).l
+	jsr	(Touch_Rings).w
 	; Bumpers in CNZ
 	cmpi.b	#casino_night_zone,(Current_Zone).w
 	bne.s	+

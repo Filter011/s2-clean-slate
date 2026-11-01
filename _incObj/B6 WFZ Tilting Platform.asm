@@ -246,7 +246,7 @@ return_3B7F6:
 ; ===========================================================================
 
 loc_3B7F8:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+
 	move.b	#ObjID_VerticalLaser,id(a1) ; load objB7 (huge unused vertical laser!)
 	move.b	#$72,subtype(a1) ; <== ObjB7_SubObjData

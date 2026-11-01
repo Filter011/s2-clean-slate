@@ -332,7 +332,7 @@ Obj57_LoadStoneSpike:
 	addi.w	#$20F0,d1
 	cmpi.w	#$2230,d1
 	bgt.s	Obj57_LoadStoneSpike
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	return_31438
 	move.b	#ObjID_MCZBoss,id(a1)	; load obj57
 	move.b	#4,boss_subtype(a1)
@@ -420,8 +420,7 @@ Obj57_Main_Sub8: ; boss defeated, standing still, exploding
 ; ===========================================================================
 +
 	bset	#render_flags.x_flip,render_flags(a0)
-	clr.w	(Boss_X_vel).w
-	clr.w	(Boss_Y_vel).w
+	clr.l	(Boss_X_vel).w	; and Boss_Y_vel
 	addq.b	#2,boss_routine(a0)	; next routine
 	move.b	#$12,sub4_mapframe(a0)	; face grin when hit
 	move.w	#-$12,(Boss_Countdown).w

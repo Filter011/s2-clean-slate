@@ -22,7 +22,7 @@ Obj23_Init:
 	move.b	#$10,width_pixels(a0)
 	move.b	#$20,y_radius(a0)
 	move.w	#4*$80,priority(a0)
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	Obj23_Main
 	move.b	id(a0),id(a1) ; load obj23
 	addq.b	#2,routine(a1)
@@ -72,8 +72,6 @@ loc_2595E:
 	tst.w	(Debug_placement_mode).w
 	bne.s	return_2598C
 	lea	(MainCharacter).w,a1 ; a1=character
-
-loc_2596E:
 	move.w	x_pos(a0),d0
 	sub.w	x_pos(a1),d0
 	bcc.s	+

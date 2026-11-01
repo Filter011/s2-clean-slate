@@ -72,7 +72,7 @@ loc_26B6E:
 	bne.s	+
 	move.w	objoff_3C(a0),objoff_3A(a0)
 +
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	loc_26C04
 	move.b	id(a0),id(a1) ; load obj65
 	addq.b	#4,routine(a1)

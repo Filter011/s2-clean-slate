@@ -17,7 +17,7 @@ Obj27_Index:	offsetTable
 ; loc_2109C: Obj27_Init:
 Obj27_InitWithAnimal:
 	addq.b	#2,routine(a0) ; => Obj27_Init
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	Obj27_Init
 	move.b	#ObjID_Animal,id(a1) ; load obj28 (Animal and 100 points)
 	move.w	x_pos(a0),x_pos(a1)

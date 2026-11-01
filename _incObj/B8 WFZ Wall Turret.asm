@@ -58,7 +58,7 @@ loc_3B9C0:
 ; ===========================================================================
 
 loc_3B9D8:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+	; rts
 	move.b	#ObjID_Projectile,id(a1) ; load obj98
 	move.b	#3,mapping_frame(a1)

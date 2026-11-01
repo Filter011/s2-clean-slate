@@ -154,7 +154,6 @@ Obj28_Main:
 ; ===========================================================================
 ;loc_11B38
 Obj28_Walk:
-
 	bsr.w	ObjectMoveAndFall
 	move.b	#1,mapping_frame(a0)
 	tst.w	y_vel(a0)

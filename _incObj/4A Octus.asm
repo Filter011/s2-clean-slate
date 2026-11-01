@@ -147,7 +147,7 @@ Obj4A_FireBullet:
 	; In the Simon Wai beta, the object loads another object
 	; here, which makes it look angry as it fires.
 	; This object would have used Obj4A_Angry.
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+	; rts
 	move.b	#ObjID_Octus,id(a1) ; load obj4A
 	move.b	#6,routine(a1)

@@ -47,7 +47,7 @@ Obj7A_Init:
 ; ===========================================================================
 ; loc_29408:
 Obj7A_SubObjectLoop:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	Obj7A_SubObjectLoop_End
 	move.b	id(a0),id(a1) ; load obj7A
 	move.b	#4,routine(a1)

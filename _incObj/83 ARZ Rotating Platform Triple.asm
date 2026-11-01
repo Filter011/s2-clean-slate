@@ -57,7 +57,7 @@ Obj83_Init:
 	move.b	d0,angle(a0)
 
 	; Create child object (chain multisprite)
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	.noRAMforChildObjects
 
 	move.b	id(a0),id(a1) ; load obj83
@@ -91,7 +91,7 @@ Obj83_Init:
 ; ===========================================================================
 ; loc_2A5DE:
 Obj83_LoadSubObject:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	.noRAMforChildObject	; rts
 	addq.b	#4,routine(a1)
 	move.b	id(a0),id(a1) ; load obj

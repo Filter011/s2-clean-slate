@@ -289,7 +289,7 @@ Obj32_VelArray2:
 ; ===========================================================================
 ; loc_236A8:
 SmashableObject_LoadPoints:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+++	; rts
 	move.b	#ObjID_Points,id(a1) ; load obj29
 	move.w	x_pos(a0),x_pos(a1)

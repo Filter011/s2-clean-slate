@@ -41,7 +41,7 @@ loc_3F212:
 ; ===========================================================================
 
 loc_3F220:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	loc_3F272
 	move.w	a1,(a3)+
 
@@ -92,7 +92,7 @@ loc_3F2B4:
 	tst.w	objoff_32(a1)
 	beq.s	++	; rts
 	movea.w	objoff_3A(a0),a2 ; a2=object
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+
 	move.b	#ObjID_Explosion,id(a1) ; load obj
 	addq.b	#2,routine(a1)
@@ -116,7 +116,7 @@ loc_3F2FC:
 	move.w	#$9A,d5
 	moveq	#-$1C,d4
 
--	jsr	(AllocateObject).l
+-	jsr	(AllocateObject).w
 	bne.s	+
 	move.b	#ObjID_Animal,id(a1) ; load obj
 	move.w	x_pos(a0),x_pos(a1)
@@ -173,7 +173,7 @@ loc_3F3A8:
 	moveq	#7,d0
 	and.b	(Vint_runcount+3).w,d0
 	bne.s	loc_3F3F4
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	loc_3F3F4
 	move.b	#ObjID_Animal,id(a1) ; load obj
 	move.w	x_pos(a0),x_pos(a1)

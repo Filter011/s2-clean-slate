@@ -174,7 +174,7 @@ loc_25BF6:
 ; ===========================================================================
 
 loc_25C1C:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	loc_25C64
 	addq.w	#6,a3
 

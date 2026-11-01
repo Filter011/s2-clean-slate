@@ -26,7 +26,7 @@ Obj70_Init:
 ; ===========================================================================
 ; loc_285EE:
 Obj70_SubObjectLoop:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+
 ; loc_285F4:
 Obj70_LoadSubObject:

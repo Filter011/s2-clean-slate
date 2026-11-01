@@ -176,7 +176,7 @@ ObjA1_LoadPincers:
 	moveq	#1,d6
 
 loc_38546:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	return_385BA
 	move.b	#ObjID_SlicerPincers,id(a1) ; load objA2
 	move.b	#$2A,subtype(a1) ; <== ObjA2_SubObjData

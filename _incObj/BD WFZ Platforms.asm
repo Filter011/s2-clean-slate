@@ -107,7 +107,7 @@ loc_3BCDE:
 ; ===========================================================================
 
 loc_3BCF8:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+	; rts
 	move.b	#ObjID_SmallMetalPform,id(a1) ; load objBD
 	move.w	x_pos(a0),x_pos(a1)

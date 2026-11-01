@@ -40,8 +40,8 @@ Obj6A_Init:
 	move.b	#0,mapping_frame(a0)
 	cmpi.b	#$18,subtype(a0)
 	bne.w	loc_27BD0
-	jsr	(AllocateObjectAfterCurrent).l
-	bne.s	++
+	jsr	(AllocateObjectAfterCurrent).w
+	bne.s	loc_27BC4
 	bsr.s	Obj6A_InitSubObject
 	addi.w	#$40,x_pos(a1)
 	addi.w	#$40,y_pos(a1)
@@ -50,16 +50,15 @@ Obj6A_Init:
 	beq.s	+
 	move.b	#$C,subtype(a1)
 +
-	jsr	(AllocateObjectAfterCurrent).l
-	bne.s	+
+	jsr	(AllocateObjectAfterCurrent).w
+	bne.s	loc_27BC4
 	bsr.s	Obj6A_InitSubObject
 	subi.w	#$40,x_pos(a1)
 	addi.w	#$40,y_pos(a1)
 	move.b	#$C,subtype(a1)
 	btst	#status.npc.x_flip,status(a0)
-	beq.s	+
+	beq.s	loc_27BC4
 	move.b	#6,subtype(a1)
-+
 	bra.s	loc_27BC4
 ; ===========================================================================
 ; loc_27B9E:

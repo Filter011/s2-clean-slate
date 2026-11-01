@@ -99,7 +99,7 @@ Obj91_Animate:
 ; loc_36E78:
 Obj91_MakeBubble:
 	move.w	#$50,Obj91_bubble_timer(a0)	; reset timer
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	return_36EB0
 	move.b	#ObjID_SmallBubbles,id(a1) ; load obj
 	move.b	#6,subtype(a1) ; <== Obj90_SubObjData2

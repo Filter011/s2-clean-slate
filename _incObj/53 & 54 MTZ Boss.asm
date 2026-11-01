@@ -44,7 +44,7 @@ Obj54_Init:
 	move.w	x_pos(a0),sub3_x_pos(a0)
 	move.w	y_pos(a0),sub3_y_pos(a0)
 	move.b	#0,sub3_mapframe(a0)
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+
 	move.b	#ObjID_MTZBoss,id(a1) ; load obj54
 	move.b	#6,boss_subtype(a1)		; => Obj54_LaserShooter
@@ -57,7 +57,7 @@ Obj54_Init:
 	move.w	y_pos(a0),y_pos(a1)
 	move.l	a0,objoff_34(a1)
 	move.b	#$20,width_pixels(a1)
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+
 	move.b	#ObjID_MTZBossOrb,id(a1) ; load obj53
 	move.l	a0,objoff_34(a1)
@@ -452,8 +452,7 @@ Obj54_MainSub10:
 ; ===========================================================================
 +
 	bset	#render_flags.x_flip,render_flags(a0)
-	clr.w	(Boss_X_vel).w
-	clr.w	(Boss_Y_vel).w
+	clr.l	(Boss_X_vel).w	; and Boss_Y_vel
 	addq.b	#2,boss_routine(a0)		; => Obj54_MainSub12
 	move.w	#-$12,(Boss_Countdown).w
 	lea	(Boss_AnimationArray).w,a1
@@ -571,7 +570,7 @@ Obj53_Init:
 	moveq	#0,d2
 	bra.s	+
 ; ===========================================================================
--	jsr	(AllocateObject).l
+-	jsr	(AllocateObject).w
 	bne.s	++
 +
 	move.b	#$20,width_pixels(a1)

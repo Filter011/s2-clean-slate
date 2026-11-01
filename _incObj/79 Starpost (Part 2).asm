@@ -3,7 +3,7 @@ Obj79_MakeSpecialStars:
 	moveq	#4-1,d1 ; execute the loop 4 times (1 for each star)
 	moveq	#0,d2
 
--	bsr.w	AllocateObjectAfterCurrent
+-	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+	; rts
 	move.b	id(a0),id(a1) ; load obj79
 	move.l	#Obj79_MapUnc_1F4A0,mappings(a1)

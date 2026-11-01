@@ -93,7 +93,7 @@ BranchTo_JmpTo18_MarkObjGone ; BranchTo
 ; ===========================================================================
 
 loc_2674C:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+
 	move.b	id(a0),id(a1) ; load obj42
 	addq.b	#4,routine(a1)

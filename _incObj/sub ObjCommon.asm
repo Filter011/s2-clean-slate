@@ -168,7 +168,7 @@ InheritParentXYFlip:
 
 ;loc_367D0:
 LoadChildObject:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+	; rts
 	move.w	(a2)+,d0
 	move.w	a1,(a0,d0.w) ; store pointer to child in parent's SST
@@ -205,7 +205,7 @@ Obj_CreateProjectiles:
 	moveq	#0,d1
 	; loop creates d6+1 projectiles
 -
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	return_3686E
 	move.b	#ObjID_Projectile,id(a1) ; load obj98
 	move.b	d2,subtype(a1)	; used for object initialization
@@ -248,8 +248,8 @@ AnimateSprite_Checked:
 	cmp.b	prev_anim(a0),d0	; is animation set to change?
 	beq.s	AnimChk_Run		; if not, branch
 	move.b	d0,prev_anim(a0)	; set previous animation to current animation
-	move.b	#0,anim_frame(a0)	; reset animation
-	move.b	#0,anim_frame_duration(a0)	; reset frame duration
+	clr.b	anim_frame(a0)	; reset animation
+	clr.b	anim_frame_duration(a0)	; reset frame duration
 
 AnimChk_Run:
 	subq.b	#1,anim_frame_duration(a0)	; subtract 1 from frame duration

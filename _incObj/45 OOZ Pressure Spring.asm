@@ -226,7 +226,7 @@ loc_2435E:
 	beq.s	loc_243C8
 	addq.w	#1,x_pos(a0)
 	moveq	#1,d0
-	move.w	#$40,d1
+	moveq	#$40,d1
 	bra.s	loc_243A6
 ; ===========================================================================
 
@@ -275,8 +275,6 @@ Obj45_LaunchCharacterHorizontal:
 	beq.s	return_243CE
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_pushing_bit,d6
-
-loc_243EA:
 	bclr	d6,status(a0)
 	beq.s	return_243CE
 	move.w	obj45_original_x_pos(a0),d0

@@ -39,7 +39,7 @@ Obj13_Init:
 ; ===========================================================================
 ; loc_20428:
 Obj13_LoadSubObject:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+	; rts
 	move.b	id(a0),id(a1) ; load obj13
 	addq.b	#4,routine(a1)

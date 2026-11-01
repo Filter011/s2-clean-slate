@@ -63,7 +63,7 @@ loc_37834:
 
 loc_37850:
 	st.b	objoff_2A(a0)
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	return_37886
 	move.b	#ObjID_Projectile,id(a1) ; load obj98
 	move.b	#4,mapping_frame(a1)

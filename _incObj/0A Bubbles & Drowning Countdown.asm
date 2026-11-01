@@ -329,7 +329,7 @@ Obj0A_MakeBubbleNow:
 	addq.w	#8,d0
 	move.w	d0,obj0a_next_bubble_timer(a0)
 
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.w	return_1D81C
 	move.b	id(a0),id(a1)		; load obj0A
 	move.w	x_pos(a2),x_pos(a1)	; match its X position to Sonic

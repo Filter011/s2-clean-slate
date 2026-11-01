@@ -153,7 +153,7 @@ loc_3C1F4:
 ; ===========================================================================
 
 loc_3C208:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	loc_3C26C
 
 loc_3C20E:

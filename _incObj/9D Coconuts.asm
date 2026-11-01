@@ -135,7 +135,7 @@ Obj9D_ThrowingHandLowered:
 ; ===========================================================================
 ; loc_37D22:
 Obj9D_CreateCoconut:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	return_37D74		; branch, if no free slots
 	move.b	#ObjID_Projectile,id(a1) ; load obj98
 	move.b	#3,mapping_frame(a1)

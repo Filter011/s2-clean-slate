@@ -88,7 +88,7 @@ loc_28112:
 ; ===========================================================================
 ; loc_28130:
 Obj6C_SubObjectsLoop:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+
 ; loc_28136:
 Obj6C_LoadSubObject:

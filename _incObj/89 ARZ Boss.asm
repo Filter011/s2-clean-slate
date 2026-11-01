@@ -80,7 +80,7 @@ Obj89_Init_RaisePillars:
 	move.w	#$100,(Boss_Y_vel).w
 
 	; load first pillar object
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	Obj89_Init_Standard
 	move.b	#ObjID_ARZBoss,id(a1) ; load obj89
 	move.l	#Obj89_MapUnc_30D68,mappings(a1)
@@ -96,7 +96,7 @@ Obj89_Init_RaisePillars:
 	move.w	#2*$80,priority(a1)
 	move.b	#$20,y_radius(a1)
 	movea.l	a1,a2				; save first pillar's address
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	Obj89_Init_Standard
 	moveq	#0,d0
 
@@ -594,7 +594,7 @@ Obj89_Pillar_ShakeOffsets:
 ; ===========================================================================
 ; loc_30AB4:
 Obj89_Pillar_Shoot:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	return_30B40
 	move.b	#ObjID_ARZBoss,id(a1) ; load obj89
 	move.b	#8,boss_subtype(a1)	; => Obj89_Pillar_BulgingEyes
@@ -616,7 +616,7 @@ Obj89_Pillar_Shoot:
 	add.w	d0,d0
 	move.w	Obj89_Arrow_Offsets(pc,d0.w),y_pos(a1)
 	movea.l	a1,a2
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	return_30B40
 	move.b	#ObjID_ARZBoss,id(a1) ; load obj89
 	move.b	#6,boss_subtype(a1)	; => Obj89_Arrow

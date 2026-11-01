@@ -53,7 +53,7 @@ Obj50_Init:
 	move.b	#3,Obj50_shots_remaining(a0)	; hardcoded to three shots
 
 	; creat wing child object
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	Obj50_Main
 
 	move.b	#ObjID_Aquis,id(a1) ; load obj50
@@ -142,7 +142,7 @@ Obj50_ChkIfShoot:
 	bhs.s	return_2CEAC
 
 	; shoot bullet
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	return_2CEAC
 	move.b	#ObjID_Aquis,id(a1) ; load obj50
 	move.b	#6,routine(a1)	; => Obj50_Bullet

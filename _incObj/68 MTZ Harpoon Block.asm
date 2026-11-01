@@ -27,7 +27,7 @@ Obj68_Init:
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.b	#$10,width_pixels(a0)
 	move.w	#4*$80,priority(a0)
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+
 	move.b	id(a0),id(a1) ; load obj68
 	addq.b	#4,routine(a1)

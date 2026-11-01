@@ -81,7 +81,7 @@ Obj16_Slide:
 	move.b	#2,mapping_frame(a0)
 	moveq	#0,d0
 	move.l	d0,x_vel(a0)	; and y_vel
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+	; rts
 	move.b	#ObjID_Scenery,id(a1) ; load obj1C
 	move.w	x_pos(a0),x_pos(a1)

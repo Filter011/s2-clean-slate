@@ -31,7 +31,7 @@ Obj9C_Main:
 ; ===========================================================================
 
 loc_37ABE:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+	; rts
 	move.b	#ObjID_BalkiryJet,id(a1) ; load obj9C
 	move.b	#6,mapping_frame(a1)
@@ -48,7 +48,7 @@ loc_37ABE:
 ; this code is for Obj9A
 
 loc_37AF2:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+	; rts
 	move.b	#ObjID_Projectile,id(a1) ; load obj98
 	move.b	#6,mapping_frame(a1)

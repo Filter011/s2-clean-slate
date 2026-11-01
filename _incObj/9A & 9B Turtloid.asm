@@ -127,7 +127,7 @@ return_37A48:
 ; ===========================================================================
 
 loc_37A4A:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	return_37A80
 	move.b	#ObjID_TurtloidRider,id(a1) ; load obj9B
 	move.b	#2,mapping_frame(a1)

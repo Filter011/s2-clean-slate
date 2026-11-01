@@ -130,7 +130,7 @@ loc_1FA2A:
 	jsr	(RandomNumber).w
 	andi.w	#$1F,d0
 	move.w	d0,objoff_38(a0)
-	bsr.w	AllocateObject
+	jsr	(AllocateObject).w
 	bne.s	loc_1FAA6
 	move.b	id(a0),id(a1) ; load obj24
 	move.w	x_pos(a0),x_pos(a1)

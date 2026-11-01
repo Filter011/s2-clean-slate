@@ -33,7 +33,7 @@ Obj95_Init:
 
 ; loc_37152:
 Obj95_NextFireball:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	loc_371AE
 	addq.b	#1,(a3)
     if object_size<>$40

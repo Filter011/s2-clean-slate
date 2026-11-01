@@ -143,7 +143,7 @@ loc_38C14:
 ; ===========================================================================
 
 loc_38C22:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	++	; rts
 	move.b	#ObjID_Projectile,id(a1) ; load obj98
 	move.b	#6,mapping_frame(a1)
@@ -166,7 +166,7 @@ loc_38C22:
 ; ===========================================================================
 
 loc_38C6E:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	++	; rts
 	move.b	#ObjID_Projectile,id(a1) ; load obj98
 	move.b	#6,mapping_frame(a1)

@@ -92,7 +92,7 @@ loc_24ED4:
 
 loc_24F04:
 	andi.b	#~standing_mask,status(a0)
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	loc_24F28
 	moveq	#0,d0
 	moveq	#bytesToLcnt(objoff_2C),d1 ; Copy everything up until 'objoff_2C', which is where the sub-object's own scratch RAM begins.

@@ -70,7 +70,7 @@ loc_36F90:
 ; ===========================================================================
 
 loc_36FA4:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	loc_36FDC
 	st.b	objoff_2B(a0)
 	move.b	#ObjID_SpikerDrill,id(a1) ; load obj93

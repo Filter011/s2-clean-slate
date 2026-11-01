@@ -315,7 +315,7 @@ loc_38292:
 	moveq	#7,d6
 
 loc_38296:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	return_382EE
 	move.b	#ObjID_ShellcrackerClaw,id(a1) ; load objA0
 	move.b	#$26,subtype(a1) ; <== ObjA0_SubObjData

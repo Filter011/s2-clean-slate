@@ -40,7 +40,7 @@ Obj43_Init:
 ; ===========================================================================
 
 loc_23E84:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	loc_23ED4
 	move.b	id(a0),id(a1) ; load obj43
 	move.b	#4,routine(a1)

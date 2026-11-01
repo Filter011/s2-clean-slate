@@ -69,7 +69,7 @@ Obj44_BumpCharacter:
 	moveq	#1,d0
 	movea.w	a1,a3
 	jsr	(AddPoints).l
-	bsr.w	AllocateObject
+	jsr	(AllocateObject).w
 	bne.s	return_1F83C
 	move.b	#ObjID_Points,id(a1) ; load obj29
 	move.w	x_pos(a0),x_pos(a1)

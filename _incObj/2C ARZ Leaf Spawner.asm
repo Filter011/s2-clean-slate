@@ -89,7 +89,7 @@ loc_261E4:
 	moveq	#4-1,d6
 
 loc_261EC:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.w	loc_26278
 	move.b	#ObjID_LeavesGenerator,id(a1) ; load obj2C
 	move.b	#4,routine(a1)

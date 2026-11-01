@@ -41,7 +41,7 @@ Obj46_Init:
 	move.b	#1,objoff_1F(a0)
 
 ; Obj46_InitPressureSpring:	; loads the spring under the ball
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+
 	move.b	#ObjID_OOZBall,id(a1) ; load obj46
 	addq.b	#6,routine(a1)
@@ -88,22 +88,21 @@ Obj46_Moving:
 	btst	#status.npc.y_flip,status(a0)
 	beq.s	loc_24B8C
 	addi.w	#$18,y_vel(a0)
-	bmi.s	+
+	bmi.s	loc_24BA4
 	move.w	(Camera_Max_Y_pos).w,d0
 	addi.w	#screen_height,d0
 	cmp.w	y_pos(a0),d0
 	blo.s	loc_24BC4
 	jsr	(ObjCheckFloorDist).l
 	tst.w	d1
-	bpl.s	+
+	bpl.s	loc_24BA4
 	add.w	d1,y_pos(a0)
 	clr.w	y_vel(a0)
 	bclr	#status.npc.y_flip,status(a0)
 	move.w	#$100,x_vel(a0)
 	btst	#status.npc.x_flip,status(a0)
-	beq.s	+
+	beq.s	loc_24BA4
 	neg.w	x_vel(a0)
-+
 	bra.s	loc_24BA4
 ; ===========================================================================
 

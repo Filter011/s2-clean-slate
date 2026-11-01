@@ -98,7 +98,7 @@ Obj52_Mobile_Flamethrower:
 	move.b	#1,mainspr_childsprites(a0)
 	cmpi.b	#-$18,objoff_3E(a0)
 	bne.s	Obj52_Mobile_Hover
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	loc_2FDAA
 	move.b	#ObjID_HTZBoss,id(a1) ; load obj52
 	move.b	#4,boss_subtype(a1)
@@ -160,7 +160,7 @@ Obj52_CreateLavaBall:
 	tst.b	objoff_38(a0)
 	bne.s	loc_2FE58
 	st.b	objoff_38(a0)
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	loc_2FE58
 	move.b	#ObjID_HTZBoss,id(a1) ; load obj52
 	move.b	#6,boss_subtype(a1)
@@ -288,7 +288,7 @@ loc_2FF78:
 ; ===========================================================================
 
 loc_2FF80:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	return_30006
 	move.w	x_pos(a0),x_pos(a1)
 	move.w	y_pos(a0),y_pos(a1)
@@ -484,7 +484,7 @@ loc_301AA:
 
 ; loc_301B4:
 Obj52_CreateSmoke
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	return_3020E
 	move.b	#ObjID_HTZBoss,id(a1) ; load obj52
 	move.b	#8,boss_subtype(a1)

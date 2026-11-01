@@ -351,7 +351,7 @@ Obj55_LaserShooter_Fire:
 	move.w	#0,(Boss_Y_vel).w
 	move.b	#8,Obj55_anim_frame_duration(a0)
 	move.b	#6,mainspr_mapframe(a0)	; use firing frame
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	Obj55_LaserShooter_End
 	move.b	#ObjID_OOZBoss,id(a1) ; load obj55
 	move.b	#8,boss_subtype(a1)	; => Obj55_Laser
@@ -644,7 +644,7 @@ return_3363E:
 ; ===========================================================================
 ; loc_33640:
 Obj55_Laser_CreateWave:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	return_336B0
 	move.b	#ObjID_OOZBoss,id(a1) ; load obj55
 	move.b	#8,boss_subtype(a1)
@@ -675,7 +675,7 @@ Obj55_Wave:
 	move.w	#$C7,Obj55_Wave_delay(a0)
 	subq.b	#1,Obj55_Wave_count(a0)
 	bmi.s	Obj55_Wave_End
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	Obj55_Wave_End
 	moveq	#0,d0
 

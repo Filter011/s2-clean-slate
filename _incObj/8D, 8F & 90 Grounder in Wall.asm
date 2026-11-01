@@ -208,7 +208,7 @@ loc_36C2C:
 	moveq	#0,d1
 
 	moveq	#4,d6
--	jsr	(AllocateObject).l
+-	jsr	(AllocateObject).w
 	bne.s	+	; rts
 	bsr.s	loc_36C40
 	dbf	d6,-
@@ -231,7 +231,7 @@ loc_36C64:
 	moveq	#0,d1
 
 	moveq	#3,d6
--	jsr	(AllocateObject).l
+-	jsr	(AllocateObject).w
 	bne.s	+	; rts
 	bsr.s	loc_36C78
 	dbf	d6,-

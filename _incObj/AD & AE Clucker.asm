@@ -123,7 +123,7 @@ loc_39516:
 ; ===========================================================================
 
 loc_39526:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	++	; rts
 	move.b	#ObjID_Projectile,id(a1) ; load obj98
 	move.b	#$D,mapping_frame(a1)

@@ -1163,7 +1163,7 @@ loc_3DFBA:
 	moveq	#1,d0	; limit to every 2 frames
 	and.b	(Vint_runcount+3).w,d0
 	bne.s	+	; rts
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+	; rts
 	move.b	#ObjID_BossExplosion,id(a1) ; load obj
 	move.w	x_pos(a0),x_pos(a1)

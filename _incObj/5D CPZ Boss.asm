@@ -61,7 +61,7 @@ Obj5D_Init:
 	bclr	#3,Obj5D_status(a0)
 
 	; Robotnik sitting in his eggmobile
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.w	loc_2D8AC
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
@@ -80,7 +80,7 @@ Obj5D_Init:
 	bmi.w	loc_2D8AC
 
 	; eggmobile's exhaust flame
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.w	loc_2D8AC
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
@@ -96,7 +96,7 @@ Obj5D_Init:
 	move.b	render_flags(a0),render_flags(a1)
 
 	; large pump mechanism on top of eggmobile
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	loc_2D8AC
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
@@ -111,7 +111,7 @@ Obj5D_Init:
 
 loc_2D8AC:
 	; glass container that dumps mega mack on player
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	loc_2D908
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
@@ -130,7 +130,7 @@ loc_2D8AC:
 
 loc_2D908:
 	; pipe used to suck mega mack from tube below
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	return_2D94C
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
@@ -344,7 +344,7 @@ Obj5D_Main_CreateExplosion:
 	moveq	#7,d0
 	and.b	(Vint_runcount+3).w,d0
 	bne.s	+	; rts
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+	; rts
 	move.b	#ObjID_BossExplosion,id(a1) ; load obj58
 	move.w	x_pos(a0),x_pos(a1)
@@ -365,7 +365,7 @@ Obj5D_Main_CreateExplosion:
 ; Creates an explosion.
 
 Obj5D_Main_Explode2:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+	; rts
 	move.b	#ObjID_BossExplosion,id(a1) ; load obj58
 	; This code suggests that the intended effect is for each piece of
@@ -524,7 +524,7 @@ Obj5D_Pump:
 	addq.w	#1,d3
 
 -
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.w	JmpTo51_DeleteObject
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
@@ -590,7 +590,7 @@ Obj5D_Pipe_Wait:
 Obj5D_Pipe_Extend:
 	subq.w  #1,Obj5D_pipe_segments(a0)	; is pipe fully extended?
 	blt.s   Obj5D_Pipe_Extend_End		; if yes, branch
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	beq.s	+
 	rts
 ; ---------------------------------------------------------------------------
@@ -643,7 +643,7 @@ Obj5D_Pipe_Pump_Index:	offsetTable
 ; prepares for pumping animation
 
 Obj5D_Pipe_Pump_0:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.w	Obj5D_PipeSegment
 	move.b	#$E,routine(a0)	; => Obj5D_PipeSegment	; temporarily turn control object into a pipe segment
 	move.b	#6,routine(a1)			; => Obj5D_Pipe_Pump
@@ -666,7 +666,7 @@ Obj5D_Pipe_Pump_0:
 	move.l	a0,Obj5D_parent(a1)	; address of control object
 	move.b	#$12,Obj5D_timer(a1)
 
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	BranchTo_Obj5D_PipeSegment
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.b	#$A,routine(a1)	; => Obj5D_Dripper
@@ -912,7 +912,7 @@ Obj5D_Container_Init:
 	btst	#7,Obj5D_status2(a1)
 	bne.s	+
 	bset	#7,Obj5D_status2(a1)
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
@@ -927,7 +927,7 @@ Obj5D_Container_Init:
 	move.b	#4,routine_secondary(a1)	; => Obj5D_Container_Floor
 	move.b	#9,anim(a1)
 +
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	+
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
@@ -1026,7 +1026,7 @@ loc_2E356:
 	bmi.w	loc_2E3E6
 
 loc_2E35C:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.w	JmpTo51_DeleteObject
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	#Obj5D_MapUnc_2EADC,mappings(a1)
@@ -1106,7 +1106,7 @@ loc_2E464:
 	bset	#5,Obj5D_status2(a1)
 	bclr	#2,Obj5D_status2(a1)
 	move.w	#$12,Obj5D_timer2(a0)
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	return_2E4CC
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)
@@ -1139,7 +1139,7 @@ loc_2E4CE:
 	bclr	#2,Obj5D_status2(a1)
 	clr.b	routine_secondary(a0)
 	movea.l	a1,a2
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	return_2E550
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	Obj5D_parent(a0),Obj5D_parent(a1)
@@ -1386,7 +1386,7 @@ Obj5D_Gunk_Droplets:
 	moveq	#3,d3
 
 Obj5D_Gunk_Droplets_Loop:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.w	BranchTo_JmpTo34_DisplaySprite
 	move.b	#ObjID_CPZBoss,id(a1) ; load obj5D
 	move.l	a0,Obj5D_parent(a1)

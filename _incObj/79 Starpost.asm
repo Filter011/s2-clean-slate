@@ -70,7 +70,7 @@ Obj79_CheckActivation:
 	bhs.w	return_1F220
 	moveq	#SndID_Checkpoint,d0 ; checkpoint ding-dong sound
 	jsr	(PlaySound).w
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	loc_1F206
 	move.b	#ObjID_Starpost,id(a1) ; load obj79
 	move.b	#6,routine(a1) ; => Obj79_Dongle

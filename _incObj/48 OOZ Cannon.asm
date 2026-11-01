@@ -59,8 +59,6 @@ Obj48_Main:
 	lea	(MainCharacter).w,a1 ; a1=character
 	lea	objoff_2C(a0),a4
 	moveq	#objoff_2C,d2
-
-loc_252DC:
 	moveq	#0,d0
 	move.b	(a4),d0
 	move.w	Obj48_Modes(pc,d0.w),d0

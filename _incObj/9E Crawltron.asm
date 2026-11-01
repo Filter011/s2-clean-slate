@@ -139,7 +139,7 @@ loc_37F6C:
 ; ===========================================================================
 
 loc_37F74:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	+	; rts
 	move.b	#ObjID_Crawlton,id(a1) ; load obj9E
 	move.b	render_flags(a0),render_flags(a1)

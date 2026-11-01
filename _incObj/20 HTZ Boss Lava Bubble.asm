@@ -51,10 +51,10 @@ loc_23076:
 loc_23084:
 	cmpi.b	#5,anim_frame_duration(a0)
 	bne.s	loc_230B4
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	loc_230A6
 	bsr.s	loc_230C2
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	loc_230A6
 	bsr.s	loc_230C2
 	neg.w	x_vel(a1)
@@ -148,7 +148,7 @@ loc_231D2:
 	move.w	#$7F,objoff_32(a0)
 	subq.b	#1,objoff_36(a0)
 	bmi.s	loc_23224
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	loc_23224
 	moveq	#0,d0
 

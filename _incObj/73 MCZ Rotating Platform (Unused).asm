@@ -55,7 +55,7 @@ Obj73_Init:
 	bcs.s	Obj73_LoadSubObject_End
 ; loc_28A6E:
 Obj73_LoadSubObject:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	Obj73_LoadSubObject_End
 	addq.b	#1,objoff_29(a0)
     if object_size<>$40

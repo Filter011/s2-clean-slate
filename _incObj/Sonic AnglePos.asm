@@ -2,8 +2,6 @@
 ; Subroutine to change Sonic's angle & position as he walks along the floor
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1E234: Sonic_AnglePos:
 AnglePos:
 	move.l	(Primary_Collision).w,(Collision_addr).w
@@ -59,7 +57,7 @@ loc_1E292:
 	add.w	d0,d3
 	lea	(Primary_Angle).w,a4
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	bsr.w	FindFloor
 	move.w	d1,-(sp)
 	move.w	y_pos(a0),d2
@@ -74,7 +72,7 @@ loc_1E292:
 	add.w	d0,d3
 	lea	(Secondary_Angle).w,a4
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	bsr.w	FindFloor
 	move.w	(sp)+,d0
 	bsr.w	Sonic_Angle
@@ -117,8 +115,6 @@ loc_1E33C:
 ; Subroutine to change Sonic's angle as he walks along the floor
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1E356:
 Sonic_Angle:
 	move.b	(Secondary_Angle).w,d2
@@ -152,8 +148,6 @@ loc_1E380:
 ; Subroutine allowing Sonic to walk up a vertical slope/wall to his right
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1E392:
 Sonic_WalkVertR:
 	move.w	y_pos(a0),d2
@@ -168,7 +162,7 @@ Sonic_WalkVertR:
 	add.w	d0,d3
 	lea	(Primary_Angle).w,a4
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	bsr.w	FindWall
 	move.w	d1,-(sp)
 	move.w	y_pos(a0),d2
@@ -182,7 +176,7 @@ Sonic_WalkVertR:
 	add.w	d0,d3
 	lea	(Secondary_Angle).w,a4
 	movea.w	#$10,a3
-	move.w	#0,d6
+	clr.w	d6
 	bsr.w	FindWall
 	move.w	(sp)+,d0
 	bsr.w	Sonic_Angle

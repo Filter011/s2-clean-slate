@@ -1720,8 +1720,8 @@ Level_FromCheckpoint:
 	move.b	d0,(Update_HUD_score).w
 	move.b	d0,(Update_HUD_rings).w
 	move.b	d0,(Update_HUD_timer).w
-	jsr	(ObjectsManager).l
-	jsr	(RingsManager).l
+	jsr	(ObjectsManager).w
+	jsr	(RingsManager).w
 	jsr	(SpecialCNZBumpers).l
 	jsr	(RunObjects).w
 	jsr	(BuildSprites).w
@@ -1755,7 +1755,7 @@ Level_FromCheckpoint:
 -	move.l	#Vint_TitleCard,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
-	jsr	(RunObjects).l
+	jsr	(RunObjects).w
 	jsr	(BuildSprites).w
 	bsr.w	Process_KosPlus_Module_Queue
 	tst.b	(TitleCard_Background+id).w
@@ -1792,7 +1792,7 @@ Level_MainLoop:
 	bne.w	Level
 	bsr.w	DeformBgLayer
 	bsr.w	UpdateWaterSurface
-	jsr	(RingsManager).l
+	jsr	(RingsManager).w
 	cmpi.b	#casino_night_zone,(Current_Zone).w	; is it CNZ?
 	bne.s	+			; if not, branch past jsr
 	jsr	(SpecialCNZBumpers).l
@@ -1804,7 +1804,7 @@ Level_MainLoop:
 	bsr.w	ChangeRingFrame
 	bsr.w	CheckLoadSignpostArt
 	jsr	(BuildSprites).w
-	jsr	(ObjectsManager).l
+	jsr	(ObjectsManager).w
 	tst.b	(Demo_mode_flag).w	; check if in demo mode
 	bne.s	+
 	cmpi.l	#Level,(Game_Mode).w	; check if in normal play mode
@@ -3345,8 +3345,6 @@ StartLocations: zoneOrderedTable 2,4	; WrdArr_StartLoc
 	include "_inc/Level Drawing.asm"
 
 	include "_inc/LoadLevelLayout.asm" ; includes loadZoneBlockMaps
-
-	include "_inc/DynamicLevelEvents.asm" ; Another big one
 ; ===========================================================================
 	include "_incObj/sub RunObjects.asm"
 ; ===========================================================================
@@ -3371,6 +3369,10 @@ LoadPLC_AnimalExplosion:
 	include "_inc/BuildSprites.asm" ; also DrawSprites
 ; ===========================================================================
 	include "_inc/Rings Manager.asm"
+; ===========================================================================
+	include "_inc/Objects Manager.asm"
+; ===========================================================================
+	include "_inc/DynamicLevelEvents.asm" ; Another big one
 ; ===========================================================================
 	include "_incObj/11 Bridge.asm"
 ; -------------------------------------------------------------------------------
@@ -4013,7 +4015,6 @@ SpecialCNZBumpers_Act1:
 SpecialCNZBumpers_Act2:
 	BINCLUDE	"level/objects/CNZ 2 bumpers.bin"	; byte_1795E
 ; ===========================================================================
-	include "_inc/Objects Manager.asm"
 
 ;---------------------------------------------------------------------------------------
 ; CNZ object layouts for 2-player mode (various objects were deleted)

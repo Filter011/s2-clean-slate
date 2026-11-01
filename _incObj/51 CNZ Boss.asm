@@ -209,7 +209,7 @@ loc_31BC6:
 ; ===========================================================================
 
 loc_31BF2:
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	return_31C06
 	move.b	#ObjID_CNZBoss,id(a1) ; load obj51
 	move.b	#4,boss_subtype(a1)
@@ -345,8 +345,7 @@ loc_31D5C:
 
 loc_31D7E:
 	bset	#render_flags.x_flip,render_flags(a0)
-	clr.w	(Boss_X_vel).w
-	clr.w	(Boss_Y_vel).w
+	clr.l	(Boss_X_vel).w	; and Boss_Y_vel
 	addq.b	#2,boss_routine(a0)
 	lea	(Boss_AnimationArray).w,a1
 	andi.b	#$F0,6(a1)
@@ -597,7 +596,7 @@ loc_32030:
 	move.b	#4,boss_subtype(a0)
 	move.b	#6,routine_secondary(a0)
 	move.b	#$98,collision_flags(a0)
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	return_3207E
 	moveq	#0,d0
 

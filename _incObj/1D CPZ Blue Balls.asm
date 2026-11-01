@@ -35,7 +35,7 @@ Obj1D_Init:
 	bra.s	Obj1D_InitBall
 ; ---------------------------------------------------------------------------
 Obj1D_LoadBall:
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	++
 ; loc_22458:
 Obj1D_InitBall:

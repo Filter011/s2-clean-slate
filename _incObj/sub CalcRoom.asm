@@ -4,8 +4,6 @@
 ; d1 = output about how many pixels (up to some high enough amount)
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1EB84: Sonic_WalkSpeed:
 CalcRoomInFront:
 	move.l	(Primary_Collision).w,(Collision_addr).w
@@ -67,8 +65,6 @@ loc_1EBE6:
 ; d0 = input angle perpendicular to the spine
 ; d1 = output about how many pixels are overhead (up to some high enough amount)
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_1EC0A:
 CalcRoomOverHead:

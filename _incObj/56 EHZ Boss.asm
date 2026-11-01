@@ -49,7 +49,7 @@ Obj56_Init:
 	addq.b	#2,routine(a0)
 	move.w	x_pos(a0),objoff_30(a0)
 	move.w	y_pos(a0),objoff_38(a0)
-	jsr	(AllocateObjectAfterCurrent).l	; vehicle with ability to fly, top part
+	jsr	(AllocateObjectAfterCurrent).w	; vehicle with ability to fly, top part
 	bne.s	+
 
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
@@ -66,7 +66,7 @@ Obj56_Init:
 	move.b	#1,anim(a1)	; normal animation
 	move.b	render_flags(a0),render_flags(a1)
 +
-	jsr	(AllocateObjectAfterCurrent).l	; Vehicle on ground
+	jsr	(AllocateObjectAfterCurrent).w	; Vehicle on ground
 	bne.s	+
 
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
@@ -85,7 +85,7 @@ Obj56_Init:
 	subq.w	#8,objoff_38(a0)
 	move.w	#$2AF0,x_pos(a0)
 	move.w	#$2F8,y_pos(a0)
-	jsr	(AllocateObjectAfterCurrent).l	; propeller normal
+	jsr	(AllocateObjectAfterCurrent).w	; propeller normal
 	bne.s	+	; rts
 
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
@@ -104,7 +104,7 @@ Obj56_Init:
 ; ---------------------------------------------------------------------------
 
 loc_2F098:
-	jsr	(AllocateObjectAfterCurrent).l	; first foreground wheel
+	jsr	(AllocateObjectAfterCurrent).w	; first foreground wheel
 	bne.s	+
 
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
@@ -126,7 +126,7 @@ loc_2F098:
 	move.w	#$A,objoff_2A(a1)
 	move.b	#0,subtype(a1)
 +
-	jsr	(AllocateObjectAfterCurrent).l	; second foreground wheel
+	jsr	(AllocateObjectAfterCurrent).w	; second foreground wheel
 	bne.s	+
 
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
@@ -148,7 +148,7 @@ loc_2F098:
 	move.w	#$A,objoff_2A(a1)
 	move.b	#1,subtype(a1)
 +
-	jsr	(AllocateObjectAfterCurrent).l	; background wheel
+	jsr	(AllocateObjectAfterCurrent).w	; background wheel
 	bne.s	+
 
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
@@ -170,7 +170,7 @@ loc_2F098:
 	move.w	#$A,objoff_2A(a1)
 	move.b	#2,subtype(a1)
 +
-	jsr	(AllocateObjectAfterCurrent).l	; Spike
+	jsr	(AllocateObjectAfterCurrent).w	; Spike
 	bne.s	+
 
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56
@@ -317,7 +317,7 @@ off_2F39C:	offsetTable
 
 loc_2F3A2:	; Obj56_VehicleMain_SubA_0:
 	bclr	#0,objoff_2D(a0)	; Robotnik off ground
-	jsr	(AllocateObjectAfterCurrent).l	; reload propeller after defeat
+	jsr	(AllocateObjectAfterCurrent).w	; reload propeller after defeat
 	bne.s	+	; rts
 
 	move.b	#ObjID_EHZBoss,id(a1) ; load obj56

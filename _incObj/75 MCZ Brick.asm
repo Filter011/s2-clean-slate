@@ -53,7 +53,7 @@ Obj75_Init:
 ; ===========================================================================
 +
 	move.b	#$9A,collision_flags(a0)
-	jsr	(AllocateObjectAfterCurrent).l
+	jsr	(AllocateObjectAfterCurrent).w
 	bne.s	Obj75_Main
 	move.b	id(a0),id(a1) ; load obj75
 	move.l	mappings(a0),mappings(a1)
