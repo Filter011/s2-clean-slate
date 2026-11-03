@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD
-; Version: 26.11.1.2 (stable)
+; Version: 26.11.3 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -107,6 +107,7 @@ zVar STRUCT DOTS
 	TempoTurbo:		ds.b 1	; Stores the tempo if speed shoes are acquired (or 7Bh is played otherwise)
 	SpeedUpFlag:		ds.b 1
 	DACEnabled:		ds.b 1
+	DACBank:		ds.b 1
 	SongBank:		ds.b 1
 	IsPalFlag:		ds.b 1	; Flags if the system is a PAL console
 zVar ENDSTRUCT
@@ -420,17 +421,19 @@ zUpdateEverything:
 	call	nz,zPSGUpdateTrack		; If it is, go update it
 
 	; Now we update the DAC... this only does anything if there's a new DAC
-	; sound to be played.  This is called after updating the DAC track.
+	; sound to be played. This is called after updating the DAC track.
 	; Otherwise it just mucks with the timing loop, forcing an update.
 zUpdateDAC:
 	ld	a,2Ah			; DAC port
 	ld	(zYM2612_A0),a		; Set DAC port register
 
-	bankswitchToBank MusicPoint1	; Bankswitch to the DAC data
+	ld	a,(zAbsVar.DACBank)
+	bankswitch			; Bankswitch to the DAC data
 
 	ld	a,(zCurDAC)		; Get currently playing DAC sound
 	or	a
 	jp	m,.dacqueued		; If one is queued (80h+), go to it!
+
 	exx				; Otherwise restore registers from mirror regs
 	ld	b,1			; b=1 (initial feed to the DAC "djnz" loops, i.e. UPDATE RIGHT AWAY)
 	pop	iy
@@ -449,7 +452,7 @@ zUpdateDAC:
 	; The following two instructions are dangerous: they discard the upper
 	; two bits of zCurDAC, meaning you can only have 40h DAC samples.
 	add	a,a
-	add	a,a			; a *= 5 (each DAC entry is a pointer and length, 2+2)
+	add	a,a			; a *= 4 (each DAC entry is a pointer and length, 2+2)
 	add	a,zDACPtrTbl&0FFh	; Get low byte into table -> 'a'
 	ld	(zDACStartAddress+1),a	; Store into the instruction after zDACStartAddress (self-modifying code)
 	add	a,zDACLenTbl-zDACPtrTbl	; How to offset to length versus pointer
@@ -761,9 +764,17 @@ zDACAfterDur:
 	ld	a,(ix+zTrack.SavedDAC)		; Get next note to play
 	sub	81h				; Transform note into an index... (we're selecting which drum to play!)
 	ret	c				; Return if below 81h
-	add	a,a				; Multiply by 2...
+	ld	c,a
+	add	a,a
+	add	a,c				; Multiply by 3...
 	add	a,zDACMasterPlaylist&0FFh	; Offset into list
+	ld	(.writeDACBank+1),a
+	inc	a
 	ld	(zDACDataStore+2),a		; store into the following instruction (self-modifying code)
+
+.writeDACBank:
+	ld	a,(zDACPtrTbl)
+	ld	(zAbsVar.DACBank),a
 
 ; zloc_22A
 zDACDataStore:
@@ -2300,6 +2311,8 @@ zInitMusicPlayback:
 	ld	b,(ix+zVar.Queue1)
 	ld	c,(ix+zVar.Queue2)
 	push	bc
+	ld	a,(ix+zVar.DACBank)
+	ex	af,af'
 	; The following clears all playback memory and non-SFX tracks
 	ld	hl,zAbsVar
 	ld	de,zAbsVar+1
@@ -2307,6 +2320,8 @@ zInitMusicPlayback:
 	ld	bc,(zTracksSongEnd-zAbsVar)-1	; This many bytes (from start of zComRange to just short of end of PSG3 music track)
 	ldir
 	; Restore those queue/flags:
+	ex	af,af'
+	ld	(ix+zVar.DACBank),a
 	pop	bc
 	ld	(ix+zVar.Queue1),b
 	ld	(ix+zVar.Queue2),c
@@ -2317,17 +2332,46 @@ zInitMusicPlayback:
 	ld	(ix+zVar.SFXPriorityVal),b
 	ld	(ix+zVar.1upPlaying),c		; 1-up playing flag
 
-	ld	ix,zTracksSongStart			; Start at the first music track...
-	ld	b,MUSIC_TRACK_COUNT		; ...and continue to the last
-	ld	de,zTrack.len
 	ld	hl,zFMDACInitBytes		; This continues into zPSGInitBytes
-
-.loop:
 	ld	a,(hl)
 	inc	hl
-	ld	(ix+zTrack.VoiceControl),a	; Set channel type while we're at it, so subroutines understand what the track is
-	add	ix,de				; Next track
-	djnz	.loop				; Loop for all channels
+	ld	(zSongDAC.VoiceControl),a
+
+	ld	a,(hl)
+	inc	hl
+	ld	(zSongFM1.VoiceControl),a
+
+	ld	a,(hl)
+	inc	hl
+	ld	(zSongFM2.VoiceControl),a
+
+	ld	a,(hl)
+	inc	hl
+	ld	(zSongFM3.VoiceControl),a
+
+	ld	a,(hl)
+	inc	hl
+	ld	(zSongFM4.VoiceControl),a
+
+	ld	a,(hl)
+	inc	hl
+	ld	(zSongFM5.VoiceControl),a
+
+	ld	a,(hl)
+	inc	hl
+	ld	(zSongFM6.VoiceControl),a
+
+	ld	a,(hl)
+	inc	hl
+	ld	(zSongPSG1.VoiceControl),a
+
+	ld	a,(hl)
+	inc	hl
+	ld	(zSongPSG2.VoiceControl),a
+
+	ld	a,(hl)
+	inc	hl
+	ld	(zSongPSG3.VoiceControl),a
 
 	ret
 ; End of function zInitMusicPlayback
@@ -3351,7 +3395,7 @@ zDACMasterPlaylist:
 
 ; DAC samples IDs
 offset :=	zDACPtrTbl
-ptrsize :=	2+2
+ptrsize :=	4
 idstart :=	81h
 
 dac_sample_metadata macro label,sampleRateScale
@@ -3359,6 +3403,7 @@ sample_rate_scale := 1.0
     if "sampleRateScale"<>""
 sample_rate_scale := sampleRateScale
     endif
+	zmake68kBanks	label
 	db	id(label.pointer),dpcmLoopCounter(int(label.sample_rate*sample_rate_scale))
     endm
 
