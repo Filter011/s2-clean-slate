@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD
-; Version: 26.11.3 (stable)
+; Version: 26.11.3.1 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -773,7 +773,7 @@ zDACAfterDur:
 	ld	(zDACDataStore+2),a		; store into the following instruction (self-modifying code)
 
 .writeDACBank:
-	ld	a,(zDACPtrTbl)
+	ld	a,(zDACMasterPlaylist)
 	ld	(zAbsVar.DACBank),a
 
 ; zloc_22A
@@ -2278,12 +2278,20 @@ zClearTrackPlaybackMem:
 	ld	a,27h			; Channel 3 special settings
 	ld	c,0			; All clear
 	rst	zWriteFMI		; Write it!
+
+	ld	a,(zAbsVar.DACBank)
+	ex	af,af'
+
 	; This performs a full clear across all track/playback memory
 	ld	hl,zAbsVar
 	ld	de,zAbsVar+1
 	ld	(hl),0				; Starting byte is 00h
 	ld	bc,(zTracksSFXEnd-zAbsVar)-1	; For 695 bytes...
 	ldir					; 695 bytes of clearing! (Because it will keep copying the byte prior to the byte after; thus 00h repeatedly)
+
+	ex	af,af'
+	ld	(zAbsVar.DACBank),a
+
 	call	zFMSilenceAll			; Silence FM
 	jp	zPSGSilenceAll			; Silence PSG
 ; End of function zClearTrackPlaybackMem
@@ -3389,7 +3397,7 @@ zDACLenTbl = zDACPtrTbl + 2
 	; First byte selects one of the DAC samples. The number that
 	; follows it is a wait time between each nibble written to the DAC
 	; (thus higher = slower)
-	ensure1byteoffset 2*11h
+	ensure1byteoffset 3*11h
 ; zbyte_124F
 zDACMasterPlaylist:
 
