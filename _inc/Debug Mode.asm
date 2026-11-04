@@ -167,7 +167,7 @@ Debug_SpawnObject:
 	btst	#button_C,(Ctrl_1_Press).w
 	beq.s	Debug_ExitDebugMode
 	; Spawn object
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	Debug_ExitDebugMode
 	move.w	x_pos(a0),x_pos(a1)
 	move.w	y_pos(a0),y_pos(a1)
@@ -187,8 +187,7 @@ Debug_ExitDebugMode:
 	btst	#button_B,(Ctrl_1_Press).w
 	beq.s	return_41CB6
 	; Exit debug mode
-	moveq	#0,d0
-	move.w	d0,(Debug_placement_mode).w
+	clr.w	(Debug_placement_mode).w
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.l	#MapUnc_Sonic,mappings(a1)
 	move.w	#ArtTile_ArtUnc_Sonic,art_tile(a1)
@@ -207,6 +206,7 @@ return_41CB6:
 
 ; sub_41CB8:
 Debug_ResetPlayerStats:
+	moveq	#0,d0
 	move.b	d0,anim(a1)
 	move.w	d0,x_sub(a1) ; subpixel x
 	move.w	d0,y_sub(a1) ; subpixel y
