@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD
-; Version: 26.11.3.1 (stable)
+; Version: 26.11.3.2 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -2280,7 +2280,6 @@ zClearTrackPlaybackMem:
 	rst	zWriteFMI		; Write it!
 
 	ld	a,(zAbsVar.DACBank)
-	ex	af,af'
 
 	; This performs a full clear across all track/playback memory
 	ld	hl,zAbsVar
@@ -2289,7 +2288,6 @@ zClearTrackPlaybackMem:
 	ld	bc,(zTracksSFXEnd-zAbsVar)-1	; For 695 bytes...
 	ldir					; 695 bytes of clearing! (Because it will keep copying the byte prior to the byte after; thus 00h repeatedly)
 
-	ex	af,af'
 	ld	(zAbsVar.DACBank),a
 
 	call	zFMSilenceAll			; Silence FM
@@ -2320,7 +2318,6 @@ zInitMusicPlayback:
 	ld	c,(ix+zVar.Queue2)
 	push	bc
 	ld	a,(ix+zVar.DACBank)
-	ex	af,af'
 	; The following clears all playback memory and non-SFX tracks
 	ld	hl,zAbsVar
 	ld	de,zAbsVar+1
@@ -2328,7 +2325,6 @@ zInitMusicPlayback:
 	ld	bc,(zTracksSongEnd-zAbsVar)-1	; This many bytes (from start of zComRange to just short of end of PSG3 music track)
 	ldir
 	; Restore those queue/flags:
-	ex	af,af'
 	ld	(ix+zVar.DACBank),a
 	pop	bc
 	ld	(ix+zVar.Queue1),b
