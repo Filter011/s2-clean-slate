@@ -2,7 +2,6 @@
 ; Subroutine to display correct tiles as you move
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 ; loc_DA5C:
 LoadTilesAsYouMove:
 	lea	(VDP_control_port).l,a5
