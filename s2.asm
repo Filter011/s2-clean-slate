@@ -1055,7 +1055,7 @@ SegaScreen:
 
 	lea	(Chunk_Table).l,a1
 	lea	(MapEng_SEGA).l,a0
-	moveq	#ArtTile_VRAM_Start,d0
+	movea.w	#ArtTile_VRAM_Start,a3
 	bsr.w	EniDec
 
 	lea	(Chunk_Table).l,a1
@@ -1221,7 +1221,7 @@ TitleScreen:
 	; Decompress the first part of the title screen background plane map...
 	lea	(Chunk_Table).l,a1
 	lea	(MapEng_TitleScreen).l,a0
-	move.w	#ArtTile_ArtNem_Title|palette_line_2,d0
+	movea.w	#ArtTile_ArtNem_Title|palette_line_2,a3
 	bsr.w	EniDec
 
 	; ...and send it to VRAM.
@@ -1234,7 +1234,7 @@ TitleScreen:
 	; Decompress the second part of the title screen background plane map...
 	lea	(Chunk_Table).l,a1
 	lea	(MapEng_TitleBack).l,a0
-	move.w	#ArtTile_ArtNem_Title|palette_line_2,d0
+	movea.w	#ArtTile_ArtNem_Title|palette_line_2,a3
 	bsr.w	EniDec
 
 	; ...and send it to VRAM.
@@ -1247,7 +1247,7 @@ TitleScreen:
 	; Decompress the title screen emblem plane map...
 	lea	(Chunk_Table).l,a1
 	lea	(MapEng_TitleLogo).l,a0
-	move.w	#ArtTile_ArtNem_Title|palette_line_3|high_priority,d0
+	movea.w	#ArtTile_ArtNem_Title|palette_line_3|high_priority,a3
 	bsr.w	EniDec
 
 	; ...add the copyright text to it...
@@ -2128,7 +2128,7 @@ MenuScreen_Options:
 	bsr.w	Queue_KosPlus_Module
 	lea	(Chunk_Table).l,a1
 	lea	(MapEng_MenuBack).l,a0
-	move.w	#ArtTile_VRAM_Start|palette_line_3,d0
+	movea.w	#ArtTile_VRAM_Start|palette_line_3,a3
 	bsr.w	EniDec
 	lea	(Chunk_Table).l,a1
 	move.l	#vdpComm(VRAM_Plane_B_Name_Table,VRAM,WRITE),d0
@@ -2138,11 +2138,11 @@ MenuScreen_Options:
 
 	lea	(Chunk_Table).l,a1
 	lea	MapEng_Options(pc),a0
-	moveq	#ArtTile_ArtNem_MenuBox,d0
+	movea.w	#ArtTile_ArtNem_MenuBox,a3
 	bsr.w	EniDec
 	lea	(Chunk_Table+$160).l,a1
 	lea	MapEng_Options(pc),a0
-	move.w	#ArtTile_ArtNem_MenuBox|palette_line_1,d0
+	movea.w	#ArtTile_ArtNem_MenuBox|palette_line_1,a3
 	bsr.w	EniDec
 	clr.b	(Options_menu_box).w
 	bsr.w	OptionScreen_DrawSelected
@@ -2483,7 +2483,7 @@ MenuScreen_LevelSelect:
 	bsr.w	Queue_KosPlus_Module
 	lea	(Chunk_Table).l,a1
 	lea	(MapEng_MenuBack).l,a0
-	move.w	#ArtTile_VRAM_Start|palette_line_3,d0
+	movea.w	#ArtTile_VRAM_Start|palette_line_3,a3
 	bsr.w	EniDec
 	lea	(Chunk_Table).l,a1
 	move.l	#vdpComm(VRAM_Plane_B_Name_Table,VRAM,WRITE),d0
@@ -2494,7 +2494,7 @@ MenuScreen_LevelSelect:
 	; Load foreground (sans zone icon)
 	lea	(Chunk_Table).l,a1
 	lea	MapEng_LevSel(pc),a0	; 2 bytes per 8x8 tile, compressed
-	moveq	#ArtTile_VRAM_Start,d0
+	movea.w	#ArtTile_VRAM_Start,a3
 	bsr.w	EniDec
 	save
 	codepage	LEVELSELECT	; This is here so we can use '*' instead of '$1A'
@@ -2570,7 +2570,7 @@ MenuScreen_LevelSelect:
 	; Load zone icon
 	lea	(Chunk_Table+planeLoc(40,0,28)).l,a1
 	lea	MapEng_LevSelIcon(pc),a0
-	move.w	#ArtTile_ArtNem_LevelSelectPics,d0
+	movea.w	#ArtTile_ArtNem_LevelSelectPics,a3
 	bsr.w	EniDec
 
 	bsr.w	LevelSelect_DrawIcon

@@ -9,7 +9,7 @@
 ; usage:
 ;	lea	(source).l,a0
 ;	lea	(destination).l,a1
-;	move.w	#arttile,d0
+;	movea.w	#arttile,a3
 ;	bsr.w	EniDec
 
 ; See http://www.segaretro.org/Enigma_compression for format description
@@ -17,7 +17,6 @@
 
 
 EniDec:
-	movea.w	d0,a3		; store starting art tile
 	move.b	(a0)+,d0
 	ext.w	d0
 	movea.w	d0,a5		; store number of bits in inline copy value
