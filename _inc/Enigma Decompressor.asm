@@ -65,31 +65,26 @@ EniDec_00:
 	addq.w	#1,a2		; increment it
 	dbf	d2,.loop	; repeat
 	bra.w	Eni_Loop
+	rept 2
 	nop
-	nop
+	endr
 ; ===========================================================================
 ; loc_1772:
 EniDec_01:
 .loop:	move.w	a4,(a1)+	; copy literal copy word
 	dbf	d2,.loop	; repeat
 	bra.w	Eni_Loop
+	rept 3
 	nop
-	nop
-	nop
+	endr
 	bra.w	EniDec_Done
+	rept 6
 	nop
-	nop
-	nop
-	nop
-	nop
-	nop
+	endr
 	bra.w	EniDec_Done
+	rept 6
 	nop
-	nop
-	nop
-	nop
-	nop
-	nop
+	endr
 ; ===========================================================================
 ; loc_177A:
 EniDec_100:
