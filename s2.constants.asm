@@ -774,7 +774,7 @@ ObjID_RingPrize =		id(ObjPtr_RingPrize)		; DC
 
 ; Music IDs
 offset :=	zMasterPlaylist
-ptrsize :=	4
+ptrsize :=	5
 idstart :=	$01
 ; $00 is reserved for silence, so if you make idstart $00 or less,
 ; you may need to insert a dummy zMusIDPtr in the $00 slot

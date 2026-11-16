@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD
-; Version: 26.11.3.2 (stable)
+; Version: 26.11.16 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -305,8 +305,6 @@ zWriteFMIorII:    rsttarget
 	add	a,(ix+zTrack.VoiceControl)	; Add the channel bits to the register address
 	bit	2,(ix+zTrack.VoiceControl)
 	jr	z,zWriteFMI
-
-WriteFMIIPart:
 	sub	4
 	jp	zWriteFMII
 ; End of function zWriteFMIorII
@@ -431,8 +429,8 @@ zUpdateDAC:
 	bankswitch			; Bankswitch to the DAC data
 
 	ld	a,(zCurDAC)		; Get currently playing DAC sound
-	or	a
-	jp	m,.dacqueued		; If one is queued (80h+), go to it!
+	sub	81h
+	jp	nc,.dacqueued		; If one is queued (80h+), go to it!
 
 	exx				; Otherwise restore registers from mirror regs
 	ld	b,1			; b=1 (initial feed to the DAC "djnz" loops, i.e. UPDATE RIGHT AWAY)
@@ -443,12 +441,7 @@ zUpdateDAC:
 
 .dacqueued:
 	; If you get here, it's time to start a new DAC sound...
-	ld	a,80h
-	ex	af,af'	;'
-	ld	hl,zCurDAC
-	ld	a,(hl)			; Get current DAC sound
-	sub	81h			; Subtract 81h (first DAC index is 81h)
-	ld	(hl),a			; Store that as current DAC sound
+	ld	(zCurDAC),a		; Store that as current DAC sound
 	; The following two instructions are dangerous: they discard the upper
 	; two bits of zCurDAC, meaning you can only have 40h DAC samples.
 	add	a,a
@@ -457,6 +450,8 @@ zUpdateDAC:
 	ld	(zDACStartAddress+1),a	; Store into the instruction after zDACStartAddress (self-modifying code)
 	add	a,zDACLenTbl-zDACPtrTbl	; How to offset to length versus pointer
 	ld	(zDACStoreLength+2),a	; Store into the instruction after zDACStoreLength (self-modifying code)
+	ld	a,80h
+	ex	af,af'	;'
 	pop	iy
 	pop	af
 	ld	hl,zWriteToDAC
@@ -1604,14 +1599,12 @@ zBGMLoad:
     else
 	sub	MusID__First			; Make it a zero-based entry ...
     endif
+	ld	c,a
 	add	a,a
 	add	a,a
+	add	a,c
 	ld	e,a				; Transform 'a' into 16-bit de
 	ld	d,0
-	ld	hl,zSpedUpTempoTable		; Load 'hl' of "sped up" tempos [I think]
-	add	hl,de				; Offset by 16-bit version of song index to proper tempo
-	ld	a,(hl)				; Get value at this location -> 'a'
-	ld	(zAbsVar.TempoTurbo),a		; Store 'a' here (provides an alternate tempo or something for speed up mode)
 	ld	hl,zMasterPlaylist		; Get address of the zMasterPlaylist
 	add	hl,de				; Offset by 16-bit
 	ld	a,(hl)				; Get bank for the song to play
@@ -1625,6 +1618,11 @@ zBGMLoad:
 	ld	e,(hl)
 	inc	hl
 	ld	d,(hl)				; Getting offset within bank to music -> de
+
+	; get next byte
+	inc	hl
+	ld	a,(hl)
+	ld	(zAbsVar.TempoTurbo),a		; store the turbo tempo
 
 	; get next byte
 	inc	hl
@@ -3289,9 +3287,10 @@ zPSG_Env13:
 
 ;	END of zPSG_EnvTbl -------------------------------
 
-music_metadata macro loc,pal
+music_metadata macro loc,tempo,pal
 	zmake68kBanks	loc
 	zmake68kPtrs	loc
+	db	tempo
 	if "pal"<>""
 	db	0
 	else
@@ -3301,73 +3300,38 @@ music_metadata macro loc,pal
 
 ; zbyte_11F5h
 zMasterPlaylist:
-zMusIDPtr_2PResult:	music_metadata Mus_2PResult
-zMusIDPtr_EHZ:		music_metadata Mus_EHZ
-zMusIDPtr_MCZ_2P:	music_metadata Mus_MCZ_2P
-zMusIDPtr_OOZ:		music_metadata Mus_OOZ
-zMusIDPtr_MTZ:		music_metadata Mus_MTZ
-zMusIDPtr_HTZ:		music_metadata Mus_HTZ
-zMusIDPtr_ARZ:		music_metadata Mus_ARZ
-zMusIDPtr_CNZ_2P:	music_metadata Mus_CNZ_2P
-zMusIDPtr_CNZ:		music_metadata Mus_CNZ
-zMusIDPtr_DEZ:		music_metadata Mus_DEZ
-zMusIDPtr_MCZ:		music_metadata Mus_MCZ
-zMusIDPtr_EHZ_2P:	music_metadata Mus_EHZ_2P
-zMusIDPtr_SCZ:		music_metadata Mus_SCZ
-zMusIDPtr_CPZ:		music_metadata Mus_CPZ
-zMusIDPtr_WFZ:		music_metadata Mus_WFZ
-zMusIDPtr_HPZ:		music_metadata Mus_HPZ
-zMusIDPtr_Options:	music_metadata Mus_Options
-zMusIDPtr_SpecStage:	music_metadata Mus_SpecStage
-zMusIDPtr_Boss:		music_metadata Mus_Boss
-zMusIDPtr_EndBoss:	music_metadata Mus_EndBoss
-zMusIDPtr_Ending:	music_metadata Mus_Ending
-zMusIDPtr_SuperSonic:	music_metadata Mus_SuperSonic
-zMusIDPtr_Invincible:	music_metadata Mus_Invincible
-zMusIDPtr_ExtraLife:	music_metadata Mus_ExtraLife
-zMusIDPtr_Title:	music_metadata Mus_Title
-zMusIDPtr_EndLevel:	music_metadata Mus_EndLevel
-zMusIDPtr_GameOver:	music_metadata Mus_GameOver
-zMusIDPtr_Continue:	music_metadata Mus_Continue
-zMusIDPtr_Emerald:	music_metadata Mus_Emerald
-zMusIDPtr_Credits:	music_metadata Mus_Credits
-zMusIDPtr_Countdown:	music_metadata Mus_Drowning,1
+zMusIDPtr_2PResult:	music_metadata Mus_2PResult,s2TempotoS3(68h)
+zMusIDPtr_EHZ:		music_metadata Mus_EHZ,s2TempotoS3(0BEh)
+zMusIDPtr_MCZ_2P:	music_metadata Mus_MCZ_2P,s2TempotoS3(0FFh)
+zMusIDPtr_OOZ:		music_metadata Mus_OOZ,s2TempotoS3(0F0h)
+zMusIDPtr_MTZ:		music_metadata Mus_MTZ,s2TempotoS3(0FFh)
+zMusIDPtr_HTZ:		music_metadata Mus_HTZ,s2TempotoS3(0DEh)
+zMusIDPtr_ARZ:		music_metadata Mus_ARZ,s2TempotoS3(0FFh)
+zMusIDPtr_CNZ_2P:	music_metadata Mus_CNZ_2P,s2TempotoS3(0DDh)
+zMusIDPtr_CNZ:		music_metadata Mus_CNZ,s2TempotoS3(68h)
+zMusIDPtr_DEZ:		music_metadata Mus_DEZ,s2TempotoS3(80h)
+zMusIDPtr_MCZ:		music_metadata Mus_MCZ,s2TempotoS3(0D6h)
+zMusIDPtr_EHZ_2P:	music_metadata Mus_EHZ_2P,s2TempotoS3(7Bh)
+zMusIDPtr_SCZ:		music_metadata Mus_SCZ,s2TempotoS3(7Bh)
+zMusIDPtr_CPZ:		music_metadata Mus_CPZ,s2TempotoS3(0FFh)
+zMusIDPtr_WFZ:		music_metadata Mus_WFZ,s2TempotoS3(0A8h)
+zMusIDPtr_HPZ:		music_metadata Mus_HPZ,s2TempotoS3(0FFh)
+zMusIDPtr_Options:	music_metadata Mus_Options,s2TempotoS3(87h)
+zMusIDPtr_SpecStage:	music_metadata Mus_SpecStage,s2TempotoS3(0FFh)
+zMusIDPtr_Boss:		music_metadata Mus_Boss,s2TempotoS3(0FFh)
+zMusIDPtr_EndBoss:	music_metadata Mus_EndBoss,s2TempotoS3(0C9h)
+zMusIDPtr_Ending:	music_metadata Mus_Ending,s2TempotoS3(97h)
+zMusIDPtr_SuperSonic:	music_metadata Mus_SuperSonic,s2TempotoS3(0FFh)
+zMusIDPtr_Invincible:	music_metadata Mus_Invincible,s2TempotoS3(0FFh)
+zMusIDPtr_ExtraLife:	music_metadata Mus_ExtraLife,s2TempotoS3(0CDh)
+zMusIDPtr_Title:	music_metadata Mus_Title,s2TempotoS3(0CDh)
+zMusIDPtr_EndLevel:	music_metadata Mus_EndLevel,s2TempotoS3(0AAh)
+zMusIDPtr_GameOver:	music_metadata Mus_GameOver,s2TempotoS3(0F2h)
+zMusIDPtr_Continue:	music_metadata Mus_Continue,s2TempotoS3(0DBh)
+zMusIDPtr_Emerald:	music_metadata Mus_Emerald,s2TempotoS3(0D5h)
+zMusIDPtr_Credits:	music_metadata Mus_Credits,s2TempotoS3(0F0h)
+zMusIDPtr_Countdown:	music_metadata Mus_Drowning,s2TempotoS3(80h),1
 zMusIDPtr__End:
-
-; Tempo with speed shoe tempo for each song
-; zbyte_1214
-zSpedUpTempoTable:
-	db	s2TempotoS3(68h)
-	db	s2TempotoS3(0BEh)
-	db	s2TempotoS3(0FFh)
-	db	s2TempotoS3(0F0h)
-	db	s2TempotoS3(0FFh)
-	db	s2TempotoS3(0DEh)
-	db	s2TempotoS3(0FFh)
-	db	s2TempotoS3(0DDh)
-	db	s2TempotoS3(68h)
-	db	s2TempotoS3(80h)
-	db	s2TempotoS3(0D6h)
-	db	s2TempotoS3(7Bh)
-	db	s2TempotoS3(7Bh)
-	db	s2TempotoS3(0FFh)
-	db	s2TempotoS3(0A8h)
-	db	s2TempotoS3(0FFh)
-	db	s2TempotoS3(87h)
-	db	s2TempotoS3(0FFh)
-	db	s2TempotoS3(0FFh)
-	db	s2TempotoS3(0C9h)
-	db	s2TempotoS3(97h)
-	db	s2TempotoS3(0FFh)
-	db	s2TempotoS3(0FFh)
-	db	s2TempotoS3(0CDh)
-	db	s2TempotoS3(0CDh)
-	db	s2TempotoS3(0AAh)
-	db	s2TempotoS3(0F2h)
-	db	s2TempotoS3(0DBh)
-	db	s2TempotoS3(0D5h)
-	db	s2TempotoS3(0F0h)
-	db	s2TempotoS3(80h)
 
 dac_sample_pointer macro label
 label.pointer = $
