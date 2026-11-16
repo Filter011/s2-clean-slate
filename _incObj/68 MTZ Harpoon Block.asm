@@ -65,7 +65,7 @@ Obj68_Block:
 ; ===========================================================================
 ; loc_27662:
 Obj68_Spike:
-	bsr.w	Obj68_Spike_Action
+	bsr.s	Obj68_Spike_Action
 	moveq	#0,d0
 	move.b	routine_secondary(a0),d0
 	add.w	d0,d0

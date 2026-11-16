@@ -27,7 +27,7 @@ ObjD2_Init:
 	move.b	subtype(a0),d0
 	lsl.w	#4,d0
 	move.w	d0,objoff_38(a0)
-	bsr.w	loc_2B60C
+	bsr.s	loc_2B60C
 ; loc_2B57E:
 ObjD2_Main:
 	tst.w	objoff_38(a0)

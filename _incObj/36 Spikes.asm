@@ -110,7 +110,7 @@ Obj36_Sideways:
 	andi.b	#p1_touch_side,d0	; is Sonic pushing against the side?
 	beq.s	Obj36_SidewaysEnd	; if not, branch
 	lea	(MainCharacter).w,a1 ; a1=character
-	bsr.w	Touch_ChkHurt2
+	bsr.s	Touch_ChkHurt2
 	bclr	#p1_pushing_bit,status(a0)
 
 ; loc_15A3A:
@@ -120,7 +120,7 @@ Obj36_SidewaysEnd:
 ; ===========================================================================
 ; loc_15A42:
 Obj36_Upsidedown:
-	bsr.w	MoveSpikes
+	bsr.s	MoveSpikes
 	moveq	#0,d1
 	move.b	width_pixels(a0),d1
 	addi.w	#$B,d1

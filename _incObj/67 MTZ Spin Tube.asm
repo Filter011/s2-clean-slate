@@ -34,8 +34,6 @@ Obj67_Init:
 Obj67_Main:
 	lea	(MainCharacter).w,a1 ; a1=character
 	lea	objoff_2C(a0),a4
-
-loc_271BE:
 	moveq	#0,d0
 	move.b	(a4),d0
 	move.w	off_271CA(pc,d0.w),d0
@@ -95,7 +93,7 @@ loc_27260:
 	move.w	d2,y_pos(a1)
 	cmpi.b	#$80,1(a4)
 	bne.s	+
-	bsr.w	loc_27310
+	bsr.s	loc_27310
 	addq.b	#2,(a4)
 	moveq	#SndID_SpindashRelease,d0
 	jmp	(PlaySound).w

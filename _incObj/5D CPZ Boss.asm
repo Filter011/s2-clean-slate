@@ -148,7 +148,7 @@ return_2D94C:
 ; ===========================================================================
 
 Obj5D_Main:
-	bsr.w	Obj5D_LookAtChar
+	bsr.s	Obj5D_LookAtChar
 	moveq	#0,d0
 	move.b	routine_secondary(a0),d0
 	move.w	Obj5D_Main_Index(pc,d0.w),d1
@@ -233,7 +233,7 @@ Obj5D_Main_StopExploding:
 
 Obj5D_Main_A_End:
 	bsr.w	Obj5D_Main_Move
-	bra.w	Obj5D_Main_Pos_and_Collision
+	bra.s	Obj5D_Main_Pos_and_Collision
 ; ===========================================================================
 ;Obj5D_Main_C:
 Obj5D_Main_Retreat:
@@ -251,7 +251,7 @@ Obj5D_Main_Retreat:
 
 Obj5D_Main_C_End:
 	bsr.w	Obj5D_Main_Move
-	bra.w	Obj5D_Main_Pos_and_Collision
+	bra.s	Obj5D_Main_Pos_and_Collision
 ; ===========================================================================
 
 Obj5D_Main_Delete:
@@ -515,8 +515,8 @@ Obj5D_Pump:
 	move.b	d3,mapping_frame(a0)
 	move.b	#$14,routine(a0)	; => Obj5D_FallingParts
 	jsr	(RandomNumber).w
-	asr.w	#8,d0
-	asr.w	#6,d0
+	moveq	#8+6,d2
+	asr.w	d2,d0
 	move.w	d0,x_vel(a0)
 	move.w	#-$380,y_vel(a0)
 
@@ -539,8 +539,8 @@ Obj5D_Pump:
 	move.b	status(a0),status(a1)
 	move.b	render_flags(a0),render_flags(a1)
 	jsr	(RandomNumber).w
-	asr.w	#8,d0
-	asr.w	#6,d0
+	moveq	#8+6,d4
+	asr.w	d4,d0
 	move.w	d0,x_vel(a1)
 	move.w	#-$380,y_vel(a1)
 	swap	d0

@@ -609,7 +609,7 @@ loc_BD6:
 ; ===========================================================================
 ;VintSub12
 Vint_Fade:
-	bsr.w	Do_ControllerPal
+	bsr.s	Do_ControllerPal
 	move.w	(Hint_counter_reserve).w,(a5)
 	bra.w	Set_KosPlus_Bookmark
 ; ===========================================================================
@@ -2179,7 +2179,7 @@ OptionScreen_Main:
 	bsr.w	WaitForVint
 	move.w	#$2700,sr
 	bsr.w	OptionScreen_DrawUnselected
-	bsr.w	OptionScreen_Controls
+	bsr.s	OptionScreen_Controls
 	bsr.w	OptionScreen_DrawSelected
 	move.w	#$2300,sr
 	lea	Anim_SonicMilesBG(pc),a2
@@ -2332,7 +2332,7 @@ OptionScreen_DrawSelected:
 
 ;loc_91F8
 OptionScreen_DrawUnselected:
-	bsr.w	OptionScreen_SelectTextPtr
+	bsr.s	OptionScreen_SelectTextPtr
 	moveq	#0,d1
 	move.b	(Options_menu_box).w,d1
 	lsl.w	#3,d1
@@ -3825,7 +3825,7 @@ loc_156CE:
 	move.w	(a0)+,d0
 	beq.s	loc_15714
 	clr.w	-2(a0)
-	bsr.w	sub_15792
+	bsr.s	sub_15792
 
 	move.w	d5,d4
 -	move.l	d0,(a5)

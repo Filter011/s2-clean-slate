@@ -1793,7 +1793,7 @@ Sonic_HitCeilingAndWalls:
 
 loc_1B02C:
 	move.b	d3,angle(a0)
-	bsr.w	Sonic_ResetOnFloor
+	bsr.s	Sonic_ResetOnFloor
 	move.w	y_vel(a0),inertia(a0)
 	tst.b	d3
 	bpl.s	return_1B042

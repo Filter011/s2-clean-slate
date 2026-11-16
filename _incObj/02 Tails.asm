@@ -255,7 +255,7 @@ Obj02_MdNormal:
 	bsr.w	Tails_CheckSpindash
 	bsr.w	Tails_Jump
 	bsr.w	Player_SlopeResist
-	bsr.w	Tails_Move
+	bsr.s	Tails_Move
 	bsr.w	Tails_Roll
 	bsr.w	Tails_LevelBound
 	jsr	(ObjectMove).w
@@ -1682,7 +1682,7 @@ Tails_HitCeilingAndWalls:
 
 loc_1CADC:
 	move.b	d3,angle(a0)
-	bsr.w	Tails_ResetOnFloor
+	bsr.s	Tails_ResetOnFloor
 	move.w	y_vel(a0),inertia(a0)
 	tst.b	d3
 	bpl.s	return_1CAF2
@@ -1838,7 +1838,7 @@ Obj02_Dead:
 	bsr.w	CheckGameOver
 	jsr	(ObjectMoveAndFall).w
 	bsr.w	Tails_RecordPos
-	bsr.w	Tails_Animate
+	bsr.s	Tails_Animate
 	bsr.w	LoadTailsDynPLC
 	jmp	(DisplaySprite).w
 

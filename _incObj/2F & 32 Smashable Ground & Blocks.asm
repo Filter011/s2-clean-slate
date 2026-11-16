@@ -220,7 +220,7 @@ Obj32_SupportingSomeone:
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.b	breakableblock_mainchar_anim(a0),d0
 	bsr.s	Obj32_SetCharacterOffBlock
-	bra.w	Obj32_Destroy
+	bra.s	Obj32_Destroy
 ; ===========================================================================
 ; loc_235EA:
 Obj32_SupportingOnePlayerOnly:
@@ -256,7 +256,7 @@ Obj32_Destroy:
 	andi.b	#~standing_mask,status(a0)
 	movea.l	objoff_3C(a0),a4
 	jsr	(BreakObjectToPieces).l
-	bsr.w	SmashableObject_LoadPoints
+	bsr.s	SmashableObject_LoadPoints
 ; loc_2366A:
 Obj32_Fragment:
 	jsr	(ObjectMove).w

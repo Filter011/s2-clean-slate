@@ -159,7 +159,7 @@ Obj83_Main:
 	move.l	d0,d4
 	move.l	d1,d5
 	moveq	#2,d6	; Update 3 chainlink childsprites
-	bsr.w	Obj83_UpdateChainSpritePosition
+	bsr.s	Obj83_UpdateChainSpritePosition
 	swap	d4
 	swap	d5
 	add.w	d2,d4
@@ -179,7 +179,7 @@ Obj83_Main:
 	move.l	d0,d4
 	move.l	d1,d5
 	moveq	#2,d6	; Update 3 chainlink childsprites
-	bsr.w	Obj83_UpdateChainSpritePosition
+	bsr.s	Obj83_UpdateChainSpritePosition
 	swap	d4
 	swap	d5
 	add.w	d2,d4

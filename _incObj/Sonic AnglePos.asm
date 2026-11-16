@@ -75,7 +75,7 @@ loc_1E292:
 	clr.w	d6
 	bsr.w	FindFloor
 	move.w	(sp)+,d0
-	bsr.w	Sonic_Angle
+	bsr.s	Sonic_Angle
 	tst.w	d1
 	beq.s	return_1E31C
 	bpl.s	loc_1E31E

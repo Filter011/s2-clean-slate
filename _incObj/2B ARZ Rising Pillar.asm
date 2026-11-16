@@ -26,7 +26,7 @@ Obj2B_Init:
 ; loc_25A9C:
 Obj2B_Main:
 	move.w	x_pos(a0),-(sp)
-	bsr.w	loc_25B28
+	bsr.s	loc_25B28
 	moveq	#$10+$B,d1
 	moveq	#0,d2
 	move.b	y_radius(a0),d2
@@ -54,11 +54,10 @@ loc_25ACE:
 loc_25AF6:
 	bclr	d6,status(a0)
 	beq.s	return_25B26
-	bset	#status.player.rolling,status(a1)
+	ori.b	#1<<status.player.rolling|1<<status.player.in_air,status(a1)
 	move.b	#$E,y_radius(a1)
 	move.b	#7,x_radius(a1)
 	move.b	#AniIDSonAni_Roll,anim(a1)
-	bset	#status.player.in_air,status(a1)
 	bclr	#status.player.on_object,status(a1)
 	move.b	#2,routine(a1)
 

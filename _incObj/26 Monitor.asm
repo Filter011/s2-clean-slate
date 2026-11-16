@@ -66,7 +66,7 @@ SolidObject_Monitor:
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
 	movem.l	d1-d4,-(sp)
-	bsr.w	SolidObject_Monitor_Sonic
+	bsr.s	SolidObject_Monitor_Sonic
 	movem.l	(sp)+,d1-d4
 
 Obj26_Animate:

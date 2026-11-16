@@ -1220,7 +1220,7 @@ SwScrl_CNZ:
 	; heights, with each row getting its own scroll value.
 	; This is used to create an elaborate parallax effect.
 	move.w	(Camera_X_pos).w,d2
-	bsr.w	SwScrl_CNZ_GenerateScrollValues
+	bsr.s	SwScrl_CNZ_GenerateScrollValues
 
 	; Use the list of row scroll values and a list of row heights to fill
 	; 'Horiz_Scroll_Buf'.

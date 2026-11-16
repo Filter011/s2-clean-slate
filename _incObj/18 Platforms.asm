@@ -75,7 +75,7 @@ Obj18_Init:
 
 .notHeightARZ:
 	bset	#render_flags.explicit_height,render_flags(a0)
-	bra.w	Obj18_FullSolid
+	bra.s	Obj18_FullSolid
 ; ---------------------------------------------------------------------------
 
 .topSolid:
@@ -101,7 +101,7 @@ Obj18_TopSolid:
 .doMovement:
 	move.w	x_pos(a0),-(sp)
 	bsr.w	Obj18_Move
-	bsr.w	Obj18_Nudge
+	bsr.s	Obj18_Nudge
 	moveq	#0,d1
 	move.b	width_pixels(a0),d1
 	moveq	#8,d3
@@ -111,8 +111,8 @@ Obj18_TopSolid:
 ; ===========================================================================
 ; loc_105A8:
 Obj18_NonSolid:
-	bsr.w	Obj18_Move
-	bsr.w	Obj18_Nudge
+	bsr.s	Obj18_Move
+	bsr.s	Obj18_Nudge
 	; fall through to Obj18_Despawn
 ; ===========================================================================
 

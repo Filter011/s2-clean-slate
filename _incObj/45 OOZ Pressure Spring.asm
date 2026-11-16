@@ -173,7 +173,7 @@ Obj45_Horizontal:
 loc_242B6:
 	andi.b	#1<<status.player.x_flip,d1
 	bne.s	loc_242C0
-	bsr.w	loc_2433C
+	bsr.s	loc_2433C
 
 loc_242C0:
 	tst.b	objoff_36(a0)

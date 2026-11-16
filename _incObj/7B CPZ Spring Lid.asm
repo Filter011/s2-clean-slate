@@ -52,7 +52,7 @@ Obj7B_Main:
 	jsr	(SolidObject_Always_SingleCharacter).l
 	btst	#p1_standing_bit,status(a0)
 	beq.s	loc_29648
-	bsr.w	loc_296C2
+	bsr.s	loc_296C2
 
 loc_29648:
 	move.w	x_pos(a0),d4

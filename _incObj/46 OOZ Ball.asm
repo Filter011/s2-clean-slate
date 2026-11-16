@@ -125,7 +125,7 @@ loc_24BA4:
 	moveq	#$11,d3
 	move.w	(sp)+,d4
 	jsr	(SolidObject).l
-	bsr.w	loc_24BF0
+	bsr.s	loc_24BF0
 	jmp	(MarkObjGone).w
 ; ===========================================================================
 

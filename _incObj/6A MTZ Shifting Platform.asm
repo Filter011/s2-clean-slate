@@ -117,7 +117,7 @@ loc_27C2E:
 	jsr	(ObjectMove).w
 	subq.w	#1,objoff_34(a0)
 	bne.s	loc_27C3E
-	bsr.w	loc_27CA2
+	bsr.s	loc_27CA2
 
 loc_27C3E:
 	move.w	(sp)+,d4

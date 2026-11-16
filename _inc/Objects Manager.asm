@@ -130,7 +130,7 @@ ObjectsManager_Main:
 	subq.b	#1,1(a2)	; respawn index of this object
 	move.b	1(a2),d2
 .noRespawn1:
-	bsr.w	ChkLoadObj	; load object
+	bsr.s	ChkLoadObj	; load object
 	bne.s	.fullSST	; branch, if SST is full
 	subq.w	#6,a0
 	bra.s	.nextObject1	; continue with previous object
@@ -182,7 +182,7 @@ ObjectsManager_GoingForward:
 	move.b	(a2),d2		; respawn index of this object
 	addq.b	#1,(a2)		; respawn index of next object to the right
 .noRespawn1:
-	bsr.w	ChkLoadObj	; load object (and get address of next object)
+	bsr.s	ChkLoadObj	; load object (and get address of next object)
 	beq.s	.nextObject1	; continue loading objects, if the SST isn't full
 ; loc_17C2A:
 .done1:

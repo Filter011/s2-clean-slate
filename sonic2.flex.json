@@ -18,7 +18,8 @@
                         "path": "art/uncompressed/Sonic's art.bin",
                         "compression": "Uncompressed",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/Sonic.asm",
@@ -46,7 +47,8 @@
                         "path": "art/uncompressed/Tails's art.bin",
                         "compression": "Uncompressed",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/Tails.asm",
@@ -82,7 +84,8 @@
                         "path": "art/uncompressed/Knuckles' art.bin",
                         "compression": "Uncompressed",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/Knuckles.asm",
@@ -116,7 +119,8 @@
                         "path": "art/uncompressed/Rings.unc",
                         "compression": "Uncompressed",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/Rings edit.asm",
@@ -142,7 +146,8 @@
                         "path": "art/kosinskiplusm/Ring Sparkles.unc",
                         "compression": "Uncompressed",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/Rings.asm",
@@ -168,7 +173,8 @@
                         "path": "",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj03.asm",
@@ -194,7 +200,8 @@
                         "path": "art/uncompressed/Signpost.bin",
                         "compression": "Uncompressed",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj0D.asm",
@@ -222,7 +229,8 @@
                         "path": "art/nemesis/Monitor and contents.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj26.asm",
@@ -250,7 +258,8 @@
                         "path": "art/nemesis/Monitor and contents.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj31_b.asm",
@@ -276,7 +285,8 @@
                         "path": "art/nemesis/Spikes.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj36.asm",
@@ -302,7 +312,8 @@
                         "path": "art/nemesis/Egg Prison.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj3E.asm",
@@ -328,7 +339,8 @@
                         "path": "art/nemesis/Vertical spring.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "",
@@ -354,7 +366,8 @@
                         "path": "art/nemesis/Monitor and contents.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj74.asm",
@@ -380,7 +393,8 @@
                         "path": "art/nemesis/Star pole.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj79_a.asm",
@@ -418,7 +432,8 @@
                         "path": "art/kosinski/ARZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj83.asm",
@@ -448,7 +463,8 @@
                         "path": "art/kosinski/ARZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj18_b.asm",
@@ -478,7 +494,8 @@
                         "path": "elArt",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj1F_d.asm",
@@ -508,7 +525,8 @@
                         "path": "art/nemesis/Arrow shooter and arrow from ARZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj22.asm",
@@ -538,7 +556,8 @@
                         "path": "art/kosinski/ARZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj23.asm",
@@ -568,7 +587,8 @@
                         "path": "art/nemesis/Bubble generator.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "",
@@ -598,7 +618,8 @@
                         "path": "art/kosinski/ARZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj2B.asm",
@@ -628,7 +649,8 @@
                         "path": "art/nemesis/Monitor and contents.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj31_b.asm",
@@ -658,7 +680,8 @@
                         "path": "art/nemesis/One way barrier from ARZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj2D.asm",
@@ -688,7 +711,8 @@
                         "path": "art/nemesis/Lever spring.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj40.asm",
@@ -718,7 +742,8 @@
                         "path": "art/kosinski/ARZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj82.asm",
@@ -748,7 +773,8 @@
                         "path": "art/kosinski/ARZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj83.asm",
@@ -778,7 +804,8 @@
                         "path": "art/nemesis/Blowfly from ARZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj8C.asm",
@@ -808,7 +835,8 @@
                         "path": "art/nemesis/Grounder from ARZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "",
@@ -838,7 +866,8 @@
                         "path": "art/nemesis/Grounder from ARZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "",
@@ -868,7 +897,8 @@
                         "path": "art/nemesis/Shark from ARZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj91.asm",
@@ -906,7 +936,8 @@
                         "path": "art/nemesis/Collapsing platform from MCZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj1F_c.asm",
@@ -936,7 +967,8 @@
                         "path": "art/kosinski/MCZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj2A.asm",
@@ -966,7 +998,8 @@
                         "path": "art/nemesis/Lever spring.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj40.asm",
@@ -996,7 +1029,8 @@
                         "path": "art/nemesis/Large wooden box from MCZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj6A.asm",
@@ -1026,7 +1060,8 @@
                         "path": "art/kosinski/MCZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj75.asm",
@@ -1056,7 +1091,8 @@
                         "path": "art/kosinski/MCZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj76.asm",
@@ -1086,7 +1122,8 @@
                         "path": "art/nemesis/Drawbridge logs from MCZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj77.asm",
@@ -1116,7 +1153,8 @@
                         "path": "art/nemesis/Pull switch from MCZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj7F.asm",
@@ -1146,7 +1184,8 @@
                         "path": "art/nemesis/Vine that lowers from MCZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj80_a.asm",
@@ -1176,7 +1215,8 @@
                         "path": "art/nemesis/Drawbridge logs from MCZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj81.asm",
@@ -1206,7 +1246,8 @@
                         "path": "art/nemesis/Snake badnik from MCZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj9E.asm",
@@ -1236,7 +1277,8 @@
                         "path": "art/nemesis/Firefly from MCZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objA3.asm",
@@ -1274,7 +1316,8 @@
                         "path": "art/nemesis/Round bumper from CNZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj44.asm",
@@ -1304,7 +1347,8 @@
                         "path": "art/nemesis/Ring.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj03.asm",
@@ -1334,7 +1378,8 @@
                         "path": "art/nemesis/Vertical impulse spring.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj85_a.asm",
@@ -1364,7 +1409,8 @@
                         "path": "art/nemesis/Flippers.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj86.asm",
@@ -1394,7 +1440,8 @@
                         "path": "art/nemesis/Bouncer badnik from CNZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objC8.asm",
@@ -1424,7 +1471,8 @@
                         "path": "art/nemesis/Caterpiller platforms from CNZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objD2.asm",
@@ -1454,7 +1502,8 @@
                         "path": "art/nemesis/Moving block from CNZ and CPZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objD4.asm",
@@ -1484,7 +1533,8 @@
                         "path": "art/nemesis/CNZ elevator.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objD5.asm",
@@ -1514,7 +1564,8 @@
                         "path": "art/nemesis/CNZ slot machine bars.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objD6_b.asm",
@@ -1544,7 +1595,8 @@
                         "path": "art/nemesis/Hexagonal bumper from CNZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objD7.asm",
@@ -1574,7 +1626,8 @@
                         "path": "art/nemesis/Drop target from CNZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objD8.asm",
@@ -1612,7 +1665,8 @@
                         "path": "art/nemesis/Bolt end and rope from MTZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj1C_e.asm",
@@ -1642,7 +1696,8 @@
                         "path": "art/kosinski/MTZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj2D.asm",
@@ -1672,7 +1727,8 @@
                         "path": "art/kosinski/MTZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj42.asm",
@@ -1702,7 +1758,8 @@
                         "path": "art/nemesis/Button.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj47.asm",
@@ -1732,7 +1789,8 @@
                         "path": "art/kosinski/MTZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj64.asm",
@@ -1762,7 +1820,8 @@
                         "path": "art/kosinski/MTZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj65_a.asm",
@@ -1792,7 +1851,8 @@
                         "path": "art/nemesis/Monitor and contents.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj66.asm",
@@ -1822,7 +1882,8 @@
                         "path": "art/nemesis/MTZ spike block.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj68.asm",
@@ -1852,7 +1913,8 @@
                         "path": "art/nemesis/Similarly shaded blocks from MTZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj69.asm",
@@ -1882,7 +1944,8 @@
                         "path": "art/kosinski/MTZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj65_a.asm",
@@ -1912,7 +1975,8 @@
                         "path": "art/nemesis/Lava cup from MTZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj6C.asm",
@@ -1942,7 +2006,8 @@
                         "path": "art/nemesis/Spike from MTZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj68.asm",
@@ -1972,7 +2037,8 @@
                         "path": "art/kosinski/MTZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj6E.asm",
@@ -2002,7 +2068,8 @@
                         "path": "art/nemesis/Large spinning wheel from MTZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj70.asm",
@@ -2032,7 +2099,8 @@
                         "path": "art/nemesis/Lava bubble from MTZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj71_b.asm",
@@ -2062,7 +2130,8 @@
                         "path": "art/nemesis/Shellcracker badnik from MTZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objA0.asm",
@@ -2092,7 +2161,8 @@
                         "path": "art/nemesis/Praying mantis badnik from MTZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objA2.asm",
@@ -2122,7 +2192,8 @@
                         "path": "art/nemesis/Exploding star badnik from MTZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objA4.asm",
@@ -2160,7 +2231,8 @@
                         "path": "art/nemesis/Small yellow moving platform from CPZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj0B.asm",
@@ -2190,7 +2262,8 @@
                         "path": "art/nemesis/Large moving platform from CPZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj19.asm",
@@ -2220,7 +2293,8 @@
                         "path": "art/nemesis/Speed booster from CPZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj1B.asm",
@@ -2250,7 +2324,8 @@
                         "path": "art/nemesis/CPZ worm enemy.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj1D.asm",
@@ -2280,7 +2355,8 @@
                         "path": "art/nemesis/Stripy blocks from CPZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj2D.asm",
@@ -2310,7 +2386,8 @@
                         "path": "art/nemesis/CPZ large moving platform blocks.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj32_b.asm",
@@ -2340,7 +2417,8 @@
                         "path": "art/nemesis/Lever spring.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj40.asm",
@@ -2370,7 +2448,8 @@
                         "path": "art/nemesis/Moving block from CPZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj6B.asm",
@@ -2400,7 +2479,8 @@
                         "path": "art/nemesis/Moving block from CPZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj7A.asm",
@@ -2430,7 +2510,8 @@
                         "path": "art/nemesis/CPZ spintube exit cover.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj7B.asm",
@@ -2460,7 +2541,8 @@
                         "path": "art/nemesis/Weird crawling badnik from CPZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objA6.asm",
@@ -2490,7 +2572,8 @@
                         "path": "art/nemesis/Weird crawling badnik from CPZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objA6.asm",
@@ -2520,7 +2603,8 @@
                         "path": "art/nemesis/Spider badnik from CPZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "",
@@ -2558,7 +2642,8 @@
                         "path": "art/nemesis/Swinging platform from OOZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj15_a.asm",
@@ -2588,7 +2673,8 @@
                         "path": "art/nemesis/Rising platform from OOZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj19.asm",
@@ -2618,7 +2704,8 @@
                         "path": "art/nemesis/Cascading oil from OOZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj1C_c.asm",
@@ -2648,7 +2735,8 @@
                         "path": "art/nemesis/OOZ collapsing platform.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj1F_b.asm",
@@ -2678,7 +2766,8 @@
                         "path": "art/nemesis/Burner Platform from OOZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj33_a.asm",
@@ -2708,7 +2797,8 @@
                         "path": "art/nemesis/Striped blocks from CPZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj3D.asm",
@@ -2738,7 +2828,8 @@
                         "path": "art/nemesis/Fan from OOZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj3F_a.asm",
@@ -2768,7 +2859,8 @@
                         "path": "art/nemesis/Spiked ball from OOZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj43.asm",
@@ -2798,7 +2890,8 @@
                         "path": "art/nemesis/Push spring from OOZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj45.asm",
@@ -2828,7 +2921,8 @@
                         "path": "art/nemesis/Transporter ball from OOZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj48.asm",
@@ -2858,7 +2952,8 @@
                         "path": "art/nemesis/Octopus badnik from OOZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj4A.asm",
@@ -2888,7 +2983,8 @@
                         "path": "art/nemesis/Seahorse from OOZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj50.asm",
@@ -2926,7 +3022,8 @@
                         "path": "art/nemesis/Stripy blocks from CPZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj2D.asm",
@@ -2956,7 +3053,8 @@
                         "path": "art/nemesis/Stripy blocks from CPZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objC6_b.asm",
@@ -2986,7 +3084,8 @@
                         "path": "art/nemesis/Robotnik's head.nem:40960",
                         "compression": "Nemesis",
                         "offset": "0",
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objC6_a.asm",
@@ -3016,7 +3115,8 @@
                         "path": "art/nemesis/Eggrobo.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objC7.asm",
@@ -3054,7 +3154,8 @@
                         "path": "art/nemesis/Bomber badnik from SCZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj99.asm",
@@ -3084,7 +3185,8 @@
                         "path": "art/nemesis/Turtle badnik from SCZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj9C.asm",
@@ -3114,7 +3216,8 @@
                         "path": "art/nemesis/Balkrie (jet badnik) from SCZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objAC.asm",
@@ -3144,7 +3247,8 @@
                         "path": "art/nemesis/The Tornado.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objB2_a.asm",
@@ -3174,7 +3278,8 @@
                         "path": "art/nemesis/Clouds.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objB3.asm",
@@ -3204,7 +3309,8 @@
                         "path": "art/nemesis/Vertical spinning blades in WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objB4.asm",
@@ -3234,7 +3340,8 @@
                         "path": "art/nemesis/Horizontal spinning blades in WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objB5.asm",
@@ -3272,7 +3379,8 @@
                         "path": "art/nemesis/EHZ bridge.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj11_b.asm",
@@ -3302,7 +3410,8 @@
                         "path": "art/kosinski/EHZ_HTZ.kos",
                         "compression": "Kosinski",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj18_a.asm",
@@ -3332,7 +3441,8 @@
                         "path": "art/nemesis/EHZ bridge.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj11_b.asm",
@@ -3362,7 +3472,8 @@
                         "path": "art/nemesis/Waterfall tiles.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj49.asm",
@@ -3392,7 +3503,8 @@
                         "path": "art/nemesis/Buzzer enemy.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj4B.asm",
@@ -3422,7 +3534,8 @@
                         "path": "art/nemesis/EHZ Pirahna badnik.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj5C.asm",
@@ -3452,7 +3565,8 @@
                         "path": "art/nemesis/Coconuts badnik from EHZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj9D.asm",
@@ -3490,7 +3604,8 @@
                         "path": "art/nemesis/Moving platform from WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj19.asm",
@@ -3520,7 +3635,8 @@
                         "path": "art/nemesis/Hook on chain from WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj80_b.asm",
@@ -3550,7 +3666,8 @@
                         "path": "art/nemesis/Ring.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/obj03.asm",
@@ -3580,7 +3697,8 @@
                         "path": "art/nemesis/Scratch from WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objAE.asm",
@@ -3610,7 +3728,8 @@
                         "path": "art/nemesis/The Tornado.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objB2_a.asm",
@@ -3640,7 +3759,8 @@
                         "path": "art/nemesis/Vertical spinning blades in WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objB4.asm",
@@ -3670,7 +3790,8 @@
                         "path": "art/nemesis/Horizontal spinning blades in WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objB5.asm",
@@ -3700,7 +3821,8 @@
                         "path": "art/nemesis/Tilting plaforms in WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objB6.asm",
@@ -3730,7 +3852,8 @@
                         "path": "art/nemesis/Wall turret from WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objB8.asm",
@@ -3760,7 +3883,8 @@
                         "path": "art/nemesis/Red horizontal laser from WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objB9.asm",
@@ -3790,7 +3914,8 @@
                         "path": "art/nemesis/Wheel for belt in WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objBA.asm",
@@ -3820,7 +3945,8 @@
                         "path": "art/nemesis/Thrust from Robotnik's getaway ship in WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objBC.asm",
@@ -3850,7 +3976,8 @@
                         "path": "art/nemesis/Platform on belt in WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objBD.asm",
@@ -3880,7 +4007,8 @@
                         "path": "art/nemesis/Retracting platform from WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objBE.asm",
@@ -3910,7 +4038,8 @@
                         "path": "art/nemesis/Catapult that shoots Sonic to the side from WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objC0.asm",
@@ -3940,7 +4069,8 @@
                         "path": "art/nemesis/Breakaway panels from WFZ.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objC1.asm",
@@ -3970,7 +4100,8 @@
                         "path": "art/nemesis/WFZ boss chamber switch.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objC2.asm",
@@ -4000,7 +4131,8 @@
                         "path": "art/nemesis/WFZ boss.nem",
                         "compression": "Nemesis",
                         "offset": 0,
-                        "extra": []
+                        "extra": [],
+                        "paletteLine": 0
                     },
                     "mappings": {
                         "path": "mappings/sprite/objC5_a.asm",

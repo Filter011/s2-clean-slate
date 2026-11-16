@@ -19,9 +19,9 @@ DMA = %100111
 
 ; tells the VDP to copy a region of 68k memory to VRAM or CRAM or VSRAM
 dma68kToVDP macro source,dest,length,type
-	move.l	#(($9400|((((length)>>1)&$FF00)>>8))<<16)|($9300|(((length)>>1)&$FF)),(a5)
-	move.l	#(($9600|((((source)>>1)&$FF00)>>8))<<16)|($9500|(((source)>>1)&$FF)),(a5)
-	move.l	#(($9700|(((((source)>>1)&$FF0000)>>16)&$7F))<<16)|(vdpComm(dest,type,DMA)>>16)&$FFFF,(a5)
+	move.l	#(($9400|((((length)/2)&$FF00)>>8))<<16)|($9300|(((length)/2)&$FF)),(a5)
+	move.l	#(($9600|((((source)/2)&$FF00)>>8))<<16)|($9500|(((source)/2)&$FF)),(a5)
+	move.l	#(($9700|(((((source)/2)&$FF0000)>>16)&$7F))<<16)|(vdpComm(dest,type,DMA)>>16)&$FFFF,(a5)
 	move.w	#vdpComm(dest,type,DMA)&$FFFF,-(sp)
 	move.w	(sp)+,(a5)
     endm
