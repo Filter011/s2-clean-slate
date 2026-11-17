@@ -3,9 +3,8 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; Version Format: YY.MM.DD.PATCH
-; Version: 26.11.17 (unstable)
-; TODO: Fix DAC when unpausing.
+; Version Format: YY.MM.DD.patch
+; Version: 26.11.17.1 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -1367,6 +1366,7 @@ zPauseMusic:
 	call	zResumeTrack
 	ld	ix,zSFX_FM5
 	call	zResumeTrack
+	ld	de,0
 	jp	zWaitLoop		; Now update the DAC
 ; End of function zPauseMusic
 
