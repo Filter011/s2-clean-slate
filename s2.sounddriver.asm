@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD
-; Version: 26.11.16 (stable)
+; Version: 26.11.16.1 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -209,7 +209,7 @@ bankswitch macro
 	rept 7
 		rra
 		ld	(hl),a
-	endm
+	endr
 	ld	(hl),h
     endm
 
@@ -220,7 +220,7 @@ bankswitchToBank macro bank
 		; this is either ld (hl),h or ld (hl),l
 		db 74h|(((bank)&(1<<(15+.cnt)))<>0)
 .cnt	:= .cnt+1
-	endm
+	endr
     endm
 
 ; small bankswitch macro
@@ -306,7 +306,10 @@ zWriteFMIorII:    rsttarget
 	bit	2,(ix+zTrack.VoiceControl)
 	jr	z,zWriteFMI
 	sub	4
-	jp	zWriteFMII
+	ld	(zYM2612_A1),a
+	ld	a,c
+	ld	(zYM2612_D1),a
+	ret
 ; End of function zWriteFMIorII
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
@@ -425,9 +428,6 @@ zUpdateDAC:
 	ld	a,2Ah			; DAC port
 	ld	(zYM2612_A0),a		; Set DAC port register
 
-	ld	a,(zAbsVar.DACBank)
-	bankswitch			; Bankswitch to the DAC data
-
 	ld	a,(zCurDAC)		; Get currently playing DAC sound
 	sub	81h
 	jp	nc,.dacqueued		; If one is queued (80h+), go to it!
@@ -442,34 +442,38 @@ zUpdateDAC:
 .dacqueued:
 	; If you get here, it's time to start a new DAC sound...
 	ld	(zCurDAC),a		; Store that as current DAC sound
-	; The following two instructions are dangerous: they discard the upper
-	; two bits of zCurDAC, meaning you can only have 40h DAC samples.
 	add	a,a
-	add	a,a			; a *= 4 (each DAC entry is a pointer and length, 2+2)
-	add	a,zDACPtrTbl&0FFh	; Get low byte into table -> 'a'
-	ld	(zDACStartAddress+1),a	; Store into the instruction after zDACStartAddress (self-modifying code)
-	add	a,zDACLenTbl-zDACPtrTbl	; How to offset to length versus pointer
-	ld	(zDACStoreLength+2),a	; Store into the instruction after zDACStoreLength (self-modifying code)
+	ld	c,a
+	add	a,a
+	add	a,c			; a *= 6 (each DAC entry is a data rate delay, bank, length and pointer)
+	ld	e,a
+	ld	d,0
+	ld	hl,zDACPtrTbl
+	add	hl,de
+	ld	c,(hl)			; get data rate delay
+	inc	hl
+	ld	a,(hl)			; get bank
+	ld	(zAbsVar.DACBank),a
+	inc	hl
+	ld	e,(hl)			; get low byte of length
+	inc	hl
+	ld	d,(hl)			; get high byte of length
+	inc	hl
+	ld	a,(hl)			; get low byte of pointer
+	inc	hl
+	ld	h,(hl)			; get high byte of pointer
+	ld	l,a
+	ld	a,(zAbsVar.DACBank)
+	exx
+	bankswitch			; Bankswitch to the DAC data
+	exx
 	ld	a,80h
-	ex	af,af'	;'
+	ex	af,af'
+	ld	b,1
 	pop	iy
 	pop	af
-	ld	hl,zWriteToDAC
-	ex	(sp),hl			; Jump to zWriteToDAC
-
-; zloc_104
-zDACStartAddress:
-	ld	hl,(zDACPtrTbl)		; Self-modified code: sets start address of DAC sample for zWriteToDAC
-
-; zloc_107
-zDACStoreLength:
-	ld	de,(zDACLenTbl)		; Self-modified code: sets length of DAC sample for zWriteToDAC
-
-;zloc_10B
-zDACStoreDelay:
-	ld	bc,100h			; Self-modified code: From zDACDataStore; sets b=1 (the 100h part of it) UPDATE RIGHT AWAY and c="data rate delay" for this DAC sample, the future 'b' setting
 	ei				; Enable interrupts
-	ret
+	jp	zWaitLoop
 ; End of function zVInt
 
 
@@ -757,27 +761,9 @@ zDACAfterDur:
 	bit	2,(ix+zTrack.PlaybackControl)	; Is SFX overriding this track?
 	ret	nz				; If so, we're done
 	ld	a,(ix+zTrack.SavedDAC)		; Get next note to play
-	sub	81h				; Transform note into an index... (we're selecting which drum to play!)
-	ret	c				; Return if below 81h
-	ld	c,a
-	add	a,a
-	add	a,c				; Multiply by 3...
-	add	a,zDACMasterPlaylist&0FFh	; Offset into list
-	ld	(.writeDACBank+1),a
-	inc	a
-	ld	(zDACDataStore+2),a		; store into the following instruction (self-modifying code)
-
-.writeDACBank:
-	ld	a,(zDACMasterPlaylist)
-	ld	(zAbsVar.DACBank),a
-
-; zloc_22A
-zDACDataStore:
-	ld	bc,(zDACMasterPlaylist)		; Load appropriate drum info -> bc
-	ld	a,c				; DAC sample number (81h base) -> 'a'
+	cp	80h				; Transform note into an index... (we're selecting which drum to play!)
+	ret	z				; Return if 80h
 	ld	(zCurDAC),a			; Store current DAC sound to play
-	ld	a,b				; Data rate delay -> 'b'
-	ld	(zDACStoreDelay+1),a		; store into the instruction after zDACStoreDelay (self-modifying code)
 	ret
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
@@ -955,12 +941,10 @@ zFMSetFreq:
     endif
 	add	a,zFrequencies&0FFh
 	ld	(.storefreq+2),a		; Store into the instruction after .storefreq (self-modifying code)
-    if FreqAlign=0
 	ld	b,a
 	adc	a,(zFrequencies&0FF00h)>>8
 	sub	b
 	ld	(.storefreq+3),a		; Store the high byte of the pointer (unnecessary if it's in the right range)
-    endif
 
 ; zloc_292
 .storefreq:
@@ -1040,9 +1024,6 @@ zMakePSGFrequencies macro
 ; This the note -> frequency setting lookup
 ; the same array is found at $729CE in Sonic 1, and at $C9C44 in Ristar
 ; zword_359:
-	if FreqAlign
-	ensure1byteoffset (12*2)*7
-	endif
 zPSGFrequencies:
 	; 7 octaves, each one begins with C and ends with B.
 	; This table differs from the one in Sonic 1 and 2's drivers by
@@ -1179,12 +1160,10 @@ zPSGSetFreq:
 	add	a,a				; Multiply note value by 2
 	add	a,zPSGFrequencies&0FFh		; Point to proper place in table
 	ld	(.storefreq+2),a		; store into the following instruction (self-modifying code)
-	if FreqAlign=0
 	ld	d,a
 	adc	a,(zPSGFrequencies&0FF00h)>>8
 	sub	d
 	ld	(.storefreq+3),a		; Store the high byte of the pointer (unnecessary if it's in the right range)
-	endif
 
 ; zloc_46D
 .storefreq:
@@ -1325,13 +1304,6 @@ zMakeFMFrequenciesOctave macro octave
 	endm
 
 ; lookup table of FM note frequencies for instruments and sound effects
-	if FreqAlign
-    if OptimiseFMFreq
-	ensure1byteoffset 12*2
-    else
-	ensure1byteoffset (12*8)*2
-    endif
-	endif
 ; zbyte_534
 zFrequencies:
 	zMakeFMFrequenciesOctave 0
@@ -1439,11 +1411,11 @@ zCycleQueue:
 	ld	d,a				; de = pointer to SFX priority
 	ld	a,(de)				; Get SFX priority
 
-	cp	(ix+zVar.SFXPriorityVal)		; Is the new SFX of a higher priority?
+	cp	(ix+zVar.SFXPriorityVal)	; Is the new SFX of a higher priority?
 	jr	c,.next_queue			; If not, jump
 
 	or	a				; Is it negative (jumping sound)?
-	jp	m,.do_not_store_priority		; Return if so
+	jp	m,.do_not_store_priority	; Return if so
 	ld	(zAbsVar.SFXPriorityVal),a	; Store the new priority
 .do_not_store_priority:
 
@@ -1476,7 +1448,7 @@ zPlaySoundByIndex:
 	ld	c,a
 	add	a,a
 	add	a,c
-	ld	(.commandjump+1),a			; store into the following instruction (self-modifying code)
+	ld	(.commandjump+1),a		; store into the following instruction (self-modifying code)
 
 ; zloc_6D5
 .commandjump:
@@ -2277,16 +2249,12 @@ zClearTrackPlaybackMem:
 	ld	c,0			; All clear
 	rst	zWriteFMI		; Write it!
 
-	ld	a,(zAbsVar.DACBank)
-
 	; This performs a full clear across all track/playback memory
 	ld	hl,zAbsVar
 	ld	de,zAbsVar+1
 	ld	(hl),0				; Starting byte is 00h
 	ld	bc,(zTracksSFXEnd-zAbsVar)-1	; For 695 bytes...
 	ldir					; 695 bytes of clearing! (Because it will keep copying the byte prior to the byte after; thus 00h repeatedly)
-
-	ld	(zAbsVar.DACBank),a
 
 	call	zFMSilenceAll			; Silence FM
 	jp	zPSGSilenceAll			; Silence PSG
@@ -2315,7 +2283,6 @@ zInitMusicPlayback:
 	ld	b,(ix+zVar.Queue1)
 	ld	c,(ix+zVar.Queue2)
 	push	bc
-	ld	a,(ix+zVar.DACBank)
 	; The following clears all playback memory and non-SFX tracks
 	ld	hl,zAbsVar
 	ld	de,zAbsVar+1
@@ -2323,7 +2290,6 @@ zInitMusicPlayback:
 	ld	bc,(zTracksSongEnd-zAbsVar)-1	; This many bytes (from start of zComRange to just short of end of PSG3 music track)
 	ldir
 	; Restore those queue/flags:
-	ld	(ix+zVar.DACBank),a
 	pop	bc
 	ld	(ix+zVar.Queue1),b
 	ld	(ix+zVar.Queue2),c
@@ -3333,55 +3299,26 @@ zMusIDPtr_Credits:	music_metadata Mus_Credits,s2TempotoS3(0F0h)
 zMusIDPtr_Countdown:	music_metadata Mus_Drowning,s2TempotoS3(80h),1
 zMusIDPtr__End:
 
-dac_sample_pointer macro label
-label.pointer = $
-	zmake68kPtrs	label
-	dw	label.size
-    endm
-
-	; DAC sample pointers and lengths
-	ensure1byteoffset 4*7
-
-; zDACPtr_Index zbyte_1233
-zDACPtrTbl:
-zDACLenTbl = zDACPtrTbl + 2
-	dac_sample_pointer SndDAC_Kick
-	dac_sample_pointer SndDAC_Snare
-	dac_sample_pointer SndDAC_Clap
-	dac_sample_pointer SndDAC_Scratch
-	dac_sample_pointer SndDAC_Timpani
-	dac_sample_pointer SndDAC_Tom
-	dac_sample_pointer SndDAC_Bongo
-
-	; something else for DAC sounds
-	; First byte selects one of the DAC samples. The number that
-	; follows it is a wait time between each nibble written to the DAC
-	; (thus higher = slower)
-	ensure1byteoffset 3*11h
-; zbyte_124F
-zDACMasterPlaylist:
-
-; DAC samples IDs
-offset :=	zDACPtrTbl
-ptrsize :=	4
-idstart :=	81h
-
 dac_sample_metadata macro label,sampleRateScale
 sample_rate_scale := 1.0
     if "sampleRateScale"<>""
 sample_rate_scale := sampleRateScale
     endif
+	db	dpcmLoopCounter(int(label.sample_rate*sample_rate_scale))
 	zmake68kBanks	label
-	db	id(label.pointer),dpcmLoopCounter(int(label.sample_rate*sample_rate_scale))
+	dw	label.size
+	zmake68kPtrs	label
     endm
 
+; zDACPtr_Index zbyte_1233
+zDACPtrTbl:
 	dac_sample_metadata SndDAC_Kick			; 81h
-	dac_sample_metadata SndDAC_Snare,		; 82h
-	dac_sample_metadata SndDAC_Clap,		; 83h
-	dac_sample_metadata SndDAC_Scratch,		; 84h
-	dac_sample_metadata SndDAC_Timpani,		; 85h
-	dac_sample_metadata SndDAC_Tom,			; 86h
-	dac_sample_metadata SndDAC_Bongo,		; 87h
+	dac_sample_metadata SndDAC_Snare		; 82h
+	dac_sample_metadata SndDAC_Clap			; 83h
+	dac_sample_metadata SndDAC_Scratch		; 84h
+	dac_sample_metadata SndDAC_Timpani		; 85h
+	dac_sample_metadata SndDAC_Tom			; 86h
+	dac_sample_metadata SndDAC_Bongo		; 87h
 	dac_sample_metadata SndDAC_Timpani, 1.30	; 88h
 	dac_sample_metadata SndDAC_Timpani, 1.20	; 89h
 	dac_sample_metadata SndDAC_Timpani, 0.97	; 8Ah
