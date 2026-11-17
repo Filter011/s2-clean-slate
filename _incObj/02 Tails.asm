@@ -999,7 +999,7 @@ Tails_Jump:
 	bset	#status.player.in_air,status(a0)
 	bclr	#status.player.pushing,status(a0)
 	addq.l	#4,sp
-	move.b	#1,jumping(a0)
+	st.b	jumping(a0)
 	clr.b	stick_to_convex(a0)
 	moveq	#SndID_Jump,d0
 	jsr	(PlaySound).w	; play jumping sound
@@ -1243,7 +1243,7 @@ Tails_CarrySonic:
 .notright:
 	move.w	#-$380,y_vel(a1)			; set Y-velocity
 	bset	#status.player.in_air,status(a1)	; set "in-air" mode
-	move.b	#1,jumping(a1)				; set jumping flag
+	st.b	jumping(a1)				; set jumping flag
 	move.b	#$E,y_radius(a1)			; set jumping height
 	move.b	#7,x_radius(a1)				; set jumping width (/2)
 	move.b	#AniIDSonAni_Roll,anim(a1)		; set rolling animation

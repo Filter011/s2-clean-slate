@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD.patch
-; Version: 26.11.17.1 (stable)
+; Version: 26.11.17.2 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -1504,8 +1504,7 @@ zPlaySegaSound:
 .stop:
 	ld	a,(zAbsVar.SongBank)
 	bankswitchSmall
-	ld	a,(zAbsVar.DACEnabled)	; DAC status
-	ld	c,a			; c = DAC status
+	ld	c,(ix+zVar.DACEnabled)	; c = DAC status
 	ld	a,2Bh			; DAC enable/disable register
 	jp	zWriteFMI
 ; ---------------------------------------------------------------------------
