@@ -3,8 +3,9 @@
 ; Originally disassembled by Xenowhirl for AS, additional disassembly work by RAS Oct 2008, merged into SVN by Flamewing
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
-; Version Format: YY.MM.DD
-; Version: 26.11.16.1 (stable)
+; Version Format: YY.MM.DD.PATCH
+; Version: 26.11.17 (unstable)
+; TODO: Fix DAC when unpausing.
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -14,9 +15,6 @@
 ; This is disabled by default to improve sound driver performance.
 ; Enable this option if you want to give the sound driver more headspace for code.
 OptimiseFMFreq = 0
-
-; Frequency Alignment
-FreqAlign = 0
 
 ; ---------------------------------------------------------------------------
 ; NOTES:
@@ -472,7 +470,6 @@ zUpdateDAC:
 	ld	b,1
 	pop	iy
 	pop	af
-	ei				; Enable interrupts
 	jp	zWaitLoop
 ; End of function zVInt
 
@@ -582,7 +579,6 @@ TempoWait:
 zStartDAC:
 	im	1	; set interrupt mode 1
 	call	zClearTrackPlaybackMem
-	ei		; enable interrupts
 	ld	iy,zDACDecodeTbl
 	ld	de,0
 	; This controls the update rate for the DAC...
@@ -603,6 +599,7 @@ zStartDAC:
 
 ; zloc_174:
 zWaitLoop:
+	ei				; Enable interrupts
 	ld	a,d			; 4
 	or	e			; 4
 	jr	z,zWaitLoop		; 7	; As long as 'de' (length of sample) = 0, wait...
@@ -1332,45 +1329,45 @@ zPauseMusic:
 	jp	m,.unpause	; If we are to unpause music, jump
 	call	zFMSilenceAll
 	call	zPSGSilenceAll
-	jp	zUpdateDAC		; Now update the DAC
+	jp	zWaitLoop		; Now update the DAC
 
 .unpause:
 	xor	a			; a = 0
 	ld	(zAbsVar.StopMusic),a	; Clear pause/unpause flag
-	ld	hl,zSongDAC.PlaybackControl	; hl = pointer to track RAM
-	bit	7,(hl)			; Is track playing?
+	ld	ix,zSongDAC		; ix = pointer to track RAM
+	bit	7,(ix+zTrack.PlaybackControl)	; Is track playing?
 	jr	z,.nexttrack		; If not, jump
-	bit	2,(hl)			; Is SFX overriding track?
+	bit	2,(ix+zTrack.PlaybackControl)	; Is SFX overriding track?
 	jr	nz,.nexttrack		; If yes, jump
 	ld	a,0B6h			; Set Panning / AMS / FMS
-	ld	c,0C0h			; default Panning / AMS / FMS settings (only stereo L/R enabled)
+	ld	c,(ix+zTrack.AMSFMSPan)	; Restore track panning
 	rst	zWriteFMII		; Set it!
 
 .nexttrack:
-	ld	ix,zSongFM1.PlaybackControl	; ix = pointer to track RAM
+	ld	ix,zSongFM1		; ix = pointer to track RAM
 	call	zResumeTrack
-	ld	ix,zSongFM2.PlaybackControl
+	ld	ix,zSongFM2
 	call	zResumeTrack
-	ld	ix,zSongFM3.PlaybackControl
+	ld	ix,zSongFM3
 	call	zResumeTrack
-	ld	ix,zSongFM4.PlaybackControl
+	ld	ix,zSongFM4
 	call	zResumeTrack
-	ld	ix,zSongFM5.PlaybackControl
+	ld	ix,zSongFM5
 	call	zResumeTrack
-	ld	ix,zSongFM6.PlaybackControl
+	ld	ix,zSongFM6
 	call	zResumeTrack
 
 	bankswitchToBank MusicPoint1	; Now for SFX
 
 	ld	a,-1			; a = -1
 	ld	(zDoSFXFlag),a		; Set flag to say we are updating SFX
-	ld	ix,zSFX_FM3.PlaybackControl	; ix = pointer to SFX track RAM
+	ld	ix,zSFX_FM3		; ix = pointer to SFX track RAM
 	call	zResumeTrack
-	ld	ix,zSFX_FM4.PlaybackControl
+	ld	ix,zSFX_FM4
 	call	zResumeTrack
-	ld	ix,zSFX_FM5.PlaybackControl
+	ld	ix,zSFX_FM5
 	call	zResumeTrack
-	jp	zUpdateDAC		; Now update the DAC
+	jp	zWaitLoop		; Now update the DAC
 ; End of function zPauseMusic
 
 
@@ -1421,11 +1418,9 @@ zCycleQueue:
 
 .skip_priority:
 	push	bc
-	push	de
 	push	hl
 	call	zPlaySoundByIndex
 	pop	hl
-	pop	de
 	pop	bc
 
 .next_queue:
@@ -2650,7 +2645,7 @@ cfFadeInToPrevious:
 	pop	bc
 	pop	bc
 	pop	bc				; These screw with the return address to make sure DAC doesn't run any further
-	jp	zUpdateDAC			; But we update DAC regardless
+	jp	zWaitLoop			; But we update DAC regardless
 ; ---------------------------------------------------------------------------
 
 ; Change tempo divider to xx

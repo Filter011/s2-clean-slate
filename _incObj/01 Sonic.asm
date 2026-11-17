@@ -1187,7 +1187,7 @@ Sonic_Jump:
 	bset	#status.player.in_air,status(a0)
 	bclr	#status.player.pushing,status(a0)
 	addq.l	#4,sp
-	move.b	#1,jumping(a0)
+	st.b	jumping(a0)
 	clr.b	stick_to_convex(a0)
 	moveq	#SndID_Jump,d0
 	jsr	(PlaySound).w	; play jumping sound
