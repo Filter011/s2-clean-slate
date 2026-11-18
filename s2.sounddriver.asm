@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD.patch
-; Version: 26.11.17.2 (stable)
+; Version: 26.11.18 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -579,6 +579,8 @@ zStartDAC:
 	im	1	; set interrupt mode 1
 	call	zClearTrackPlaybackMem
 	ld	iy,zDACDecodeTbl
+
+zResetDAC:
 	ld	de,0
 	; This controls the update rate for the DAC...
 	; My speculation for the rate at which the DAC updates:
@@ -1328,7 +1330,7 @@ zPauseMusic:
 	jp	m,.unpause	; If we are to unpause music, jump
 	call	zFMSilenceAll
 	call	zPSGSilenceAll
-	jp	zWaitLoop		; Now update the DAC
+	jp	zResetDAC		; Now update the DAC
 
 .unpause:
 	xor	a			; a = 0
@@ -1366,8 +1368,7 @@ zPauseMusic:
 	call	zResumeTrack
 	ld	ix,zSFX_FM5
 	call	zResumeTrack
-	ld	de,0
-	jp	zWaitLoop		; Now update the DAC
+	jp	zResetDAC		; Now update the DAC
 ; End of function zPauseMusic
 
 
@@ -2644,7 +2645,7 @@ cfFadeInToPrevious:
 	pop	bc
 	pop	bc
 	pop	bc				; These screw with the return address to make sure DAC doesn't run any further
-	jp	zWaitLoop			; But we update DAC regardless
+	jp	zResetDAC			; But we update DAC regardless
 ; ---------------------------------------------------------------------------
 
 ; Change tempo divider to xx
