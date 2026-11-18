@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD.patch
-; Version: 26.11.18.2 (stable)
+; Version: 26.11.18.3 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -583,9 +583,9 @@ TempoWait:
 zStartDAC:
 	im	1	; set interrupt mode 1
 	call	zClearTrackPlaybackMem
-	ld	iy,zDACDecodeTbl
 
 zResetDAC:
+	ld	iy,zDACDecodeTbl
 	ld	de,0
 	; This controls the update rate for the DAC...
 	; My speculation for the rate at which the DAC updates:
