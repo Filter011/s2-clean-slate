@@ -50,8 +50,15 @@ loc_1EBE6:
 	cmpi.b	#$80,d0
 	beq.w	CheckCeilingDist_Part2		; Player is going mostly up
 	andi.b	#$38,d1
-	bne.s	+
+	bne.s	++
 	addq.w	#8,d2
+	btst	#2,status(a0)			; Is the Player rolling?
+	bne.s	+				; If not, branch
+	cmpi.b	#ObjID_Tails,id(a0)		; Is this Tails?
+	bne.s	++				; If not, branch
+	addq.w	#1,d2				; Offset push sensor movement when not rolling
++
+	subq.w	#5,d2				; Move the push sensor up
 +
 	cmpi.b	#$40,d0
 	beq.w	CheckLeftWallDist_Part2		; Player is going mostly left

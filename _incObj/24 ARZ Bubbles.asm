@@ -55,14 +55,14 @@ loc_1F93E:
 	blo.s	loc_1F956
 	move.b	#6,routine(a0)
 	addq.b	#3,anim(a0)
-	bra.w	loc_1F99E
+	bra.s	loc_1F99E
 ; ===========================================================================
 
 loc_1F956:
 	move.b	angle(a0),d0
 	addq.b	#1,angle(a0)
 	andi.w	#$7F,d0
-	lea	(Obj0A_WobbleData).l,a1
+	lea	Obj0A_WobbleData(pc),a1
 	move.b	(a1,d0.w),d0
 	ext.w	d0
 	add.w	objoff_30(a0),d0

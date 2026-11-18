@@ -82,7 +82,7 @@ Obj81_BridgeUp:
 	bne.s	+
 	move.b	#1,objoff_36(a0)
 	moveq	#SndID_DrawbridgeMove,d0
-	jsr	(PlaySound2).w
+	jsr	(PlaySound).w
 	cmpi.b	#1<<status.npc.no_balancing|1<<status.npc.x_flip,status(a0)
 	bne.s	+
 	move.w	objoff_30(a0),x_pos(a0)

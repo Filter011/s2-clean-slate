@@ -82,14 +82,12 @@ Obj01_Control:
 	bne.s	+			; if yes, branch
 	move.w	(Ctrl_1).w,(Ctrl_1_Logical).w	; copy new held buttons, to enable joypad control
 +
-    if flightCarrySonic = 1
 	btst	#status_secondary.carry,status_secondary(a0)	; is Sonic being carried by Tails now?
 	beq.s	+			; if not, branch
 	tst.b	flying+object_size(a0)	; is Tails actually flying?
 	bne.s	++			; if yes, branch to skip Sonic's control
 	bclr	#status_secondary.carry,status_secondary(a0)	; free Sonic
 +
-    endif
 	btst	#0,obj_control(a0)	; is Sonic interacting with another object that holds him in place or controls his movement somehow?
 	bne.s	+			; if yes, branch to skip Sonic's control
 	moveq	#1<<status.player.in_air|1<<status.player.rolling,d0	; %0000 %0110
@@ -2252,7 +2250,7 @@ SAnim_Tumble:
 	divu.w	#$16,d0
 	addi.b	#$5F,d0
 	move.b	d0,mapping_frame(a0)
-	move.b	#0,anim_frame_duration(a0)
+	clr.b	anim_frame_duration(a0)
 	rts
 ; ===========================================================================
 ; loc_1B54E:
@@ -2274,7 +2272,7 @@ loc_1B572:
 	divu.w	#$16,d0
 	addi.b	#$5F,d0
 	move.b	d0,mapping_frame(a0)
-	move.b	#0,anim_frame_duration(a0)
+	clr.b	anim_frame_duration(a0)
 	rts
 ; ===========================================================================
 ; loc_1B586:

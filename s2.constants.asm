@@ -5,7 +5,7 @@
 ; size variables - you'll get an informational error if you need to change these...
 ; they are all in units of bytes
 Size_of_SEGA_sound =		$6174
-Size_of_Snd_driver_guess =	$DF1 ; approximate post-compressed size of the Z80 sound driver
+Size_of_Snd_driver_guess =	$200 ; approximate post-compressed size of the Z80 sound driver
 
 ; ---------------------------------------------------------------------------
 ; Object Status Table offsets (for everything between Object_RAM and Primary_Collision)
@@ -1058,8 +1058,6 @@ Object_RAM:			; The various objects in the game are loaded in this area.
 Reserved_Object_RAM:
 MainCharacter:			; first object (usually Sonic except in a Tails Alone game)
 				ds.b	object_size
-				; while no sidekick exists, we'll keep this object reserved
-				; if you re-add the sidekick, here's the RAM, otherwise it's free
 Sidekick:			; second object (Tails in a Sonic and Tails game)
 				ds.b	object_size
 TitleCard:
@@ -1124,15 +1122,9 @@ Sonic_Shield:
 Tails_Shield:
 				ds.b	object_size
 Sonic_InvincibilityStars:
-				ds.b	object_size
-				ds.b	object_size
-				ds.b	object_size
-				ds.b	object_size
+				ds.b	object_size*4
 Tails_InvincibilityStars:
-				ds.b	object_size
-				ds.b	object_size
-				ds.b	object_size
-				ds.b	object_size
+				ds.b	object_size*4
 LevelOnly_Object_RAM_End:
 
 Primary_Collision:		ds.l	1
@@ -1530,7 +1522,9 @@ MTZCylinder_Angle_Sonic:	ds.b	1
 MTZCylinder_Angle_Tails:	ds.b	1
 				ds.b	$A	; unused
 BigRingGraphics:		ds.w	1	; S1 holdover
-				ds.b	7	; unused
+Sidekick_X_vel_copy:		ds.w	1	; copy of Tails's X speed
+Sidekick_Y_vel_copy:		ds.w	1	; copy of Tails's Y speed
+				ds.b	3	; unused
 WindTunnel_flag:		ds.b	1
 				ds.b	1	; unused
 WindTunnel_holding_flag:	ds.b	1

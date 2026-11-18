@@ -29,7 +29,7 @@ ObjD3:
 	blo.s	+
 	clr.w	(Bonus_Countdown_3).w
 	moveq	#SndID_HurtBySpikes,d0
-	jsr	(PlaySound2).w
+	jsr	(PlaySound).w
 +
 	tst.w	(Ring_count).w
 	beq.s	BranchTo_JmpTo44_DeleteObject

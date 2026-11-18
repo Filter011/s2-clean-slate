@@ -22,9 +22,6 @@ debugbuild = 1
 skipChecksumCheck = 1
 ;	| If 1, disables the slow bootup checksum calculation
 ;
-flightCarrySonic = 0
-;	| If 1 and a sidekick character exists, allow Tails as the sidekick to carry MainCharacter
-;	| Set to 0 as the sidekick functionallity doesn't currently exist
 ; >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ; AS-specific macros and assembler settings
 	CPU 68000
@@ -47,8 +44,8 @@ SonicDriverVer = 2 ; Tell SMPS2ASM that we are targetting Sonic 2's sound driver
 
 ; >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ; Expressing sprite mappings and DPLCs in a portable and human-readable form
-SonicMappingsVer := 3
-SonicDplcVer := 3
+SonicMappingsVer = 3
+SonicDplcVer = 3
 	include "mappings/MapMacros.asm"
 
 ; >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -696,30 +693,28 @@ loc_1072:
 ; sub_111C:
 ReadJoypads:
 	lea	(Ctrl_1).w,a0	; address where joypad states are written
-	lea	(HW_Port_1_Data).l,a1	; first joypad port
-	bsr.s	Joypad_Read		; do the first joypad
-	addq.w	#2,a1			; do the second joypad
+	lea	(HW_Port_1_Data-1).l,a1	; first joypad port
+	moveq	#%00000000,d0
+	moveq	#%01000000,d1
 
-; sub_112A:
-Joypad_Read:
-	move.w	#$100,(Z80_Bus_Request).l ; stop the Z80
-	move.b	#0,(a1)	; Poll controller data port
-	or.l	d0,d0
-	move.b	(a1),d0	; Get controller port data (start/A)
-	lsl.b	#2,d0
-	andi.b	#$C0,d0
-	move.b	#$40,(a1)	; Poll controller data port again
-	or.l	d0,d0
-	move.b	(a1),d1	; Get controller port data (B/C/Dpad)
-	startZ80
-	andi.b	#$3F,d1
-	or.b	d1,d0	; Fuse them into one controller bit array
-	not.b	d0
-	move.b	(a0),d1	; Get button press data
-	eor.b	d0,d1	; Toggle off held buttons
-	move.b	d0,(a0)+	; Store raw controller input for held button data
-	and.b	d0,d1
-	move.b	d1,(a0)+	; Store pressed controller input
+    rept 2
+	move.w	d0,(a1)		; Poll controller data port
+	moveq	#%00110000,d2	; Only get start/A
+	and.w	(a1),d2		; Get controller port data (start/A)
+	add.b	d2,d2
+	add.b	d2,d2
+	move.w	d1,(a1)		; Poll controller data port again
+	moveq	#%00111111,d3	; Only get C, B, right, left, down and up
+	and.w	(a1)+,d3	; Get controller port data (B/C/Dpad)
+	or.b	d3,d2		; Fuse them into one controller bit array
+	not.b	d2
+	move.b	(a0),d3		; Get button press data
+	eor.b	d2,d3		; Toggle off held buttons
+	move.b	d2,(a0)+	; Store raw controller input for held button data
+	and.b	d2,d3
+	move.b	d3,(a0)+	; Store pressed controller input
+    endr
+
 	rts
 ; End of function Joypad_Read
 
@@ -826,9 +821,11 @@ PlayLevelMusic:
 ; The original source code called this 'bgmset'.
 ; sub_135E:
 PlayMusic:
+	move.w	sr,-(sp)
 	stopZ80
 	move.b	d0,(Z80_RAM+zAbsVar.Queue1).l
 	startZ80
+	move.w	(sp)+,sr
 	rts
 ; End of function PlayMusic
 
@@ -845,10 +842,12 @@ PlaySoundLocal:
 ; The original source code called this 'sfxset'.
 ; sub_1370
 PlaySound:
-PlaySound2:
+;PlaySound2:
+	move.w	sr,-(sp)
 	stopZ80
 	move.b	d0,(Z80_RAM+zAbsVar.Queue2).l
 	startZ80
+	move.w	(sp)+,sr
 
 PlaySoundExit:
 	rts
@@ -872,9 +871,11 @@ PauseGame:
 	beq.s	PlaySoundExit	; if not, branch
 +
 	st.b	(Game_paused).w	; freeze time
+	move.w	sr,-(sp)
 	stopZ80
 	move.b	#MusID_Pause,(Z80_RAM+zAbsVar.StopMusic).l	; pause music
 	startZ80
+	move.w	(sp)+,sr
 ; loc_13B2:
 Pause_Loop:
 	move.l	#Vint_Level,(Vint_routine).w
@@ -899,9 +900,11 @@ Pause_ChkStart:
 	beq.s	Pause_Loop	; if not, branch
 ; loc_13F2:
 Pause_Resume:
+	move.w	sr,-(sp)
 	stopZ80
 	move.b	#MusID_Unpause,(Z80_RAM+zAbsVar.StopMusic).l	; unpause the music
 	startZ80
+	move.w	(sp)+,sr
 ; loc_13F8:
 Unpause:
 	clr.b	(Game_paused).w	; unpause the game
@@ -912,9 +915,11 @@ Pause_DoNothing:
 ; loc_1400:
 Pause_SlowMo:
 	st.b	(Game_paused).w
+	move.w	sr,-(sp)
 	stopZ80
 	move.b	#MusID_Unpause,(Z80_RAM+zAbsVar.StopMusic).l
 	startZ80
+	move.w	(sp)+,sr
 	rts
 ; End of function PauseGame
 
@@ -953,7 +958,6 @@ PlaneMapToVRAM_H40:
 
 -	move.l	d0,VDP_control_port-VDP_data_port(a6)	; move d0 to VDP_control_port
 	move.w	d1,d3
-
 -	move.w	(a1)+,(a6)	; from source address to destination in VDP
 	dbf	d3,-		; next tile
 
@@ -1670,7 +1674,6 @@ Level_TtlCard:
 
 	clearRAM Horiz_Scroll_Buf,Horiz_Scroll_Buf+HorizontalScrollBuffer.len
 
-	bsr.w	LoadZoneTiles
 	bsr.w	loadZoneBlockMaps
 	jsr	(LoadAnimatedBlocks).l
 	bsr.w	DrawInitialBG
@@ -1727,9 +1730,9 @@ Level_FromCheckpoint:
 	jsr	(BuildSprites).w
 	jsr	(AniArt_Load).l
 	bsr.w	SetLevelEndType
-	move.w	#0,(Demo_button_index).w
-	lea	DemoScriptPointers(pc),a1
 	moveq	#0,d0
+	move.w	d0,(Demo_button_index).w
+	lea	DemoScriptPointers(pc),a1
 	move.b	(Current_Zone).w,d0	; load zone value
 	add.w	d0,d0
 	add.w	d0,d0
@@ -1769,7 +1772,7 @@ Level_FromCheckpoint:
 	beq.s	+	; branch if the act number has been unloaded
 	move.b	#$16,(TitleCard_ActNumber+routine).w
 	move.w	#$2D,(TitleCard_ActNumber+anim_frame_duration).w
-+	move.b	#0,(Control_Locked).w
++	clr.b	(Control_Locked).w
 	move.b	#1,(Level_started_flag).w
 
 ; Level_StartGame: loc_435A:
@@ -2024,8 +2027,6 @@ CheckLoadSignpostArt:
 	include "demodata/EHZ.asm"
 	include "demodata/CPZ.asm"
 	include "demodata/ARZ.asm"
-
-	include "_inc/Load Zone Tiles.asm"
 
  ; temporarily remap characters to title card letter format
  ; Characters are encoded as Aa, Bb, Cc, etc. through a macro

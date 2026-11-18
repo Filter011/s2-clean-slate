@@ -20,7 +20,7 @@ Debug_Init:
 	move.w	(Camera_Max_Y_pos_target).w,(Camera_Max_Y_pos_Debug_Copy).w
 	cmpi.b	#sky_chase_zone,(Current_Zone).w
 	bne.s	+
-	move.w	#0,(Camera_Min_X_pos).w
+	clr.w	(Camera_Min_X_pos).w
 	move.w	#$3FFF,(Camera_Max_X_pos).w
 +
 	andi.w	#$7FF,(MainCharacter+y_pos).w

@@ -288,12 +288,8 @@ Obj02_MdFly:
 	bsr.w	Tails_LevelBound
 	jsr	(ObjectMove).w
 	bsr.w	Tails_JumpAngle
-    if flightCarrySonic
 	bsr.w	Tails_DoLevelCollision
 	bra.w	Tails_CarrySonic
-    else
-	bra.w	Tails_DoLevelCollision
-    endif
 ; ===========================================================================
 ; Start of subroutine Obj02_MdRoll
 ; Called if Tails is in a ball, but not airborne (thus, probably rolling)
@@ -1198,7 +1194,6 @@ Tails_FlyingAnimation:
 ; ---------------------------------------------------------------------------
 ; Subroutine to control Sonic being carried by Tails during flight
 ; ---------------------------------------------------------------------------
-    if flightCarrySonic
 
 Tails_CarrySonic:
 	tst.w	(Player_mode).w				; is this a Sonic & Tails game?
@@ -1327,7 +1322,7 @@ Tails_CarryUpdatePosition:
 Tails_CarryNoGrab:
 	rts
 ; End of subroutine Tails_CarryUpdatePosition
-	endif
+
 ; ---------------------------------------------------------------------------
 ; Subroutine to check for starting to charge a spindash
 ; ---------------------------------------------------------------------------
@@ -1345,8 +1340,8 @@ Tails_CheckSpindash:
 	moveq	#SndID_SpindashRev,d0
 	jsr	(PlaySound).w
 	addq.l	#4,sp
-	move.b	#1,spindash_flag(a0)
-	move.w	#0,spindash_counter(a0)
+	st.b	spindash_flag(a0)
+	clr.w	spindash_counter(a0)
 	cmpi.b	#12,air_left(a0)	; if he's drowning, branch to not make dust
 	blo.s	loc_1C754
 	move.b	#2,(Tails_Dust+anim).w
@@ -1423,7 +1418,7 @@ Tails_ChargingSpindash:			; If still charging the dash...
 	lsr.w	#5,d0
 	sub.w	d0,spindash_counter(a0)
 	bcc.s	loc_1C7F8
-	move.w	#0,spindash_counter(a0)
+	clr.w	spindash_counter(a0)
 
 loc_1C7F8:
 	move.b	(Ctrl_2_Press_Logical).w,d0

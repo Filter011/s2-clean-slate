@@ -79,7 +79,7 @@ CollectRing_Sonic:
 	jmp	(PlayMusic).w
 
 JmpTo_PlaySound2 ; JmpTo
-	jmp	(PlaySound2).w
+	jmp	(PlaySound).w
 ; End of function CollectRing
 
 ; ===========================================================================
@@ -154,7 +154,7 @@ Obj37_Init:
 	dbf	d5,-
 +
 	moveq	#SndID_RingSpill,d0
-	jsr	(PlaySound2).w
+	jsr	(PlaySound).w
 	moveq	#0,d0
 	moveq	#-1,d1
 	move.w	d0,(Ring_count).w

@@ -14,7 +14,55 @@ loadZoneBlockMaps:
 	lea	(LevelArtPointers).l,a3
 	lea	(a3,d0.w),a3
 	move.l	a3,-(sp)
-	addq.w	#4,a3
+
+	move.l	#$FFFFFF,d0	; 8x8 tile pointer
+	and.l	(a3)+,d0
+	movea.l	d0,a0
+	lea	(Chunk_Table).l,a1
+	bsr.w	KosPlusDec
+	move.w	a1,d3
+	cmpi.b	#hill_top_zone,(Current_Zone).w
+	bne.s	+
+	lea	(ArtKos_HTZ).l,a0
+	lea	(Chunk_Table+tiles_to_bytes(ArtTile_ArtKos_NumTiles_HTZ_Main)).l,a1
+	bsr.w	KosPlusDec	; patch for HTZ
+	move.w	#tiles_to_bytes(ArtTile_ArtKos_NumTiles_HTZ),d3
++
+	cmpi.b	#wing_fortress_zone,(Current_Zone).w
+	bne.s	+
+	lea	(ArtKos_WFZ).l,a0
+	lea	(Chunk_Table+tiles_to_bytes(ArtTile_ArtKos_NumTiles_WFZ_Main)).l,a1
+	bsr.w	KosPlusDec	; patch for WFZ
+	move.w	#tiles_to_bytes(ArtTile_ArtKos_NumTiles_WFZ),d3
++
+	cmpi.b	#death_egg_zone,(Current_Zone).w
+	bne.s	+
+	move.w	#tiles_to_bytes(ArtTile_ArtKos_NumTiles_DEZ),d3
++
+	move.w	d3,d7
+	andi.w	#$FFF,d3
+	lsr.w	#1,d3
+	rol.w	#4,d7
+	andi.w	#$F,d7
+
+-	move.w	d7,d2
+	moveq	#12,d0
+	lsl.w	d0,d2
+	move.l	#$FFFFFF,d1
+	move.w	d2,d1
+    if AssumeSourceAddressInBytes=0
+	lsr.l	#1,d1
+    endif
+	bsr.w	QueueDMATransfer
+	move.w	d7,-(sp)
+	move.l	#Vint_TitleCard,(Vint_routine).w
+	bsr.w	Process_KosPlus_Queue
+	bsr.w	WaitForVint
+	bsr.w	Process_KosPlus_Module_Queue
+	move.w	(sp)+,d7
+	move.w	#$800,d3
+	dbf	d7,-
+
 	move.l	#$FFFFFF,d0	; pointer to block mappings
 	and.l	(a3)+,d0
 	movea.l	d0,a0

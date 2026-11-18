@@ -27,7 +27,7 @@ MarkObjGone2:
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$80+roundToNextMultiple(screen_width,$80)+$80,d0	; This gives an object $80 pixels of room offscreen before being unloaded
 	bhi.s	+
-	bra.w	DisplaySprite
+	bra.s	DisplaySprite
 +
 	lea	(Object_Respawn_Table).w,a2
 	moveq	#0,d0

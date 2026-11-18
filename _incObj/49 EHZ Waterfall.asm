@@ -28,7 +28,7 @@ Obj49_ChkDel:
 	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0
 	cmpi.w	#$280,d0
-	bhi.w	JmpTo18_DeleteObject
+	bhi.s	Obj49_Del
 	move.w	x_pos(a0),d1
 	move.w	d1,d2
 	moveq	#$40,d3
@@ -46,3 +46,6 @@ Obj49_ChkDel:
 loc_20C36:
 	add.b	d4,mapping_frame(a0)
 	jmp	(DisplaySprite).w
+
+Obj49_Del:
+	jmp	(DeleteObject).w

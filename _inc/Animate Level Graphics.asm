@@ -245,11 +245,11 @@ Dynamic_HTZ:
 	; The same as below, but does not safely handle odd addresses.
     rept 3
 	move.l	(a4)+,(a2)+
-	adda.w	#$40-4,a2
-    endm
+	lea	$40-4(a2),a2
+    endr
 	move.l	(a4)+,(a2)+
-	suba.w	#$40*3,a2
-	adda.w	#$20,a0
+	lea	-($40*3)(a2),a2
+	lea	$20(a0),a0
 	dbf	d1,.cloudLoop
 	bra.s	.done
 ; ===========================================================================
@@ -259,14 +259,14 @@ Dynamic_HTZ:
     rept 3
       rept 4
 	move.b	(a4)+,(a2)+
-      endm
-	adda.w	#$40-4,a2
-    endm
+      endr
+	lea	$40-4(a2),a2
+    endr
     rept 4
 	move.b	(a4)+,(a2)+
-    endm
-	suba.w	#$40*3,a2
-	adda.w	#$20,a0
+    endr
+	lea	-($40*3)(a2),a2
+	lea	$20(a0),a0
 	dbf	d1,.cloudLoop
 ; loc_3FEEC:
 .done:
@@ -333,8 +333,7 @@ Dynamic_Normal:
 	; Get VRAM destination address
 	move.w	4(a2),d2
 	; Get ROM source address
-	move.l	#$FFFFFF,d1
-	and.l	(a2),d1		; Get start address of animated tile art
+	move.l	(a2),d1		; Get start address of animated tile art
 	add.l	d0,d1		; Offset into art, to get the address of new frame
 	; Get size of art to be transferred
 	moveq	#0,d3

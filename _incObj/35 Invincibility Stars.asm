@@ -49,10 +49,10 @@ loc_1D9A4:
 
 loc_1DA0C:
 	tst.b	(Super_Sonic_flag).w
-	bne.w	loc_1DA74.delete
+	bne.s	loc_1DA74.delete
 	movea.w	parent(a0),a1 ; a1=character
 	btst	#status_secondary.invincible,status_secondary(a1)
-	beq.w	loc_1DA74.delete
+	beq.s	loc_1DA74.delete
 	move.w	x_pos(a1),d0
 	move.w	d0,x_pos(a0)
 	move.w	y_pos(a1),d1
