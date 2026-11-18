@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD.patch
-; Version: 26.11.18.3 (stable)
+; Version: 26.11.18.4 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -587,6 +587,7 @@ zStartDAC:
 zResetDAC:
 	ld	iy,zDACDecodeTbl
 	ld	de,0
+	ei				; Enable interrupts
 	; This controls the update rate for the DAC...
 	; My speculation for the rate at which the DAC updates:
 	;	Z80 clock = 3.57954MHz = 3579540Hz (not sure?)
@@ -605,7 +606,6 @@ zResetDAC:
 
 ; zloc_174:
 zWaitLoop:
-	ei				; Enable interrupts
 	ld	a,d			; 4
 	or	e			; 4
 	jr	z,zWaitLoop		; 7	; As long as 'de' (length of sample) = 0, wait...
