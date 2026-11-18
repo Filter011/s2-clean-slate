@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD.patch
-; Version: 26.11.18.5 (stable)
+; Version: 26.11.18.6 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -117,7 +117,7 @@ zYM2612_D1 =	$4003
 zBankRegister =	$6000
 zPSG =		$7F11
 zROMWindow =	$8000
-zStack =	$1C00
+zStack =	$1CE0
 
 	phase zStack
 zAbsVar:		zVar
@@ -173,8 +173,10 @@ zSaveSongPSG3:		zTrack
 zTracksSaveEnd:
 ; See the very end for another set of variables
 
+	if *<$2000
 	if MOMPASS=1
 		message	"Z80 Sound Driver RAM is \{*-zStack}h bytes. \{$2000-*}h bytes are free."
+	endif
 	endif
 
 	if *>$2000
