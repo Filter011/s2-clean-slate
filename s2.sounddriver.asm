@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD.patch
-; Version: 26.11.18.1 (stable)
+; Version: 26.11.18.2 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -547,32 +547,32 @@ TempoWait:
 	ld	hl,zSongDAC.DurationTimeout	; Start at first track's delay counter (counting up to delay)
 	inc	(hl)	; Increasing delay tick counter to target
 
-	ld	hl,zSongFM1.DurationTimeout	; Current track
-	inc	(hl)	; Increasing delay tick counter to target
+	ld	hl,zSongFM1.DurationTimeout
+	inc	(hl)
 
-	ld	hl,zSongFM2.DurationTimeout	; Current track
-	inc	(hl)	; Increasing delay tick counter to target
+	ld	hl,zSongFM2.DurationTimeout
+	inc	(hl)
 
-	ld	hl,zSongFM3.DurationTimeout	; Current track
-	inc	(hl)	; Increasing delay tick counter to target
+	ld	hl,zSongFM3.DurationTimeout
+	inc	(hl)
 
-	ld	hl,zSongFM4.DurationTimeout	; Current track
-	inc	(hl)	; Increasing delay tick counter to target
+	ld	hl,zSongFM4.DurationTimeout
+	inc	(hl)
 
-	ld	hl,zSongFM5.DurationTimeout	; Current track
-	inc	(hl)	; Increasing delay tick counter to target
+	ld	hl,zSongFM5.DurationTimeout
+	inc	(hl)
 
-	ld	hl,zSongFM6.DurationTimeout	; Current track
-	inc	(hl)	; Increasing delay tick counter to target
+	ld	hl,zSongFM6.DurationTimeout
+	inc	(hl)
 
-	ld	hl,zSongPSG1.DurationTimeout	; Current track
-	inc	(hl)	; Increasing delay tick counter to target
+	ld	hl,zSongPSG1.DurationTimeout
+	inc	(hl)
 
-	ld	hl,zSongPSG2.DurationTimeout	; Current track
-	inc	(hl)	; Increasing delay tick counter to target
+	ld	hl,zSongPSG2.DurationTimeout
+	inc	(hl)
 
-	ld	hl,zSongPSG3.DurationTimeout	; Current track
-	inc	(hl)	; Increasing delay tick counter to target
+	ld	hl,zSongPSG3.DurationTimeout
+	inc	(hl)
 
 	ret
 ; End of function TempoWait
@@ -2296,46 +2296,17 @@ zInitMusicPlayback:
 	ld	(ix+zVar.SFXPriorityVal),b
 	ld	(ix+zVar.1upPlaying),c		; 1-up playing flag
 
+	ld	ix,zTracksSongStart			; Start at the first music track...
+	ld	b,MUSIC_TRACK_COUNT		; ...and continue to the last
+	ld	de,zTrack.len
 	ld	hl,zFMDACInitBytes		; This continues into zPSGInitBytes
-	ld	a,(hl)
-	inc	hl
-	ld	(zSongDAC.VoiceControl),a
 
+.loop:
 	ld	a,(hl)
 	inc	hl
-	ld	(zSongFM1.VoiceControl),a
-
-	ld	a,(hl)
-	inc	hl
-	ld	(zSongFM2.VoiceControl),a
-
-	ld	a,(hl)
-	inc	hl
-	ld	(zSongFM3.VoiceControl),a
-
-	ld	a,(hl)
-	inc	hl
-	ld	(zSongFM4.VoiceControl),a
-
-	ld	a,(hl)
-	inc	hl
-	ld	(zSongFM5.VoiceControl),a
-
-	ld	a,(hl)
-	inc	hl
-	ld	(zSongFM6.VoiceControl),a
-
-	ld	a,(hl)
-	inc	hl
-	ld	(zSongPSG1.VoiceControl),a
-
-	ld	a,(hl)
-	inc	hl
-	ld	(zSongPSG2.VoiceControl),a
-
-	ld	a,(hl)
-	inc	hl
-	ld	(zSongPSG3.VoiceControl),a
+	ld	(ix+zTrack.VoiceControl),a	; Set channel type while we're at it, so subroutines understand what the track is
+	add	ix,de				; Next track
+	djnz	.loop				; Loop for all channels
 
 	ret
 ; End of function zInitMusicPlayback
@@ -2693,17 +2664,15 @@ cfSetTempo:
 ; (via Saxman's doc): Change tempo modifier to xx for ALL channels
 ; zloc_DDC
 cfSetTempoMod:
-	push	ix			; Save 'ix'
-	ld	ix,zTracksSongStart		; Start at beginning of track memory
+	ld	hl,zTracksSongStart+zTrack.TempoDivider	; Start at beginning of track memory
 	ld	de,zTrack.len		; Track size
 	ld	b,MUSIC_TRACK_COUNT	; All 10 tracks
 
 .trackloop:
-	ld	(ix+zTrack.TempoDivider),a	; Sets the timing divisor for ALL tracks; this can result in total half-speed, quarter-speed, etc.
-	add	ix,de
+	ld	(hl),a	; Sets the timing divisor for ALL tracks; this can result in total half-speed, quarter-speed, etc.
+	add	hl,de
 	djnz	.trackloop
 
-	pop	ix	; Restore 'ix'
 	ret
 ; ---------------------------------------------------------------------------
 ; This controls which TL registers are set for a particular
