@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD.patch
-; Version: 26.11.18 (stable)
+; Version: 26.11.18.1 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -1351,16 +1351,7 @@ zPauseMusic:
 
 .nexttrack:
 	ld	ix,zSongFM1		; ix = pointer to track RAM
-	call	zResumeTrack
-	ld	ix,zSongFM2
-	call	zResumeTrack
-	ld	ix,zSongFM3
-	call	zResumeTrack
-	ld	ix,zSongFM4
-	call	zResumeTrack
-	ld	ix,zSongFM5
-	call	zResumeTrack
-	ld	ix,zSongFM6
+	ld	b,MUSIC_FM_TRACK_COUNT
 	call	zResumeTrack
 
 	bankswitchToBank MusicPoint1	; Now for SFX
@@ -1368,10 +1359,7 @@ zPauseMusic:
 	ld	a,-1			; a = -1
 	ld	(zDoSFXFlag),a		; Set flag to say we are updating SFX
 	ld	ix,zSFX_FM3		; ix = pointer to SFX track RAM
-	call	zResumeTrack
-	ld	ix,zSFX_FM4
-	call	zResumeTrack
-	ld	ix,zSFX_FM5
+	ld	b,SFX_FM_TRACK_COUNT
 	call	zResumeTrack
 	jp	zResetDAC		; Now update the DAC
 ; End of function zPauseMusic
@@ -1381,10 +1369,18 @@ zPauseMusic:
 ; zsub_64D
 zResumeTrack:
 	bit	7,(ix+zTrack.PlaybackControl)	; Is track playing?
-	ret	z				; If not, return
+	jr	z,.nexttrack			; If not, return
 	bit	2,(ix+zTrack.PlaybackControl)	; Is SFX overriding track?
-	ret	nz				; If yes, return
-	jp	zSetVoice
+	jr	nz,.nexttrack			; If yes, return
+	push	bc
+	call	zSetVoice
+	pop	bc
+
+.nexttrack:
+	ld	de,zTrack.len
+	add	ix,de
+	djnz	zResumeTrack
+	ret
 ; End of function zResumeTrack
 
 
