@@ -200,6 +200,8 @@ SFX_PSG_TRACK_COUNT = (zSFX_PSGEnd-zSFX_PSGStart)/zTrack.len
     CPU Z80UNDOC
     listing purecode
 
+; generic bankswitch macro
+; 101 cycles, 19 bytes
 bankswitch macro
 	ld	hl,zBankRegister
 	ld	(hl),a
@@ -210,6 +212,8 @@ bankswitch macro
 	ld	(hl),h
     endm
 
+; bankswitch to specified bank macro
+; 73 cycles, 21 bytes
 bankswitchToBank macro bank
 	ld	hl,zBankRegister+1
 .cnt	:= 0
@@ -221,7 +225,8 @@ bankswitchToBank macro bank
     endm
 
 ; small bankswitch macro
-; useful for code that only runs once, 10 bytes in size
+; useful for code that only runs once
+; 211 cycles (approx.), 10 bytes
 bankswitchSmall macro
 	ld	hl,zBankRegister
 	ld	b,8
