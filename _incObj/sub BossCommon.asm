@@ -132,7 +132,7 @@ return_2D690:
 AnimateBoss_CmdParam:	; parameter $FF - reset animation to first frame
 	addq.b	#1,d2
 	bne.s	+
-	move.b	#0,d1
+	clr.b	d1
 	move.b	1(a1),d2
 	bra.s	loc_2D672
 ; ----------------------------------------------------------------------------

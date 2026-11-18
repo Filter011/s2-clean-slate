@@ -3,8 +3,6 @@
 ; loads information from a sub-object into this object a0
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_365F4:
 LoadSubObject:
 	moveq	#0,d0
