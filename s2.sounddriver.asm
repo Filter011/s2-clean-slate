@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD.patch
-; Version: 26.11.18.4 (stable)
+; Version: 26.11.18.5 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -12,7 +12,7 @@
 
 ; Optimise FM Frequencies
 ; This is disabled by default to improve sound driver performance.
-; Enable this option if you want to give the sound driver more headspace for code.
+; Enable this option if you want to give the sound driver more space for code.
 OptimiseFMFreq = 0
 
 ; ---------------------------------------------------------------------------
@@ -1111,7 +1111,8 @@ zPSGUpdateFreq:
 	ld	a,l			; Frequency low byte -> 'a'
 	and	0Fh			; Keep only lower four bits (first PSG reg write only applies d0-d3 of freq)
 	or	b			; Apply register bits
-	ld	(zPSG),a		; Write it to PSG!
+	ld	de,zPSG
+	ld	(de),a			; Write it to PSG!
 	ld	a,l			; Get frequency low byte -> 'a'
 	and	0F0h			; Get high nibble now
 	or	h			; OR in the high byte of the new frequency
@@ -1119,7 +1120,7 @@ zPSGUpdateFreq:
 	rrca
 	rrca
 	rrca
-	ld	(zPSG),a		; Write other frequency byte to PSG!
+	ld	(de),a			; Write other frequency byte to PSG!
 	ret
 ; End of function zPSGDoNoteOn
 

@@ -1011,7 +1011,7 @@ WaitForVint:
 -	tst.b	(a0)
 	bne.s	-
     if debugbuild
-	move.w	#$9193,(a1)	; disable lag-o-meter
+	move.w	#$9193,(a1)	; enable lag-o-meter
     endif
 	rts
 ; End of function WaitForVint
