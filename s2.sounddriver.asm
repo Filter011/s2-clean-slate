@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD.patch
-; Version: 26.11.18.7 (stable)
+; Version: 26.11.18.8 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -2115,10 +2115,8 @@ zStopSoundEffects:
 ; ---------------------------------------------------------------------------
 ; zloc_ABF
 zFadeOutMusic:
-	ld	a,3
-	ld	(zAbsVar.FadeOutDelay),a	; Set delay ticker to 3
-	ld	a,28h
-	ld	(zAbsVar.FadeOutCounter),a	; Set total frames to decrease volume over
+	ld	(ix+zVar.FadeOutDelay),3	; Set delay ticker to 3
+	ld	(ix+zVar.FadeOutCounter),28h	; Set total frames to decrease volume over
 	xor	a
 	ld	(zSongDAC.PlaybackControl),a	; Stop DAC track (can't fade it)
 	ld	(zAbsVar.SpeedUpFlag),a		; No speed shoe tempo?
