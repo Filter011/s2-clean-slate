@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD.patch
-; Version: 26.11.18.6 (stable)
+; Version: 26.11.18.7 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -366,8 +366,9 @@ zUpdateEverything:
 	or	a
 	call	nz,zUpdateFadeIn		; If so, update that
 
-	ld	a,(zAbsVar.Queue1)
-	or	(ix+zVar.Queue2)
+	ld	hl,zAbsVar.Queue1
+	ld	a,(zAbsVar.Queue2)
+	or	(hl)
 	call	nz,zCycleQueue			; If first queue is non-zero, cycle queue
 
 .nosndinput:
@@ -1390,7 +1391,6 @@ zResumeTrack:
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 ; zsub_674
 zCycleQueue:
-	ld	hl,zAbsVar.QueueStart		; Get address of next sound
 	ld	b,zVar.QueueEnd-zVar.QueueStart
 
 .inputloop:
