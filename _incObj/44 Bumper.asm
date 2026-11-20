@@ -32,6 +32,11 @@ Obj44_Main:
 	beq.s	+
 	bsr.s	Obj44_BumpCharacter
 +
+	lea	(Sidekick).w,a1 ; a1=character
+	bclr	#1,collision_property(a0)
+	beq.s	+
+	bsr.s	Obj44_BumpCharacter
++
 	clr.b	collision_property(a0)
 	bra.w	loc_1F83E
 ; ===========================================================================
