@@ -536,6 +536,37 @@ Vint_Title:
 ;VintSub8
 Vint_Level:
 	bsr.w	ReadJoypads
+	tst.b	(Teleport_timer).w
+	beq.s	.setNormalOrUnderwaterPalette
+	tst.b	(Game_paused).w	; is the game paused?
+	bne.w	.afterPaletteSetup	; if yes, branch
+	subq.b	#1,(Teleport_timer).w
+	bne.s	+
+	clr.b	(Teleport_flag).w
++
+	cmpi.b	#16,(Teleport_timer).w
+	blo.s	.setNormalOrUnderwaterPalette
+	move.l	#vdpComm($0000,CRAM,WRITE),(a5)
+	move.l	#$0EEE0EEE,d0 ; White.
+
+	; Do two palette lines.
+	moveq	#(32)/2-1,d1
+-	move.l	d0,(a6)
+	dbf	d1,-
+
+	; Skip a colour.
+	move.l	#vdpComm($0042,CRAM,WRITE),(a5)
+
+	; Do the remaining two palette lines.
+	moveq	#(31)-1,d1
+-	move.w	d0,(a6)
+	dbf	d1,-
+
+	bra.s	.afterPaletteSetup
+; ---------------------------------------------------------------------------
+
+; loc_6F8:
+.setNormalOrUnderwaterPalette:
 	tst.b	(Water_fullscreen_flag).w
 	bne.s	.useUnderwaterPalette
 	dma68kToVDP Normal_palette,0,palette_line_size*4,CRAM
@@ -557,6 +588,8 @@ Vint_Level:
 
 	movem.l	(Camera_RAM).w,d0-a1		; and Scroll_flags
 	movem.l	d0-a1,(Camera_RAM_copy).w	; and Scroll_flags_copy
+	movem.l	(Camera_Positions_P2).w,d0-a1	; and Scroll_flags_P2
+	movem.l	d0-a1,(Camera_P2_copy).w	; and Scroll_flags_copy_P2
 	cmpi.b	#92,(Hint_counter_reserve+1).w
 	bhs.s	Do_Updates
 	st.b	(Do_Updates_in_H_int).w
@@ -602,6 +635,8 @@ loc_BD6:
 
 	movem.l	(Camera_RAM).w,d0-a1		; and Scroll_flags
 	movem.l	d0-a1,(Camera_RAM_copy).w	; and Scroll_flags_copy
+	movem.l	(Camera_Positions_P2).w,d0-a1	; and Scroll_flags_P2
+	movem.l	d0-a1,(Camera_P2_copy).w	; and Scroll_flags_copy_P2
 	bra.w	Set_KosPlus_Bookmark
 ; ===========================================================================
 ;VintSub12
@@ -1553,14 +1588,16 @@ Level:
 	moveq	#PLCID_Std2,d0
 	bsr.w	LoadPLC
 	bsr.w	Level_SetPlayerMode
-	moveq	#PLCID_MilesLife2P,d0
-	cmpi.w	#1,(Player_mode).w
+	moveq	#PLCID_KnuxLife,d0
+	cmpi.w	#3,(Player_mode).w
+	beq.s	++
+	cmpi.w	#2,(Player_mode).w
 	bne.s	Level_ClrRam
-	addq.w	#PLCID_MilesLife-PLCID_MilesLife2P,d0
+	moveq	#PLCID_MilesLife,d0
 +
 	tst.b	(HW_Version).l
 	bpl.s	+
-	addq.w	#PLCID_TailsLife2P-PLCID_MilesLife2P,d0
+	moveq	#PLCID_TailsLife,d0
 +
 	bsr.w	LoadPLC
 ; loc_3F48:
@@ -1615,12 +1652,18 @@ Level_InitWater:
 	move.w	d0,(Water_Level_1).w ; set water heights
 	move.w	d0,(Water_Level_2).w
 	move.w	d0,(Water_Level_3).w
-	clr.b	(Water_routine).w	; clear water routine counter
-	clr.b	(Water_fullscreen_flag).w	; clear water movement
+	moveq	#0,d0
+	move.b	d0,(Water_routine).w	; clear water routine counter
+	move.b	d0,(Water_fullscreen_flag).w	; clear water movement
 	move.b	#1,(Water_on).w	; enable water
 ; loc_407C:
 Level_LoadPal:
 	moveq	#PalID_BGND,d0
+	cmpi.w	#3,(Player_mode).w
+	bne.s	.notKnux
+	moveq	#PalID_Knux,d0
+
+.notKnux:
 	bsr.w	PalLoad_Now	; load Sonic's palette line
 	tst.b	(Water_flag).w	; does level have water?
 	beq.s	Level_GetBgm	; if not, branch
@@ -1716,7 +1759,6 @@ Level_FromCheckpoint:
 	move.w	d0,(Debug_placement_mode).w
 	move.w	d0,(Level_Inactive_flag).w
 	move.w	d0,(Rings_Collected).w
-	move.w	d0,(Monitors_Broken).w
 	move.b	d0,(Super_Sonic_flag).w
 	bsr.w	OscillateNumInit
 	moveq	#1,d0
@@ -1855,15 +1897,13 @@ Level_MainLoop:
 
 ; sub_4450:
 Level_SetPlayerMode:
-	tst.b	(Demo_mode_flag).w	; demo mode?
-	bne.s	+			; if yes, branch
--
+	move.b	(Demo_mode_flag).w,d0	; demo mode?
+	and.b	(GameModeFlag_TitleCard).w,d0	; and pre-level?
+	bne.s	+			; if so, branch
 	move.w	(Player_option).w,(Player_mode).w ; use the option chosen in the Options screen
 	rts
 +
-	tst.b	(GameModeFlag_TitleCard).w	; pre-level?
-	beq.s	-			; if not, branch
-	clr.w	(Player_mode).w	; force Sonic alone
+	clr.w	(Player_mode).w		; force Sonic and Tails
 	rts
 ; End of function Level_SetPlayerMode
 
@@ -1873,18 +1913,49 @@ Level_SetPlayerMode:
 ; sub_446E:
 InitPlayers:
 	move.w	(Player_mode).w,d0
-	bne.s	InitPlayers_TailsAlone ; branch if this isn't a Sonic and Tails game
+	bne.s	InitPlayers_Alone ; branch if this isn't a Sonic and Tails game
+
+	move.b	#ObjID_Sonic,(MainCharacter+id).w ; load Obj01 Sonic object at $FFFFB000
+	move.b	#ObjID_SpindashDust,(Sonic_Dust+id).w ; load Obj08 Sonic's spindash dust/splash object at $FFFFD100
+
+	cmpi.b	#wing_fortress_zone,(Current_Zone).w
+	beq.s	+ ; skip loading Tails if this is WFZ
+	cmpi.b	#death_egg_zone,(Current_Zone).w
+	beq.s	+ ; skip loading Tails if this is DEZ
+	cmpi.b	#sky_chase_zone,(Current_Zone).w
+	beq.s	+ ; skip loading Tails if this is SCZ
+
+	move.b	#ObjID_Tails,(Sidekick+id).w ; load Obj02 Tails object at $FFFFB040
+	move.w	(MainCharacter+x_pos).w,(Sidekick+x_pos).w
+	move.w	(MainCharacter+y_pos).w,(Sidekick+y_pos).w
+	subi.w	#$20,(Sidekick+x_pos).w
+	addq.w	#4,(Sidekick+y_pos).w
+	move.b	#ObjID_SpindashDust,(Tails_Dust+id).w ; load Obj08 Tails' spindash dust/splash object at $FFFFD140
+	move.w	#0,(Tails_CPU_routine).w
++
+	rts
+; ===========================================================================
+; loc_44BE:
+InitPlayers_Alone: ; either Sonic or Tails but not both
+	subq.w	#1,d0
+	bne.s	InitPlayers_TailsAlone ; branch if this is a Tails alone game
 
 	move.b	#ObjID_Sonic,(MainCharacter+id).w ; load Obj01 Sonic object at $FFFFB000
 	move.b	#ObjID_SpindashDust,(Sonic_Dust+id).w ; load Obj08 Sonic's spindash dust/splash object at $FFFFD100
 	rts
 ; ===========================================================================
-; loc_44BE:
-InitPlayers_TailsAlone: ; either Sonic or Tails but not both
+; loc_44D0:
+InitPlayers_TailsAlone:
 	subq.w	#1,d0
+	bne.s	InitPlayers_KnucklesAlone ; branch if this is a Knuckles alone game
 	move.b	#ObjID_Tails,(MainCharacter+id).w ; load Obj02 Tails object at $FFFFB000
 	move.b	#ObjID_SpindashDust,(Tails_Dust+id).w ; load Obj08 Tails' spindash dust/splash object at $FFFFD100
 	addq.w	#4,(MainCharacter+y_pos).w
+	rts
+; ===========================================================================
+InitPlayers_KnucklesAlone:
+	move.b	#ObjID_Knuckles,(MainCharacter+id).w ; load Obj09 Knuckles object at $FFFFB000
+	move.b	#ObjID_SpindashDust,(Sonic_Dust+id).w ; load Obj08 Knuckles' spindash dust/splash object at $FFFFD100
 	rts
 ; End of function InitPlayers
 
@@ -1901,8 +1972,7 @@ InitPlayers_TailsAlone: ; either Sonic or Tails but not both
 
 InitRingFrame:
 	moveq	#-1,d1
-	move.b	d1,(Rings_anim_prev).w			; Make sure initial frame art loads
-	move.b	d1,(Ring_spill_prev).w
+	move.w	d1,(Rings_anim_prev).w		; Make sure initial frame art loads | and Ring_spill_prev
 
 ; ---------------------------------------------------------------------------
 ; Subroutine to change global object animation variables (like rings)
@@ -2164,8 +2234,7 @@ MenuScreen_Options:
 	moveq	#0,d0
 	move.l	d0,(Camera_X_pos).w
 	move.l	d0,(Camera_Y_pos).w
-	move.w	d0,(Correct_cheat_entries).w
-	move.w	d0,(Correct_cheat_entries_2).w
+	move.l	d0,(Correct_cheat_entries).w	; and Correct_cheat_entries_2
 	move.l	#Vint_Menu,(Vint_routine).w
 	bsr.w	Process_KosPlus_Queue
 	bsr.w	WaitForVint
@@ -2231,10 +2300,9 @@ OptionScreen_Controls:
 	btst	#button_down,d0
 	beq.s	+
 	addq.b	#1,d2
-;	cmpi.b	#2,d2
-;	blo.s	+
-;	moveq	#0,d2
-	andi.b	#1,d2
+	cmpi.b	#4,d2
+	blo.s	+
+	moveq	#0,d2
 
 +
 	move.b	d2,(Options_menu_box).w
@@ -2286,7 +2354,7 @@ OptionScreen_Controls:
 ; ===========================================================================
 ; word_917A:
 OptionScreen_Choices:
-	dc.l (2-1)<<24|(Player_option&$FFFFFF)
+	dc.l (4-1)<<24|(Player_option&$FFFFFF)
 	dc.l ($00-1)<<24|(Sound_test_sound&$FFFFFF)
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
@@ -2420,11 +2488,15 @@ boxData macro txtlabel,vramAddr
 	boxData	TextOptScr_SoundTest,VRAM_Plane_A_Name_Table+planeLoc(64,9,12)
 
 off_92D2:
+	dc.l TextOptScr_SonicAndMiles
 	dc.l TextOptScr_SonicAlone
 	dc.l TextOptScr_MilesAlone
+	dc.l TextOptScr_KnucklesAlone
 off_92DE:
+	dc.l TextOptScr_SonicAndTails
 	dc.l TextOptScr_SonicAlone
 	dc.l TextOptScr_TailsAlone
+	dc.l TextOptScr_KnucklesAlone
 off_92F2:
 	dc.l TextOptScr_0
 ; ===========================================================================
@@ -2604,8 +2676,7 @@ MenuScreen_LevelSelect:
 	moveq	#0,d0
 	move.l	d0,(Camera_X_pos).w
 	move.l	d0,(Camera_Y_pos).w
-	move.w	d0,(Correct_cheat_entries).w
-	move.w	d0,(Correct_cheat_entries_2).w
+	move.l	d0,(Correct_cheat_entries).w	; and Correct_cheat_entries_2
 
 	move.l	#Vint_Menu,(Vint_routine).w
 	bsr.w	WaitForVint
@@ -2820,7 +2891,7 @@ LevelSelect_PickCharacterNumber:
 	btst	#button_C,(Ctrl_1_Press).w
 	beq.s	locret_7F60
 	addq.w	#1,(Player_option).w
-	cmpi.w	#3,(Player_option).w
+	cmpi.w	#4,(Player_option).w
 	blo.s	locret_7F60
 	clr.w	(Player_option).w
 
@@ -2976,7 +3047,7 @@ LevSel_IconTable:
 	dc.b   Icon_CNZ,Icon_CNZ		;6	CNZ
 	dc.b   Icon_HTZ,Icon_HTZ		;8	HTZ
 	dc.b   Icon_MCZ,Icon_MCZ		;$A	MCZ
-	dc.b   Icon_HPZ,Icon_HPZ	;$C	HPZ
+	dc.b   Icon_HPZ,Icon_HPZ		;$C	HPZ
 	dc.b   Icon_OOZ,Icon_OOZ		;$C	OOZ
 	dc.b   Icon_MTZ,Icon_MTZ,Icon_MTZ	;$E	MTZ
 	dc.b   Icon_SCZ				;$11	SCZ
@@ -3084,9 +3155,12 @@ super_sonic_cheat:
 	; options screen menu text
 
 TextOptScr_PlayerSelect:	menutxt	"* PLAYER SELECT *"	; byte_97CA:
+TextOptScr_SonicAndMiles:	menutxt	"SONIC AND MILES"	; byte_97DC:
+TextOptScr_SonicAndTails:	menutxt	"SONIC AND TAILS"	; byte_97EC:
 TextOptScr_SonicAlone:		menutxt	"SONIC ALONE    "	; byte_97FC:
 TextOptScr_MilesAlone:		menutxt	"MILES ALONE    "	; byte_980C:
 TextOptScr_TailsAlone:		menutxt	"TAILS ALONE    "	; byte_981C:
+TextOptScr_KnucklesAlone:	menutxt	"KNUCKLES ALONE "
 TextOptScr_SoundTest:		menutxt	"*  SOUND TEST   *"	; byte_985E:
 TextOptScr_0:			menutxt	"      00       "	; byte_9870:
 
@@ -4066,6 +4140,8 @@ Obj0D_MapRUnc_196EE:	include "mappings/spriteDPLC/obj0D.asm"
 ; ===========================================================================
 	include "_incObj/05 Tails' Tails.asm"
 	include "_anim/Tails' Tails.asm"
+; ===========================================================================
+	include "_incObj/09 Knuckles.asm" ; Needs to be broken up further!
 ; ===========================================================================
 	include "_incObj/0A Bubbles & Drowning Countdown.asm"
 ; ===========================================================================
@@ -5501,6 +5577,8 @@ ArtUnc_Waterfall3:	BINCLUDE	"art/uncompressed/ARZ waterfall patterns - 3.bin"
 ArtUnc_Sonic:			BINCLUDE	"art/uncompressed/Sonic's art.bin"
 	align tiles_to_bytes(1)
 ArtUnc_Tails:			BINCLUDE	"art/uncompressed/Tails's art.bin"
+	align tiles_to_bytes(1)
+ArtUnc_Knuckles:		BINCLUDE	"art/uncompressed/Knuckles' art.bin"
 
 MapUnc_Sonic:			include		"mappings/sprite/Sonic.asm"
 
@@ -5517,6 +5595,10 @@ ArtNem_SuperSonic_stars:	BINCLUDE	"art/kosinskiplusm/Super Sonic stars.kospm"
 MapUnc_Tails:			include		"mappings/sprite/Tails.asm"
 
 MapRUnc_Tails:			include		"mappings/spriteDPLC/Tails.asm"
+
+MapUnc_Knuckles:		include		"mappings/sprite/Knuckles.asm"
+
+MapRUnc_Knuckles:		include		"mappings/spriteDPLC/Knuckles.asm"
 
 ;---------------------------------------------------------------------------------------
 ; Sega Screen Assets
@@ -5596,6 +5678,8 @@ ArtNem_MiniSonic:		BINCLUDE	"art/kosinskiplusm/Sonic continue.kospm"
 ArtNem_TailsLife:		BINCLUDE	"art/kosinskiplusm/Tails life counter.kospm"
 	even
 ArtNem_MiniTails:		BINCLUDE	"art/kosinskiplusm/Tails continue.kospm"
+	even
+ArtNem_KnuxLife:		BINCLUDE	"art/kosinskiplusm/Knuckles life counter.kospm"
 	even
 
 ;---------------------------------------------------------------------------------------
@@ -6371,7 +6455,7 @@ Sound34:	include "sound/sfx/B4 - Bumper.asm"
 Sound35:	include "sound/sfx/B5 - Ring.asm"
 Sound36:	include "sound/sfx/B6 - Spikes Move.asm"
 Sound37:	include "sound/sfx/B7 - Rumbling.asm"
-Sound38:	include "sound/sfx/B8 - Unknown (Unused).asm"
+Sound38:	include "sound/sfx/4C - Glide Land.asm"
 Sound39:	include "sound/sfx/B9 - Smash.asm"
 Sound3A:	include "sound/sfx/BA - Grab.asm"
 Sound3B:	include "sound/sfx/BB - Door Slam.asm"
@@ -6386,7 +6470,7 @@ Sound43:	include "sound/sfx/C3 - Enter Giant Ring (Unused).asm"
 Sound44:	include "sound/sfx/C4 - Boss Explosion.asm"
 Sound45:	include "sound/sfx/C5 - Tally End.asm"
 Sound46:	include "sound/sfx/C6 - Ring Spill.asm"
-Sound47:	include "sound/sfx/C7 - Chain Rise (Unused).asm"
+Sound47:	include "sound/sfx/7E - Ground Slide.asm"
 Sound48:	include "sound/sfx/C8 - Flamethrower.asm"
 Sound49:	include "sound/sfx/C9 - Hidden Bonus (Unused).asm"
 Sound4A:	include "sound/sfx/CA - Special Stage Entry.asm"

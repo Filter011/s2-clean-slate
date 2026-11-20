@@ -166,14 +166,15 @@ Obj18_FullSolid:
 ; the player's weight
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_1061E:
 Obj18_Nudge:
 	move.b	obj18_y_offset(a0),d0
 	jsr	(CalcSine).w
-	move.w	#$400,d1
-	muls.w	d1,d0
+;	move.w	#$400,d1
+;	muls.w	d1,d0
+	moveq	#10,d1
+	ext.l	d0
+	asl.l	d1,d0
 	swap	d0
 	add.w	obj18_y_actual(a0),d0
 	move.w	d0,y_pos(a0)
@@ -184,8 +185,6 @@ Obj18_Nudge:
 ; ---------------------------------------------------------------------------
 ; Subroutine to handle the platform's different movement modes
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_10638:
 Obj18_Move:
@@ -334,6 +333,12 @@ Obj18_Fall:
 	bsr.s	Obj18_DropPlayer
 
 .noP1:
+	bclr	#p2_standing_bit,status(a0)
+	beq.s	.noP2
+	lea	(Sidekick).w,a1 ; a1=character
+	bsr.s	Obj18_DropPlayer
+
+.noP2:
 	move.b	#6,routine(a0)	; => Obj18_NonSolid
 
 ; loc_10730:
@@ -358,8 +363,6 @@ Obj18_Fall:
 ; Input:
 ;	a1	Address to player object
 ; ---------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_1075E:
 Obj18_DropPlayer:

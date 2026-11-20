@@ -13,7 +13,7 @@ ObjPtr_Spiral:		dc.l Obj06	; Rotating cylinder in MTZ, twisting spiral pathway i
 ObjPtr_Oil:		dc.l Obj07	; Oil in OOZ
 ObjPtr_SpindashDust:
 ObjPtr_Splash:		dc.l Obj08	; Water splash in Aquatic Ruin Zone, Spindash dust
-ObjPtr_SonicSS:		dc.l ObjNull	; Sonic in Special Stage
+ObjPtr_Knuckles:	dc.l Obj09	; Knuckles
 ObjPtr_SmallBubbles:	dc.l Obj0A	; Small bubbles from Sonic's face while underwater
 ObjPtr_TippingFloor:	dc.l Obj0B	; Section of pipe that tips you off from CPZ
 			dc.l Obj0C	; Small floating platform (unused)

@@ -292,12 +292,16 @@ Obj0A_ReduceAir:
 	move.b	#AniIDSonAni_Drown,anim(a0)	; use Sonic's drowning animation
 	bset	#status.player.in_air,status(a0)
 	bset	#high_priority_bit,art_tile(a0)
-	move.l	#0,x_vel(a0)	; and y_vel
-	move.w	#0,inertia(a0)
+	moveq	#0,d0
+	move.l	d0,x_vel(a0)	; and y_vel
+	move.w	d0,inertia(a0)
 	move.b	#2,routine(a0)
-	clr.b	(Update_HUD_timer).w
+	move.b	d0,(Update_HUD_timer).w
 	movea.l	(sp)+,a0 ; load obj address ; restore a0 = obj0A
+	cmpa.w	#MainCharacter,a2
+	bne.s	+	; if it isn't player 1, branch
 	st.b	(Deform_lock).w
++
 	rts
 ; ===========================================================================
 ; loc_1D708:

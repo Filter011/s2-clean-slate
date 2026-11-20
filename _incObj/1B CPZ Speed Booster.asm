@@ -62,6 +62,21 @@ Obj1B_Main:
 	bsr.s	Obj1B_GiveBoost
 	move.w	(sp)+,d0
 +
+	lea	(Sidekick).w,a1 ; a1=character
+	btst	#status.player.in_air,status(a1)
+	bne.s	+
+	move.w	x_pos(a1),d4
+	cmp.w	d0,d4
+	blo.s	+
+	cmp.w	d1,d4
+	bhs.s	+
+	move.w	y_pos(a1),d4
+	cmp.w	d2,d4
+	blo.s	+
+	cmp.w	d3,d4
+	bhs.s	+
+	bsr.s	Obj1B_GiveBoost
++
 	jmp	(MarkObjGone).w
 
 ; ===========================================================================

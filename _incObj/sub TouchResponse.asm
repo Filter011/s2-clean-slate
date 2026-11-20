@@ -230,14 +230,14 @@ loc_3F6EE:
 Touch_ChkValue:
 	move.b	collision_flags(a1),d1	; load touch response number
 	andi.b	#$C0,d1			; is touch response $40 or higher?
-	beq.s	Touch_Enemy		; if not, branch
+	beq.w	Touch_Enemy		; if not, branch
 	cmpi.b	#$C0,d1			; is touch response $C0 or higher?
 	beq.w	Touch_Special		; if yes, branch
 	tst.b	d1			; is touch response $80-$BF?
 	bmi.w	Touch_ChkHurt		; if yes, branch
 	; touch response is $40-$7F
-	move.b	collision_flags(a1),d0
-	andi.b	#$3F,d0
+	moveq	#$3F,d0
+	and.b	collision_flags(a1),d0
 	cmpi.b	#6,d0			; is touch response $46?
 	beq.s	Touch_Monitor		; if yes, branch
 	move.b	(MainCharacter+invulnerable_time).w,d0
@@ -275,7 +275,15 @@ Touch_Monitor:
 ; loc_3F768:
 .breakMonitor:
 	cmpi.b	#AniIDSonAni_Roll,anim(a0)
+	beq.s	.okaytodestroy
+	cmpi.b	#ObjID_Knuckles,id(a0)
 	bne.s	return_3F78A
+	cmpi.b	#1,double_jump_flag(a0)
+	beq.s	.okaytodestroy
+	cmpi.b	#3,double_jump_flag(a0)
+	bne.s	return_3F78A
+
+.okaytodestroy:
 	neg.w	y_vel(a0)	; reverse Sonic's y-motion
 	move.b	#4,routine(a1)
 	move.w	a0,parent(a1)
@@ -291,6 +299,15 @@ Touch_Enemy:
 	beq.s	+
 	cmpi.b	#AniIDSonAni_Roll,anim(a0)		; is Sonic rolling?
 	beq.s	+					; if yes, branch
+	cmpi.b	#ObjID_Knuckles,id(a0)			; is the character Knuckles?
+	bne.s	.notknuckles				; if not, branch
+	cmpi.b	#1,double_jump_flag(a0)			; Is Knuckles gliding?
+	beq.s	+					; If so, branch
+	cmpi.b	#3,double_jump_flag(a0)			; Is Knuckles sliding across the ground after gliding?
+	beq.s	+					; If so, branch
+	bra.w	Touch_ChkHurt
+
+.notknuckles:
 	cmpi.b	#ObjID_Tails,id(a0)			; is the character Tails?
 	bne.w	Touch_ChkHurt				; if not, branch
 	tst.b	flying(a0)				; is Tails flying?
@@ -310,8 +327,7 @@ Touch_Enemy:
 	beq.s	Touch_Enemy_Part2
 	tst.b	boss_hitcount2(a1)
 	beq.s	return_3F7C6
-	neg.w	x_vel(a0)
-	neg.w	y_vel(a0)
+	neg.l	x_vel(a0)	; and y_vel
 	move.b	#0,collision_flags(a1)
 	subq.b	#1,boss_hitcount2(a1)
 
@@ -322,18 +338,30 @@ return_3F7C6:
 Touch_Enemy_Part2:
 	tst.b	collision_property(a1)
 	beq.s	Touch_KillEnemy
-	neg.w	x_vel(a0)
-	neg.w	y_vel(a0)
+	neg.l	x_vel(a0)	; and y_vel
 	btst	#status_secondary.carry,status_secondary(a0)	; is Sonic being carried?
 	beq.s	.noextrabounce			; if not, branch
-	neg.w	x_vel+object_size(a0)		; negate Tails' X-velocity
-	neg.w	y_vel+object_size(a0)		; negate Tails' Y-velocity
+	neg.l	x_vel+object_size(a0)		; negate Tails' X/Y-velocity
 
 .noextrabounce:
 	move.b	#0,collision_flags(a1)
 	subq.b	#1,collision_property(a1)
-	bne.s	return_3F7E8
+	bne.s	+
 	bset	#status.npc.no_balancing,status(a1)
++
+	cmpi.b	#ObjID_Knuckles,id(a0)			; is the character Knuckles?
+	bne.s	return_3F7E8				; if not, branch
+	cmpi.b	#1,double_jump_flag(a0)
+	bne.s	return_3F7E8
+	move.b	#2,double_jump_flag(a0)
+	move.b	#AniIDKnuxAni_FallAfterGlide,anim(a0)
+	bclr	#0,status(a0)
+	tst.w	x_vel(a0)
+	bmi.s	+
+	bset	#0,status(a0)
++
+	move.b	#19,y_radius(a0)
+	move.b	#9,x_radius(a0)
 
 return_3F7E8:
 	rts
@@ -403,8 +431,6 @@ loc_3F85C:
 ; note: Sonic or Tails must be at a0
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_3F862:
 Touch_ChkHurt:
 	btst	#status_secondary.invincible,status_secondary(a0)	; is Sonic invincible?
@@ -429,11 +455,13 @@ Touch_Hurt:
 ; loc_3F878: HurtSonic:
 HurtCharacter:
 	move.w	(Ring_count).w,d0
+	cmpa.w	#MainCharacter,a0
+	bne.s	Hurt_Sidekick
 	btst	#status_secondary.shield,status_secondary(a0)
 	bne.s	Hurt_Shield
 	tst.w	d0
 	beq.w	KillCharacter
-	jsr	(AllocateObject).l
+	jsr	(AllocateObject).w
 	bne.s	Hurt_Shield
 	move.b	#ObjID_LostRings,id(a1) ; load obj
 	move.w	x_pos(a0),x_pos(a1)
@@ -443,6 +471,9 @@ HurtCharacter:
 ; loc_3F8B8:
 Hurt_Shield:
 	bclr	#status_secondary.shield,status_secondary(a0) ; remove shield
+
+; loc_3F8BE:
+Hurt_Sidekick:
 	move.b	#4,routine(a0)
 	jsr	(Sonic_ResetOnFloor_Part2).l
 	bset	#status.player.in_air,status(a0)
@@ -503,8 +534,8 @@ KillCharacter:
 ; ===========================================================================
 ;loc_3F976:
 Touch_Special:
-	move.b	collision_flags(a1),d1
-	andi.b	#$3F,d1
+	moveq	#$3F,d1
+	and.b	collision_flags(a1),d1
 	cmpi.b	#6,d1
 	beq.s	loc_3FA00
 	cmpi.b	#7,d1
@@ -696,7 +727,7 @@ BossCollision_ARZ:
 ; ===========================================================================
 ;loc_3FAFE:
 BossCollision_MCZ:
-	sf	boss_hurt_sonic(a1)
+	sf.b	boss_hurt_sonic(a1)
 	cmpi.b	#1,(Boss_CollisionRoutine).w
 	blt.s	BossCollision_MCZ2
 ; Boss_CollisionRoutine = 1, i.e. diggers pointing to the side
@@ -796,7 +827,7 @@ loc_3FBFA:
 	move.l	#$60008,d1
 	bsr.w	Boss_DoCollision
 	move.w	(sp)+,d7
-	move.w	#0,d0
+	clr.w	d0
 	rts
 ; ===========================================================================
 word_3FC10:
@@ -818,7 +849,7 @@ loc_3FC1C:
 	move.l	#$8000C,d1
 	bsr.s	loc_3FC7A
 	move.w	(sp)+,d7
-	move.b	#0,d0
+	clr.b	d0
 	rts
 ; ===========================================================================
 
@@ -894,6 +925,5 @@ loc_3FC9E:
 	bhi.s	return_3FC86
 
 loc_3FCA4:
-	neg.w	x_vel(a0)
-	neg.w	y_vel(a0)
+	neg.l	x_vel(a0)	; and y_vel
 	rts

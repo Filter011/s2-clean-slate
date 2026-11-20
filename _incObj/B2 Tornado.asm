@@ -26,7 +26,7 @@ ObjB2_Init:
 	move.b	subtype(a0),d0
 	subi.b	#$4E,d0
 	move.b	d0,routine(a0)
-	cmpi.w	#1,(Player_mode).w
+	cmpi.w	#2,(Player_mode).w
 	bne.s	+
 	cmpi.b	#8,d0
 	bhs.s	+
@@ -460,7 +460,7 @@ loc_3AC84:
 	move.w	x_pos(a0),d0
 	subi.w	#$10,d0
 	move.w	d0,x_pos(a1)
-	cmpi.w	#1,(Player_mode).w
+	cmpi.w	#2,(Player_mode).w
 	bne.s	loc_3ACC8
 	subi.w	#$10,y_pos(a1)
 
@@ -762,7 +762,7 @@ ObjB2_Animate_Pilot:
 	moveq	#0,d0
 	move.b	objoff_36(a0),d0
 	moveq	#Tails_pilot_frames_end-Tails_pilot_frames,d1
-	cmpi.w	#1,(Player_mode).w
+	cmpi.w	#2,(Player_mode).w
 	bne.s	+
 	moveq	#Sonic_pilot_frames_end-Sonic_pilot_frames,d1
 + ; loc_3AF78:
@@ -772,7 +772,7 @@ ObjB2_Animate_Pilot:
 	moveq	#0,d0
 + ; loc_3AF80:
 	move.b	d0,objoff_36(a0)
-	cmpi.w	#1,(Player_mode).w
+	cmpi.w	#2,(Player_mode).w
 	bne.s	+
 	move.b	Sonic_pilot_frames(pc,d0.w),d0
 	jmp	(LoadSonicDynPLC_Part2).l

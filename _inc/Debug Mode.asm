@@ -191,6 +191,18 @@ Debug_ExitDebugMode:
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.l	#MapUnc_Sonic,mappings(a1)
 	move.w	#ArtTile_ArtUnc_Sonic,art_tile(a1)
+	cmpi.b	#ObjID_Tails,id(a1)
+	bne.s	.nottails
+	move.l	#MapUnc_Tails,mappings(a1)
+	move.w	#ArtTile_ArtUnc_Sonic,art_tile(a1)
+
+.nottails:
+	cmpi.b	#ObjID_Knuckles,id(a1)
+	bne.s	.notknuckles
+	move.l	#MapUnc_Knuckles,mappings(a1)
+	move.w	#ArtTile_ArtUnc_Sonic,art_tile(a1)
+
+.notknuckles:
 	bsr.s	Debug_ResetPlayerStats
 	move.b	#$13,y_radius(a1)
 	move.b	#9,x_radius(a1)

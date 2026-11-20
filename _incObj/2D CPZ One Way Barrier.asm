@@ -84,6 +84,8 @@ Obj2D_Main:
 	move.b	#0,routine_secondary(a0)             ; set barrier to move down, check if characters are in area
 	lea	(MainCharacter).w,a1 ; a1=character
 	bsr.s	Obj2D_CheckCharacter
+	lea	(Sidekick).w,a1 ; a1=character
+	bsr.s	Obj2D_CheckCharacter
 	tst.b	routine_secondary(a0)                ; check if barrier is moving up
 	beq.s	+
 	cmpi.w	#$40,objoff_30(a0)                   ; check if barrier is high enough

@@ -57,7 +57,7 @@ loc_140CE:
 
 loc_14102:
 	moveq	#0,d0
-	cmpi.w	#1,(Player_mode).w
+	cmpi.w	#2,(Player_mode).w
 	bne.s	loc_14118
 	addq.w	#1,d0
 	tst.b	(HW_Version).l

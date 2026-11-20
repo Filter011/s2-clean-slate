@@ -6,8 +6,6 @@
 ; a1 is pointer to block in chunk table
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1E596: Floor_ChkTile:
 Find_Tile:
 	move.w	d2,d0	; y_pos

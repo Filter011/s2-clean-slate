@@ -2,8 +2,6 @@
 ; Subroutine to play music after a countdown (when Sonic leaves the water)
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1D81E:
 ResumeMusic:
 	cmpi.b	#12,air_left(a1)

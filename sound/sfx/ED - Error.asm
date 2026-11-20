@@ -9,7 +9,7 @@ Sound6D_Error_Header:
 ; FM5 Data
 Sound6D_Error_FM5:
 	smpsSetvoice        $00
-	dc.b	nB3, $06, nRst, $06, nB3, $18
+	dc.b	nB3, $06, nRst, nB3, $18
 	smpsStop
 
 Sound6D_Error_Voices:

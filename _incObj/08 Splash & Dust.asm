@@ -4,6 +4,8 @@
 
 obj08_previous_frame = objoff_30
 obj08_dust_timer = objoff_32
+obj08_belongs_to_tails = objoff_34
+obj08_vram_address = objoff_3C
 
 ; Sprite_1DD20:
 Obj08:
@@ -28,6 +30,15 @@ Obj08_Init:
 	move.b	#$10,width_pixels(a0)
 	move.w	#ArtTile_ArtNem_SonicDust,art_tile(a0)
 	move.w	#MainCharacter,parent(a0)
+	move.w	#tiles_to_bytes(ArtTile_ArtNem_SonicDust),obj08_vram_address(a0)
+	cmpa.w	#Sonic_Dust,a0
+	beq.s	Obj08_Main
+	st.b	obj08_belongs_to_tails(a0)
+	cmpi.w	#2,(Player_mode).w
+	beq.s	Obj08_Main
+	move.w	#ArtTile_ArtNem_TailsDust,art_tile(a0)
+	move.w	#Sidekick,parent(a0)
+	move.w	#tiles_to_bytes(ArtTile_ArtNem_TailsDust),obj08_vram_address(a0)
 
 ; loc_1DD90:
 Obj08_Main:
@@ -67,8 +78,8 @@ Obj08_MdSpindashDust:
 	move.w	y_pos(a2),y_pos(a0)
 	move.b	status(a2),status(a0)
 	andi.b	#1<<status.npc.x_flip,status(a0)
-	cmpi.w	#1,(Player_mode).w
-	bne.s	+
+	tst.b	obj08_belongs_to_tails(a0)
+	beq.s	+
 	subq.w	#4,y_pos(a0)	; Tails is shorter than Sonic
 +
 	tst.b	prev_anim(a0)
@@ -103,8 +114,16 @@ BranchTo16_DeleteObject ; BranchTo
 ; loc_1DE4A:
 Obj08_CheckSkid:
 	movea.w	parent(a0),a2 ; a2=character
+	moveq	#$10,d1
 	cmpi.b	#AniIDSonAni_Stop,anim(a2)	; SonAni_Stop
 	beq.s	Obj08_SkidDust
+	cmpi.b	#ObjID_Knuckles,id(a2)
+	bne.s	.notknuckles
+	moveq	#6,d1
+	cmpi.b	#3,double_jump_flag(a2)
+	beq.s	Obj08_SkidDust
+
+.notknuckles:
 	move.b	#2,routine(a0)
 	move.b	#0,obj08_dust_timer(a0)
 	rts
@@ -119,11 +138,11 @@ Obj08_SkidDust:
 	move.b	id(a0),id(a1) ; load obj08
 	move.w	x_pos(a2),x_pos(a1)
 	move.w	y_pos(a2),y_pos(a1)
-	addi.w	#$10,y_pos(a1)
-	cmpi.w	#1,(Player_mode).w
-	bne.s	+
-	subq.w	#4,y_pos(a1)	; Tails is shorter than Sonic
+	tst.b	obj08_belongs_to_tails(a0)
+	beq.s	+
+	subq.w	#4,d1	; Tails is shorter than Sonic
 +
+	add.w	d1,y_pos(a1)
 	move.b	#0,status(a1)
 	move.b	#3,anim(a1)
 	addq.b	#2,routine(a1)
@@ -150,7 +169,7 @@ Obj08_LoadDustOrSplashArt:
 	adda.w	(a2,d0.w),a2
 	move.w	(a2)+,d5
 	bmi.s	return_1DF36
-	move.w	#tiles_to_bytes(ArtTile_ArtNem_SonicDust),d4
+	move.w	obj08_vram_address(a0),d4
     if AssumeSourceAddressInBytes
 	move.l	#ArtUnc_SplashAndDust,d6
     else

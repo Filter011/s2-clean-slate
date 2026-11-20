@@ -49,8 +49,17 @@ Obj7B_Main:
 	move.w	x_pos(a0),d4
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
 	jsr	(SolidObject_Always_SingleCharacter).l
 	btst	#p1_standing_bit,status(a0)
+	beq.s	+
+	bsr.w	loc_296C2
++
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing_bit,d6
+	jsr	(SolidObject_Always_SingleCharacter).l
+	btst	#p2_standing_bit,status(a0)
 	beq.s	loc_29648
 	bsr.s	loc_296C2
 
@@ -77,6 +86,23 @@ loc_29648:
 	move.b	#2,anim(a0)
 
 loc_29686:
+	move.w	(Sidekick+x_pos).w,d0
+	cmp.w	d4,d0
+	blo.s	loc_296B6
+	cmp.w	d5,d0
+	bhs.s	loc_296B6
+	move.w	(Sidekick+y_pos).w,d0
+	cmp.w	d2,d0
+	blo.s	loc_296B6
+	cmp.w	d3,d0
+	bhs.s	loc_296B6
+	cmpi.w	#4,(Tails_CPU_routine).w	; TailsCPU_Flying
+	beq.w	loc_296B6
+	cmpi.b	#3,prev_anim(a0)
+	beq.s	loc_296B6
+	move.b	#3,anim(a0)
+
+loc_296B6:
 	lea	Ani_obj7B(pc),a1
 	jmp	(AnimateSprite).w
 ; ===========================================================================

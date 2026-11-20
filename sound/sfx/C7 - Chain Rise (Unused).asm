@@ -9,7 +9,7 @@ Sound47_Header:
 ; FM5 Data
 Sound47_FM5:
 	smpsSetvoice        $00
-	dc.b	nCs5, $05, nRst, $04, nCs5, $04, nRst, $04
+	dc.b	nCs5, $05, nRst, $04, nCs5, nRst
 	smpsStop
 
 Sound47_Voices:

@@ -66,8 +66,11 @@ SolidObject_Monitor:
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
 	movem.l	d1-d4,-(sp)
-	bsr.s	SolidObject_Monitor_Sonic
+	bsr.s	SolidObject_Monitor_Player
 	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing_bit,d6
+	bsr.s	SolidObject_Monitor_Player
 
 Obj26_Animate:
 	lea	Ani_obj26(pc),a1
@@ -78,10 +81,10 @@ BranchTo2_MarkObjGone ; BranchTo
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 ; sub_12756:
-SolidObject_Monitor_Sonic:
+SolidObject_Monitor_Player:
 	btst	d6,status(a0)			; is Sonic standing on the monitor?
 	bne.s	Obj26_ChkOverEdge		; if yes, branch
-	cmpi.b	#AniIDSonAni_Roll,anim(a1)		; is Sonic spinning?
+	cmpi.b	#AniIDSonAni_Roll,anim(a1)	; is Sonic spinning?
 	bne.w	SolidObject_cont		; if not, branch
 	rts
 ; End of function SolidObject_Monitor_Sonic

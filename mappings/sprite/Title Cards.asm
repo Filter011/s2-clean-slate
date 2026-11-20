@@ -41,8 +41,7 @@ TC_EHZ:		spriteHeader	; EMERALD HILL
 	spritePiece	$18, 0, 2, 2, $5EC, 0, 0, 0, 1	; L
 	spritePiece	$28, 0, 2, 2, $5F0, 0, 0, 0, 1	; D
 
-	spritePiece	$48, 0, 2, 2, $5F4, 0, 0, 0, 1	; H
-	spritePiece	$58, 0, 1, 2, $5F8, 0, 0, 0, 1	; I
+	spritePiece	$48, 0, 3, 2, $5F4, 0, 0, 0, 1	; HI
 	spritePiece	$60, 0, 2, 2, $5EC, 0, 0, 0, 1	; L
 	spritePiece	$70, 0, 2, 2, $5EC, 0, 0, 0, 1	; L
 TC_EHZ_End
@@ -63,8 +62,7 @@ TC_MTZ_End
 
 ; word_14894:
 TC_HTZ:		spriteHeader	; HILL TOP
-	spritePiece	8, 0, 2, 2, $5DE, 0, 0, 0, 1	; H
-	spritePiece	$18, 0, 1, 2, $5E2, 0, 0, 0, 1	; I
+	spritePiece	8, 0, 3, 2, $5DE, 0, 0, 0, 1	; HI
 	spritePiece	$20, 0, 2, 2, $5E4, 0, 0, 0, 1	; L
 	spritePiece	$30, 0, 2, 2, $5E4, 0, 0, 0, 1	; L
 
@@ -75,12 +73,10 @@ TC_HTZ_End
 
 ; word_148CE:
 TC_HPZ:		spriteHeader	; HIDDEN PALACE
-	spritePiece	-$48, 0, 2, 2, $5DE, 0, 0, 0, 1	; H
-	spritePiece	-$38, 0, 1, 2, $5E2, 0, 0, 0, 1	; I
+	spritePiece	-$48, 0, 3, 2, $5DE, 0, 0, 0, 1	; HI
 	spritePiece	-$30, 0, 2, 2, $5E4, 0, 0, 0, 1	; D
 	spritePiece	-$20, 0, 2, 2, $5E4, 0, 0, 0, 1	; D
-	spritePiece	-$10, 0, 2, 2, $580, 0, 0, 0, 1	; E
-	spritePiece	0, 0, 2, 2, $584, 0, 0, 0, 1	; N
+	spritePiece	-$10, 0, 4, 2, $580, 0, 0, 0, 1	; EN
 
 	spritePiece	$20, 0, 2, 2, $5E8, 0, 0, 0, 1	; P
 	spritePiece	$30, 0, 2, 2, $5EC, 0, 0, 0, 1	; A
@@ -124,13 +120,11 @@ TC_CNZ:		spriteHeader	; CASINO NIGHT
 	spritePiece	-$20, 0, 2, 2, $5E2, 0, 0, 0, 1	; A
 	spritePiece	-$10, 0, 2, 2, $5E6, 0, 0, 0, 1	; S
 	spritePiece	0, 0, 1, 2, $5EA, 0, 0, 0, 1	; I
-	spritePiece	8, 0, 2, 2, $584, 0, 0, 0, 1	; N
-	spritePiece	$18, 0, 2, 2, $588, 0, 0, 0, 1	; O
+	spritePiece	8, 0, 4, 2, $584, 0, 0, 0, 1	; NO
 
 	spritePiece	$38, 0, 2, 2, $584, 0, 0, 0, 1	; N
 	spritePiece	$48, 0, 1, 2, $5EA, 0, 0, 0, 1	; I
-	spritePiece	$50, 0, 2, 2, $5EC, 0, 0, 0, 1	; G
-	spritePiece	$60, 0, 2, 2, $5F0, 0, 0, 0, 1	; H
+	spritePiece	$50, 0, 4, 2, $5EC, 0, 0, 0, 1	; GH
 	spritePiece	$70, 0, 2, 2, $5F4, 0, 0, 0, 1	; T
 TC_CNZ_End
 

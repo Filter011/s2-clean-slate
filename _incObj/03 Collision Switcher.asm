@@ -40,6 +40,11 @@ Obj03_Init:
 	bhs.s	+
 	move.b	#1,objoff_34(a0)
 +
+	lea	(Sidekick).w,a1 ; a1=character
+	cmp.w	y_pos(a1),d1
+	bhs.s	+
+	move.b	#1,objoff_35(a0)
++
 	bra.w	Obj03_MainY
 ; ===========================================================================
 word_1FD68:
@@ -57,16 +62,23 @@ Obj03_Init_CheckX:
 	move.w	x_pos(a0),d1
 	lea	(MainCharacter).w,a1 ; a1=character
 	cmp.w	x_pos(a1),d1
-	bhs.s	Obj03_MainX
+	bhs.s	+
 	move.b	#1,objoff_34(a0)
++
+	lea	(Sidekick).w,a1 ; a1=character
+	cmp.w	x_pos(a1),d1
+	bhs.s	Obj03_MainX
+	move.b	#1,objoff_35(a0)
 
 ; loc_1FDA4:
 Obj03_MainX:
 	tst.w	(Debug_placement_mode).w
-	bne.s	.return
+	bne.w	.return
 	move.w	x_pos(a0),d1
 	lea	objoff_34(a0),a2
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	+
+	lea	(Sidekick).w,a1 ; a1=character
 
 +	tst.b	(a2)+
 	bne.s	Obj03_MainX_Alt
@@ -149,6 +161,8 @@ Obj03_MainY:
 	move.w	y_pos(a0),d1
 	lea	objoff_34(a0),a2
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	+
+	lea	(Sidekick).w,a1 ; a1=character
 
 +	tst.b	(a2)+
 	bne.s	Obj03_MainY_Alt

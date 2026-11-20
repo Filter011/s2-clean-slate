@@ -2,8 +2,6 @@
 ; This runs the code of all the objects that are in Object_RAM
 ; -------------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_15F9C: ObjectsLoad:
 RunObjects:
 	lea	(Object_RAM).w,a0 ; a0=object
@@ -19,13 +17,9 @@ RunObjects:
 	cmpi.b	#6,(MainCharacter+routine).w
 	bhs.s	RunObjectsWhenPlayerIsDead ; if dead, branch
 	; continue straight to RunObject
-; ---------------------------------------------------------------------------
-
 ; -------------------------------------------------------------------------------
 ; This is THE place where each individual object's code gets called from
 ; -------------------------------------------------------------------------------
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 ; sub_15FCC:
 RunObject:

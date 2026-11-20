@@ -40,7 +40,7 @@ Obj74_Main:
 	move.w	d2,d3
 	addq.w	#1,d3
 	move.w	x_pos(a0),d4
-	bsr.w	SolidObject_Always
+	jsr	(SolidObject_Always).l
 	moveq	#-$80,d0
 	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0

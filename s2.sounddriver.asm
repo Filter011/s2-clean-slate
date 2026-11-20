@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD.patch
-; Version: 26.11.18.8 (stable)
+; Version: 26.11.20 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -784,7 +784,17 @@ zFMUpdateTrack:
 	ret	nz				; If so, quit
 	call	zDoModulation			; Update modulation (if modulation doesn't change, we do not return here)
 	call	zFMUpdateFreq			; Prepares to play next note
-	jp	zFMNoteOn			; Actually key it (if allowed)
+	ld	a,(ix+zTrack.FreqLow)
+	or	(ix+zTrack.FreqHigh)
+	ret	z				; If Frequency is zero, return
+	ld	a,(ix+zTrack.PlaybackControl)	; Get playback control byte
+	and	00010110b
+	ret	nz				; If bit 1 ("track in rest"), 2 ("SFX overriding this track"), or 4 (no attack), quit!
+	ld	a,(ix+zTrack.VoiceControl)	; Get "voice control" byte
+	or	0F0h				; Turn on ALL operators
+	ld	c,a				; Set as data to write to FM
+	ld	a,28h				; Write to KEY ON/OFF port (key ON in this case)
+	jp	zWriteFMI			; Do it!
 
 .notegoing:
 	bit	1,(ix+zTrack.PlaybackControl)	; Is "track in rest"?
@@ -1059,8 +1069,7 @@ zPSGUpdateTrack:
 	bit	1,(ix+zTrack.PlaybackControl)	; Is "track in rest"?
 	ret	nz				; If so, quit
 	call	zDoModulation			; Update modulation (if modulation doesn't change, we do not return here)
-	call	zPSGUpdateFreq			; Actually key it (if allowed)
-	jp	zPSGDoVolFX			; This applies PSG volume as well as its special volume-based effects that I call "flutter"
+	jp	zPSGUpdateFreq			; Actually key it (if allowed)
 
 .notegoing:
 	bit	1,(ix+zTrack.PlaybackControl)	; Is "track in rest"?
@@ -1072,7 +1081,6 @@ zPSGUpdateTrack:
 	jp	z,zPSGNoteOff_RestTrack		; If zero, branch
 
 .next:
-	call	zPSGUpdateVolFX			; Update volume effects
 	call	zDoModulation			; Update modulation (if modulation doesn't change, we do not return here)
 	; fall into zPSGUpdateFreq
 ; End of function zPSGUpdateTrack
@@ -1124,8 +1132,85 @@ zPSGUpdateFreq:
 	rrca
 	rrca
 	ld	(de),a			; Write other frequency byte to PSG!
-	ret
 ; End of function zPSGDoNoteOn
+
+
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
+
+
+; zsub_4CF
+zPSGDoVolFX:
+	ld	b,(ix+zTrack.Volume)		; Channel volume -> 'b'
+	ld	a,(ix+zTrack.VoiceIndex)	; Current PSG tone -> 'a'
+	or	a				; Test it
+	jr	z,zPSGUpdateVol			; If tone is zero, jump to zPSGUpdateVol
+	ld	hl,zPSG_EnvTbl-2		; hl points to PSG envelope table
+	add	a,a				; a *= 2
+	ld	e,a
+	ld	d,0				; de = a
+	add	hl,de				; Offset into pointer table...
+	ld	a,(hl)				; Get low byte -> 'a'
+	inc	hl				; Next byte
+	ld	h,(hl)				; Get high byte into 'h'
+	add	a,(ix+zTrack.VolFlutter)	; Apply PSG flutter (provides dynamic volume for special effects)
+	ld	l,a
+	adc	a,h
+	sub	l
+	ld	h,a			; Basically, hl = (hl+(ix+zTrack.VolFlutter))
+	ld	a,(hl)			; Get byte from this location
+	inc	(ix+zTrack.VolFlutter)	; Increment PSG flutter value
+	or	a			; test byte from before
+	jp	p,.gotflutter		; Is it a positive value?
+    if 0
+	cp	80h			; Check if it's 80h (terminator to the "flutter" list)
+	jr	z,zVolEnvHold		; If it is, then jump to zVolEnvHold (which just keeps at this flutter value, i.e. no more changes in volume)
+    else
+	jp	m,zVolEnvHold
+    endif
+
+.gotflutter:
+	add	a,b			; Apply this "flutter" to channel volume -> 'a'
+	ld	b,a			; a -> 'b'
+
+; zloc_4F9
+zPSGUpdateVol:
+	bit	1,(ix+zTrack.PlaybackControl)	; Is bit 1 ("track at rest") set?
+	ret	nz				; If so, quit!
+	bit	4,(ix+zTrack.PlaybackControl)	; Is "do not attack next note" set?
+	jr	nz,zPSGCheckNoteFill		; If so, jump to zPSGCheckNoteFill
+
+; zloc_505
+zPSGSendVol:
+	ld	a,b				; 'b' -> 'a'
+	cp	10h				; Did the level get pushed below silence level? (i.e. a > 0Fh)
+	jr	c,.abovesilence
+	ld	a,0Fh				; If so, fix it!
+
+.abovesilence:
+	or	(ix+zTrack.VoiceControl)	; Apply channel info (which PSG to set!)
+	or	10h				; This bit marks it as an attenuation level assignment (along with channel info just above)
+	ld	(zPSG),a			; Write to PSG!!
+	ret
+; ---------------------------------------------------------------------------
+
+; zloc_515
+zPSGCheckNoteFill:				; If you get here, then "do not attack next note" was set...
+	ld	a,(ix+zTrack.NoteFillMaster)	; Get master "note fill" value
+	or	a				; test it
+	jr	z,zPSGSendVol			; If it's zero, then just process normally
+	ld	a,(ix+zTrack.NoteFillTimeout)	; Otherwise, get current "note fill" value
+	or	a				; Test it
+	jr	nz,zPSGSendVol			; If it's not zero, then just process normally
+	ret
+; ---------------------------------------------------------------------------
+; zloc_522
+zVolEnvHold:
+	; This just decrements the flutter to keep it in place; no more volume changes in this list
+	ld	a,(ix+zTrack.VolFlutter)
+	sub	2			; Put index back (before final volume value)
+	ld	(ix+zTrack.VolFlutter),a
+	jp	zPSGDoVolFX		; Loop back and update volume
+; End of function zPSGDoVolFX
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
@@ -1210,96 +1295,6 @@ zPSGNoteOff:
 	ld	(zPSG),a	; Stop noise channel
 	ret
 ; End of function zPSGNoteOff
-
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
-
-; zsub_4CA
-zPSGUpdateVolFX:
-	ld	a,(ix+zTrack.VoiceIndex)	; Get current PSG tone
-	or	a				; Test if it's zero
-	ret	z				; If it is, return!
-	; Otherwise, fall into zPSGDoVolFX...
-
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
-
-; zsub_4CF
-zPSGDoVolFX:
-	ld	b,(ix+zTrack.Volume)		; Channel volume -> 'b'
-	ld	a,(ix+zTrack.VoiceIndex)	; Current PSG tone -> 'a'
-	or	a				; Test it
-	jr	z,zPSGUpdateVol			; If tone is zero, jump to zPSGUpdateVol
-	ld	hl,zPSG_EnvTbl-2		; hl points to PSG envelope table
-	add	a,a				; a *= 2
-	ld	e,a
-	ld	d,0				; de = a
-	add	hl,de				; Offset into pointer table...
-	ld	a,(hl)				; Get low byte -> 'a'
-	inc	hl				; Next byte
-	ld	h,(hl)				; Get high byte into 'h'
-	add	a,(ix+zTrack.VolFlutter)	; Apply PSG flutter (provides dynamic volume for special effects)
-	ld	l,a
-	adc	a,h
-	sub	l
-	ld	h,a			; Basically, hl = (hl+(ix+zTrack.VolFlutter))
-	ld	a,(hl)			; Get byte from this location
-	inc	(ix+zTrack.VolFlutter)	; Increment PSG flutter value
-	or	a			; test byte from before
-	jp	p,.gotflutter		; Is it a positive value?
-    if 0
-	cp	80h			; Check if it's 80h (terminator to the "flutter" list)
-	jr	z,zVolEnvHold		; If it is, then jump to zVolEnvHold (which just keeps at this flutter value, i.e. no more changes in volume)
-    else
-	jp	m,zVolEnvHold
-    endif
-
-.gotflutter:
-	add	a,b			; Apply this "flutter" to channel volume -> 'a'
-	ld	b,a			; a -> 'b'
-
-; zloc_4F9
-zPSGUpdateVol:
-	ld	a,(ix+zTrack.PlaybackControl)	; get playback control byte
-	and	0110b				; Checks bits 1 ("track at rest") and 2 ("SFX overriding this track")
-	ret	nz				; If either bit is set, quit!
-	bit	4,(ix+zTrack.PlaybackControl)	; Is "do not attack next note" set?
-	jr	nz,zPSGCheckNoteFill		; If so, jump to zPSGCheckNoteFill
-
-; zloc_505
-zPSGSendVol:
-	ld	a,b				; 'b' -> 'a'
-	cp	10h				; Did the level get pushed below silence level? (i.e. a > 0Fh)
-	jr	c,.abovesilence
-	ld	a,0Fh				; If so, fix it!
-
-.abovesilence:
-	or	(ix+zTrack.VoiceControl)	; Apply channel info (which PSG to set!)
-	or	10h				; This bit marks it as an attenuation level assignment (along with channel info just above)
-	ld	(zPSG),a			; Write to PSG!!
-	ret
-; ---------------------------------------------------------------------------
-
-; zloc_515
-zPSGCheckNoteFill:				; If you get here, then "do not attack next note" was set...
-	ld	a,(ix+zTrack.NoteFillMaster)	; Get master "note fill" value
-	or	a				; test it
-	jr	z,zPSGSendVol			; If it's zero, then just process normally
-	ld	a,(ix+zTrack.NoteFillTimeout)	; Otherwise, get current "note fill" value
-	or	a				; Test it
-	jr	nz,zPSGSendVol			; If it's not zero, then just process normally
-	ret
-; ---------------------------------------------------------------------------
-; zloc_522
-zVolEnvHold:
-	; This just decrements the flutter to keep it in place; no more volume changes in this list
-	ld	a,(ix+zTrack.VolFlutter)
-	sub	2			; Put index back (before final volume value)
-	ld	(ix+zTrack.VolFlutter),a
-	jp	zPSGDoVolFX		; Loop back and update volume
-; End of function zPSGDoVolFX
 
 ; ---------------------------------------------------------------------------
 zMakeFMFrequency function frequency,roundFloatToInteger(frequency*1024*1024*2/FM_Sample_Rate)
@@ -2411,25 +2406,6 @@ zUpdateFadeIn:
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
 
-; zsub_C46
-zFMNoteOn:
-	ld	a,(ix+zTrack.FreqLow)
-	or	(ix+zTrack.FreqHigh)
-	ret	z				; If Frequency is zero, return
-	ld	a,(ix+zTrack.PlaybackControl)	; Get playback control byte
-	and	00010110b
-	ret	nz				; If bit 1 ("track in rest"), 2 ("SFX overriding this track"), or 4 (no attack), quit!
-	ld	a,(ix+zTrack.VoiceControl)	; Get "voice control" byte
-	or	0F0h				; Turn on ALL operators
-	ld	c,a				; Set as data to write to FM
-	ld	a,28h				; Write to KEY ON/OFF port (key ON in this case)
-	jp	zWriteFMI			; Do it!
-; End of function zFMNoteOn
-
-
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
-
 ; zsub_C56
 zFMNoteOff:
 	ld	a,(ix+zTrack.PlaybackControl)	; Load this track's playback control byte
@@ -3327,7 +3303,7 @@ SndPtr_Ring:
 SndPtr_RingRight:	sfx_metadata	Sound35	; ring sound
 SndPtr_SpikesMove:	sfx_metadata	Sound36
 SndPtr_Rumbling:	sfx_metadata	Sound37	; rumbling
-			sfx_metadata	Sound38	; (unused)
+SndPtr_GlideLand:	sfx_metadata	Sound38	; (unused)
 SndPtr_Smash:		sfx_metadata	Sound39	; smash/breaking
 SndPtr_Grab:		sfx_metadata	Sound3A	; nondescript ding (unused)
 SndPtr_DoorSlam:	sfx_metadata	Sound3B	; door slamming shut
@@ -3342,7 +3318,7 @@ SndPtr_EnterGiantRing:	sfx_metadata	Sound43	; special stage ring flash (mostly u
 SndPtr_BossExplosion:	sfx_metadata	Sound44	; thunk
 SndPtr_TallyEnd:	sfx_metadata	Sound45	; cha-ching
 SndPtr_RingSpill:	sfx_metadata	Sound46	; losing rings
-			sfx_metadata	Sound47	; chain pull chink-chink (unused)
+SndPtr_GroundSlide:	sfx_metadata	Sound47	; chain pull chink-chink (unused)
 SndPtr_Flamethrower:	sfx_metadata	Sound48	; flamethrower
 SndPtr_Bonus:		sfx_metadata	Sound49	; bonus pwoieeew (mostly unused)
 SndPtr_SpecStageEntry:	sfx_metadata	Sound4A	; special stage entry

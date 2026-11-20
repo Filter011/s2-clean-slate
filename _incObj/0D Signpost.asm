@@ -69,7 +69,7 @@ Obj0D_Main:
 	tst.b	obj0D_finalanim(a0)
 	bne.s	loc_19350
 	move.b	#3,obj0D_finalanim(a0)
-	cmpi.w	#1,(Player_mode).w
+	cmpi.w	#2,(Player_mode).w
 	bne.s	loc_19350
 	move.b	#4,obj0D_finalanim(a0)
 

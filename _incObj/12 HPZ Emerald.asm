@@ -27,7 +27,7 @@ Obj12_Main:
 	moveq	#$10,d2
 	moveq	#$10,d3
 	move.w	x_pos(a0),d4
-	bsr.w	SolidObject
+	jsr	(SolidObject).l
 	moveq	#-$80,d0
 	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0

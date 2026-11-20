@@ -9,7 +9,7 @@ Sound27_Sparkle_Header:
 ; FM4 Data
 Sound27_Sparkle_FM4:
 	smpsSetvoice        $00
-	dc.b	nE5, $05, nG5, $05, nC6, $2B
+	dc.b	nE5, $05, nG5, nC6, $2B
 	smpsStop
 
 Sound27_Sparkle_Voices:

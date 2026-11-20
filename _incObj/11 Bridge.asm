@@ -208,8 +208,14 @@ loc_F852:
 
 
 sub_F872:
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing_bit,d6
+	moveq	#objoff_3B,d5
+	movem.l	d1-d4,-(sp)
+	bsr.s	+
+	movem.l	(sp)+,d1-d4
 	lea	(MainCharacter).w,a1 ; a1=character
-	moveq	#p1_standing_bit,d6
+	subq.b	#p2_standing_bit-p1_standing_bit,d6
 	moveq	#objoff_3F,d5
 +
 	btst	d6,status(a0)
@@ -285,6 +291,12 @@ sub_F912:
 	swap	d2
 	move.b	byte_F950(pc,d0.w),d2
 	moveq	#0,d0
+	tst.w	(Sidekick+x_vel).w
+	bne.s	+
+	move.b	(Vint_runcount+3).w,d0
+	andi.w	#$1C,d0
+	lsr.w	#1,d0
++
 	moveq	#0,d6
 	move.b	byte_F950+1(pc,d0.w),d6
 	swap	d6
@@ -308,6 +320,11 @@ byte_F950:
 	andi.b	#p1_standing,d0
 	beq.s	+
 	move.b	objoff_3F(a0),d3
++
+	move.b	status(a0),d0
+	andi.b	#p2_standing,d0
+	beq.s	+
+	move.b	objoff_3B(a0),d4
 +
 	movea.l	Obj11_child1(a0),a1
 	lea	sub9_mapframe+next_subspr(a1),a2

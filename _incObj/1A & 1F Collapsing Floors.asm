@@ -98,6 +98,8 @@ Obj1A_Fragment:
 	subq.b	#1,collapsing_platform_delay_counter(a0)
 	bne.s	+
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	sub_109DC
+	lea	(Sidekick).w,a1 ; a1=character
 
 sub_109DC:
 	btst	#status.player.on_object,status(a1)
@@ -207,6 +209,8 @@ Obj1F_Fragment:
 	subq.b	#1,collapsing_platform_delay_counter(a0)
 	bne.s	+	; rts
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	sub_10B36
+	lea	(Sidekick).w,a1 ; a1=character
 
 sub_10B36:
 	btst	#status.player.on_object,status(a1)

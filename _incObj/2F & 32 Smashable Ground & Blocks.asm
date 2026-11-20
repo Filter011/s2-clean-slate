@@ -42,6 +42,7 @@ Obj2F_Init:
 Obj2F_Main:
 	move.w	(Chain_Bonus_counter).w,objoff_38(a0)
 	move.b	(MainCharacter+anim).w,objoff_32(a0)
+	move.b	(Sidekick+anim).w,objoff_33(a0)
 	moveq	#0,d1
 	move.b	width_pixels(a0),d1
 	addi.w	#$B,d1
@@ -69,12 +70,25 @@ Obj2F_Main:
 loc_233C0:
 	move.b	#$C,(MainCharacter+top_solid_bit).w
 	move.b	#$D,(MainCharacter+lrb_solid_bit).w
+	cmpi.b	#AniIDSonAni_Roll,objoff_33(a0)
+	bne.s	loc_233E2
+	tst.b	subtype(a0)
+	bmi.s	loc_233F0
+	cmpi.b	#$E,(Sidekick+top_solid_bit).w
+	beq.s	loc_233F0
+
+loc_233E2:
+	move.b	#$C,(Sidekick+top_solid_bit).w
+	move.b	#$D,(Sidekick+lrb_solid_bit).w
 	jmp	(MarkObjGone).w
 ; ===========================================================================
 
 loc_233F0:
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.b	objoff_32(a0),d0
+	bsr.s	loc_2343E
+	lea	(Sidekick).w,a1 ; a1=character
+	move.b	objoff_33(a0),d0
 	bsr.s	loc_2343E
 	bra.w	loc_234A4
 ; ===========================================================================
@@ -93,8 +107,6 @@ loc_23408:
 loc_23426:
 	move.b	#$C,(MainCharacter+top_solid_bit).w
 	move.b	#$D,(MainCharacter+lrb_solid_bit).w
-
-loc_23470:
 	jmp	(MarkObjGone).w
 ; ===========================================================================
 
@@ -120,6 +132,28 @@ loc_2345C:
 	move.b	#2,routine(a1)
 	rts
 ; ===========================================================================
+
+loc_23470:
+	andi.b	#p2_standing,d0
+	beq.s	BranchTo_JmpTo9_MarkObjGone
+	cmpi.b	#AniIDSonAni_Roll,objoff_33(a0)
+	bne.s	loc_2348E
+	tst.b	subtype(a0)
+	bmi.s	loc_2349E
+	cmpi.b	#$E,(Sidekick+top_solid_bit).w
+	beq.s	loc_2349E
+
+loc_2348E:
+	move.b	#$C,(Sidekick+top_solid_bit).w
+	move.b	#$D,(Sidekick+lrb_solid_bit).w
+
+BranchTo_JmpTo9_MarkObjGone:
+	jmp	(MarkObjGone).w
+; ===========================================================================
+
+loc_2349E:
+	lea	(Sidekick).w,a1 ; a1=character
+	bsr.s	loc_23444
 
 loc_234A4:
 	move.w	objoff_38(a0),(Chain_Bonus_counter).w
@@ -196,6 +230,7 @@ Obj32_Init:
 Obj32_Main:
 	move.w	(Chain_Bonus_counter).w,objoff_38(a0)
 	move.b	(MainCharacter+anim).w,breakableblock_mainchar_anim(a0)
+	move.b	(Sidekick+anim).w,breakableblock_sidekick_anim(a0)
 	moveq	#0,d1
 	move.b	width_pixels(a0),d1
 	addi.w	#$B,d1
@@ -215,10 +250,15 @@ Obj32_SupportingSomeone:
 	cmpi.b	#standing_mask,d0	; are BOTH players standing on the object?
 	bne.s	Obj32_SupportingOnePlayerOnly	; if not, branch
 	cmpi.b	#AniIDSonAni_Roll,breakableblock_mainchar_anim(a0)
+	beq.s	+
+	cmpi.b	#AniIDSonAni_Roll,breakableblock_sidekick_anim(a0)
 	bne.s	BranchTo2_JmpTo9_MarkObjGone
 +
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.b	breakableblock_mainchar_anim(a0),d0
+	bsr.s	Obj32_SetCharacterOffBlock
+	lea	(Sidekick).w,a1 ; a1=character
+	move.b	breakableblock_sidekick_anim(a0),d0
 	bsr.s	Obj32_SetCharacterOffBlock
 	bra.s	Obj32_Destroy
 ; ===========================================================================
@@ -226,7 +266,7 @@ Obj32_SupportingSomeone:
 Obj32_SupportingOnePlayerOnly:
 	move.b	d0,d1
 	andi.b	#p1_standing,d1			 ; is the main character standing on the object?
-	beq.s	BranchTo2_JmpTo9_MarkObjGone ; if not, branch
+	beq.s	Obj32_SupportingSidekick ; if not, branch
 	cmpi.b	#AniIDSonAni_Roll,breakableblock_mainchar_anim(a0)
 	bne.s	BranchTo2_JmpTo9_MarkObjGone
 	lea	(MainCharacter).w,a1 ; a1=character
@@ -250,6 +290,14 @@ Obj32_BouncePlayer:
 	move.b	#2,routine(a1)
 	rts
 ; ===========================================================================
+; loc_2363A:
+Obj32_SupportingSidekick:
+	andi.b	#p2_standing,d0	; is the sidekick standing on the object? (at this point, it should...)
+	beq.w	BranchTo2_JmpTo9_MarkObjGone ; if, by miracle, he's not, branch
+	cmpi.b	#2,breakableblock_sidekick_anim(a0)
+	bne.w	BranchTo2_JmpTo9_MarkObjGone
+	lea	(Sidekick).w,a1 ; a1=character
+	bsr.s	Obj32_BouncePlayer
 ; loc_23652:
 Obj32_Destroy:
 	move.w	objoff_38(a0),(Chain_Bonus_counter).w

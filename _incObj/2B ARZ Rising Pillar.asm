@@ -48,6 +48,9 @@ loc_25ACE:
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
 	bsr.s	loc_25AF6
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.b	#1,d6
+	bsr.s	loc_25AF6
 	bra.w	loc_25B8E
 ; ===========================================================================
 
@@ -81,6 +84,8 @@ loc_25B3C:
 	tst.w	(Debug_placement_mode).w
 	bne.s	return_25B64
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	loc_25B4C
+	lea	(Sidekick).w,a1 ; a1=character
 
 loc_25B4C:
 	move.w	x_pos(a0),d0

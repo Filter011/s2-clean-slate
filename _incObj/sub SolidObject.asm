@@ -20,6 +20,16 @@ SolidObject:
 	; Collide player 1.
 	lea	(MainCharacter).w,a1
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)	; Backup input registers.
+	bsr.s	+
+	movem.l	(sp)+,d1-d4	; Restore input registers.
+
+	; Collide player 2.
+	lea	(Sidekick).w,a1
+	_btst	#render_flags.on_screen,render_flags(a1)
+	_beq.w	return_19776	; Don't bother if Tails is not on-screen.
+	addq.b	#p2_standing_bit-p1_standing_bit,d6
++
 	btst	d6,status(a0)
 	beq.w	SolidObject_OnScreenTest
 	move.w	d1,d2
@@ -56,7 +66,12 @@ return_19776:
 SolidObject_Always:
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
-
+	movem.l	d1-d4,-(sp)
+	bsr.s	SolidObject_Always_SingleCharacter
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.b	#1,d6
+;loc_1978E:
 SolidObject_Always_SingleCharacter:
 	btst	d6,status(a0)
 	beq.w	SolidObject_cont
@@ -103,7 +118,14 @@ loc_197C6:
 SlopedSolid:
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
+	bsr.s	SlopedSolid_SingleCharacter
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.b	#1,d6
 
+; this gets called from a few more places...
+; loc_197E6: SolidObject_Simple:
 SlopedSolid_SingleCharacter:
 	btst	d6,status(a0)
 	beq.w	SlopedSolid_cont
@@ -136,6 +158,13 @@ loc_1981E:
 SolidObject45:
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
+	bsr.s	loc_19896
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.b	#1,d6
+
+loc_19896:
 	btst	d6,status(a0)
 	beq.s	SolidObject45_cont
 	btst	#status.player.in_air,status(a1)

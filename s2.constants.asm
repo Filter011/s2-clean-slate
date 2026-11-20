@@ -5,7 +5,7 @@
 ; size variables - you'll get an informational error if you need to change these...
 ; they are all in units of bytes
 Size_of_SEGA_sound =		$6174
-Size_of_Snd_driver_guess =	$200 ; approximate post-compressed size of the Z80 sound driver
+Size_of_Snd_driver_guess =	$00 ; approximate post-compressed size of the Z80 sound driver
 
 ; ---------------------------------------------------------------------------
 ; Object Status Table offsets (for everything between Object_RAM and Primary_Collision)
@@ -71,9 +71,12 @@ top_solid_bit = 	$3E ; the bit to check for top solidity (either $C or $E)
 lrb_solid_bit =		$3F ; the bit to check for left/right/bottom solidity (either $D or $F)
 ;
 ; - Status Constants For Tails Flight
-flying 		=		$1F	; 0 for normal, 1 for flying, 2+ for flying unaffected by gravity
+flying =		$1F	; 0 for normal, 1 for flying, 2+ for flying unaffected by gravity
 flying_timer =		$21	; remaining flight time for Tails (frames / 2)
 carry_delay =		$23	; number of frames before main character can be carried by Tails after jumping off; starts at either 18 or 60 and decrements to 0
+; - Status Constants For Knuckles
+double_jump_property =	$1F
+double_jump_flag =	$23
 ; ---------------------------------------------------------------------------
 ; conventions followed by several objects but NOT Sonic/Tails:
 y_pixel =		y_pos ; and 3+x_pos ; y coordinate for objects using screen-space coordinate system
@@ -450,6 +453,7 @@ idstart :=	0
 PalID_SEGA =	id(PalPtr_SEGA) ; 0
 PalID_Title =	id(PalPtr_Title) ; 1
 PalID_BGND =	id(PalPtr_BGND) ; 3
+PalID_Knux =	id(PalPtr_Knux) ; 3
 PalID_EHZ =	id(PalPtr_EHZ) ; 4
 PalID_EHZ2 =	id(PalPtr_EHZ2) ; 5
 PalID_WZ =	id(PalPtr_WZ) ; 6
@@ -486,7 +490,7 @@ PLCID_StdWtr =		id(PLCptr_StdWtr) ; 2
 PLCID_GameOver =	id(PLCptr_GameOver) ; 3
 PLCID_Ehz1 =		id(PLCptr_Ehz1) ; 4
 PLCID_Ehz2 =		id(PLCptr_Ehz2) ; 5
-PLCID_MilesLife2P =	id(PLCptr_MilesLife2P) ; 6
+PLCID_KnuxLife =	id(PLCptr_KnuxLife) ; 6
 PLCID_MilesLife =	id(PLCptr_MilesLife) ; 7
 PLCID_TailsLife2P =	id(PLCptr_TailsLife2P) ; 8
 PLCID_TailsLife =	id(PLCptr_TailsLife) ; 9
@@ -559,7 +563,7 @@ ObjID_Spiral =			id(ObjPtr_Spiral)		; 06
 ObjID_Oil =			id(ObjPtr_Oil)			; 07
 ObjID_SpindashDust =		id(ObjPtr_SpindashDust)		; 08
 ObjID_Splash =			id(ObjPtr_Splash)		; 08
-ObjID_SonicSS =			id(ObjPtr_SonicSS)		; 09
+ObjID_Knuckles =		id(ObjPtr_Knuckles)		; 09
 ObjID_SmallBubbles =		id(ObjPtr_SmallBubbles)		; 0A
 ObjID_TippingFloor =		id(ObjPtr_TippingFloor)		; 0B
 ObjID_Signpost =		id(ObjPtr_Signpost)		; 0D
@@ -903,6 +907,8 @@ SndID_OilSlide =	id(SndPtr_OilSlide)		; F0
 SndID_Grab =		id(SndPtr_Grab)			; grabbing
 SndID_Flying =		id(SndPtr_Flying)		; flying
 SndID_FlyingTired =	id(SndPtr_FlyingTired)		; flying tired
+SndID_GlideLand =	id(SndPtr_GlideLand)		; glide land
+SndID_GroundSlide =	id(SndPtr_GroundSlide)		; ground slide
 SndID__End =		id(SndPtr__End)			; F1
 
 ; Sound command IDs
@@ -986,6 +992,47 @@ AniIDTailsAni_Swim		= id(TailsAni_Swim_ptr)		; 38 ; $26
 AniIDTailsAni_SwimUp		= id(TailsAni_SwimUp_ptr)	; 39 ; $27
 AniIDTailsAni_SwimCarry		= id(TailsAni_SwimCarry_ptr)	; 40 ; $28
 AniIDTailsAni_SwimTired		= id(TailsAni_SwimTired_ptr)	; 41 ; $29
+
+offset :=	KnucklesAniData
+ptrsize :=	2
+idstart :=	0
+
+AniIDKnuxAni_Walk		= id(KnuxAni_Walk_ptr)		;  0 ;   0
+AniIDKnuxAni_Run		= id(KnuxAni_Run_ptr)		;  1 ;   1
+AniIDKnuxAni_Roll		= id(KnuxAni_Roll_ptr)		;  2 ;   2
+AniIDKnuxAni_Push		= id(KnuxAni_Push_ptr)		;  3 ;   3
+AniIDKnuxAni_Wait		= id(KnuxAni_Wait_ptr)		;  4 ;   4
+AniIDKnuxAni_Balance		= id(KnuxAni_Balance_ptr)	;  5 ;   5
+AniIDKnuxAni_LookUp		= id(KnuxAni_LookUp_ptr)	;  6 ;   6
+AniIDKnuxAni_Duck		= id(KnuxAni_Duck_ptr)		;  7 ;   7
+AniIDKnuxAni_Spindash		= id(KnuxAni_Spindash_ptr)	;  8 ;   8
+AniIDKnuxAni_Blink		= id(KnuxAni_Blink_ptr)		;  9 ;   9
+AniIDKnuxAni_GetUp		= id(KnuxAni_GetUp_ptr)		; 10 ;  $A
+AniIDKnuxAni_Balance2		= id(KnuxAni_Balance2_ptr)	; 11 ;  $B
+AniIDKnuxAni_Stop		= id(KnuxAni_Stop_ptr)		; 12 ;  $C
+AniIDKnuxAni_Float		= id(KnuxAni_Float_ptr)		; 13 ;  $D
+AniIDKnuxAni_Float2		= id(KnuxAni_Float2_ptr)	; 14 ;  $E
+AniIDKnuxAni_Spring		= id(KnuxAni_Spring_ptr)	; 15 ;  $F
+AniIDKnuxAni_Hang		= id(KnuxAni_Hang_ptr)		; 16 ; $10
+AniIDKnuxAni_Dash2		= id(KnuxAni_Dash2_ptr)		; 17 ; $11
+AniIDKnuxAni_Dash3		= id(KnuxAni_Dash3_ptr)		; 18 ; $12
+AniIDKnuxAni_Hang2		= id(KnuxAni_Hang2_ptr)		; 19 ; $13
+AniIDKnuxAni_Bubble		= id(KnuxAni_Bubble_ptr)	; 20 ; $14
+AniIDKnuxAni_DeathBW		= id(KnuxAni_DeathBW_ptr)	; 21 ; $15
+AniIDKnuxAni_Drown		= id(KnuxAni_Drown_ptr)		; 22 ; $16
+AniIDKnuxAni_Death		= id(KnuxAni_Death_ptr)		; 23 ; $17
+AniIDKnuxAni_Hurt		= id(KnuxAni_Hurt_ptr)		; 24 ; $18
+AniIDKnuxAni_Hurt2		= id(KnuxAni_Hurt2_ptr)		; 25 ; $19
+AniIDKnuxAni_Slide		= id(KnuxAni_Slide_ptr)		; 26 ; $1A
+AniIDKnuxAni_Blank		= id(KnuxAni_Blank_ptr)		; 27 ; $1B
+AniIDKnuxAni_Balance3		= id(KnuxAni_Balance3_ptr)	; 28 ; $1C ; Exclusive to Sonic
+AniIDKnuxAni_Balance4		= id(KnuxAni_Balance4_ptr)	; 29 ; $1D ; Exclusive to Sonic
+AniIDSupKnuxAni_Transform	= id(SupKnuxAni_Transform_ptr)	; 30 ; $1E ; Exclusive to Sonic
+AniIDKnuxAni_Glide		= id(KnuxAni_Glide_ptr)			; 32 ; $20
+AniIDKnuxAni_FallAfterGlide	= id(KnuxAni_FallAfterGlide_ptr)	; 33 ; $21
+AniIDKnuxAni_ClimbLedge		= id(KnuxAni_ClimbLedge_ptr)		; 34 ; $22
+AniIDKnuxAni_LandAfterGlide	= id(KnuxAni_LandAfterGlide_ptr)	; 35 ; $23
+AniIDKnuxAni_ShadowBox		= id(KnuxAni_ShadowBox_ptr)		; 36 ; $24
 
 
 ; Other sizes
@@ -1189,7 +1236,23 @@ Scroll_flags_BG2:		ds.w	1	; bitfield ; essentially unused; bit 0 = redraw left-m
 Scroll_flags_BG3:		ds.w	1	; bitfield ; for CPZ; bits 0-3 as Scroll_flags_BG but using Y-dependent BG camera; bits 4-5 = bits 2-3; bits 6-7 = bits 2-3
 Scroll_Flags_All_End:
 
-				ds.b	$20	; unused
+Camera_Positions_P2:
+Camera_X_pos_P2:		ds.l	1
+Camera_Y_pos_P2:		ds.l	1
+Camera_BG_X_pos_P2:		ds.l	1	; only used sometimes as the layer deformation makes it sort of redundant
+Camera_BG_Y_pos_P2:		ds.l	1
+Camera_BG2_X_pos_P2:		ds.l	1	; unused (only initialised at beginning of level)?
+Camera_BG2_Y_pos_P2:		ds.l	1	; unused (only initialised at beginning of level)?
+Camera_BG3_X_pos_P2:		ds.l	1	; unused (only initialised at beginning of level)?
+Camera_BG3_Y_pos_P2:		ds.l	1	; unused (only initialised at beginning of level)?
+Camera_Positions_P2_End:
+
+Scroll_Flags_All_P2:
+Scroll_flags_P2:		ds.w	1	; bitfield ; bit 0 = redraw top row, bit 1 = redraw bottom row, bit 2 = redraw left-most column, bit 3 = redraw right-most column
+Scroll_flags_BG_P2:		ds.w	1	; bitfield ; bits 0-3 as above, bit 4 = redraw top row (except leftmost block), bit 5 = redraw bottom row (except leftmost block), bits 6-7 = as bits 0-1
+Scroll_flags_BG2_P2:		ds.w	1	; bitfield ; essentially unused; bit 0 = redraw left-most column, bit 1 = redraw right-most column
+Scroll_flags_BG3_P2:		ds.w	1	; bitfield ; for CPZ; bits 0-3 as Scroll_flags_BG but using Y-dependent BG camera; bits 4-5 = bits 2-3; bits 6-7 = bits 2-3
+Scroll_Flags_All_P2_End:
 
 Block_Crossed_Flags:
 Horiz_block_crossed_flag:	ds.b	1	; toggles between 0 and $10 when you cross a block boundary horizontally
@@ -1205,8 +1268,8 @@ Block_Crossed_Flags_End:
 Block_Crossed_Flags_P2:
 Horiz_block_crossed_flag_P2:	ds.b	1	; toggles between 0 and $10 when you cross a block boundary horizontally
 Verti_block_crossed_flag_P2:	ds.b	1	; toggles between 0 and $10 when you cross a block boundary vertically
-
-				ds.b	$E	; unused
+				ds.b	6	; $FFFFEE4A-$FFFFEE4F ; seems unused
+Block_Crossed_Flags_P2_End:
 
 Camera_Positions_Copy:
 Camera_RAM_copy:		ds.l	2	; copied over every V-int
@@ -1222,7 +1285,17 @@ Scroll_flags_BG2_copy:		ds.w	1	; copied over every V-int
 Scroll_flags_BG3_copy:		ds.w	1	; copied over every V-int
 Scroll_Flags_Copy_All_End:
 
-				ds.b	$28	; unused
+
+Camera_Positions_Copy_P2:
+Camera_P2_copy:			ds.l	8	; copied over every V-int
+Camera_Positions_Copy_P2_End:
+
+Scroll_Flags_Copy_All_P2:
+Scroll_flags_copy_P2:		ds.w	1	; copied over every V-int
+Scroll_flags_BG_copy_P2:	ds.w	1	; copied over every V-int
+Scroll_flags_BG2_copy_P2:	ds.w	1	; copied over every V-int
+Scroll_flags_BG3_copy_P2:	ds.w	1	; copied over every V-int
+Scroll_Flags_Copy_All_P2_End:
 
 Camera_Difference:
 Camera_X_pos_diff:		ds.w	1	; (new X pos - old X pos) * 256
@@ -1283,7 +1356,12 @@ Vscroll_Factor_P2_HInt:		ds.l	1
 Camera_X_pos_copy:		ds.l	1
 Camera_Y_pos_copy:		ds.l	1
 
-				ds.b	8	; unused
+Camera_Boundaries_P2:
+Tails_Min_X_pos:		ds.w	1
+Tails_Max_X_pos:		ds.w	1
+Tails_Min_Y_pos:		ds.w	1 ; seems not actually implemented (only written to)
+Tails_Max_Y_pos:		ds.w	1
+Camera_Boundaries_P2_End:
 
 Camera_RAM_End:
 
@@ -1346,7 +1424,8 @@ Vscroll_Factor_BG:		ds.w	1
 Vscroll_Factor_P2:
 Vscroll_Factor_P2_FG:		ds.w	1
 Vscroll_Factor_P2_BG:		ds.w	1
-				ds.b	2	; unused
+Teleport_timer:			ds.b	1	; timer for teleport effect
+Teleport_flag:			ds.b	1	; set when a teleport is in progress
 Hint_counter_reserve:		ds.w	1	; Must contain a VDP command word, preferably a write to register $0A. Executed every V-INT.
 Palette_fade_range:				; Range affected by the palette fading routines
 Palette_fade_start:		ds.b	1	; Offset from the start of the palette to tell what range of the palette will be affected in the palette fading routines
@@ -1405,7 +1484,9 @@ Ctrl_2_Press_Logical:		ds.b	1	; 1 byte
 				ds.b	4	; unused
 Super_Sonic_frame_count:	ds.w	1
 Camera_ARZ_BG_X_pos:		ds.l	1
-				ds.b	$A	; unused
+Super_Knuckles_frame_count:	ds.w	1
+Super_Knuckles_palette:		ds.b	1
+				ds.b	7	; unused
 MiscLevelVariables_End
 
 				ds.b	$80	; unused
@@ -1516,7 +1597,10 @@ Collision_addr:			ds.l	1
 Boss_defeated_flag:		ds.b	1
 				ds.b	2	; unused
 Current_Boss_ID:		ds.b	1
-				ds.b	5	; unused
+				ds.b	1	; unused
+Gliding_collision_flags:	ds.b	1
+Disable_wall_grab:		ds.b	1	; Leftover from S3K: only read, and never written.
+				ds.b	2	; unused
 MTZ_Platform_Cog_X:		ds.w	1	; X position of moving MTZ platform for cog animation.
 MTZCylinder_Angle_Sonic:	ds.b	1
 MTZCylinder_Angle_Tails:	ds.b	1
@@ -1537,7 +1621,7 @@ Chain_Bonus_counter:		ds.w	1	; counts up when you destroy things that give point
 Bonus_Countdown_1:		ds.w	1	; level results time bonus or special stage Sonic ring bonus
 Bonus_Countdown_2:		ds.w	1	; level results ring bonus or special stage Tails ring bonus
 Update_Bonus_score:		ds.b	1
-				ds.b	3	; unused
+				ds.b	1	; unused
 
 Camera_X_pos_coarse:		ds.w	1	; (Camera_X_pos - 128) / 256
 Camera_X_pos_coarse_End:
@@ -1547,6 +1631,8 @@ Camera_X_pos_coarse_P2_End:
 
 Tails_LastLoadedDPLC:		ds.b	1	; mapping frame number when Tails last had his tiles requested to be transferred from ROM to VRAM. can be set to a dummy value like -1 to force a refresh DMA.
 TailsTails_LastLoadedDPLC:	ds.b	1	; mapping frame number when Tails' tails last had their tiles requested to be transferred from ROM to VRAM. can be set to a dummy value like -1 to force a refresh DMA.
+Knuckles_LastLoadedDPLC:	ds.b	1
+				ds.b	1	; unused
 ButtonVine_Trigger:		ds.b	$10	; 16 bytes flag array, #subtype byte set when button/vine of respective subtype activated
 Anim_Counters:			ds.b	$10	; $FFFFF7F0-$FFFFF7FF
 Misc_Variables_End:
@@ -1668,10 +1754,14 @@ Tails_acceleration:		ds.w	1
 Tails_deceleration:		ds.w	1
 Tails_Speeds_End:
 
-				ds.b	$2A	; unused
+Knuckles_Speeds:
+Knuckles_top_speed:		ds.w	1
+Knuckles_acceleration:		ds.w	1
+Knuckles_deceleration:		ds.w	1
+Knuckles_Speeds_End:
+				ds.b	$24	; unused
 Rings_Collected:		ds.w	1
-Monitors_Broken:		ds.w	1
-				ds.b	$4C	; unused
+				ds.b	$4E	; unused
 Perfect_rings_left:		ds.w	1
 Perfect_rings_flag:		ds.w	1
 				ds.b	8	; unused
@@ -1811,37 +1901,6 @@ SS_Swap_Positions_Flag:		ds.b	1
 
     if * > Boss_variables_end
 	fatal "Special stage variables exceed size of boss variables."
-    endif
-	dephase
-
-; RAM variables - Continue screen
-	phase	Object_RAM	; Move back to the object RAM
-				; These two object slots are presumably used by Sonic and Tails
-				ds.b	object_size
-				ds.b	object_size
-ContinueText:			; "CONTINUE" on the Continue screen
-				ds.b	object_size
-ContinueIcons:			; The icons in the Continue screen
-				ds.b	$D*object_size
-    if * > Object_RAM_End
-	fatal "Continue screen objects exceed size of object RAM buffer."
-    endif
-	dephase
-
-; RAM variables - 2P VS results screen
-	phase	Object_RAM	; Move back to the object RAM
-VSResults_HUD:			; Blinking text at the bottom of the screen
-				ds.b	object_size
-    if * > Object_RAM_End
-	fatal "2P VS results screen objects exceed size of object RAM buffer."
-    endif
-	dephase
-
-; RAM variables - Menu screens
-	phase	Object_RAM	; Move back to the object RAM
-				; No objects are loaded in the menu screens
-    if * > Object_RAM_End
-	fatal "Menu screen objects exceed size of object RAM buffer."
     endif
 	dephase
 

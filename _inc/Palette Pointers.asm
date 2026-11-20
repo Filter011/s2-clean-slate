@@ -15,6 +15,7 @@ PalPointers:
 PalPtr_SEGA:	palptr Pal_SEGA,  0
 PalPtr_Title:	palptr Pal_Title, 1
 PalPtr_BGND:	palptr Pal_BGND,  0
+PalPtr_Knux:	palptr Pal_Knux,  0
 PalPtr_EHZ:	palptr Pal_EHZ,   1
 PalPtr_EHZ2:	palptr Pal_EHZ,   1
 PalPtr_WZ:	palptr Pal_WZ,    1
@@ -54,8 +55,9 @@ __LABEL___End label *
 	endm
 
 Pal_SEGA:  palette Sega screen.bin ; SEGA screen palette (Sonic and initial background)
-Pal_Title: palette Title screen.bin ; Title screen Palette
+Pal_Title: palette Title screen.bin ; Title screen palette
 Pal_BGND:  palette SonicAndTails.bin,SonicAndTails2.bin ; "Sonic and Miles" background palette (also usually the primary palette line)
+Pal_Knux:  palette Knuckles.bin,SonicAndTails2.bin ; Knuckles palette
 Pal_EHZ:   palette EHZ.bin ; Emerald Hill Zone palette
 Pal_WZ:    palette Wood Zone.bin ; Wood Zone palette
 Pal_MTZ:   palette MTZ.bin ; Metropolis Zone palette

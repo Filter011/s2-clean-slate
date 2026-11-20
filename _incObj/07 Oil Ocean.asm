@@ -30,7 +30,7 @@ Obj07_Init:
 Obj07_Main:
 	; check player 1
 	tst.w	(Debug_placement_mode).w
-	bne.s	Obj07_End
+	bne.w	Obj07_End
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing,d1
 	move.b	status(a0),d0
@@ -53,6 +53,32 @@ Obj07_CheckSupportChar1:
 	moveq	#0,d3
 	move.b	oil_char1submersion(a0),d3
 	moveq	#p1_standing_bit,d6
+	move.w	x_pos(a1),d4
+	move.w	d4,x_pos(a0)
+	jsr	(PlatformObject_SingleCharacter).l ; stop the character from falling past the oil
+	; check player 2
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing,d1
+	move.b	status(a0),d0
+	and.b	d1,d0
+	bne.s	Obj07_CheckKillChar2
+	cmpi.b	#$30,oil_char2submersion(a0)
+	beq.s	Obj07_CheckSupportChar2
+	addq.b	#1,oil_char2submersion(a0)
+	bra.s	Obj07_CheckSupportChar2
+; ---------------------------------------------------------------------------
+; loc_240B4:
+Obj07_CheckKillChar2:
+	tst.b	oil_char2submersion(a0)
+	beq.s	Obj07_SuffocateCharacter
+	subq.b	#1,oil_char2submersion(a0)
+
+; loc_240BE:
+Obj07_CheckSupportChar2:
+	moveq	#$20,d1
+	moveq	#0,d3
+	move.b	oil_char2submersion(a0),d3
+	moveq	#p2_standing_bit,d6
 	move.w	x_pos(a1),d4
 	move.w	d4,x_pos(a0)
 	jmp	(PlatformObject_SingleCharacter).l ; stop the character from falling past the oil

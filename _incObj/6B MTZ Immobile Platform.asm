@@ -60,9 +60,8 @@ Obj6B_Init:
 ; loc_27E0E:
 Obj6B_Main:
 	move.w	x_pos(a0),-(sp)
-	moveq	#0,d0
-	move.b	subtype(a0),d0
-	andi.w	#$F,d0
+	moveq	#$F,d0
+	and.b	subtype(a0),d0
 	add.w	d0,d0
 	move.w	Obj6B_Types(pc,d0.w),d1
 	jsr	Obj6B_Types(pc,d1.w)

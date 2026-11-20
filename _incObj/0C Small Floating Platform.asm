@@ -85,5 +85,5 @@ loc_202E6:
 	move.b	width_pixels(a0),d1
 	moveq	#9,d3
 	move.w	x_pos(a0),d4
-	bsr.w	PlatformObject
+	jsr	(PlatformObject).l
 	jmp	(MarkObjGone).w

@@ -105,6 +105,14 @@ Obj30_HurtSupportedPlayers:
 	jsr	(Touch_ChkHurt).l
 	movea.l	(sp)+,a0 ; load 0bj address
 +
+	btst	#p2_standing_bit,status(a0)
+	beq.s	+
+	move.l	a0,-(sp)
+	movea.l	a0,a1
+	lea	(Sidekick).w,a0 ; a0=character
+	jsr	(Touch_ChkHurt).l
+	movea.l	(sp)+,a0 ; load 0bj address
++
 	rts
 ; ===========================================================================
 

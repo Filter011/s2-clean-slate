@@ -55,6 +55,8 @@ loc_2A82A:
 loc_2A84E:
 	lea	(MainCharacter).w,a1 ; a1=character
 	bsr.s	loc_2A894
+	lea	(Sidekick).w,a1 ; a1=character
+	bsr.s	loc_2A894
 	subq.b	#1,anim_frame_duration(a0)
 	bpl.s	BranchTo_JmpTo26_MarkObjGone
 	move.b	#0,anim_frame_duration(a0)
@@ -150,6 +152,8 @@ loc_2A926:
 
 loc_2A94A:
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	loc_2A990
+	lea	(Sidekick).w,a1 ; a1=character
 	bsr.s	loc_2A990
 	subq.b	#1,anim_frame_duration(a0)
 	bpl.s	BranchTo2_JmpTo26_MarkObjGone

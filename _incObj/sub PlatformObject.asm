@@ -14,6 +14,11 @@
 PlatformObject:
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
+	bsr.s	PlatformObject_SingleCharacter
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.b	#1,d6
 ; loc_19C48:
 PlatformObject_SingleCharacter:
 	btst	d6,status(a0)
@@ -60,6 +65,11 @@ loc_19C80:
 SlopedPlatform:
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
+	bsr.s	SlopedPlatform_SingleCharacter
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.b	#1,d6
 ; loc_19CA0:
 SlopedPlatform_SingleCharacter:
 	btst	d6,status(a0)
@@ -93,6 +103,11 @@ loc_19CD8:
 PlatformObject2:
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
+	bsr.s	loc_19CF8
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.b	#1,d6
 
 loc_19CF8:
 	btst	d6,status(a0)
@@ -129,6 +144,11 @@ loc_19D30:
 PlatformObjectD5:
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
+	bsr.s	loc_19D50
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.b	#1,d6
 
 loc_19D50:
 	btst	d6,status(a0)
@@ -269,7 +289,7 @@ loc_19E30:
 	move.w	a0,d1
 	subi.w	#Object_RAM,d1
 	bne.s	loc_19E76
-	cmpi.w	#1,(Player_mode).w
+	cmpi.w	#2,(Player_mode).w
 	beq.s	loc_19E76
 	jsr	(Sonic_ResetOnFloor_Part2).l
 	bra.s	loc_19E7C
@@ -366,5 +386,20 @@ loc_19F08:
 	bclr	#p1_standing_bit,status(a0)
 
 loc_19F1E:
+	lea	(Sidekick).w,a1 ; a1=character
+	btst	#p2_standing_bit,status(a0)
+	beq.s	loc_19F4C
+	jsr	(ChkFloorEdge2).l
+	tst.w	d1
+	beq.s	loc_19F36
+	bpl.s	loc_19F4C
+
+loc_19F36:
+	lea	(Sidekick).w,a1 ; a1=character
+	bclr	#status.player.on_object,status(a1)
+	bset	#status.player.in_air,status(a1)
+	bclr	#p2_standing_bit,status(a0)
+
+loc_19F4C:
 	moveq	#0,d4
 	rts

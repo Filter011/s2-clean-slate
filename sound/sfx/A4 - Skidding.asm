@@ -13,7 +13,7 @@ Sound24_Skidding_PSG2:
 	dc.b	nBb3, $01, nRst, nBb3, nRst, $03
 
 Sound24_Skidding_Loop01:
-	dc.b	nBb3, $01, nRst, $01
+	dc.b	nBb3, $01, nRst
 	smpsLoop            $00, $0B, Sound24_Skidding_Loop01
 	smpsStop
 
@@ -23,6 +23,6 @@ Sound24_Skidding_PSG3:
 	dc.b	nRst, $01, nAb3, nRst, nAb3, nRst, $03
 
 Sound24_Skidding_Loop00:
-	dc.b	nAb3, $01, nRst, $01
+	dc.b	nAb3, $01, nRst
 	smpsLoop            $00, $0B, Sound24_Skidding_Loop00
 	smpsStop

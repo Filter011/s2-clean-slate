@@ -36,6 +36,10 @@ Obj1E_Init:
 Obj1E_Main:
 	lea	(MainCharacter).w,a1 ; a1=character
 	lea	objoff_2C(a0),a4
+	bsr.s	+
+	lea	(Sidekick).w,a1 ; a1=character
+	lea	objoff_36(a0),a4
++
 	moveq	#0,d0
 	move.b	(a4),d0
 	move.w	Obj1E_Modes(pc,d0.w),d0
@@ -61,12 +65,9 @@ loc_225FC:
 	sub.w	y_pos(a0),d1
 	cmpi.w	#$80,d1
 	bhs.w	return_22718
-	cmpi.b	#ObjID_Tails,id(a1)		; is the character Tails?
-	bne.s	.nottails			; if not, branch
-	cmpi.w	#4,(Tails_CPU_routine).w	; is Tails respawning?
-	beq.w	return_22718			; if yes, branch
+	cmpi.b	#$20,anim(a1)
+	beq.w	return_22718
 
-.nottails:
 	moveq	#0,d3
 	cmpi.w	#$A0,d2
 	beq.s	+

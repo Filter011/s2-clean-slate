@@ -10,6 +10,6 @@ Sound35_RingRight_Header:
 Sound35_RingRight_FM5:
 	smpsSetvoice        $00
 	smpsPan             panRight, $00
-	dc.b	nE5, $05, nG5, $05, nC6, $1B
+	dc.b	nE5, $05, nG5, nC6, $1B
 	smpsStop
 

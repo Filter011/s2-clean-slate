@@ -32,7 +32,9 @@ Obj3D_Init:
 ; loc_24E26:
 Obj3D_Main:
 	move.b	(MainCharacter+anim).w,objoff_32(a0)
+	move.b	(Sidekick+anim).w,objoff_33(a0)
 	move.w	(MainCharacter+y_vel).w,objoff_34(a0)
+	move.w	(Sidekick+y_vel).w,objoff_36(a0)
 	moveq	#$1B,d1
 	moveq	#$10,d2
 	moveq	#$11,d3
@@ -50,6 +52,8 @@ loc_24E60:
 	cmpi.b	#standing_mask,d0
 	bne.s	loc_24E96
 	cmpi.b	#AniIDSonAni_Roll,objoff_32(a0)
+	beq.s	loc_24E76
+	cmpi.b	#AniIDSonAni_Roll,objoff_33(a0)
 	bne.s	BranchTo_JmpTo13_MarkObjGone
 
 loc_24E76:
@@ -57,13 +61,17 @@ loc_24E76:
 	move.b	objoff_32(a0),d0
 	move.w	objoff_34(a0),d1
 	bsr.s	loc_24EB2
+	lea	(Sidekick).w,a1 ; a1=character
+	move.b	objoff_33(a0),d0
+	move.w	objoff_36(a0),d1
+	bsr.s	loc_24EB2
 	bra.w	loc_24F04
 ; ===========================================================================
 
 loc_24E96:
 	move.b	d0,d1
 	andi.b	#p1_standing,d1
-	beq.s	BranchTo_JmpTo13_MarkObjGone
+	beq.s	loc_24EE8
 	cmpi.b	#AniIDSonAni_Roll,objoff_32(a0)
 	bne.s	BranchTo_JmpTo13_MarkObjGone
 	lea	(MainCharacter).w,a1 ; a1=character
@@ -89,6 +97,15 @@ loc_24ED4:
 	move.b	#2,routine(a1)
 	rts
 ; ===========================================================================
+
+loc_24EE8:
+	andi.b	#p2_standing,d0
+	beq.w	BranchTo_JmpTo13_MarkObjGone
+	cmpi.b	#AniIDSonAni_Roll,objoff_33(a0)
+	bne.w	BranchTo_JmpTo13_MarkObjGone
+	lea	(Sidekick).w,a1 ; a1=character
+	move.w	objoff_36(a0),d1
+	bsr.s	loc_24EB8
 
 loc_24F04:
 	andi.b	#~standing_mask,status(a0)
@@ -162,6 +179,10 @@ loc_24F84:
 loc_24FAA:
 	cmpi.w	#$10,d1
 	bhs.s	return_25034
+	cmpa.w	#Sidekick,a1
+	bne.s	loc_24FC2
+	cmpi.w	#4,(Tails_CPU_routine).w ; TailsCPU_Flying
+	beq.w	return_25034
 
 loc_24FC2:
 	addq.b	#2,(a4)

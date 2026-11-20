@@ -2,8 +2,6 @@
 ; Tails' AI code for the Sonic and Tails mode 1-player game
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; loc_1BAD4:
 TailsCPU_Control: ; a0=Tails
 	move.b	(Ctrl_2_Held).w,d0	; did the real player 2 hit something?
@@ -30,13 +28,13 @@ TailsCPU_States: offsetTable
 ; loc_1BAFE:
 TailsCPU_Init:
 	move.w	#6,(Tails_CPU_routine).w	; => TailsCPU_Normal
-	move.b	#0,obj_control(a0)
+	moveq	#0,d1
+	move.b	d1,obj_control(a0)
 	move.b	#AniIDSonAni_Walk,anim(a0)
-	move.w	#0,x_vel(a0)
-	move.w	#0,y_vel(a0)
-	move.w	#0,inertia(a0)
-	move.b	#0,status(a0)
-	move.w	#0,(Tails_respawn_counter).w
+	move.l	d1,x_vel(a0)	; and y_vel
+	move.w	d1,inertia(a0)
+	move.b	d1,status(a0)
+	move.w	d1,(Tails_respawn_counter).w
 	rts
 
 ; ===========================================================================
@@ -64,8 +62,9 @@ TailsCPU_Respawn:
 	subi.w	#$C0,d0
 	move.w	d0,y_pos(a0)
 	ori.w	#high_priority,art_tile(a0)
-	move.b	#0,spindash_flag(a0)
-	move.w	#0,spindash_counter(a0)
+	moveq	#0,d1
+	move.b	d1,spindash_flag(a0)
+	move.w	d1,spindash_counter(a0)
 	move.w	#$600,(Tails_top_speed).w
 	move.w	#$C,(Tails_acceleration).w
 	move.w	#$80,(Tails_deceleration).w
@@ -82,23 +81,25 @@ TailsCPU_Flying:
 	addq.w	#1,(Tails_respawn_counter).w
 	cmpi.w	#$12C,(Tails_respawn_counter).w
 	blo.s	TailsCPU_Flying_Part2
-	move.w	#0,(Tails_respawn_counter).w
+	moveq	#0,d1
+	move.w	d1,(Tails_respawn_counter).w
 	move.w	#2,(Tails_CPU_routine).w	; => TailsCPU_Spawning
 	move.b	#$81,obj_control(a0)
 	andi.b	#1<<status.player.underwater,status(a0)	; keep Tails' underwater status bit
 	ori.b	#1<<status.player.in_air,status(a0)	; set Tails' "in-air" status bit
-	move.w	#0,x_pos(a0)
-	move.w	#0,y_pos(a0)
+	move.w	d1,x_pos(a0)
+	move.w	d1,y_pos(a0)
 	bra.w	Tails_FlyingAnimation		; set flying animation
 ; ---------------------------------------------------------------------------
 ; loc_1BBC8:
 TailsCPU_FlyingOnscreen:
-	move.w	#0,(Tails_respawn_counter).w
+	clr.w	(Tails_respawn_counter).w
 ; loc_1BBCE:
 TailsCPU_Flying_Part2:
 	lea	(Sonic_Pos_Record_Buf).w,a2
 	move.w	#$10,d2
-	lsl.b	#2,d2
+	add.b	d2,d2
+	add.b	d2,d2
 	addq.b	#4,d2
 	move.w	(Sonic_Pos_Record_Index).w,d3
 	sub.b	d2,d3
@@ -156,14 +157,14 @@ loc_1BC68:
 	or.w	d0,d1
 	bne.s	return_1BCDE
 	move.w	#6,(Tails_CPU_routine).w	; => TailsCPU_Normal
-	move.b	#0,obj_control(a0)
+	moveq	#0,d1
+	move.b	d1,obj_control(a0)
 	move.b	#AniIDSonAni_Walk,anim(a0)
-	move.w	#0,x_vel(a0)
-	move.w	#0,y_vel(a0)
-	move.w	#0,inertia(a0)
+	move.l	d1,x_vel(a0)	; and y_vel
+	move.w	d1,inertia(a0)
 	andi.b	#1<<status.player.underwater,status(a0)	; keep Tails' underwater status bit
 	ori.b	#1<<status.player.in_air,status(a0)	; set Tails' "in-air" status bit
-	move.w	#0,move_lock(a0)
+	move.w	d1,move_lock(a0)
 	andi.w	#drawing_mask,art_tile(a0)
 	tst.b	art_tile(a1)
 	bpl.s	+
@@ -212,7 +213,8 @@ TailsCPU_Normal_SonicOK:
 +
 	lea	(Sonic_Pos_Record_Buf).w,a1
 	move.w	#$10,d1
-	lsl.b	#2,d1
+	add.b	d1,d1
+	add.b	d1,d1
 	addq.b	#4,d1
 	move.w	(Sonic_Pos_Record_Index).w,d0
 	sub.b	d1,d0
@@ -350,15 +352,13 @@ TailsCPU_CheckDespawn:
 	movea.l	d0,a3	; a3=object
 	move.b	(Tails_interact_ID).w,d0
 	cmp.b	id(a3),d0
-	bne.s	BranchTo_TailsCPU_Despawn
+	bne.s	TailsCPU_Despawn
 
 ; loc_1BE8C:
 TailsCPU_TickRespawnTimer:
 	addq.w	#1,(Tails_respawn_counter).w
 	cmpi.w	#$12C,(Tails_respawn_counter).w
 	blo.s	TailsCPU_UpdateObjInteract
-
-BranchTo_TailsCPU_Despawn ; BranchTo
 	bra.w	TailsCPU_Despawn
 ; ===========================================================================
 ; loc_1BE9C:
@@ -385,7 +385,7 @@ TailsCPU_UpdateObjInteract:
 TailsCPU_Panic:
 	bsr.w	TailsCPU_CheckDespawn
 	tst.w	(Tails_control_counter).w
-	bne.w	return_1BF36
+	bne.s	++
 	tst.w	move_lock(a0)
 	bne.s	return_1BF36
 	tst.b	spindash_flag(a0)
@@ -407,6 +407,7 @@ TailsCPU_Panic:
 	cmpi.b	#AniIDSonAni_Duck,anim(a0)
 	bne.s	return_1BF36
 	move.w	#((button_down_mask|button_B_mask|button_C_mask|button_A_mask)<<8)|(button_down_mask|button_B_mask|button_C_mask|button_A_mask),(Ctrl_2_Logical).w
++
 	rts
 ; ---------------------------------------------------------------------------
 ; loc_1BF0C:

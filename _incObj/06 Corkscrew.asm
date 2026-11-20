@@ -39,6 +39,10 @@ Obj06_Init:
 Obj06_Spiral:
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	bsr.s	+
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.b	#1,d6
++
 	btst	d6,status(a0)
 	bne.w	loc_215C0
 	btst	#status.player.in_air,status(a1)
@@ -70,7 +74,7 @@ loc_21562:
 	bhs.s	return_215BE
 	tst.b	obj_control(a1)
 	bne.s	return_215BE
-	bra.w	RideObject_SetRide
+	jmp	(RideObject_SetRide).l
 ; ---------------------------------------------------------------------------
 
 loc_21580:
@@ -97,7 +101,7 @@ loc_215A8:
 	subi.w	#$10,d1
 	cmpi.w	#$30,d1
 	bhs.s	return_215BE
-	bra.w	RideObject_SetRide
+	jmp	(RideObject_SetRide).l
 
 return_215BE:
 	rts
@@ -260,7 +264,7 @@ Obj06_Cylinder:
 	addq.w	#3,d2
 	move.w	d2,y_pos(a1)
 	move.b	#1,flip_turned(a1) ; face the other way
-	bsr.w	RideObject_SetRide
+	jsr	(RideObject_SetRide).l
 	move.w	#(AniIDSonAni_Walk<<8)|(AniIDSonAni_Run<<0),anim(a1)
 	move.b	#0,(a2)
 	tst.w	inertia(a1)

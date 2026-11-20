@@ -4,6 +4,12 @@
 ; Sprite_1B8A4: Object_Tails:
 Obj02:
 	; a0=character
+	cmpi.w	#2,(Player_mode).w
+	bne.s	+
+	move.w	(Camera_Min_X_pos).w,(Tails_Min_X_pos).w
+	move.w	(Camera_Max_X_pos).w,(Tails_Max_X_pos).w
+	move.w	(Camera_Max_Y_pos).w,(Tails_Max_Y_pos).w
++
 	moveq	#0,d0
 	move.b	routine(a0),d0
 	move.w	Obj02_Index(pc,d0.w),d1
@@ -71,6 +77,7 @@ Obj02_Control_Joypad2:
 	bne.s	+
 	move.w	(Ctrl_2).w,(Ctrl_2_Logical).w
 +
+	bsr.w	TailsCPU_Control
 ; loc_1B9EA:
 Obj02_Control_Part2:
 	btst	#0,obj_control(a0)	; is Tails flying, or interacting with another object that holds him in place or controls his movement somehow?
@@ -163,6 +170,8 @@ Obj02_ChkShoes:		; Checks if Speed Shoes have expired and disables them if they 
 Obj02_ExitChk:
 	rts
 ; End of subroutine Tails_Display
+
+    include "_incObj/Tails AI.asm"
 
 ; ---------------------------------------------------------------------------
 ; Subroutine to record Tails' previous positions for invincibility stars
@@ -476,7 +485,7 @@ Obj02_Traction:
 ; loc_1C232:
 Obj02_CheckWallsOnGround:
 	moveq	#$3F,d0					; is he standing on a flat surface in any of the four quadrants?
-	and.b	obAngle(a0),d0				; get Tails's current angle in relation to the floor
+	and.b	angle(a0),d0				; get Tails's current angle in relation to the floor
 	beq.s	.noearlyexit				; if yes, skip the upside-down exit below
 	move.b	angle(a0),d0
 	addi.b	#$40,d0
@@ -877,11 +886,11 @@ Tails_LevelBound:
 	asl.l	#8,d0
 	add.l	d0,d1
 	swap	d1
-	move.w	(Camera_Min_X_pos).w,d0
+	move.w	(Tails_Min_X_pos).w,d0
 	addi.w	#$10,d0
 	cmp.w	d1,d0			; has Tails touched the left boundary?
 	bhi.s	Tails_Boundary_Sides	; if yes, branch
-	move.w	(Camera_Max_X_pos).w,d0
+	move.w	(Tails_Max_X_pos).w,d0
 	addi.w	#screen_width-24,d0		; screen width - Tails's width_pixels
 	tst.b	(Current_Boss_ID).w
 	bne.s	+
@@ -892,7 +901,7 @@ Tails_LevelBound:
 
 ; loc_1C58C:
 Tails_Boundary_CheckBottom:
-	move.w	(Camera_Max_Y_pos).w,d0
+	move.w	(Tails_Max_Y_pos).w,d0
 	move.w	(Camera_Max_Y_pos_target).w,d1
 	cmp.w	d0,d1
 	blo.s	.skip
@@ -1111,14 +1120,14 @@ Tails_Flying:
 	blt.s	.applygravity			; if yes, branch
 	tst.b	flying_timer(a0)		; is Tails tired?
 	beq.s	.applygravity			; if yes, branch
-	tst.w	(Player_mode).w			; is it a Tails-only game?
-	bne.s	.allowflightt			; if yes, branch
+	cmpi.w	#2,(Player_mode).w		; is it a Tails-only game?
+	beq.s	.allowflight			; if yes, branch
 	btst	#status.player.underwater,status(a0)	; is Tails underwater?
-	beq.s	.allowflightt			; if not, branch
+	beq.s	.allowflight			; if not, branch
 	btst	#status_secondary.carry,status_secondary-object_size(a0)	; is Tails carrying Sonic?
 	bne.s	.applygravity			; if yes, branch
 
-.allowflightt:
+.allowflight:
 	move.b	#2,flying(a0)			; set flying flag to 2 (and thus run delay code on next frame)
 
 .applygravity:
@@ -1147,7 +1156,7 @@ Tails_FlyingAnimation:
 	addq.b	#1,d0				; use upwards sprites
 
 .movingdown:
-	tst.w	(Player_mode).w			; is this a Sonic & Tails game?
+	cmpi.w	#0,(Player_mode).w		; is this a Sonic & Tails game?
 	bne.s	.nocarry			; if not, branch
 	cmpi.w	#4,(Tails_CPU_routine).w	; is Tails respawning?
 	beq.s	.nottired			; if yes, check for water only
@@ -1196,7 +1205,7 @@ Tails_FlyingAnimation:
 ; ---------------------------------------------------------------------------
 
 Tails_CarrySonic:
-	tst.w	(Player_mode).w				; is this a Sonic & Tails game?
+	cmpi.w	#0,(Player_mode).w				; is this a Sonic & Tails game?
 	bne.w	Tails_CarryNoGrab			; if not, branch
 	lea	(MainCharacter).w,a1			; load Sonic's RAM address to a1
 	move.w	(Ctrl_1).w,d0				; load player's inputs to d0
@@ -1750,7 +1759,10 @@ Tails_ResetOnFloor_Part2:
 Tails_ResetOnFloor_Part3:
 	andi.b	#~(1<<status.player.in_air|1<<status.player.pushing),status(a0)
 	moveq	#0,d0
+	cmpi.w	#2,(Player_mode).w
+	bne.s	+
 	move.w	d0,(Chain_Bonus_counter).w
++
 	move.b	d0,flip_angle(a0)
 	move.b	d0,flip_turned(a0)
 	move.b	d0,flips_remaining(a0)
@@ -1795,7 +1807,7 @@ Obj02_Hurt:
 ; loc_1CC08:
 Tails_HurtStop:
 	movea.l	a0,a2
-	move.w	(Camera_Max_Y_pos).w,d0
+	move.w	(Tails_Max_Y_pos).w,d0
 	move.w	(Camera_Max_Y_pos_target).w,d1
 	cmp.w	d0,d1
 	blo.s	.skip
@@ -1830,7 +1842,8 @@ JmpTo2_KillCharacter ; JmpTo
 
 ; loc_1CC50:
 Obj02_Dead:
-	bsr.w	CheckGameOver
+	cmpi.w	#2,(Player_mode).w	; is it a Tails Alone game?
+	beq.w	CheckGameOver		; if so, branch
 	jsr	(ObjectMoveAndFall).w
 	bsr.w	Tails_RecordPos
 	bsr.s	Tails_Animate

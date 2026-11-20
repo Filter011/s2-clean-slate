@@ -26,8 +26,8 @@ DeformBgLayer:
 	lea	(Camera_X_pos_diff).w,a4
 	lea	(Camera_Delay).w,a5
 	lea	(Sonic_Pos_Record_Buf).w,a6
-	tst.w	(Player_mode).w
-	beq.s	+
+	cmpi.w	#2,(Player_mode).w
+	bne.s	+
 	lea	(Camera_Delay_P2).w,a5
 	lea	(Tails_Pos_Record_Buf).w,a6
 +
@@ -38,8 +38,8 @@ DeformBgLayer:
 	lea	(Camera_Boundaries).w,a2
 	lea	(Camera_Y_pos_diff).w,a4
 	move.w	(Camera_Y_pos_bias).w,d3
-	tst.w	(Player_mode).w
-	beq.s	+
+	cmpi.w	#2,(Player_mode).w
+	bne.s	+
 	move.w	(Camera_Y_pos_bias_P2).w,d3
 +
 	bsr.w	ScrollVerti

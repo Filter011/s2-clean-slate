@@ -82,6 +82,19 @@ loc_1ECFE:
 +
 	rts
 ; ===========================================================================
+; sub_318FF6:
+CheckFloorDist_WithRadius:
+	move.b	x_radius(a0),d0
+	ext.w	d0
+	add.w	d0,d2
+	lea	(Primary_Angle).w,a4
+	movea.w	#$10,a3
+	clr.w	d6
+	bsr.w	FindFloor
+	clr.b	d2
+	bra.s	loc_1ECFE
+; End of function CheckFloorDist_WithRadius
+; ===========================================================================
 ; loc_1ED56:
 ChkFloorEdge:
 	move.w	x_pos(a0),d3
@@ -92,6 +105,8 @@ ChkFloorEdge_Part2:
 	move.b	y_radius(a0),d0
 	ext.w	d0
 	add.w	d0,d2
+
+ChkFloorEdge_Part3:
 	move.l	(Primary_Collision).w,(Collision_addr).w
 	cmpi.b	#$C,top_solid_bit(a0)
 	beq.s	+
@@ -269,6 +284,21 @@ CheckRightWallDist_Part2:
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 
+; loc_319208:
+CheckRightWallDist_WithRadius:
+	move.b	x_radius(a0),d0
+	ext.w	d0
+	add.w	d0,d3
+	lea	(Primary_Angle).w,a4
+	move.w	#16,a3
+	move.w	#0,d6
+	bsr.w	FindWall
+	move.b	#$C0,d2
+	bra.w	loc_1ECFE
+; End of function CheckRightWallDist_WithRadius
+
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
+
 ; loc_1EF00: ObjCheckLeftWallDist:
 ObjCheckRightWallDist:
 	add.w	x_pos(a0),d3
@@ -350,6 +380,22 @@ CheckCeilingDist_Part2:
 	move.b	#$80,d2
 	bra.w	loc_1ECFE
 ; End of function CheckCeilingDist
+
+; =============== S U B	R O U T	I N E =======================================
+
+; sub_3192E6:
+CheckCeilingDist_WithRadius:
+	move.b	x_radius(a0),d0
+	ext.w	d0
+	sub.w	d0,d2
+	eori.w	#$F,d2
+	lea	(Primary_Angle).w,a4
+	movea.w	#-$10,a3
+	move.w	#$800,d6
+	bsr.w	FindFloor
+	move.b	#$80,d2
+	bra.w	loc_1ECFE
+; End of function CheckCeilingDist_WithRadius
 
 ; ---------------------------------------------------------------------------
 ; Stores a distance to the nearest wall above the object into d1
@@ -444,6 +490,22 @@ CheckLeftWallDist_Part2:
 	move.b	#$40,d2
 	bra.w	loc_1ECFE
 ; End of function CheckLeftWallDist
+
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
+
+; loc_3193D2:
+CheckLeftWallDist_WithRadius:
+	move.b	x_radius(a0),d0
+	ext.w	d0
+	sub.w	d0,d3
+	eori.w	#$F,d3
+	lea	(Primary_Angle).w,a4
+	movea.w	#-$10,a3
+	move.w	#$400,d6
+	bsr.w	FindWall
+	move.b	#$40,d2
+	bra.w	loc_1ECFE
+; End of function CheckLeftWallDist_WithRadius
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
 

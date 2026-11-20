@@ -34,9 +34,9 @@ PLCptr_StdWtr:		offsetTableEntry.w PlrList_StdWtr		; 2
 PLCptr_GameOver:	offsetTableEntry.w PlrList_GameOver		; 3
 PLCptr_Ehz1:		offsetTableEntry.w PlrList_Ehz1			; 4
 PLCptr_Ehz2:		offsetTableEntry.w PlrList_Ehz2			; 5
-PLCptr_MilesLife2P:	offsetTableEntry.w PlrList_MilesLife2P		; 6
+PLCptr_KnuxLife:	offsetTableEntry.w PlrList_KnuxLife		; 6
 PLCptr_MilesLife:	offsetTableEntry.w PlrList_MilesLife		; 7
-PLCptr_TailsLife2P:	offsetTableEntry.w PlrList_TailsLife2P		; 8
+PLCptr_TailsLife2P:	offsetTableEntry.w PlrList_TailsLife		; 8
 PLCptr_TailsLife:	offsetTableEntry.w PlrList_TailsLife		; 9
 PLCptr_Unused1:		offsetTableEntry.w PlrList_Mtz1			; 10
 PLCptr_Unused2:		offsetTableEntry.w PlrList_Mtz1			; 11
@@ -169,11 +169,11 @@ PlrList_Ehz2: plrlistheader
 PlrList_Ehz2_End
 ;---------------------------------------------------------------------------------------
 ; PATTERN LOAD REQUEST LIST
-; Miles 1up patch
+; Knuckles life counter
 ;---------------------------------------------------------------------------------------
-PlrList_MilesLife2P: plrlistheader
-	plreq ArtTile_ArtNem_2p_life_counter, ArtNem_MilesLife
-PlrList_MilesLife2P_End
+PlrList_KnuxLife: plrlistheader
+	plreq ArtTile_ArtNem_life_counter, ArtNem_KnuxLife
+PlrList_KnuxLife_End
 ;---------------------------------------------------------------------------------------
 ; PATTERN LOAD REQUEST LIST
 ; Miles life counter
@@ -181,13 +181,6 @@ PlrList_MilesLife2P_End
 PlrList_MilesLife: plrlistheader
 	plreq ArtTile_ArtNem_life_counter, ArtNem_MilesLife
 PlrList_MilesLife_End
-;---------------------------------------------------------------------------------------
-; PATTERN LOAD REQUEST LIST
-; Tails 1up patch
-;---------------------------------------------------------------------------------------
-PlrList_TailsLife2P: plrlistheader
-	plreq ArtTile_ArtNem_2p_life_counter, ArtNem_TailsLife
-PlrList_TailsLife2P_End
 ;---------------------------------------------------------------------------------------
 ; PATTERN LOAD REQUEST LIST
 ; Tails life counter

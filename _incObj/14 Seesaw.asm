@@ -82,7 +82,7 @@ Obj14_UpdateMappingAndCollision:
 	move.b	width_pixels(a0),d1
 	moveq	#8,d3
 	move.w	(sp)+,d4
-	bra.w	SlopedPlatform
+	jmp	(SlopedPlatform).l
 ; ===========================================================================
 
 return_21A74:

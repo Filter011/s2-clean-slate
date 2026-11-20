@@ -11,7 +11,7 @@ Sound2A_Splash_Header:
 Sound2A_Splash_PSG3:
 	smpsPSGvoice        $00
 	smpsPSGform         $E7
-	dc.b	nF5, $05, nMaxPSG, $05, smpsNoAttack
+	dc.b	nF5, $05, nMaxPSG, smpsNoAttack
 
 Sound2A_Splash_Loop00:
 	dc.b	$07
