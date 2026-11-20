@@ -61,7 +61,7 @@ Obj45_Strengths:
 ; ===========================================================================
 ; loc_24186:
 Obj45_Vertical:
-	; Is a player stood on this object?
+	; Is a player standing on this object?
 	move.b	status(a0),d0
 	andi.b	#standing_mask,d0
 	bne.s	loc_2419C
@@ -93,6 +93,9 @@ loc_241A8:
 Obj45_LaunchCharacterVertical:
 	lea	(MainCharacter).w,a1
 	moveq	#p1_standing_bit,d6
+	bsr.s	loc_241D4
+	lea	(Sidekick).w,a1
+	moveq	#p2_standing_bit,d6
 
 loc_241D4:
 	; If this isn't the character that's stood on this object, then return.
@@ -161,6 +164,7 @@ Obj45_Horizontal:
 	move.w	x_pos(a0),d4
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
 	jsr	(SolidObject_Always_SingleCharacter).l
 	cmpi.w	#1,d4
 	bne.s	loc_242C0
@@ -173,9 +177,27 @@ Obj45_Horizontal:
 loc_242B6:
 	andi.b	#1<<status.player.x_flip,d1
 	bne.s	loc_242C0
-	bsr.s	loc_2433C
+	bsr.w	loc_2433C
 
 loc_242C0:
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing_bit,d6
+	jsr	(SolidObject_Always_SingleCharacter).l
+	cmpi.w	#1,d4
+	bne.s	loc_242EE
+	move.b	status(a0),d1
+	move.w	x_pos(a0),d2
+	sub.w	x_pos(a1),d2
+	bcs.s	loc_242E6
+	eori.b	#1<<status.player.x_flip,d1
+
+loc_242E6:
+	andi.b	#1<<status.player.x_flip,d1
+	bne.s	loc_242EE
+	bsr.s	loc_2433C
+
+loc_242EE:
 	tst.b	objoff_36(a0)
 	bne.s	return_2433A
 	move.w	obj45_original_x_pos(a0),d0
@@ -275,6 +297,11 @@ Obj45_LaunchCharacterHorizontal:
 	beq.s	return_243CE
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_pushing_bit,d6
+	bsr.s	loc_243EA
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_pushing_bit,d6
+
+loc_243EA:
 	bclr	d6,status(a0)
 	beq.s	return_243CE
 	move.w	obj45_original_x_pos(a0),d0
