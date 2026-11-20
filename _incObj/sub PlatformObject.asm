@@ -184,6 +184,8 @@ loc_19D92:
 	move.w	d4,d2
 	bsr.w	MvSonicOnPtfm
 	moveq	#0,d4
+
+return_19D92:
 	rts
 ; ===========================================================================
 ; Used only by EHZ/HPZ log bridges. Very similar to PlatformObject_cont, but
@@ -199,14 +201,15 @@ PlatformObject11_cont:
 
 .inair:
 	tst.w	y_vel(a1)
-	bmi.w	return_19E8E
-.skip
+	bmi.s	return_19D92
+
+.skip:
 	move.w	x_pos(a1),d0
 	sub.w	x_pos(a0),d0
 	add.w	d1,d0
-	bmi.w	return_19E8E
+	bmi.s	return_19D92
 	cmp.w	d2,d0
-	bhs.w	return_19E8E
+	bhs.s	return_19D92
 	bra.s	loc_19DD8
 ; ===========================================================================
 ;loc_19DBA:
@@ -221,7 +224,8 @@ PlatformObject_cont:
 .inair:
 	tst.w	y_vel(a1)
 	bmi.w	return_19E8E
-.skip
+
+.skip:
 	move.w	x_pos(a1),d0
 	sub.w	x_pos(a0),d0
 	add.w	d1,d0
@@ -321,7 +325,8 @@ SlopedPlatform_cont:
 .inair:
 	tst.w	y_vel(a1)
 	bmi.s	return_19E8E
-.skip
+
+.skip:
 	move.w	x_pos(a1),d0
 	sub.w	x_pos(a0),d0
 	add.w	d1,d0
@@ -355,7 +360,8 @@ PlatformObject2_cont:
 .inair:
 	tst.w	y_vel(a1)
 	bmi.s	return_19E8E
-.skip
+
+.skip:
 	move.w	x_pos(a1),d0
 	sub.w	x_pos(a0),d0
 	add.w	d1,d0
