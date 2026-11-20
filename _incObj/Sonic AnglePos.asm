@@ -10,16 +10,13 @@ AnglePos:
 	move.l	(Secondary_Collision).w,(Collision_addr).w
 +
 	move.b	top_solid_bit(a0),d5
+	moveq	#0,d0
 	btst	#status.player.on_object,status(a0)
 	beq.s	+
-	moveq	#0,d0
-	move.b	d0,(Primary_Angle).w
-	move.b	d0,(Secondary_Angle).w
+	move.w	d0,(Primary_Angle).w	; and Secondary_Angle
 	rts
 ; ---------------------------------------------------------------------------
-+	moveq	#3,d0
-	move.b	d0,(Primary_Angle).w
-	move.b	d0,(Secondary_Angle).w
++	move.w	#$0303,(Primary_Angle).w	; and Secondary_Angle
 	move.b	angle(a0),d0
 	addi.b	#$20,d0
 	bpl.s	loc_1E286

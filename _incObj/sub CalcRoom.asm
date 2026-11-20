@@ -52,7 +52,7 @@ loc_1EBE6:
 	andi.b	#$38,d1
 	bne.s	++
 	addq.w	#8,d2
-	btst	#2,status(a0)			; Is the Player rolling?
+	btst	#status.player.rolling,status(a0)	; Is the Player rolling?
 	bne.s	+				; If not, branch
 	cmpi.b	#ObjID_Tails,id(a0)		; Is this Tails?
 	bne.s	++				; If not, branch

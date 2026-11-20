@@ -1558,9 +1558,8 @@ Sonic_Speeds_End:
 Sonic_LastLoadedDPLC:		ds.b	1	; mapping frame number when Sonic last had his tiles requested to be transferred from ROM to VRAM. can be set to a dummy value like -1 to force a refresh DMA. was: Sonic_mapping_frame
 				ds.b	1	; unused
 Primary_Angle:			ds.b	1
-				ds.b	1	; unused
 Secondary_Angle:		ds.b	1
-				ds.b	1	; unused
+				ds.b	2	; unused
 Obj_placement_routine:		ds.b	1
 				ds.b	1	; unused
 Camera_X_pos_last:		ds.w	1	; Camera_X_pos_coarse from the previous frame
