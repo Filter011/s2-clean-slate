@@ -34,6 +34,11 @@ Obj67_Init:
 Obj67_Main:
 	lea	(MainCharacter).w,a1 ; a1=character
 	lea	objoff_2C(a0),a4
+	bsr.s	loc_271BE
+	lea	(Sidekick).w,a1 ; a1=character
+	lea	objoff_36(a0),a4
+
+loc_271BE:
 	moveq	#0,d0
 	move.b	(a4),d0
 	move.w	off_271CA(pc,d0.w),d0

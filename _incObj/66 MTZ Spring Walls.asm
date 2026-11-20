@@ -38,6 +38,7 @@ Obj66_Main:
 	move.w	x_pos(a0),d4
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
 	jsr	(SolidObject_Always_SingleCharacter).l
 	cmpi.b	#1,d4
 	bne.s	loc_26FF6
@@ -54,6 +55,25 @@ Obj66_Main:
 	bsr.s	loc_27042
 
 loc_26FF6:
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing_bit,d6
+	jsr	(SolidObject_Always_SingleCharacter).l
+	cmpi.b	#1,d4
+	bne.s	loc_2702C
+	btst	#status.player.in_air,status(a1)
+	beq.s	loc_2702C
+	move.b	status(a0),d1
+	move.w	x_pos(a0),d0
+	sub.w	x_pos(a1),d0
+	bcs.s	+
+	eori.b	#1<<status.player.x_flip,d1
++
+	andi.b	#1<<status.player.x_flip,d1
+	bne.s	loc_2702C
+	bsr.s	loc_27042
+
+loc_2702C:
 	moveq	#-$80,d0
 	and.w	x_pos(a0),d0
 	sub.w	(Camera_X_pos_coarse).w,d0

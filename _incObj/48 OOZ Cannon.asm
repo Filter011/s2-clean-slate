@@ -59,6 +59,12 @@ Obj48_Main:
 	lea	(MainCharacter).w,a1 ; a1=character
 	lea	objoff_2C(a0),a4
 	moveq	#objoff_2C,d2
+	bsr.s	loc_252DC
+	lea	(Sidekick).w,a1 ; a1=character
+	lea	objoff_36(a0),a4
+	moveq	#objoff_36,d2
+
+loc_252DC:
 	moveq	#0,d0
 	move.b	(a4),d0
 	move.w	Obj48_Modes(pc,d0.w),d0
@@ -85,6 +91,10 @@ loc_252F0:
 	addi.w	#$10,d1
 	cmpi.w	#$20,d1
 	bhs.w	return_253C4
+	cmpa.w	#Sidekick,a1
+	bne.s	+
+	cmpi.w	#4,(Tails_CPU_routine).w	; TailsCPU_Flying
+	beq.w	return_253C4
 +
 	cmpi.b	#6,routine(a1)
 	bhs.w	return_253C4

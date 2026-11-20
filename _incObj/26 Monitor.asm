@@ -34,7 +34,6 @@ Obj26_Init:
 	moveq	#0,d0
 	move.b	respawn_index(a0),d0
 	beq.s	+
-	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 	btst	#0,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)	; if this bit is set it means the monitor is already broken
 	beq.s	+
 	move.b	#8,routine(a0)	; set monitor to 'broken' state

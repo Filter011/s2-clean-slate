@@ -21,7 +21,6 @@ Obj46_Init:
 	moveq	#0,d0
 	move.b	respawn_index(a0),d0
 	beq.s	+
-	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 	bset	#0,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 	bne.w	JmpTo25_DeleteObject
 +

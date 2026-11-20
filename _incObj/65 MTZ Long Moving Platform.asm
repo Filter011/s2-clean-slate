@@ -283,6 +283,18 @@ loc_26DB4:
 	bhs.s	+
 	moveq	#1,d1
 +
+	move.w	(Sidekick+x_pos).w,d0
+	cmp.w	d4,d0
+	blo.s	+
+	cmp.w	d5,d0
+	bhs.s	+
+	move.w	(Sidekick+y_pos).w,d0
+	cmp.w	d2,d0
+	blo.s	+
+	cmp.w	d3,d0
+	bhs.s	+
+	moveq	#1,d1
++
 	tst.b	d1
 	beq.s	loc_26E0E
 	move.w	objoff_3C(a0),d0

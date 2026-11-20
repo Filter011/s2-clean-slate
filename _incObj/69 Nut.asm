@@ -35,6 +35,10 @@ Obj69_Main:
 	lea	objoff_38(a0),a4
 	moveq	#p1_standing_bit,d6
 	bsr.s	Obj69_Action
+	lea	(Sidekick).w,a1 ; a1=character
+	lea	objoff_3C(a0),a4
+	moveq	#p2_standing_bit,d6
+	bsr.s	Obj69_Action
 
 loc_278F4:
 	andi.w	#$7FF,y_pos(a0)
