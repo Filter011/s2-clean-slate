@@ -212,6 +212,8 @@ byte_1FAF0:
 
 loc_1FB02:
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	loc_1FB0C
+	lea	(Sidekick).w,a1 ; a1=character
 
 loc_1FB0C:
 	tst.b	obj_control(a1)
