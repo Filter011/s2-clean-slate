@@ -1600,7 +1600,8 @@ Player_JumpRightFlip:
 	bcc.s	Player_JumpFlipSet
 	moveq	#0,d0
 	move.b	d0,flips_remaining(a0)
-	bra.s	Player_JumpFlipSet
+	move.b	d0,flip_angle(a0)
+	rts
 ; ===========================================================================
 ; loc_1AE88:
 Player_JumpLeftFlip:
