@@ -56,8 +56,13 @@ Obj84_Init_CheckX:
 	move.w	x_pos(a0),d1
 	lea	(MainCharacter).w,a1 ; a1=character
 	cmp.w	x_pos(a1),d1
-	bhs.s	Obj84_MainX
+	bhs.s	+
 	move.b	#1,objoff_34(a0)
++
+	lea	(Sidekick).w,a1 ; a1=character
+	cmp.w	x_pos(a1),d1
+	bhs.s	Obj84_MainX
+	move.b	#1,objoff_35(a0)
 
 ; loc_21224:
 Obj84_MainX:
@@ -66,6 +71,11 @@ Obj84_MainX:
 	move.w	x_pos(a0),d1
 	lea	objoff_34(a0),a2 ; a2=object
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	+
+	lea	(Sidekick).w,a1 ; a1=character
+	cmpi.w	#4,(Tails_CPU_routine).w	; TailsCPU_Flying
+	beq.s	return_21284
+
 +	tst.b	(a2)+
 	bne.s	Obj84_MainX_Alt
 	cmp.w	x_pos(a1),d1
@@ -135,6 +145,10 @@ Obj84_MainY:
 	move.w	y_pos(a0),d1
 	lea	objoff_34(a0),a2 ; a2=object
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	+
+	lea	(Sidekick).w,a1 ; a1=character
+	cmpi.w	#4,(Tails_CPU_routine).w	; TailsCPU_Flying
+	beq.s	return_21350
 +
 	tst.b	(a2)+
 	bne.s	Obj84_MainY_Alt
