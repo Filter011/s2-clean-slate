@@ -346,7 +346,7 @@ Obj01_MdAir:
 	beq.s	+		; if not, branch
 	subi.w	#$28,y_vel(a0)	; reduce gravity by $28 ($38-$28=$10)
 +
-	bsr.w	Sonic_JumpAngle
+	bsr.w	Player_JumpAngle
 	bra.w	Sonic_DoLevelCollision
 ; End of subroutine Obj01_MdAir
 ; ===========================================================================
@@ -380,7 +380,7 @@ Obj01_MdJump:
 	beq.s	+		; if not, branch
 	subi.w	#$28,y_vel(a0)	; reduce gravity by $28 ($38-$28=$10)
 +
-	bsr.w	Sonic_JumpAngle
+	bsr.w	Player_JumpAngle
 	bra.w	Sonic_DoLevelCollision
 ; End of subroutine Obj01_MdJump
 
@@ -1126,12 +1126,7 @@ Obj01_NoRoll:
 ; loc_1A9FA:
 Obj01_ChkRoll:
 	bset	#status.player.rolling,status(a0)	; is Sonic already rolling?
-	beq.s	Obj01_DoRoll	; if not, branch
-	rts
-
-; ---------------------------------------------------------------------------
-; loc_1AA04:
-Obj01_DoRoll:
+	bne.s	return_1AA36	; if so, branch
 	move.b	#$E,y_radius(a0)
 	move.b	#7,x_radius(a0)
 	move.b	#AniIDSonAni_Roll,anim(a0)	; use "rolling" animation
@@ -1560,66 +1555,66 @@ loc_1AE44:
 ; End of function Player_SlopeRepel
 
 ; ---------------------------------------------------------------------------
-; Subroutine to return Sonic's angle to 0 as he jumps
+; Subroutine to return Player's angle to 0 as he jumps
 ; ---------------------------------------------------------------------------
 
 ; loc_1AE4A:
-Sonic_JumpAngle:
-	move.b	angle(a0),d0	; get Sonic's angle
-	beq.s	Sonic_JumpFlip	; if already 0, branch
+Player_JumpAngle:
+	move.b	angle(a0),d0	; get Player's angle
+	beq.s	Player_JumpFlip	; if already 0, branch
 	bpl.s	loc_1AE5A	; if higher than 0, branch
 
 	addq.b	#2,d0		; increase angle
-	bcc.s	Sonic_JumpAngleSet
+	bcc.s	Player_JumpAngleSet
 	moveq	#0,d0
-	bra.s	Sonic_JumpAngleSet
+	bra.s	Player_JumpAngleSet
 ; ===========================================================================
 
 loc_1AE5A:
 	subq.b	#2,d0		; decrease angle
-	bcc.s	Sonic_JumpAngleSet
+	bcc.s	Player_JumpAngleSet
 	moveq	#0,d0
 
 ; loc_1AE60:
-Sonic_JumpAngleSet:
+Player_JumpAngleSet:
 	move.b	d0,angle(a0)
-; End of function Sonic_JumpAngle
-	; continue straight to Sonic_JumpFlip
+; End of function Player_JumpAngle
+	; continue straight to Player_JumpFlip
 
 ; ---------------------------------------------------------------------------
-; Updates Sonic's secondary angle if he's tumbling
+; Updates Player's secondary angle if he's tumbling
 ; ---------------------------------------------------------------------------
 
 ; loc_1AE64:
-Sonic_JumpFlip:
+Player_JumpFlip:
 	move.b	flip_angle(a0),d0
 	beq.s	return_1AEA8
 	tst.w	inertia(a0)
-	bmi.s	Sonic_JumpLeftFlip
+	bmi.s	Player_JumpLeftFlip
 ; loc_1AE70:
-Sonic_JumpRightFlip:
+Player_JumpRightFlip:
 	move.b	flip_speed(a0),d1
 	add.b	d1,d0
-	bcc.s	Sonic_JumpFlipSet
+	bcc.s	Player_JumpFlipSet
 	subq.b	#1,flips_remaining(a0)
-	bcc.s	Sonic_JumpFlipSet
+	bcc.s	Player_JumpFlipSet
 	moveq	#0,d0
 	move.b	d0,flips_remaining(a0)
-	bra.s	Sonic_JumpFlipSet
+	bra.s	Player_JumpFlipSet
 ; ===========================================================================
 ; loc_1AE88:
-Sonic_JumpLeftFlip:
+Player_JumpLeftFlip:
 	tst.b	flip_turned(a0)
-	bne.s	Sonic_JumpRightFlip
+	bne.s	Player_JumpRightFlip
 	move.b	flip_speed(a0),d1
 	sub.b	d1,d0
-	bcc.s	Sonic_JumpFlipSet
+	bcc.s	Player_JumpFlipSet
 	subq.b	#1,flips_remaining(a0)
-	bcc.s	Sonic_JumpFlipSet
+	bcc.s	Player_JumpFlipSet
 	moveq	#0,d0
 	move.b	d0,flips_remaining(a0)
 ; loc_1AEA4:
-Sonic_JumpFlipSet:
+Player_JumpFlipSet:
 	move.b	d0,flip_angle(a0)
 
 return_1AEA8:
@@ -1638,8 +1633,7 @@ Sonic_DoLevelCollision:
 	move.l	(Secondary_Collision).w,(Collision_addr).w
 +
 	move.b	lrb_solid_bit(a0),d5
-	move.w	x_vel(a0),d0				; get X speed
-	move.w	y_vel(a0),d1				; get Y speed
+	movem.w	x_vel(a0),d0-d1				; get X/Y speed
 	bpl.s	SonAirCol_PosY				; if it's positive, branch
 	cmp.w	d0,d1					; are we moving towards the left?
 	bgt.w	Sonic_HitLeftWall			; if so, branch

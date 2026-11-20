@@ -81,8 +81,13 @@ Obj36_Upright:
 	beq.s	Obj36_UprightEnd	; if not, branch
 	move.b	d6,d0
 	andi.b	#p1_standing,d0		; is Sonic standing on the object?
-	beq.s	Obj36_UprightEnd	; if not, branch
+	beq.s	+			; if not, branch
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.w	Touch_ChkHurt2
++
+	andi.b	#p2_standing,d6		; is Tails standing on the object?
+	beq.s	Obj36_UprightEnd	; if not, branch
+	lea	(Sidekick).w,a1 ; a1=character
 	bsr.w	Touch_ChkHurt2
 
 ; loc_159DE:
@@ -108,10 +113,16 @@ Obj36_Sideways:
 	beq.s	Obj36_SidewaysEnd	; if not, branch
 	move.b	d6,d0
 	andi.b	#p1_touch_side,d0	; is Sonic pushing against the side?
-	beq.s	Obj36_SidewaysEnd	; if not, branch
+	beq.s	+			; if not, branch
 	lea	(MainCharacter).w,a1 ; a1=character
-	bsr.s	Touch_ChkHurt2
+	bsr.w	Touch_ChkHurt2
 	bclr	#p1_pushing_bit,status(a0)
++
+	andi.b	#p2_touch_side,d6	; is Tails pushing against the side?
+	beq.s	Obj36_SidewaysEnd	; if not, branch
+	lea	(Sidekick).w,a1 ; a1=character
+	bsr.w	Touch_ChkHurt2
+	bclr	#p2_pushing_bit,status(a0)
 
 ; loc_15A3A:
 Obj36_SidewaysEnd:
@@ -135,8 +146,13 @@ Obj36_Upsidedown:
 	beq.s	Obj36_UpsidedownEnd	; if not, branch
 	move.b	d6,d0
 	andi.b	#p1_touch_bottom,d0	; is Sonic touching the bottom?
-	beq.s	Obj36_UpsidedownEnd	; if not, branch
+	beq.s	+			; if not, branch
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	Touch_ChkHurt2
++
+	andi.b	#p2_touch_bottom,d6	; is Tails touching the bottom?
+	beq.s	Obj36_UpsidedownEnd	; if not, branch
+	lea	(Sidekick).w,a1 ; a1=character
 	bsr.s	Touch_ChkHurt2
 
 ; loc_15A88:
@@ -149,12 +165,10 @@ Obj36_UpsidedownEnd:
 ; unlike Touch_ChkHurt, the character is at a1 instead of a0
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 Touch_ChkHurt2:
 	btst	#status_secondary.invincible,status_secondary(a1)	; is character invincible?
 	bne.s	+	; rts		; if yes, branch
-	tst.w	invulnerable_time(a1)	; is character invulnerable?
+	tst.b	invulnerable_time(a1)	; is character invulnerable?
 	bne.s	+	; rts		; if yes, branch
 	cmpi.b	#4,routine(a1)		; is the character hurt, dying, etc. ?
 	bhs.s	+	; rts		; if yes, branch

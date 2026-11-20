@@ -275,33 +275,6 @@ loc_F8F0:
 ; End of function sub_F872
 
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
-
-sub_F912:
-	moveq	#0,d0
-	tst.w	(MainCharacter+x_vel).w
-	bne.s	+
-	move.b	(Vint_runcount+3).w,d0
-	andi.w	#$1C,d0
-	lsr.w	#1,d0
-+
-	moveq	#0,d2
-	move.b	byte_F950+1(pc,d0.w),d2
-	swap	d2
-	move.b	byte_F950(pc,d0.w),d2
-	moveq	#0,d0
-	tst.w	(Sidekick+x_vel).w
-	bne.s	+
-	move.b	(Vint_runcount+3).w,d0
-	andi.w	#$1C,d0
-	lsr.w	#1,d0
-+
-	moveq	#0,d6
-	move.b	byte_F950+1(pc,d0.w),d6
-	swap	d6
-	move.b	byte_F950(pc,d0.w),d6
-	bra.s	+
 ; ===========================================================================
 byte_F950:
 	dc.b   1,  2
@@ -312,8 +285,33 @@ byte_F950:
 	dc.b   0,  0	; 10
 	dc.b   0,  0	; 12
 	dc.b   0,  1	; 14
-; ===========================================================================
+
+; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
+
+
+sub_F912:
+	moveq	#0,d0
+	tst.w	(MainCharacter+x_vel).w
+	bne.s	+
+	moveq	#$1C,d0
+	and.w	(Vint_runcount+2).w,d0
+	lsr.w	#1,d0
 +
+	moveq	#0,d2
+	move.b	byte_F950+1(pc,d0.w),d2
+	swap	d2
+	move.b	byte_F950(pc,d0.w),d2
+	moveq	#0,d0
+	tst.w	(Sidekick+x_vel).w
+	bne.s	+
+	moveq	#$1C,d0
+	and.w	(Vint_runcount+2).w,d0
+	lsr.w	#1,d0
++
+	moveq	#0,d6
+	move.b	byte_F950+1(pc,d0.w),d6
+	swap	d6
+	move.b	byte_F950(pc,d0.w),d6
 	moveq	#-2,d3
 	moveq	#-2,d4
 	move.b	status(a0),d0

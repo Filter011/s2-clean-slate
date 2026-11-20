@@ -2,8 +2,6 @@
 ; Oscillating number subroutine
 ; ---------------------------------------------------------------------------
 
-; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
 ; sub_4A70:
 OscillateNumInit:
 	lea	(Oscillating_Numbers).w,a1

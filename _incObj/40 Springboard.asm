@@ -49,9 +49,18 @@ Obj40_Main:
 +
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
 	jsr	(SlopedSolid_SingleCharacter).l
 	btst	#p1_standing_bit,status(a0)
 	beq.s	+
+	bsr.s	loc_2641E
++
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing_bit,d6
+	jsr	(SlopedSolid_SingleCharacter).l
+	btst	#p2_standing_bit,status(a0)
+	beq.s	+	; rts
 	bra.s	loc_2641E
 +
 	rts
@@ -148,14 +157,12 @@ loc_2651E:
 	andi.b	#$C,d0
 	cmpi.b	#4,d0
 	bne.s	loc_26534
-	move.b	#$C,top_solid_bit(a1)
-	move.b	#$D,lrb_solid_bit(a1)
+	move.w	#$0C0D,top_solid_bit(a1)	; and lrb_solid_bit
 
 loc_26534:
 	cmpi.b	#8,d0
 	bne.s	loc_26546
-	move.b	#$E,top_solid_bit(a1)
-	move.b	#$F,lrb_solid_bit(a1)
+	move.w	#$0E0F,top_solid_bit(a1)	; and lrb_solid_bit
 
 loc_26546:
 	moveq	#SndID_Spring,d0

@@ -99,12 +99,22 @@ Obj41_Up:
 	move.w	x_pos(a0),d4
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
 	bsr.w	SolidObject_Always_SingleCharacter
 	btst	#p1_standing_bit,status(a0)
 	beq.s	loc_189A8
 	bsr.s	loc_189CA
 
 loc_189A8:
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing_bit,d6
+	bsr.w	SolidObject_Always_SingleCharacter
+	btst	#p2_standing_bit,status(a0)
+	beq.s	loc_189C0
+	bsr.s	loc_189CA
+
+loc_189C0:
 	lea	Ani_obj41(pc),a1
 	bra.w	AnimateSprite
 ; ===========================================================================
@@ -143,14 +153,12 @@ loc_18A3E:
 	andi.b	#$C,d0
 	cmpi.b	#4,d0
 	bne.s	loc_18A54
-	move.b	#$C,top_solid_bit(a1)
-	move.b	#$D,lrb_solid_bit(a1)
+	move.w	#$0C0D,top_solid_bit(a1)	; and lrb_solid_bit
 
 loc_18A54:
 	cmpi.b	#8,d0
 	bne.s	loc_18A66
-	move.b	#$E,top_solid_bit(a1)
-	move.b	#$F,lrb_solid_bit(a1)
+	move.w	#$0E0F,top_solid_bit(a1)	; and lrb_solid_bit
 
 loc_18A66:
 	moveq	#SndID_Spring,d0
@@ -164,6 +172,7 @@ Obj41_Horizontal:
 	move.w	x_pos(a0),d4
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
 	bsr.w	SolidObject_Always_SingleCharacter
 	btst	#p1_pushing_bit,status(a0)
 	beq.s	loc_18AB0
@@ -179,6 +188,24 @@ loc_18AA8:
 	bsr.s	loc_18AEE
 
 loc_18AB0:
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing_bit,d6
+	bsr.w	SolidObject_Always_SingleCharacter
+	btst	#p2_pushing_bit,status(a0)
+	beq.s	loc_18AE0
+	move.b	status(a0),d1
+	move.w	x_pos(a0),d0
+	sub.w	x_pos(a1),d0
+	bcs.s	loc_18AD8
+	eori.b	#1<<status.npc.x_flip,d1
+
+loc_18AD8:
+	andi.b	#1<<status.npc.x_flip,d1
+	bne.s	loc_18AE0
+	bsr.s	loc_18AEE
+
+loc_18AE0:
 	bsr.w	loc_18BC6
 	lea	Ani_obj41(pc),a1
 	bra.w	AnimateSprite
@@ -229,14 +256,12 @@ loc_18B82:
 	andi.b	#$C,d0
 	cmpi.b	#4,d0
 	bne.s	loc_18B98
-	move.b	#$C,top_solid_bit(a1)
-	move.b	#$D,lrb_solid_bit(a1)
+	move.w	#$0C0D,top_solid_bit(a1)	; and lrb_solid_bit
 
 loc_18B98:
 	cmpi.b	#8,d0
 	bne.s	loc_18BAA
-	move.b	#$E,top_solid_bit(a1)
-	move.b	#$F,lrb_solid_bit(a1)
+	move.w	#$0E0F,top_solid_bit(a1)	; and lrb_solid_bit
 
 loc_18BAA:
 	bclr	#p1_pushing_bit,status(a0)
@@ -248,7 +273,7 @@ loc_18BAA:
 
 loc_18BC6:
 	cmpi.b	#3,anim(a0)
-	beq.s	return_18C7E
+	beq.w	return_18C7E
 	move.w	x_pos(a0),d0
 	move.w	d0,d1
 	addi.w	#$28,d1
@@ -283,6 +308,32 @@ loc_18C10:
 	blo.s	return_18C7E
 	cmp.w	d3,d4
 	bhs.s	return_18C7E
+	move.w	d0,-(sp)
+	bsr.w	loc_18AEE
+	move.w	(sp)+,d0
+
+loc_18C3C:
+	lea	(Sidekick).w,a1 ; a1=character
+	btst	#status.player.in_air,status(a1)
+	bne.s	return_18C7E
+	move.w	inertia(a1),d4
+	btst	#status.npc.x_flip,status(a0)
+	beq.s	loc_18C56
+	neg.w	d4
+
+loc_18C56:
+	tst.w	d4
+	bmi.s	return_18C7E
+	move.w	x_pos(a1),d4
+	cmp.w	d0,d4
+	blo.s	return_18C7E
+	cmp.w	d1,d4
+	bhs.s	return_18C7E
+	move.w	y_pos(a1),d4
+	cmp.w	d2,d4
+	blo.s	return_18C7E
+	cmp.w	d3,d4
+	bhs.s	return_18C7E
 	bra.w	loc_18AEE
 
 return_18C7E:
@@ -296,12 +347,22 @@ Obj41_Down:
 	move.w	x_pos(a0),d4
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
 	bsr.w	SolidObject_Always_SingleCharacter
 	cmpi.w	#-2,d4
 	bne.s	loc_18CA6
 	bsr.s	loc_18CC6
 
 loc_18CA6:
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing_bit,d6
+	bsr.w	SolidObject_Always_SingleCharacter
+	cmpi.w	#-2,d4
+	bne.s	loc_18CBC
+	bsr.s	loc_18CC6
+
+loc_18CBC:
 	lea	Ani_obj41(pc),a1
 	bra.w	AnimateSprite
 ; ===========================================================================
@@ -361,12 +422,22 @@ Obj41_DiagonallyUp:
 	lea	Obj41_SlopeData_DiagUp(pc),a2
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
 	bsr.w	SlopedSolid_SingleCharacter
 	btst	#p1_standing_bit,status(a0)
 	beq.s	loc_18D92
 	bsr.s	loc_18DB4
 
 loc_18D92:
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing_bit,d6
+	bsr.w	SlopedSolid_SingleCharacter
+	btst	#p2_standing_bit,status(a0)
+	beq.s	loc_18DAA
+	bsr.s	loc_18DB4
+
+loc_18DAA:
 	lea	Ani_obj41(pc),a1
 	bra.w	AnimateSprite
 ; ===========================================================================
@@ -429,14 +500,12 @@ loc_18E6C:
 	andi.b	#$C,d0
 	cmpi.b	#4,d0
 	bne.s	loc_18E82
-	move.b	#$C,top_solid_bit(a1)
-	move.b	#$D,lrb_solid_bit(a1)
+	move.w	#$0C0D,top_solid_bit(a1)	; and lrb_solid_bit
 
 loc_18E82:
 	cmpi.b	#8,d0
 	bne.s	loc_18E94
-	move.b	#$E,top_solid_bit(a1)
-	move.b	#$F,lrb_solid_bit(a1)
+	move.w	#$0E0F,top_solid_bit(a1)	; and lrb_solid_bit
 
 loc_18E94:
 	moveq	#SndID_Spring,d0
@@ -450,12 +519,22 @@ Obj41_DiagonallyDown:
 	lea	Obj41_SlopeData_DiagDown(pc),a2
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
 	bsr.w	SlopedSolid_SingleCharacter
 	cmpi.w	#-2,d4
 	bne.s	loc_18EC4
 	bsr.s	loc_18EE6
 
 loc_18EC4:
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing_bit,d6
+	bsr.w	SlopedSolid_SingleCharacter
+	cmpi.w	#-2,d4
+	bne.s	loc_18EDA
+	bsr.s	loc_18EE6
+
+loc_18EDA:
 	lea	Ani_obj41(pc),a1
 	bra.w	AnimateSprite
 ; ===========================================================================
@@ -500,14 +579,12 @@ loc_18F78:
 	andi.b	#$C,d0
 	cmpi.b	#4,d0
 	bne.s	loc_18F8E
-	move.b	#$C,top_solid_bit(a1)
-	move.b	#$D,lrb_solid_bit(a1)
+	move.w	#$0C0D,top_solid_bit(a1)	; and lrb_solid_bit
 
 loc_18F8E:
 	cmpi.b	#8,d0
 	bne.s	loc_18FA0
-	move.b	#$E,top_solid_bit(a1)
-	move.b	#$F,lrb_solid_bit(a1)
+	move.w	#$0E0F,top_solid_bit(a1)	; and lrb_solid_bit
 
 loc_18FA0:
 	moveq	#SndID_Spring,d0

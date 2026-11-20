@@ -286,7 +286,7 @@ Obj02_MdAir:
 	beq.s	+					; if not, branch
 	subi.w	#$28,y_vel(a0)	; reduce gravity by $28 ($38-$28=$10)
 +
-	bsr.w	Tails_JumpAngle
+	bsr.w	Player_JumpAngle
 	bra.w	Tails_DoLevelCollision
 ; End of subroutine Obj02_MdAir
 ; ---------------------------------------------------------------------------
@@ -296,7 +296,7 @@ Obj02_MdFly:
 	bsr.w	Tails_ChgJumpDir
 	bsr.w	Tails_LevelBound
 	jsr	(ObjectMove).w
-	bsr.w	Tails_JumpAngle
+	bsr.w	Player_JumpAngle
 	bsr.w	Tails_DoLevelCollision
 	bra.w	Tails_CarrySonic
 ; ===========================================================================
@@ -950,12 +950,7 @@ Obj02_NoRoll:
 ; loc_1C5E0:
 Obj02_ChkRoll:
 	bset	#status.player.rolling,status(a0)	; is Tails already rolling?
-	beq.s	Obj02_DoRoll				; if not, branch
-	rts
-
-; ---------------------------------------------------------------------------
-; loc_1C5EA:
-Obj02_DoRoll:
+	bne.s	Obj02_NoRoll				; if so, branch
 	move.b	#$E,y_radius(a0)
 	move.b	#7,x_radius(a0)
 	move.b	#AniIDSonAni_Roll,anim(a0)	; use "rolling" animation
@@ -979,7 +974,7 @@ return_1C61C:
 Tails_Jump:
 	move.b	(Ctrl_2_Press_Logical).w,d0
 	andi.b	#button_B_mask|button_C_mask|button_A_mask,d0 ; is A, B or C pressed?
-	beq.w	return_1C6C2	; if not, return
+	beq.s	return_1C61C	; if not, return
 	moveq	#0,d0
 	move.b	angle(a0),d0
 	addi.b	#$80,d0
@@ -1063,11 +1058,11 @@ Tails_CheckFlying:
 	move.b	(Ctrl_2_Press_Logical).w,d0	; get Tails' controller input
 	andi.b	#button_A_mask|button_B_mask|button_C_mask,d0	; has been any jump button pressed?
 	beq.s	.noflight			; if not, branch
-;	cmpa.l	#Sidekick,a0			; is Tails the sidekick?
-;	bne.s	.setflight			; if not, make him fly?
+	cmpa.w	#Sidekick,a0			; is Tails the sidekick?
+	bne.s	.setflight			; if not, make him fly?
 
-;	tst.w	(Tails_control_counter).w	; is Tails currently AI controlled?
-;	beq.s	.noflight			; if yes, branch
+	tst.w	(Tails_control_counter).w	; is Tails currently AI controlled?
+	beq.s	.noflight			; if yes, branch
 
 .setflight:
 	bclr	#status.player.rolling,status(a0)	; unset Tails' rolling flag
@@ -1205,7 +1200,7 @@ Tails_FlyingAnimation:
 ; ---------------------------------------------------------------------------
 
 Tails_CarrySonic:
-	cmpi.w	#0,(Player_mode).w				; is this a Sonic & Tails game?
+	cmpi.w	#0,(Player_mode).w			; is this a Sonic & Tails game?
 	bne.w	Tails_CarryNoGrab			; if not, branch
 	lea	(MainCharacter).w,a1			; load Sonic's RAM address to a1
 	move.w	(Ctrl_1).w,d0				; load player's inputs to d0
@@ -1453,73 +1448,6 @@ loc_1C83C:
 	bsr.w	Tails_LevelBound
 	bra.w	AnglePos
 ; End of subroutine Tails_UpdateSpindash
-
-; ---------------------------------------------------------------------------
-; Subroutine to return Tails' angle to 0 as he jumps
-; ---------------------------------------------------------------------------
-
-; loc_1C8FA:
-Tails_JumpAngle:
-	move.b	angle(a0),d0	; get Tails' angle
-	beq.s	Tails_JumpFlip	; if already 0, branch
-	bpl.s	loc_1C90A	; if higher than 0, branch
-
-	addq.b	#2,d0		; increase angle
-	bcc.s	Tails_JumpAngleSet
-	moveq	#0,d0
-	bra.s	Tails_JumpAngleSet
-; ===========================================================================
-
-loc_1C90A:
-	subq.b	#2,d0		; decrease angle
-	bcc.s	Tails_JumpAngleSet
-	moveq	#0,d0
-
-; loc_1C910:
-Tails_JumpAngleSet:
-	move.b	d0,angle(a0)
-; End of function Tails_JumpAngle
-	; continue straight to Tails_JumpFlip
-
-; ---------------------------------------------------------------------------
-; Updates Tails' secondary angle if he's tumbling
-; ---------------------------------------------------------------------------
-
-; loc_1C914:
-Tails_JumpFlip:
-	move.b	flip_angle(a0),d0
-	beq.s	return_1C958
-	tst.w	inertia(a0)
-	bmi.s	Tails_JumpLeftFlip
-; loc_1C920:
-Tails_JumpRightFlip:
-	move.b	flip_speed(a0),d1
-	add.b	d1,d0
-	bcc.s	Tails_JumpFlipSet
-	subq.b	#1,flips_remaining(a0)
-	bcc.s	Tails_JumpFlipSet
-	move.b	#0,flips_remaining(a0)
-	moveq	#0,d0
-	bra.s	Tails_JumpFlipSet
-; ===========================================================================
-; loc_1C938:
-Tails_JumpLeftFlip:
-	tst.b	flip_turned(a0)
-	bne.s	Tails_JumpRightFlip
-	move.b	flip_speed(a0),d1
-	sub.b	d1,d0
-	bcc.s	Tails_JumpFlipSet
-	subq.b	#1,flips_remaining(a0)
-	bcc.s	Tails_JumpFlipSet
-	move.b	#0,flips_remaining(a0)
-	moveq	#0,d0
-; loc_1C954:
-Tails_JumpFlipSet:
-	move.b	d0,flip_angle(a0)
-
-return_1C958:
-	rts
-; End of function Tails_JumpFlip
 
 ; ---------------------------------------------------------------------------
 ; Subroutine for Tails to interact with the floor and walls when he's in the air

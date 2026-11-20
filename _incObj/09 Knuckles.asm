@@ -311,7 +311,7 @@ Obj09_MdAir:
 	beq.s	+		; if not, branch
 	subi.w	#$28,y_vel(a0)	; reduce gravity by $28 ($38-$28=$10)
 +
-	bsr.w	Knuckles_JumpAngle
+	bsr.w	Player_JumpAngle
 	bra.w	Knuckles_DoLevelCollision
 ; End of subroutine Obj09_MdAir
 
@@ -1171,7 +1171,7 @@ Obj09_MdJump:
 	beq.s	+		; if not, branch
 	subi.w	#$28,y_vel(a0)	; reduce gravity by $28 ($38-$28=$10)
 +
-	bsr.w	Knuckles_JumpAngle
+	bsr.w	Player_JumpAngle
 	bra.w	Knuckles_DoLevelCollision
 ; End of subroutine Obj09_MdJump
 
@@ -1851,12 +1851,7 @@ Obj09_NoRoll:
 ; loc_1A9FA:
 Obj09_ChkRoll:
 	bset	#status.player.rolling,status(a0)	; is Knuckles already rolling?
-	beq.s	Obj09_DoRoll	; if not, branch
-	rts
-
-; ---------------------------------------------------------------------------
-; loc_1AA04:
-Obj09_DoRoll:
+	bne.s	Obj09_NoRoll	; if so, branch
 	move.b	#$E,y_radius(a0)
 	move.b	#7,x_radius(a0)
 	move.b	#AniIDKnuxAni_Roll,anim(a0)	; use "rolling" animation
@@ -1966,12 +1961,12 @@ return_1AB36_K:
 ; loc_1AB38: test_set_SS:
 Knuckles_CheckGoSuper:
 	tst.w	(Demo_mode_flag).w	; Don't glide on demos
-	bne.w	return_3165D2
+	bne.s	return_1AB36_K
 	tst.b	double_jump_flag(a0)
-	bne.w	return_3165D2
+	bne.s	return_1AB36_K
 	move.b	(Ctrl_1_Press_Logical).w,d0
 	andi.b	#button_B_mask|button_C_mask|button_A_mask,d0
-	beq.w	return_3165D2
+	beq.s	return_1AB36_K
 
 	tst.b	(Super_Sonic_flag).w	; is Knuckles already Super?
 	bne.s	Knuckles_BeginGlide	; if yes, branch
@@ -2046,11 +2041,11 @@ return_1ABA4_K:
 ; loc_1ABA6:
 Knuckles_Super:
 	tst.b	(Super_Sonic_flag).w	; Ignore all this code if not Super Knuckles
-	beq.w	return_1AC3C_K
+	beq.s	return_1ABA4_K
 	tst.b	(Update_HUD_timer).w
 	beq.s	Knuckles_RevertToNormal ; ?
 	subq.w	#1,(Super_Knuckles_frame_count).w
-	bpl.w	return_1AC3C_K
+	bpl.s	return_1ABA4_K
 	move.w	#60,(Super_Knuckles_frame_count).w	; Reset frame counter to 60
 	tst.w	(Ring_count).w
 	beq.s	Knuckles_RevertToNormal
@@ -2220,73 +2215,6 @@ loc_1AD8C_K:
 	bsr.w	Knuckles_LevelBound
 	bra.w	AnglePos
 ; End of subroutine Knuckles_UpdateSpindash
-
-; ---------------------------------------------------------------------------
-; Subroutine to return Knuckles's angle to 0 as he jumps
-; ---------------------------------------------------------------------------
-
-; loc_1AE4A:
-Knuckles_JumpAngle:
-	move.b	angle(a0),d0	; get Knuckles's angle
-	beq.s	Knuckles_JumpFlip	; if already 0, branch
-	bpl.s	loc_1AE5A_K	; if higher than 0, branch
-
-	addq.b	#2,d0		; increase angle
-	bcc.s	Knuckles_JumpAngleSet
-	moveq	#0,d0
-	bra.s	Knuckles_JumpAngleSet
-; ===========================================================================
-
-loc_1AE5A_K:
-	subq.b	#2,d0		; decrease angle
-	bcc.s	Knuckles_JumpAngleSet
-	moveq	#0,d0
-
-; loc_1AE60:
-Knuckles_JumpAngleSet:
-	move.b	d0,angle(a0)
-; End of function Knuckles_JumpAngle
-	; continue straight to Knuckles_JumpFlip
-
-; ---------------------------------------------------------------------------
-; Updates Knuckles's secondary angle if he's tumbling
-; ---------------------------------------------------------------------------
-
-; loc_1AE64:
-Knuckles_JumpFlip:
-	move.b	flip_angle(a0),d0
-	beq.s	return_1AEA8_K
-	tst.w	inertia(a0)
-	bmi.s	Knuckles_JumpLeftFlip
-; loc_1AE70:
-Knuckles_JumpRightFlip:
-	move.b	flip_speed(a0),d1
-	add.b	d1,d0
-	bcc.s	Knuckles_JumpFlipSet
-	subq.b	#1,flips_remaining(a0)
-	bcc.s	Knuckles_JumpFlipSet
-	move.b	#0,flips_remaining(a0)
-	moveq	#0,d0
-	bra.s	Knuckles_JumpFlipSet
-; ===========================================================================
-; loc_1AE88:
-Knuckles_JumpLeftFlip:
-	tst.b	flip_turned(a0)
-	bne.s	Knuckles_JumpRightFlip
-	move.b	flip_speed(a0),d1
-	sub.b	d1,d0
-	bcc.s	Knuckles_JumpFlipSet
-	subq.b	#1,flips_remaining(a0)
-	bcc.s	Knuckles_JumpFlipSet
-	move.b	#0,flips_remaining(a0)
-	moveq	#0,d0
-; loc_1AEA4:
-Knuckles_JumpFlipSet:
-	move.b	d0,flip_angle(a0)
-
-return_1AEA8_K:
-	rts
-; End of function Knuckles_JumpFlip
 
 ; ---------------------------------------------------------------------------
 ; Subroutine for Knuckles to interact with the floor and walls when he's in the air
@@ -2463,17 +2391,23 @@ Knuckles_DoLevelCollision:
 	move.l	(Secondary_Collision).w,(Collision_addr).w
 +
 	move.b	lrb_solid_bit(a0),d5
-	move.w	x_vel(a0),d1
-	move.w	y_vel(a0),d2
-	jsr	(CalcAngle).w
-	subi.b	#$20,d0
-	andi.b	#$C0,d0
-	cmpi.b	#$40,d0
-	beq.w	Knuckles_HitLeftWall
-	cmpi.b	#$80,d0
-	beq.w	Knuckles_HitCeilingAndWalls
-	cmpi.b	#$C0,d0
-	beq.w	Knuckles_HitRightWall
+	movem.w	x_vel(a0),d0-d1				; get X/Y speed
+	bpl.s	KnuxAirCol_PosY				; if it's positive, branch
+	cmp.w	d0,d1					; are we moving towards the left?
+	bgt.w	Knuckles_HitLeftWall			; if so, branch
+	neg.w	d0					; negate for right cheeck
+	cmp.w	d0,d1					; are we moving towards the right?
+	bge.w	Knuckles_HitRightWall			; if so, branch
+	bra.w	Knuckles_HitCeilingAndWalls		; we are moving upwards
+; ===========================================================================
+
+KnuxAirCol_PosY:
+	cmp.w	d0,d1					; are we moving towards the right?
+	blt.w	Knuckles_HitRightWall			; if so, branch
+	neg.w	d0					; negate for left check
+	cmp.w	d0,d1					; are we moving towards the left?
+	ble.w	Knuckles_HitLeftWall			; if so, branch
+	; otherwise, we know we're falling down (fall-through...)
 	bsr.w	CheckLeftWallDist
 	tst.w	d1
 	bpl.s	+
@@ -2488,49 +2422,58 @@ Knuckles_DoLevelCollision:
 +
 	bsr.w	Sonic_CheckFloor
 	tst.w	d1
-	bpl.s	return_1AF8A_K
+	bpl.s	.return
 	move.b	y_vel(a0),d2
 	addq.b	#8,d2
 	neg.b	d2
 	cmp.b	d2,d1
 	bge.s	+
 	cmp.b	d2,d0
-	blt.s	return_1AF8A_K
+	blt.s	.return
 +
 	add.w	d1,y_pos(a0)
 	move.b	d3,angle(a0)
 	bsr.w	Knuckles_ResetOnFloor
-	move.b	d3,d0
-	addi.b	#$20,d0
-	andi.b	#$40,d0
-	bne.s	loc_1AF68_K
-	move.b	d3,d0
-	addi.b	#$10,d0
-	andi.b	#$20,d0
-	beq.s	loc_1AF5A_K
+	move.b	d3,d0					; get floor angle
+	bpl.s	.checkupper				; if it's in the left half, branch
+	neg.b	d0					; if if's in the right half, mirror it
+.checkupper:
+	btst	#6,d0					; is it in the lower half?
+	beq.s	.checkslope				; if so, branch
+	subi.b	#$80,d0					; if it's in the upper half...
+	neg.b	d0					; ...mirror it
+.checkslope:
+	cmpi.b	#$20,d0					; are we landing on a steep slope?
+	bhs.s	.steepslope				; if so, branch
+	cmpi.b	#$11,d0					; are we landing on a shallow slope?
+	blo.s	.flatsurface				; if not, branch
 	asr.w	y_vel(a0)
-	bra.s	loc_1AF7C_K
+	bra.s	.noslopecap
 ; ===========================================================================
 
-loc_1AF5A_K:
+; loc_1AF5A:
+.flatsurface:
 	move.w	#0,y_vel(a0)
 	move.w	x_vel(a0),inertia(a0)
 	rts
 ; ===========================================================================
 
-loc_1AF68_K:
-	move.w	#0,x_vel(a0) ; stop Knuckles since he hit a wall
+; loc_1AF68:
+.steepslope:
+	move.w	#0,x_vel(a0) ; stop Sonic since he hit a wall
 	cmpi.w	#$FC0,y_vel(a0)
-	ble.s	loc_1AF7C_K
+	ble.s	.noslopecap
 	move.w	#$FC0,y_vel(a0)
 
-loc_1AF7C_K:
+; loc_1AF7C:
+.noslopecap:
 	move.w	y_vel(a0),inertia(a0)
 	tst.b	d3
-	bpl.s	return_1AF8A_K
+	bpl.s	.return
 	neg.w	inertia(a0)
 
-return_1AF8A_K:
+; return_1AF8A:
+.return:
 	rts
 ; ===========================================================================
 ; loc_1AF8C:
