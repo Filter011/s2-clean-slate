@@ -295,12 +295,18 @@ loc_19E30:
 	bne.s	loc_19E76
 	cmpi.w	#2,(Player_mode).w
 	beq.s	loc_19E76
+	cmpi.w	#3,(Player_mode).w
+	beq.s	loc_19E76_K
 	jsr	(Sonic_ResetOnFloor_Part2).l
 	bra.s	loc_19E7C
 ; ===========================================================================
 
 loc_19E76:
 	jsr	(Tails_ResetOnFloor_Part2).l
+	bra.s	loc_19E7C
+
+loc_19E76_K:
+	jsr	(Knuckles_ResetOnFloor_Part2).l
 
 loc_19E7C:
 	movea.l	(sp)+,a0 ; a0=character
