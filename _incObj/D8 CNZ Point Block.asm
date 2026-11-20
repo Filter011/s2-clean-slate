@@ -49,6 +49,20 @@ loc_2C716:
 	bsr.s	loc_2C74E
 
 loc_2C724:
+	addq.w	#1,a4
+	tst.b	(a4)
+	beq.s	loc_2C72E
+	subq.b	#1,(a4)
+	bra.s	loc_2C73C
+; ===========================================================================
+
+loc_2C72E:
+	lea	(Sidekick).w,a1 ; a1=character
+	bclr	#1,collision_property(a0)
+	beq.s	loc_2C73C
+	bsr.s	loc_2C74E
+
+loc_2C73C:
 	clr.b	collision_property(a0)
 
 loc_2C740:

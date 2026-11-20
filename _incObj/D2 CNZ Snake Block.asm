@@ -27,7 +27,7 @@ ObjD2_Init:
 	move.b	subtype(a0),d0
 	lsl.w	#4,d0
 	move.w	d0,objoff_38(a0)
-	bsr.s	loc_2B60C
+	bsr.w	loc_2B60C
 ; loc_2B57E:
 ObjD2_Main:
 	tst.w	objoff_38(a0)
@@ -54,6 +54,11 @@ ObjD2_Main:
 	bclr	#status.player.on_object,(MainCharacter+status).w
 	bset	#status.player.in_air,(MainCharacter+status).w
 +
+	bclr	#p2_standing_bit,status(a0)
+	beq.s	loc_2B5E2
+	bclr	#status.player.on_object,(Sidekick+status).w
+	bset	#status.player.in_air,(Sidekick+status).w
+
 loc_2B5E2:
 	move.w	objoff_30(a0),x_pos(a0)
 	bra.s	loc_2B60C

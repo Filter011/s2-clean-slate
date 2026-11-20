@@ -33,6 +33,10 @@ ObjD6_Main:
 	movem.l	d1-d4,-(sp)
 	bsr.s	loc_2BBE8
 	movem.l	(sp)+,d1-d4
+	lea	objoff_34(a0),a2 ; a2=object
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing_bit,d6
+	bsr.w	loc_2BBE8
 	lea	Ani_objD6(pc),a1
 	jsr	(AnimateSprite).w
 	jmp	(MarkObjGone).w

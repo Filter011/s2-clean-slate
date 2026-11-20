@@ -25,6 +25,10 @@ ObjD9_Main:
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.w	(Ctrl_1).w,d0
 	bsr.s	ObjD9_CheckCharacter
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.w	#1,a2
+	move.w	(Ctrl_2).w,d0
+	bsr.s	ObjD9_CheckCharacter
 	jmp	(MarkObjGone3).w
 ; ===========================================================================
 ; loc_2C972:

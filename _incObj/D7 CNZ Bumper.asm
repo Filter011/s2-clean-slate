@@ -41,6 +41,11 @@ ObjD7_Main:
 	beq.s	+
 	bsr.s	ObjD7_BouncePlayerOff
 +
+	lea	(Sidekick).w,a1 ; a1=character
+	bclr	#1,collision_property(a0)
+	beq.s	+
+	bsr.s	ObjD7_BouncePlayerOff
++
 	clr.b	collision_property(a0)
 	bra.w	ObjD7_MainContinued
 ; ===========================================================================
