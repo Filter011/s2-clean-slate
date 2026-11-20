@@ -7,12 +7,12 @@ Obj85:
 	move.b	routine(a0),d0
 	move.w	Obj85_Index(pc,d0.w),d1
 	jsr	Obj85_Index(pc,d1.w)
-	move.w	#object_display_list_size*4,d0
 	moveq	#-$80,d1
 	and.w	x_pos(a0),d1
 	sub.w	(Camera_X_pos_coarse).w,d1
 	cmpi.w	#$280,d1
 	bhi.s	+
+	move.w	#object_display_list_size*4,d0
 	jmp	(DisplaySprite3).w
 ; ===========================================================================
 +
@@ -92,6 +92,13 @@ Obj85_Up:
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.w	(Ctrl_1_Logical).w,d5
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
+	bsr.s	loc_2AD26
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.w	#1,a2
+	move.w	(Ctrl_2).w,d5
+	moveq	#p2_standing_bit,d6
 	bsr.s	loc_2AD26
 	tst.w	objoff_36(a0)
 	beq.s	loc_2AD14
@@ -239,6 +246,13 @@ Obj85_Diagonal:
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.w	(Ctrl_1_Logical).w,d5
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
+	bsr.s	loc_2AF06
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.w	#1,a2
+	move.w	(Ctrl_2).w,d5
+	moveq	#p2_standing_bit,d6
 	bsr.s	loc_2AF06
 	tst.w	objoff_36(a0)
 	beq.s	loc_2AEF4
