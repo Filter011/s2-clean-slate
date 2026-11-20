@@ -97,7 +97,7 @@ loc_29686:
 	cmp.w	d3,d0
 	bhs.s	loc_296B6
 	cmpi.w	#4,(Tails_CPU_routine).w	; TailsCPU_Flying
-	beq.w	loc_296B6
+	beq.s	loc_296B6
 	cmpi.b	#3,prev_anim(a0)
 	beq.s	loc_296B6
 	move.b	#3,anim(a0)
@@ -139,13 +139,11 @@ loc_29736:
 	andi.b	#$C,d0
 	cmpi.b	#4,d0
 	bne.s	+
-	move.b	#$C,top_solid_bit(a1)
-	move.b	#$D,lrb_solid_bit(a1)
+	move.w	#$0C0D,top_solid_bit(a1)	; and lrb_solid_bit
 +
 	cmpi.b	#8,d0
 	bne.s	+
-	move.b	#$E,top_solid_bit(a1)
-	move.b	#$F,lrb_solid_bit(a1)
+	move.w	#$0E0F,top_solid_bit(a1)	; and lrb_solid_bit
 +
 	moveq	#SndID_Spring,d0
 	jmp	(PlaySound).w

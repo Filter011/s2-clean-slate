@@ -72,6 +72,10 @@ loc_2595E:
 	tst.w	(Debug_placement_mode).w
 	bne.s	return_2598C
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	loc_2596E
+	lea	(Sidekick).w,a1 ; a1=character
+
+loc_2596E:
 	move.w	x_pos(a0),d0
 	sub.w	x_pos(a1),d0
 	bcc.s	+
