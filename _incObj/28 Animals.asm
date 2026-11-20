@@ -137,8 +137,7 @@ Obj28_Main:
 	tst.w	d1
 	bpl.s	+
 	add.w	d1,y_pos(a0)
-	move.w	animal_ground_x_vel(a0),x_vel(a0)
-	move.w	animal_ground_y_vel(a0),y_vel(a0)
+	move.l	animal_ground_x_vel(a0),x_vel(a0)	; and animal_ground_y_vel/y_vel
 	move.b	#1,mapping_frame(a0)
 	move.b	animal_ground_routine_base(a0),d0
 	add.b	d0,d0

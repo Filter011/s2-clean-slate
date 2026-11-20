@@ -147,8 +147,7 @@ Obj37_Init:
 	bcc.s	+
 	move.w	#$288,d4
 +
-	move.w	d2,x_vel(a1)
-	move.w	d3,y_vel(a1)
+	movem.w	d2-d3,x_vel(a1)	; and y_vel
 	neg.w	d2
 	neg.w	d4
 	dbf	d5,-

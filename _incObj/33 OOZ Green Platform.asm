@@ -143,8 +143,7 @@ loc_23CA0:
 
 	move.b	#1,obj_control(a1)
 	move.w	#0,inertia(a1)
-	move.w	#0,x_vel(a1)
-	move.w	#0,y_vel(a1)
+	move.l	#0,x_vel(a1)	; and y_vel
 	bclr	#status.player.pushing,status(a1)
 	bclr	#high_priority_bit,art_tile(a1)
 	move.b	#1,obj_control(a2)

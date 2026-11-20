@@ -31,10 +31,11 @@ Obj27_Init:
 	move.w	#ArtTile_ArtNem_Explosion,art_tile(a0)
 	move.b	#1<<render_flags.level_fg,render_flags(a0)
 	move.w	#1*$80,priority(a0)
-	move.b	#0,collision_flags(a0)
+	moveq	#0,d0
+	move.b	d0,collision_flags(a0)
 	move.b	#$C,width_pixels(a0)
 	move.b	#3,anim_frame_duration(a0)
-	move.b	#0,mapping_frame(a0)
+	move.b	d0,mapping_frame(a0)
 	moveq	#SndID_Explosion,d0
 	jsr	(PlaySound).w
 
