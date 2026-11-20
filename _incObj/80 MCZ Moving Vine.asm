@@ -111,6 +111,10 @@ loc_29AAE:
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.w	(Ctrl_1).w,d0
 	bsr.s	Obj80_Action
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.w	#1,a2
+	move.w	(Ctrl_2).w,d0
+	bsr.s	Obj80_Action
 	jmp	(MarkObjGone).w
 ; ===========================================================================
 ; loc_29ACC:
@@ -248,5 +252,9 @@ loc_29C42:
 	lea	objoff_30(a0),a2
 	lea	(MainCharacter).w,a1 ; a1=character
 	move.w	(Ctrl_1).w,d0
+	bsr.w	Obj80_Action
+	lea	(Sidekick).w,a1 ; a1=character
+	addq.w	#1,a2
+	move.w	(Ctrl_2).w,d0
 	bsr.w	Obj80_Action
 	jmp	(MarkObjGone).w

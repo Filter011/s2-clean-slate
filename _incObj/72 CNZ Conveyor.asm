@@ -32,6 +32,8 @@ Obj72_Init:
 Obj72_Main:
 	lea	(MainCharacter).w,a1 ; a1=character
 	bsr.s	Obj72_Action
+	lea	(Sidekick).w,a1 ; a1=character
+	bsr.s	Obj72_Action
 	jmp	(MarkObjGone3).w
 ; ===========================================================================
 ; loc_28990:

@@ -28,7 +28,6 @@ Obj79_Init:
 	moveq	#0,d0
 	move.b	respawn_index(a0),d0
 	beq.s	Obj79_Main
-	bclr	#7,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 	btst	#0,Obj_respawn_data-Object_Respawn_Table(a2,d0.w)
 	bne.s	loc_1F120
 	move.b	(Last_star_pole_hit).w,d1

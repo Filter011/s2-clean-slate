@@ -55,11 +55,16 @@ Obj77_Main:
 Obj77_DropCharacters:
 	move.b	status(a0),d0
 	andi.b	#standing_mask,d0
-	beq.s	++
+	beq.s	+++
 	move.b	d0,d1
 	andi.b	#p1_standing,d0
 	beq.s	+
 	lea	(MainCharacter).w,a1 ; a1=character
+	bclr	#status.player.on_object,status(a1)
++
+	andi.b	#p2_standing,d1
+	beq.s	+
+	lea	(Sidekick).w,a1 ; a1=character
 	bclr	#status.player.on_object,status(a1)
 +
 	andi.b	#~standing_mask,status(a0)

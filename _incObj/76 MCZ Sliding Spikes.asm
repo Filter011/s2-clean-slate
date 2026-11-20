@@ -62,10 +62,16 @@ Obj76_Main:
 	beq.s	loc_28EC2
 	move.b	d6,d0
 	andi.b	#p1_touch_side,d0
-	beq.s	loc_28EC2
+	beq.s	+
 	lea	(MainCharacter).w,a1 ; a1=character
 	jsr	(Touch_ChkHurt2).l
 	bclr	#p1_pushing_bit,status(a0)
++
+	andi.b	#p2_touch_side,d6
+	beq.s	loc_28EC2
+	lea	(Sidekick).w,a1 ; a1=character
+	jsr	(Touch_ChkHurt2).l
+	bclr	#p2_pushing_bit,status(a0)
 
 loc_28EC2:
 	move.w	objoff_34(a0),d0
@@ -79,6 +85,10 @@ Obj76_Modes:	offsetTable
 ; loc_28ECE:
 Obj76_CheckPlayers:
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	Obj76_CheckPlayer
+	lea	(Sidekick).w,a1 ; a1=character
+; loc_28ED8:
+Obj76_CheckPlayer:
 	btst	#status.player.in_air,status(a1)
 	bne.s	++	; rts
 	move.w	x_pos(a1),d0
