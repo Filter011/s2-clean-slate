@@ -51,10 +51,16 @@ loc_2B1B6:
 	move.w	(Ctrl_1_Logical).w,d5
 	moveq	#p1_standing_bit,d6
 	bsr.s	loc_2B20A
+	addq.w	#1,a3
+	lea	(Sidekick).w,a1 ; a1=character
+	move.w	(Ctrl_2).w,d5
+	moveq	#p2_standing_bit,d6
+	bsr.s	loc_2B20A
 	tst.b	objoff_38(a0)
 	beq.s	loc_2B1FE
 	clr.b	objoff_38(a0)
 	bsr.w	loc_2B290
+	subq.w	#1,a3
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
 	bsr.w	loc_2B290
@@ -171,12 +177,22 @@ Obj86_HorizontalType:
 	move.w	x_pos(a0),d4
 	lea	(MainCharacter).w,a1 ; a1=character
 	moveq	#p1_standing_bit,d6
+	movem.l	d1-d4,-(sp)
 	jsr	(SolidObject_Always_SingleCharacter).l
 	btst	#p1_pushing_bit,status(a0)
 	beq.s	loc_2B33A
 	bsr.s	loc_2B35C
 
 loc_2B33A:
+	movem.l	(sp)+,d1-d4
+	lea	(Sidekick).w,a1 ; a1=character
+	moveq	#p2_standing_bit,d6
+	jsr	(SolidObject_Always_SingleCharacter).l
+	btst	#p2_pushing_bit,status(a0)
+	beq.s	loc_2B352
+	bsr.s	loc_2B35C
+
+loc_2B352:
 	lea	Ani_obj86(pc),a1
 	jmp	(AnimateSprite).w
 ; ===========================================================================

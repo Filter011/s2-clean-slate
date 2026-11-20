@@ -47,8 +47,10 @@ ObjB5_Animate:
 ; loc_3B456:
 ObjB5_CheckPlayers:
 	cmpi.b	#4,anim(a0)
-	bne.s	++	; rts
+	bne.w	++	; rts
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	ObjB5_CheckPlayer
+	lea	(Sidekick).w,a1 ; a1=character
 ; loc_3B46A:
 ObjB5_CheckPlayer:
 	move.w	x_pos(a1),d0

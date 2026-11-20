@@ -64,6 +64,11 @@ loc_3BF66:
 	andi.b	#p1_standing,d1
 	beq.s	+
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	loc_3BFB4
++
+	andi.b	#p2_standing,d0
+	beq.s	+	; rts
+	lea	(Sidekick).w,a1 ; a1=character
 	bra.s	loc_3BFB4
 +
 	rts
@@ -98,8 +103,13 @@ loc_3BFD8:
 	beq.s	return_3C01E
 	move.b	d0,d1
 	andi.b	#p1_standing,d1
-	beq.s	return_3C01E
+	beq.s	+
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	loc_3BFB4
++
+	andi.b	#p2_standing,d0
+	beq.s	return_3C01E
+	lea	(Sidekick).w,a1 ; a1=character
 	bra.s	loc_3BFB4
 
 return_3C01E:
@@ -121,8 +131,14 @@ loc_3C034:
 	beq.s	loc_3C062
 	move.b	d0,d1
 	andi.b	#p1_standing,d1
-	beq.s	loc_3C062
+	beq.s	loc_3C056
 	lea	(MainCharacter).w,a1 ; a1=character
+	bsr.s	loc_3C020
+
+loc_3C056:
+	andi.b	#p2_standing,d0
+	beq.s	loc_3C062
+	lea	(Sidekick).w,a1 ; a1=character
 	bsr.s	loc_3C020
 
 loc_3C062:
