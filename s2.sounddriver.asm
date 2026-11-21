@@ -4,7 +4,7 @@
 
 ; S2CS Driver for short, optimised and rewritten by Filter.
 ; Version Format: YY.MM.DD.patch
-; Version: 26.11.20 (stable)
+; Version: 26.11.21 (stable)
 
 ; ---------------------------------------------------------------------------
 ; Settings
@@ -12,7 +12,7 @@
 
 ; Optimise FM Frequencies
 ; This is disabled by default to improve sound driver performance.
-; Enable this option if you want to give the sound driver more space for code.
+; Enable this option if you want to give the sound driver more space for code/data.
 OptimiseFMFreq = 0
 
 ; ---------------------------------------------------------------------------
@@ -435,16 +435,7 @@ zUpdateDAC:
 
 	ld	a,(zCurDAC)		; Get currently playing DAC sound
 	sub	81h
-	jp	nc,.dacqueued		; If one is queued (80h+), go to it!
-
-	exx				; Otherwise restore registers from mirror regs
-	ld	b,1			; b=1 (initial feed to the DAC "djnz" loops, i.e. UPDATE RIGHT AWAY)
-	pop	iy
-	pop	af
-	ei				; Enable interrupts
-	ret
-
-.dacqueued:
+	jr	c,.nodacqueued		; If not queued (80h and below), exit
 	; If you get here, it's time to start a new DAC sound...
 	ld	(zCurDAC),a		; Store that as current DAC sound
 	add	a,a
@@ -478,6 +469,14 @@ zUpdateDAC:
 	pop	iy
 	pop	af
 	jp	zWaitLoop
+
+.nodacqueued:
+	exx				; Otherwise restore registers from mirror regs
+	ld	b,1			; b=1 (initial feed to the DAC "djnz" loops, i.e. UPDATE RIGHT AWAY)
+	pop	iy
+	pop	af
+	ei				; Enable interrupts
+	ret
 ; End of function zVInt
 
 
